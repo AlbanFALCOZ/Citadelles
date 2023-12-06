@@ -74,6 +74,22 @@ public class Robot {
         return character;
     }
 
+
+/*
+    public void tryBuild() {
+        for (DistrictsType district : district) {
+            if (district.getCost() <= this.getGolds()) {
+                city.add(district);
+                setGolds(getGolds() - district.getCost());
+                break;
+            }
+        }
+    }
+
+
+
+}
+*/
 }
 
 
