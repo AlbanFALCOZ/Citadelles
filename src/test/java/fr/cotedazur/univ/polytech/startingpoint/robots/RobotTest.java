@@ -24,5 +24,6 @@ class RobotTest {
         String builtDistrictName1 = robot.tryBuild();
         assertEquals(districtWithCost2.name(), builtDistrictName1);
 
+
     }
 }
