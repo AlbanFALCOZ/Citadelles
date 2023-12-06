@@ -108,6 +108,10 @@ public class Robot {
         for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < districtInHand.size(); numberOfDistrictInCity++) {
             status += "(" + districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + ")";
         }
+        status += "}, city {";
+        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < city.size(); numberOfDistrictInCity++) {
+            status += "(" + city.get(numberOfDistrictInCity).getName() + "," + city.get(numberOfDistrictInCity).getCost() + ")";
+        }
         status += "}]";
         return status;
     }

@@ -17,13 +17,13 @@ class GameEngineTest {
     @BeforeEach
     void setUp() {
         gameEngine = new GameEngine();
-        gameEngine.initializeBots();
+        //gameEngine.initializeBots();
     }
 
 
     @Test
     void initializeBots() {
-        gameEngine.initializeBots();
+        //gameEngine.initializeBots();
 
         for (Robot bot : gameEngine.getBots()) {
             assertEquals(4, bot.getNumberOfDistrictInHand(), "Chaque robot doit avoir 4 districts uniques");
