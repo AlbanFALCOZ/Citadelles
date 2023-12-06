@@ -7,21 +7,22 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Robot {
 
-    private int number;
+    private String name;
     private int golds;
     private Strategies strategies;
     private DeckDistrict district;
     private CharactersType character;
     private DeckCharacters deckCharacters;
 
-    private ArrayList<DeckDistrict> city ;
+    private ArrayList<DistrictsType> city;
 
-    public Robot(int number) {
-        this.number = number;
+
+    public Robot(String name) {
+        this.name = name;
         this.district = null;
         this.golds = 2;
         this.character = null;
@@ -29,8 +30,8 @@ public class Robot {
     }
 
 
-    public int getNumber() {
-        return number;
+    public String getName() {
+        return name;
     }
 
     public int getGolds() {
@@ -61,6 +62,16 @@ public class Robot {
 
     public void setCharacter(CharactersType character) {
         this.character = character;
+    }
+
+
+    public void startTurn() {
+        this.golds += 2; //incrémente de 2 le nb golds du robot
+    }
+
+
+    public CharactersType getCharacter() {
+        return character;
     }
 
 }

@@ -20,16 +20,35 @@ public class GameEngine {
         deckDistrict = new DeckDistrict();
         deckCharacters = new DeckCharacters();
         initializeBots();
+        playTurns();
     }
 
 
     private void initializeBots() {
         for (int i = 0; i < 4; i++) {
-            bots.add(new Robot(i));
+            bots.add(new Robot("Bot " + i));
+        }
+    }
+
+    public List<Robot> getBots() {
+        return bots;
+    }
+
+
+    public void assignRandomCharacterToRobots() {
+        Collections.shuffle(deckCharacters.getCharactersInHand());
+
+        for (int i = 0; i < bots.size(); i++) {
+            bots.get(i).setCharacter(deckCharacters.getCharactersInHand().get(i));
         }
     }
 
 
 
+    private void playTurns() {
+        for (Robot bot : bots) {
+            bot.startTurn(); //début du tour pour chaque bot
+        }
+    }
 
 }

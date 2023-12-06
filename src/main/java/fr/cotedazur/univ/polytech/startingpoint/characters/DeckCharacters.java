@@ -7,17 +7,13 @@ import java.util.List;
 public class DeckCharacters {
     private List<CharactersType> charactersInHand;
 
-    public class ListCharacters {
-        private List<CharactersType> charactersInHand;
 
-        public ListCharacters() {
+    public DeckCharacters() {
+        this.charactersInHand = new ArrayList<>(Arrays.asList(CharactersType.values()));
+    }
+    public List<CharactersType> getCharactersInHand() {
+        return new ArrayList<>(charactersInHand);
 
-            this.charactersInHand = new ArrayList<>(Arrays.asList(CharactersType.values()));
-        }
-
-        public List<CharactersType> getCharactersInHand() {
-            return new ArrayList<>(charactersInHand);
-        }
     }
 }
 
