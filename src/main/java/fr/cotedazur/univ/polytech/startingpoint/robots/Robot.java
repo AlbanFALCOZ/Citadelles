@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.ListCharacters;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.complements.Strategies;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
@@ -12,17 +12,17 @@ public class Robot {
     private int golds;
     private Strategies strategies;
     private DistrictsType district;
-    private ListCharacters listCharacters;
+    private DeckCharacters deckCharacters;
 
-    public Robot(int number, DistrictsType district, List<ListCharacters> listCharacters, Strategies strategy, int golds) {
+    public Robot(int number, DistrictsType district, List<DeckCharacters> deckCharacters, Strategies strategy, int golds) {
         this.number = number;
         this.district = district;
         this.golds = golds;
-        this.listCharacters = getRandomCharacter(listCharacters);
+        this.deckCharacters = getRandomCharacter(deckCharacters);
     }
 
-    public Robot(int number, DistrictsType district, List<ListCharacters> listCharacters, Strategies strategy) {
-        this(number, district, listCharacters, strategy, 2);
+    public Robot(int number, DistrictsType district, List<DeckCharacters> deckCharacters, Strategies strategy) {
+        this(number, district, deckCharacters, strategy, 2);
     }
 
     public int getNumber() {
@@ -41,8 +41,8 @@ public class Robot {
         return district;
     }
 
-    public ListCharacters getListCharacters() {
-        return listCharacters;
+    public DeckCharacters getListCharacters() {
+        return deckCharacters;
     }
 
     public void setGolds(int golds) {
@@ -54,10 +54,10 @@ public class Robot {
     }
 
 
-    private ListCharacters getRandomCharacter(List<ListCharacters> listCharacters) {
-        if (listCharacters != null && !listCharacters.isEmpty()) {
-            int randomIndex = (int) (Math.random() * listCharacters.size());
-            return listCharacters.get(randomIndex);
+    private DeckCharacters getRandomCharacter(List<DeckCharacters> deckCharacters) {
+        if (deckCharacters != null && !deckCharacters.isEmpty()) {
+            int randomIndex = (int) (Math.random() * deckCharacters.size());
+            return deckCharacters.get(randomIndex);
         }
         return null;
     }
