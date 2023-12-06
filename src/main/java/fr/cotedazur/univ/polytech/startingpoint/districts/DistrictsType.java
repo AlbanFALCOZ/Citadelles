@@ -1,7 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.districts;
 
-import fr.cotedazur.univ.polytech.startingpoint.complements.Colors;
-
 /**
  * Cet enum prend englobe toutes les cartes quartiers dont on aura besoin
  * le long de la partie
@@ -30,7 +28,7 @@ public enum DistrictsType {
 
 
     // GUERRE
-    TOUR_DE_QUET("Tour de guet", 3,null, 1),
+    TOUR_DE_GUET("Tour de guet", 3,null, 1),
     PRISON("Prison", 3, null, 2),
     CASERNE("Caserne", 3, null, 3),
     FORTRESSE("Forteresse", 2, null, 5),
@@ -46,7 +44,7 @@ public enum DistrictsType {
     CIMETIERE("Cimetière", 1, null, 5),
     BIBLIOTHEQUE("Bibliothèque", 1, null, 6),
     ECOLE_DE_MAGIE("École de magie", 1, null, 6),
-    UNIVERCITE("Université", 1, null, 6),
+    UNIVERSITE("Université", 1, null, 6),
     DRACOPORT("Dracoport", 1, null, 6);
 
 
