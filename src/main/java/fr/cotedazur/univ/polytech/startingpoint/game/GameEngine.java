@@ -57,7 +57,9 @@ public class GameEngine {
     private void districtConstructions(){
         for (Robot bot : bots){
             String builtBuilding = bot.tryBuild();
-            System.out.println(bot.getName() + "Built a new disctrict" + builtBuilding);
+            if(builtBuilding==null) {
+                System.out.println(bot.getName() + "Built a new disctrict" + builtBuilding);
+            }
         }
     }
 
