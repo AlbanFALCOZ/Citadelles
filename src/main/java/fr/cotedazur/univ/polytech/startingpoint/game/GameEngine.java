@@ -26,7 +26,7 @@ public class GameEngine {
 
     private void initializeBots() {
         for (int i = 0; i < 4; i++) {
-            bots.add(new Robot(i));
+            bots.add(new Robot("Bot " + i));
         }
     }
 
