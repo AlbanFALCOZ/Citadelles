@@ -21,7 +21,7 @@ public class GameEngine {
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
         initializeBots();
-        playTurns();
+
     }
 
     public void initializeBots() {
@@ -66,6 +66,9 @@ public class GameEngine {
             System.out.println(bot.getName() + "Built a new disctrict" + builtBuilding);
         }
     }
+
+
+
 
 
 
