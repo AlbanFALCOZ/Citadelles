@@ -124,7 +124,7 @@ public class Robot {
     public int calculateScore() {
         int score = 0;
         for (DistrictsType district : city) {
-            score += district.getCost();
+            score += district.getScore();
         }
         return score;
     }

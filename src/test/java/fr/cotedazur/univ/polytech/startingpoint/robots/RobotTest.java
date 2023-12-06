@@ -17,9 +17,9 @@ public class RobotTest {
         assertEquals("[Status of Bot avec 8 golds : 8 golds, hand {}, city {}]",robot.statusOfPlayer());
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
         robot.addDistrict(district);
-        assertEquals("[Status of Bot avec 8 golds : 8 golds, hand {(Bibliothèque,1)}, city {}]",robot.statusOfPlayer());
+        assertEquals("[Status of Bot avec 8 golds : 8 golds, hand {(Bibliothèque,6)}, city {}]",robot.statusOfPlayer());
         robot.tryBuild();
-        assertEquals("[Status of Bot avec 8 golds : 7 golds, hand {}, city {(Bibliothèque,1)}]",robot.statusOfPlayer());
+        assertEquals("[Status of Bot avec 8 golds : 2 golds, hand {}, city {(Bibliothèque,6)}]",robot.statusOfPlayer());
 
     }
 
@@ -29,12 +29,12 @@ public class RobotTest {
         DeckDistrict deckDistrict = new DeckDistrict();
 
         // Assuming you have some districts in the deck for testing
+        DistrictsType districtWithCost2 = DistrictsType.EGLISE;
+        DistrictsType districtWithCost3 = DistrictsType.MANOIR;
         DistrictsType districtWithCost5 = DistrictsType.PALAIS;
-        DistrictsType districtWithCost2 = DistrictsType.HOTEL_DE_VILLE;
-        DistrictsType districtWithCost1 = DistrictsType.UNIVERSITE;
         robot.addDistrict(districtWithCost2);
         robot.addDistrict(districtWithCost5);
-        robot.addDistrict(districtWithCost1);
+        robot.addDistrict(districtWithCost3);
         assertEquals(2, robot.getGolds());
         String builtDistrictName1 = robot.tryBuild();
         assertEquals(districtWithCost2.name(), builtDistrictName1);
@@ -46,9 +46,9 @@ public class RobotTest {
     @Test
     void calculateScore() {
         Robot robot = new Robot("TestRobot");
-        DistrictsType districtWithCost2 = DistrictsType.PALAIS;
-        DistrictsType districtWithCost2 = DistrictsType.HOTEL_DE_VILLE;
-        DistrictsType districtWithCost5 = DistrictsType.UNIVERSITE;
+        DistrictsType districtWithCost2 = DistrictsType.EGLISE;
+        DistrictsType districtWithCost3 = DistrictsType.MANOIR;
+        DistrictsType districtWithCost5 = DistrictsType.PALAIS;
         robot.addDistrict(districtWithCost2);
         robot.addDistrict(districtWithCost5);
         robot.addDistrict(districtWithCost3);
