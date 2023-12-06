@@ -60,6 +60,9 @@ public class Robot {
         this.district = district;
     }
 
+    public void addGold(int golds) {
+        this.golds += golds;
+    }
 
 
     public void setCharacter(CharactersType character) {
@@ -82,6 +85,15 @@ public class Robot {
 
     public int getNumberOfDistrictInHand() {
         return districtInHand.size();
+    }
+
+    public String statusOfPlayer() {
+        String status = "[Status de " + this.name + " : " + this.golds + " golds, hand{ ";
+        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < city.size(); numberOfDistrictInCity++) {
+            status += "(" + city.get(numberOfDistrictInCity).getName() + ", " + city.get(numberOfDistrictInCity).getCost() + ")";
+        }
+        status += "}]";
+        return status;
     }
 }
 
