@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,15 @@ class GameEngineTest {
     @BeforeEach
     void setUp() {
         gameEngine = new GameEngine();
+    }
+
+    @Test
+    void initializeBots() {
+        gameEngine.initializeBots();
+
+        for (Robot bot : gameEngine.getBots()) {
+            assertEquals(4, bot.getNumberOfDistrictInHand(), "Chaque robot doit avoir 4 districts uniques");
+        }
     }
 
     @Test

@@ -13,22 +13,28 @@ import java.util.List;
 public class GameEngine {
 
     private List<Robot> bots = new ArrayList<>();
-    private DeckDistrict deckDistrict;
+    private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
 
     public GameEngine() {
-        deckDistrict = new DeckDistrict();
+        deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
         initializeBots();
         playTurns();
     }
 
-
-    private void initializeBots() {
+    public void initializeBots() {
         for (int i = 0; i < 4; i++) {
-            bots.add(new Robot("Bot " + i));
+            Robot bot = new Robot("Bot " + i);
+            for (int j = 0; j < 4; j++) {
+                bot.addDistrict(deckDistricts.getDistrictsInDeck());
+            }
+            bots.add(bot);
         }
+
     }
+
+
 
     public List<Robot> getBots() {
         return bots;
