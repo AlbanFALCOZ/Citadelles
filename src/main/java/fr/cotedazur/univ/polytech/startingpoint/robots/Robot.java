@@ -88,9 +88,9 @@ public class Robot {
     }
 
     public String statusOfPlayer() {
-        String status = "[Status de " + this.name + " : " + this.golds + " golds, hand{ ";
-        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < city.size(); numberOfDistrictInCity++) {
-            status += "(" + city.get(numberOfDistrictInCity).getName() + ", " + city.get(numberOfDistrictInCity).getCost() + ")";
+        String status = "[Status of " + this.name + " : " + this.golds + " golds, hand {";
+        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < districtInHand.size(); numberOfDistrictInCity++) {
+            status += "(" + districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + ")";
         }
         status += "}]";
         return status;
