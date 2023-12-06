@@ -29,12 +29,12 @@ public class RobotTest {
         DeckDistrict deckDistrict = new DeckDistrict();
 
         // Assuming you have some districts in the deck for testing
-        DistrictsType districtWithCost2 = DistrictsType.PALAIS;
-        DistrictsType districtWithCost3 = DistrictsType.HOTEL_DE_VILLE;
-        DistrictsType districtWithCost5 = DistrictsType.UNIVERSITE;
+        DistrictsType districtWithCost5 = DistrictsType.PALAIS;
+        DistrictsType districtWithCost2 = DistrictsType.HOTEL_DE_VILLE;
+        DistrictsType districtWithCost1 = DistrictsType.UNIVERSITE;
         robot.addDistrict(districtWithCost2);
         robot.addDistrict(districtWithCost5);
-        robot.addDistrict(districtWithCost3);
+        robot.addDistrict(districtWithCost1);
         assertEquals(2, robot.getGolds());
         String builtDistrictName1 = robot.tryBuild();
         assertEquals(districtWithCost2.name(), builtDistrictName1);
@@ -47,7 +47,7 @@ public class RobotTest {
     void calculateScore() {
         Robot robot = new Robot("TestRobot");
         DistrictsType districtWithCost2 = DistrictsType.PALAIS;
-        DistrictsType districtWithCost3 = DistrictsType.HOTEL_DE_VILLE;
+        DistrictsType districtWithCost2 = DistrictsType.HOTEL_DE_VILLE;
         DistrictsType districtWithCost5 = DistrictsType.UNIVERSITE;
         robot.addDistrict(districtWithCost2);
         robot.addDistrict(districtWithCost5);
@@ -55,6 +55,10 @@ public class RobotTest {
         robot.tryBuild();
         robot.tryBuild();
         robot.tryBuild();
+        assertEquals(2, robot.calculateScore());
+        robot.startTurn();
+        robot.tryBuild();
+        System.out.println(robot.statusOfPlayer());
         assertEquals(2, robot.calculateScore());
     }
 }
