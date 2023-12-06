@@ -17,7 +17,9 @@ class GameEngineTest {
     @BeforeEach
     void setUp() {
         gameEngine = new GameEngine();
+        gameEngine.initializeBots();
     }
+
 
     @Test
     void initializeBots() {
@@ -36,5 +38,28 @@ class GameEngineTest {
             characters.add(bot.getCharacter());
         }
         assertEquals(4, characters.size());
+    }
+
+
+    /*
+    @Test
+    void testPlayTurns() {
+        gameEngine.initializeBots();
+        gameEngine.playTurns();
+        for (Robot bot : gameEngine.getBots()) {
+            assertEquals(4, bot.getGolds(), "Le robot doit avoir 4 golds après un tour.");
+        }
+    }*/
+
+
+    @Test
+    void testPlayTurns() {
+
+        gameEngine.playTurns();
+
+        //si les robots ont 4 golds après le tour.
+        for (Robot bot : gameEngine.getBots()) {
+            assertEquals(4, bot.getGolds(), "Le robot doit avoir 4 golds après un tour.");
+        }
     }
 }
