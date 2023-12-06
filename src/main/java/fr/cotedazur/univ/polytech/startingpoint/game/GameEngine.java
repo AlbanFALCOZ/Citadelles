@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
+import java.sql.SQLOutput;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +52,22 @@ public class GameEngine {
 
 
 
-    private void playTurns() {
+
+    public void playTurns() {
+
         for (Robot bot : bots) {
             bot.startTurn(); //début du tour pour chaque bot
             System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds());
         }
     }
+    private void districtConstructions(){
+        for (Robot bot : bots){
+            String builtBuilding = bot.tryBuild();
+            System.out.println(bot.getName() + "Built a new disctrict" + builtBuilding);
+        }
+    }
+
+
+
 
 }

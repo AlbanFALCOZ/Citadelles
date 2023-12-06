@@ -79,6 +79,22 @@ public class Robot {
         return character;
     }
 
+
+
+
+    public String tryBuild() {
+        for (DistrictsType district : districtInHand) {
+            if (district.getCost() <= this.getGolds()) {
+                city.add(district);
+                setGolds(getGolds() - district.getCost());
+                return district.name();
+            }
+        }
+        return null;
+
+    }
+
+
     public void addDistrict(DistrictsType district) {
         this.districtInHand.add(district);
     }
