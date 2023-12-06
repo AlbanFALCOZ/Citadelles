@@ -25,8 +25,9 @@ public class GameEngine {
     }
 
     public void initializeBots() {
+        String name[] = {"Alban","Sara","Stacy","Nora"};
         for (int i = 0; i < 4; i++) {
-            Robot bot = new Robot("Bot " + i);
+            Robot bot = new Robot(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
             }
@@ -54,11 +55,11 @@ public class GameEngine {
             System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds());
         }
     }
-    private void districtConstructions(){
+    public void districtConstructions(){
         for (Robot bot : bots){
             String builtBuilding = bot.tryBuild();
-            if(builtBuilding==null) {
-                System.out.println(bot.getName() + "Built a new disctrict" + builtBuilding);
+            if(builtBuilding!=null) {
+                System.out.println(bot.getName() + " built a new " + builtBuilding);
             }
         }
     }
@@ -69,7 +70,21 @@ public class GameEngine {
             int score = bot.calculateScore();
             System.out.println(bot.getName() + " a un score de " + score);
         }
+
     }
+
+    public String getWinner(){
+        Robot winner = bots.get(0);
+        for (Robot bot : bots){
+            if(bot.calculateScore() > winner.calculateScore()){
+                winner = bot;
+            }
+        }
+        return winner.getName();
+
+    }
+
+
 
 
 

@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.complements.Main;
+import fr.cotedazur.univ.polytech.startingpoint.game.Main;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,15 +8,5 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
 
-    String varToBeInitInSetup;
 
-    @BeforeEach
-    void setUp() {
-        varToBeInitInSetup = "Hello World!";
-    }
-
-    @Test
-    void helloTest() {
-        assertEquals(varToBeInitInSetup, Main.hello());
-    }
 }
