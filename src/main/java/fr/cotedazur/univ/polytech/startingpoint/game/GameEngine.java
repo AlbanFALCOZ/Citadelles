@@ -35,12 +35,9 @@ public class GameEngine {
 
     }
 
-
-
     public List<Robot> getBots() {
         return bots;
     }
-
 
     public void assignRandomCharacterToRobots() {
         Collections.shuffle(deckCharacters.getCharactersInHand());
@@ -49,9 +46,6 @@ public class GameEngine {
             bots.get(i).setCharacter(deckCharacters.getCharactersInHand().get(i));
         }
     }
-
-
-
 
     public void playTurns() {
 
@@ -66,6 +60,16 @@ public class GameEngine {
             System.out.println(bot.getName() + "Built a new disctrict" + builtBuilding);
         }
     }
+
+
+    public void calculateScores() {
+        for (Robot bot : bots) {
+            int score = bot.calculateScore();
+            System.out.println(bot.getName() + " a un score de " + score);
+        }
+    }
+
+
 
 
 

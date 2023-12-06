@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,5 +36,21 @@ public class RobotTest {
         String builtDistrictName1 = robot.tryBuild();
         assertEquals(districtWithCost2.name(), builtDistrictName1);
 
+    }
+
+
+    @Test
+    void calculateScore() {
+        Robot robot = new Robot("TestRobot");
+        DistrictsType districtWithCost2 = DistrictsType.PALAIS;
+        DistrictsType districtWithCost3 = DistrictsType.HOTEL_DE_VILLE;
+        DistrictsType districtWithCost5 = DistrictsType.UNIVERSITE;
+        robot.addDistrict(districtWithCost2);
+        robot.addDistrict(districtWithCost5);
+        robot.addDistrict(districtWithCost3);
+        robot.tryBuild();
+        robot.tryBuild();
+        robot.tryBuild();
+        assertEquals(2, robot.calculateScore());
     }
 }

@@ -111,6 +111,14 @@ public class Robot {
         status += "}]";
         return status;
     }
+
+    public int calculateScore() {
+        int score = 0;
+        for (DistrictsType district : city) {
+            score += district.getCost();
+        }
+        return score;
+    }
 }
 
 

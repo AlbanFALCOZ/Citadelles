@@ -37,18 +37,6 @@ class GameEngineTest {
         assertEquals(4, characters.size());
     }
 
-
-    /*
-    @Test
-    void testPlayTurns() {
-        gameEngine.initializeBots();
-        gameEngine.playTurns();
-        for (Robot bot : gameEngine.getBots()) {
-            assertEquals(4, bot.getGolds(), "Le robot doit avoir 4 golds après un tour.");
-        }
-    }*/
-
-
     @Test
     void testPlayTurns() {
         gameEngine.playTurns();
