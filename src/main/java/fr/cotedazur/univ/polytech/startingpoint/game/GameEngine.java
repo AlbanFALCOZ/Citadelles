@@ -50,7 +50,11 @@ public class GameEngine {
         }
     }
 
-    private void playTurns() {
+
+
+
+    public void playTurns() {
+
         for (Robot bot : bots) {
             bot.startTurn(); //début du tour pour chaque bot
             System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds());
