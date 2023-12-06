@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
 import java.util.List;
 
-public class Robots {
+public class Robot {
 
     private int number;
     private int golds;
@@ -14,14 +14,14 @@ public class Robots {
     private DistrictsType district;
     private ListCharacters listCharacters;
 
-    public Robots(int number, DistrictsType district, List<ListCharacters> listCharacters, Strategies strategy, int golds) {
+    public Robot(int number, DistrictsType district, List<ListCharacters> listCharacters, Strategies strategy, int golds) {
         this.number = number;
         this.district = district;
         this.golds = golds;
         this.listCharacters = getRandomCharacter(listCharacters);
     }
 
-    public Robots(int number, DistrictsType district, List<ListCharacters> listCharacters, Strategies strategy) {
+    public Robot(int number, DistrictsType district, List<ListCharacters> listCharacters, Strategies strategy) {
         this(number, district, listCharacters, strategy, 2);
     }
 

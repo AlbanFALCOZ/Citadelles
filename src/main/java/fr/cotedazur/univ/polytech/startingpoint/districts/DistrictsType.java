@@ -51,11 +51,11 @@ public enum DistrictsType {
     int cost ;
     String name ;
 
-    Colors color ;
+    String color ;
 
     int score ;
 
-    DistrictsType(String name , int cost , Colors color , int score ){
+    DistrictsType(String name , int cost , String color , int score ){
         this.cost = cost ;
         this.name = name ;
         this.color = color ;
@@ -70,7 +70,7 @@ public enum DistrictsType {
         return name;
     }
 
-    public Colors getColor() {
+    public String getColor() {
         return color;
     }
 
