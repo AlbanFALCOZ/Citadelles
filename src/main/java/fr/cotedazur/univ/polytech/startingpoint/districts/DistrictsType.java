@@ -9,43 +9,43 @@ package fr.cotedazur.univ.polytech.startingpoint.districts;
  * Version 0.1 du jeu citadelle.
  */
 public enum DistrictsType {
-    MANOIR("Manoir", 5,  null, 3),
+    MANOIR("Manoir", 3,  null, 3),
     CHATEAU("Château", 4, null, 4),
-    PALAIS("Palais", 2, null, 5),
+    PALAIS("Palais", 5, null, 5),
 
     // RELIGION
-    TEMPLE("Temple", 3, null, 1),
-    EGLISE("Église", 4, null, 2),
+    TEMPLE("Temple", 1, null, 1),
+    EGLISE("Église", 2, null, 2),
     MONASTERE("Monastère", 3,null, 3),
-    CATHEDRALE("Cathédrale", 2,null, 5),
+    CATHEDRALE("Cathédrale", 5,null, 5),
     // TRADE DISTRICTS
-    TAVERNE("Taverne", 5, null, 1),
-    ECHOPPE("Échoppe", 3,null, 2),
-    MARCHE("Marché", 4, null, 2),
+    TAVERNE("Taverne", 1, null, 1),
+    ECHOPPE("Échoppe", 2,null, 2),
+    MARCHE("Marché", 2, null, 2),
     COMPTOIR("Comptoir", 3, null, 3),
-    PORT("Port", 3, null, 4),
-    HOTEL_DE_VILLE("Hôtel de ville", 2, null, 5),
+    PORT("Port", 4, null, 4),
+    HOTEL_DE_VILLE("Hôtel de ville", 5, null, 5),
 
 
     // GUERRE
-    TOUR_DE_GUET("Tour de guet", 3,null, 1),
-    PRISON("Prison", 3, null, 2),
+    TOUR_DE_GUET("Tour de guet", 1,null, 1),
+    PRISON("Prison", 2, null, 2),
     CASERNE("Caserne", 3, null, 3),
-    FORTRESSE("Forteresse", 2, null, 5),
+    FORTRESSE("Forteresse", 5, null, 5),
 
 
     // SPECIAL
 
-    COURT_DES_MIRACLES("Cour des miracles", 1, null, 2),
-    DONJON("Donjon", 1, null, 3),
-    LABORATOIRE("Laboratoire", 1, null, 5),
-    MANUFACTURE("Manufacture", 1, null, 5),
-    OBSERVATOIRE("Observatoire", 1, null, 5),
-    CIMETIERE("Cimetière", 1, null, 5),
-    BIBLIOTHEQUE("Bibliothèque", 1, null, 6),
-    ECOLE_DE_MAGIE("École de magie", 1, null, 6),
-    UNIVERSITE("Université", 1, null, 6),
-    DRACOPORT("Dracoport", 1, null, 6);
+    COURT_DES_MIRACLES("Cour des miracles", 2, null, 2),
+    DONJON("Donjon", 3, null, 3),
+    LABORATOIRE("Laboratoire", 5, null, 5),
+    MANUFACTURE("Manufacture", 5, null, 5),
+    OBSERVATOIRE("Observatoire", 5, null, 5),
+    CIMETIERE("Cimetière", 5, null, 5),
+    BIBLIOTHEQUE("Bibliothèque", 6, null, 6),
+    ECOLE_DE_MAGIE("École de magie", 6, null, 6),
+    UNIVERSITE("Université", 6, null, 6),
+    DRACOPORT("Dracoport", 6, null, 6);
 
 
     int cost ;
