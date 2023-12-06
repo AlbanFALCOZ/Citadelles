@@ -58,6 +58,17 @@ public class DeckDistrict {
         districtsInDeck.remove((int)indice);
         return district;
     }
+
+    public int getDeckSize() {
+        return districtsInDeck.size();
+    }
+
+
+    public static void main (String[] args){
+        DeckDistrict deckDistrict = new DeckDistrict();
+        System.out.println(deckDistrict.getDistrictsInDeck().name);
+        System.out.println(deckDistrict.getDeckSize());
+    }
    
 
 }

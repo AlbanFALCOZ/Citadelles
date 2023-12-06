@@ -6,8 +6,9 @@ import fr.cotedazur.univ.polytech.startingpoint.complements.Strategies;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+
 
 public class Robot {
 
@@ -19,11 +20,15 @@ public class Robot {
     private CharactersType character;
     private DeckCharacters deckCharacters;
 
+    private ArrayList<DistrictsType> city;
+
+
     public Robot(String name) {
         this.name = name;
         this.districtInHand = new ArrayList<>();
         this.golds = 2;
         this.character = null;
+        this.city = new ArrayList<>();
     }
 
 
