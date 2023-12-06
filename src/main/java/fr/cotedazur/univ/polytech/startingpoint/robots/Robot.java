@@ -59,6 +59,11 @@ public class Robot {
         this.character = character;
     }
 
+
+    public void startTurn() {
+        this.golds += 2; //incrémente de 2 le nb golds du robot
+    }
+
 }
 
 

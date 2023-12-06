@@ -20,6 +20,7 @@ public class GameEngine {
         deckDistrict = new DeckDistrict();
         deckCharacters = new DeckCharacters();
         initializeBots();
+        playTurns();
     }
 
 
@@ -29,5 +30,11 @@ public class GameEngine {
         }
     }
 
+
+    private void playTurns() {
+        for (Robot bot : bots) {
+            bot.startTurn(); //début du tour pour chaque bot
+        }
+    }
 
 }
