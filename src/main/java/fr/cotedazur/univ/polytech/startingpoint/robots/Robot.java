@@ -1,32 +1,29 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.characters.ListCharacters;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.complements.Strategies;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
 import java.util.List;
 
-public class Robots {
+public class Robot {
 
     private int number;
     private int golds;
     private Strategies strategies;
-
-    private List<DistrictsType> district;
+    private DeckDistrict district;
     private CharactersType character;
-    private ListCharacters listCharacters;
+    private DeckCharacters deckCharacters;
 
-    public Robots(int number, List<DistrictsType> district, CharactersType character, Strategies strategy, int golds) {
+    public Robot(int number) {
         this.number = number;
-        this.district = district;
-        this.golds = golds;
-        this.character = character;
+        this.district = null;
+        this.golds = 2;
+        this.character = null;
     }
 
-    public Robots(int number, List<DistrictsType> district, CharactersType character, Strategies strategy) {
-        this(number, district, character, strategy, 2);
-    }
 
     public int getNumber() {
         return number;
@@ -40,19 +37,22 @@ public class Robots {
         return strategies;
     }
 
+    public DeckDistrict getDistrict() {
+        return district;
+    }
+
+    public DeckCharacters getListCharacters() {
+        return deckCharacters;
+    }
 
     public void setGolds(int golds) {
         this.golds = golds;
     }
 
-    public void setDistrict(List<DistrictsType> district) {
+    public void setDistrict(DeckDistrict district) {
         this.district = district;
     }
 
-
-    public void setDistricts(List<DistrictsType> districtsForBot) {
-        this.district = districtsForBot;
-    }
 
 
     public void setCharacter(CharactersType character) {

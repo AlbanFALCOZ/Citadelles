@@ -1,7 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.characters;
 
-import fr.cotedazur.univ.polytech.startingpoint.complements.Colors;
-
 /**
  * Cet enum englobe toutes les cartes personnages dont on aura besoin
  * le long de la partie
@@ -20,9 +18,9 @@ public enum CharactersType {
     CONDOTTIERE(0, "Condottière", null);
     int number ;
     String type ;
-    Colors color  ;
+    String color  ;
 
-    CharactersType(int numero , String type , Colors couleur){
+    CharactersType(int numero , String type, String color){
         this.number = number ;
         this.type = type ;
         this.color = null;
@@ -36,7 +34,7 @@ public enum CharactersType {
         return type;
     }
 
-    public Colors getColor() {
+    public String getColor() {
         return color;
     }
 
