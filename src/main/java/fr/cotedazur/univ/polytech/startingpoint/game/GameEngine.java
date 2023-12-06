@@ -29,5 +29,31 @@ public class GameEngine {
         }
     }
 
+    public List<Robot> getBots() {
+        return bots;
+    }
+
+    public DeckDistrict getDeckDistrict() {
+        return deckDistrict;
+    }
+
+    public DeckCharacters getDeckCharacters() {
+        return deckCharacters;
+    }
+
+
+    public void assignRandomCharacterToRobots() {
+        Collections.shuffle(deckCharacters.getCharactersInHand());
+
+        for (int i = 0; i < bots.size(); i++) {
+            bots.get(i).setCharacter(deckCharacters.getCharactersInHand().get(i));
+        }
+    }
+
+    public CharactersType getCharacter(int number) {
+        return bots.get(number).getCharacter();
+    }
+
+
 
 }

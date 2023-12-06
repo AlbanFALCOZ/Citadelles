@@ -59,6 +59,10 @@ public class Robot {
         this.character = character;
     }
 
+    public CharactersType getCharacter() {
+        return character;
+    }
+
 }
 
 
