@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
+import java.sql.SQLOutput;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,22 +14,28 @@ import java.util.List;
 public class GameEngine {
 
     private List<Robot> bots = new ArrayList<>();
-    private DeckDistrict deckDistrict;
+    private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
 
     public GameEngine() {
-        deckDistrict = new DeckDistrict();
+        deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
         initializeBots();
         playTurns();
     }
 
-
-    private void initializeBots() {
+    public void initializeBots() {
         for (int i = 0; i < 4; i++) {
-            bots.add(new Robot("Bot " + i));
+            Robot bot = new Robot("Bot " + i);
+            for (int j = 0; j < 4; j++) {
+                bot.addDistrict(deckDistricts.getDistrictsInDeck());
+            }
+            bots.add(bot);
         }
+
     }
+
+
 
     public List<Robot> getBots() {
         return bots;
@@ -43,14 +50,20 @@ public class GameEngine {
         }
     }
 
-
-
-
-
     private void playTurns() {
         for (Robot bot : bots) {
             bot.startTurn(); //début du tour pour chaque bot
+            System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds());
         }
     }
+    private void districtConstructions(){
+        for (Robot bot : bots){
+            String builtBuilding = bot.tryBuild();
+            System.out.println(bot.getName() + "Built a new disctrict" + builtBuilding);
+        }
+    }
+
+
+
 
 }

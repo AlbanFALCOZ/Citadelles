@@ -6,7 +6,8 @@ import fr.cotedazur.univ.polytech.startingpoint.complements.Strategies;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
-import java.util.ArrayList;
+import java.util.*;
+
 
 
 public class Robot {
@@ -15,6 +16,7 @@ public class Robot {
     private int golds;
     private Strategies strategies;
     private DeckDistrict district;
+    private List<DistrictsType> districtInHand;
     private CharactersType character;
     private DeckCharacters deckCharacters;
 
@@ -23,7 +25,7 @@ public class Robot {
 
     public Robot(String name) {
         this.name = name;
-        this.district = null;
+        this.districtInHand = new ArrayList<>();
         this.golds = 2;
         this.character = null;
         this.city = new ArrayList<>();
@@ -75,21 +77,29 @@ public class Robot {
     }
 
 
-/*
-    public void tryBuild() {
-        for (DistrictsType district : district) {
+
+
+    public String tryBuild() {
+        for (DistrictsType district : districtInHand) {
             if (district.getCost() <= this.getGolds()) {
                 city.add(district);
                 setGolds(getGolds() - district.getCost());
-                break;
+                return district.name();
             }
         }
+        return null;
+
     }
 
 
+    public void addDistrict(DistrictsType district) {
+        this.districtInHand.add(district);
+    }
 
-}
-*/
+    public int getNumberOfDistrictInHand() {
+        return districtInHand.size();
+    }
+
 }
 
 
