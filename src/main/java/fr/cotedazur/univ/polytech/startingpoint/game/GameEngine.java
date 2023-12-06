@@ -30,6 +30,19 @@ public class GameEngine {
         }
     }
 
+    public List<Robot> getBots() {
+        return bots;
+    }
+
+
+    public void assignRandomCharacterToRobots() {
+        Collections.shuffle(deckCharacters.getCharactersInHand());
+
+        for (int i = 0; i < bots.size(); i++) {
+            bots.get(i).setCharacter(deckCharacters.getCharactersInHand().get(i));
+        }
+    }
+
 
     private void playTurns() {
         for (Robot bot : bots) {
