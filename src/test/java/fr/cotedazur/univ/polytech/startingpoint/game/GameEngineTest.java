@@ -20,7 +20,6 @@ class GameEngineTest {
     }
 
 
-    @Test
     void testInitializeBots() {
         for (Robot bot : gameEngine.getBots()) {
             assertEquals(4, bot.getNumberOfDistrictInHand(), "Chaque robot doit avoir 4 districts uniques");

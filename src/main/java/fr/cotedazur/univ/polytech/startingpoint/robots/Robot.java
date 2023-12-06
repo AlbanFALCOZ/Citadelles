@@ -79,20 +79,25 @@ public class Robot {
         return character;
     }
 
+    public ArrayList<DistrictsType> getCity(){
+        return city;
+    }
 
 
 
     public String tryBuild() {
-        for (DistrictsType district : districtInHand) {
+        for (int i = 0; i < districtInHand.size(); i++) {
+            DistrictsType district = districtInHand.get(i);
             if (district.getCost() <= this.getGolds()) {
                 city.add(district);
                 setGolds(getGolds() - district.getCost());
+                districtInHand.remove(i);
                 return district.name();
             }
         }
         return null;
-
     }
+
 
 
     public void addDistrict(DistrictsType district) {
@@ -107,6 +112,10 @@ public class Robot {
         String status = "[Status of " + this.name + " : " + this.golds + " golds, hand {";
         for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < districtInHand.size(); numberOfDistrictInCity++) {
             status += "(" + districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + ")";
+        }
+        status += "}, city {";
+        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < city.size(); numberOfDistrictInCity++) {
+            status += "(" + city.get(numberOfDistrictInCity).getName() + "," + city.get(numberOfDistrictInCity).getCost() + ")";
         }
         status += "}]";
         return status;
