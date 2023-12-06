@@ -21,7 +21,7 @@ public class GameEngine {
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
         initializeBots();
-        playTurns();
+
     }
 
     public void initializeBots() {

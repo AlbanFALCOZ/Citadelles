@@ -17,14 +17,11 @@ class GameEngineTest {
     @BeforeEach
     void setUp() {
         gameEngine = new GameEngine();
-        gameEngine.initializeBots();
     }
 
 
     @Test
-    void initializeBots() {
-        gameEngine.initializeBots();
-
+    void testInitializeBots() {
         for (Robot bot : gameEngine.getBots()) {
             assertEquals(4, bot.getNumberOfDistrictInHand(), "Chaque robot doit avoir 4 districts uniques");
         }
@@ -54,7 +51,6 @@ class GameEngineTest {
 
     @Test
     void testPlayTurns() {
-
         gameEngine.playTurns();
 
         //si les robots ont 4 golds après le tour.
