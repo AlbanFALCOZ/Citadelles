@@ -23,6 +23,8 @@ public class Robot {
 
     private ArrayList<DistrictsType> city;
 
+    private boolean hasCrown;
+
 
     public Robot(String name) {
         this.name = name;
@@ -30,6 +32,7 @@ public class Robot {
         this.golds = 2;
         this.character = null;
         this.city = new ArrayList<>();
+        this.hasCrown = false;
     }
 
 
@@ -77,6 +80,11 @@ public class Robot {
 
     public ArrayList<DistrictsType> getCity(){
         return city;
+    }
+
+    public void setHasCrown(boolean hasCrown){
+        this.hasCrown = hasCrown;
+
     }
 
 
