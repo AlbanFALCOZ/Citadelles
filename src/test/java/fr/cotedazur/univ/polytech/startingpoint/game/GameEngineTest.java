@@ -40,6 +40,7 @@ class GameEngineTest {
 
     @Test
     void testassignCrown() {
+        gameEngine.assignRandomCharacterToRobots();
         gameEngine.assignCrown();
         int numberOfCrown = 0;
         for (Robot bot : gameEngine.getBots()) {
@@ -94,5 +95,6 @@ class GameEngineTest {
             }
         }
     }
+
 
 }

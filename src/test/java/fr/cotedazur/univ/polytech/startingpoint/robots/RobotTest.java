@@ -79,4 +79,62 @@ public class RobotTest {
         robot.pickDistrictCard();
 
     }
+
+    @Test
+    void testGetNumberOfDistrictInHand() {
+        robot.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        robot.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        robot.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        robot.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        assertEquals(4, robot.getNumberOfDistrictInHand());
+    }
+
+    @Test
+    void testGetGolds() {
+        robot.setGolds(5);
+        assertEquals(5, robot.getGolds());
+    }
+
+    @Test
+    void testGetName() {
+        assertEquals("TestRobot", robot.getName());
+    }
+
+    @Test
+    void testGetCharacter() {
+        robot.setCharacter(CharactersType.ASSASSIN);
+        assertEquals(CharactersType.ASSASSIN, robot.getCharacter());
+    }
+
+    @Test
+    void testGetCity() {
+        robot.addDistrict(DistrictsType.TAVERNE);
+        robot.tryBuild();
+        assertEquals(1, robot.getCity().size());
+    }
+
+    @Test
+    void testSetHasCrown() {
+        robot.setHasCrown(true);
+        assertTrue(robot.getHasCrown());
+    }
+
+    @Test
+    void testAddGold() {
+        robot.addGold(5);
+        assertEquals(7, robot.getGolds());
+    }
+
+    @Test
+    void testAddDistrict() {
+        robot.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        assertEquals(1, robot.getNumberOfDistrictInHand());
+    }
+
+    @Test
+    void testSetGolds() {
+        robot.setGolds(5);
+        assertEquals(5, robot.getGolds());
+    }
+
 }
