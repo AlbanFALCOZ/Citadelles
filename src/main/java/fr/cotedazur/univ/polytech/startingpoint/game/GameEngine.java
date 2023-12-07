@@ -52,14 +52,15 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             bot.startTurn(); //début du tour pour chaque bot
-            System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds());
+            bot.pickDistrictCard();
+            System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds() + " et a dans sa main: " + bot.getNumberOfDistrictInHand());
         }
     }
     public void districtConstructions(){
         for (Robot bot : bots){
             String builtBuilding = bot.tryBuild();
             if(builtBuilding!=null) {
-                System.out.println(bot.getName() + " built a new " + builtBuilding);
+                System.out.println(bot.getName() + " built a new " + builtBuilding + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
             }
         }
     }

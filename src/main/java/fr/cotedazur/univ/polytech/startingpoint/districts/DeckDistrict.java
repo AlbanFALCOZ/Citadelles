@@ -64,11 +64,15 @@ public class DeckDistrict {
     }
 
 
+
     public static void main (String[] args){
         DeckDistrict deckDistrict = new DeckDistrict();
         System.out.println(deckDistrict.getDistrictsInDeck().name);
         System.out.println(deckDistrict.getDeckSize());
     }
-   
 
+
+    public void addDistrictToDeck(DistrictsType district) {
+        this.districtsInDeck.add(district);
+    }
 }

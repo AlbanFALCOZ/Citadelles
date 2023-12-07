@@ -8,6 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
 import java.util.*;
 
+import static java.lang.Math.random;
 
 
 public class Robot {
@@ -15,7 +16,7 @@ public class Robot {
     private String name;
     private int golds;
     private Strategies strategies;
-    private DeckDistrict district;
+    private DeckDistrict district = new DeckDistrict();
     private List<DistrictsType> districtInHand;
     private CharactersType character;
     private DeckCharacters deckCharacters;
@@ -121,15 +122,18 @@ public class Robot {
         return status;
     }
 
-    public void pickRandomDistrictCard() {
+    public void pickDistrictCard() {
         DistrictsType card1 = district.getDistrictsInDeck();
         DistrictsType card2 = district.getDistrictsInDeck();
 
-        DistrictsType chosenCard = new Random().nextBoolean() ? card1 : card2;
-        DistrictsType nonChosenCard = chosenCard == card1 ? card2 : card1;
-        //district.putCardBack(nonChosenCard);
+        if (card1.getScore() > card2.getScore()) {
+            districtInHand.add(card1);
+            district.addDistrictToDeck(card2);
+        } else {
+            districtInHand.add(card2);
+            district.addDistrictToDeck(card1);
+        }
 
-        this.addDistrict(chosenCard);
     }
 
     public int calculateScore() {

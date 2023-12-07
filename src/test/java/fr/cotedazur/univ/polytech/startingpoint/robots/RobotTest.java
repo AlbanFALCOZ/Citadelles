@@ -10,6 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RobotTest {
 
+    private Robot robot;
+
+    @BeforeEach
+    void setUp() {
+         robot = new Robot("TestRobot");
+    }
+
 
     @Test
     void showStatus() {
@@ -46,7 +53,6 @@ public class RobotTest {
 
     @Test
     void calculateScore() {
-        Robot robot = new Robot("TestRobot");
         robot.setCharacter(CharactersType.ASSASSIN);
         DistrictsType districtWithCost2 = DistrictsType.EGLISE;
         DistrictsType districtWithCost3 = DistrictsType.MANOIR;
@@ -62,5 +68,12 @@ public class RobotTest {
         robot.tryBuild();
         System.out.println(robot.statusOfPlayer());
         assertEquals(2, robot.calculateScore());
+    }
+
+    @Test
+    void testPickDistrictCard() {
+        robot.pickDistrictCard();
+        robot.pickDistrictCard();
+
     }
 }
