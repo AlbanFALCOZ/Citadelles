@@ -4,11 +4,8 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.robots.ListRobots;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
-import java.sql.Array;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class GameEngine {
@@ -51,8 +48,8 @@ public class GameEngine {
 
     public void assignCrown(){
         Collections.shuffle(bots);
-
         bots.get(0).setHasCrown(true);
+        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         System.out.println(bots.get(0).getName() + " has crown");
 
 
@@ -112,6 +109,8 @@ public class GameEngine {
         return winner.getName();
 
     }
+
+
 
 
 
