@@ -56,6 +56,7 @@ public class GameEngine {
     }
 
     public void playTurns() {
+        specialCard();
         assignCrown();
         for (Robot bot : bots) {
             int choice = (int) (Math.random()*2);
@@ -108,6 +109,14 @@ public class GameEngine {
         }
         return winner.getName();
 
+    }
+
+    public void specialCard(){
+        for (Robot bot : bots){
+            if(bot.getCharacter().getNumber()==6){
+                bot.addGold(1);
+            }
+        }
     }
 
 
