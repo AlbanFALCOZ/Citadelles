@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,14 +14,14 @@ public class RobotTest {
     @Test
     void showStatus() {
         Robot robot = new Robot("Bot avec 8 golds");
+        robot.setCharacter(CharactersType.ASSASSIN);
         robot.addGold(6);
-        assertEquals("[Status of Bot avec 8 golds : 8 golds, hand {}, city {}]",robot.statusOfPlayer());
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]",robot.statusOfPlayer());
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
         robot.addDistrict(district);
-        assertEquals("[Status of Bot avec 8 golds : 8 golds, hand {(Bibliothèque,6)}, city {}]",robot.statusOfPlayer());
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]",robot.statusOfPlayer());
         robot.tryBuild();
-        assertEquals("[Status of Bot avec 8 golds : 2 golds, hand {}, city {(Bibliothèque,6)}]",robot.statusOfPlayer());
-
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]",robot.statusOfPlayer());
     }
 
     @Test
@@ -46,6 +47,7 @@ public class RobotTest {
     @Test
     void calculateScore() {
         Robot robot = new Robot("TestRobot");
+        robot.setCharacter(CharactersType.ASSASSIN);
         DistrictsType districtWithCost2 = DistrictsType.EGLISE;
         DistrictsType districtWithCost3 = DistrictsType.MANOIR;
         DistrictsType districtWithCost5 = DistrictsType.PALAIS;
