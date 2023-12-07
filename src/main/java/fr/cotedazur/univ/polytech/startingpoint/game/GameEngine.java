@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.ListRobots;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.sql.SQLOutput;
@@ -11,7 +12,7 @@ import java.util.*;
 
 public class GameEngine {
 
-    private List<Robot> bots = new ArrayList<>();
+    private ListRobots bots = new ListRobots();
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
 
