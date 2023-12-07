@@ -39,9 +39,61 @@ class GameEngineTest {
     }
 
     @Test
+    void testassignCrown() {
+        gameEngine.assignRandomCharacterToRobots();
+        gameEngine.assignCrown();
+        int numberOfCrown = 0;
+        for (Robot bot : gameEngine.getBots()) {
+            if (bot.getHasCrown()) {
+                numberOfCrown++;
+            }
+        }
+        assertEquals(1, numberOfCrown);
+    }
+
+    @Test
     void testPlayTurns() {
+        gameEngine.assignRandomCharacterToRobots();
         gameEngine.playTurns();
 
+    }
+
+    @Test
+    void testCalculateScores() {
+        gameEngine.assignRandomCharacterToRobots();
+        gameEngine.playTurns();
+        gameEngine.calculateScores();
+        int maxScore = 0;
+        for (Robot bot : gameEngine.getBots()) {
+            if (bot.calculateScore() > maxScore) {
+                maxScore = bot.calculateScore();
+            }
+        }
+        List<String> winners = gameEngine.getWinners();
+        for (Robot bot : gameEngine.getBots()) {
+            if (bot.calculateScore() == maxScore) {
+                assertTrue(winners.contains(bot.getName()));
+            }
+        }
+    }
+
+    @Test
+    void testGetWinner() {
+        gameEngine.assignRandomCharacterToRobots();
+        gameEngine.playTurns();
+        gameEngine.calculateScores();
+        int maxScore = 0;
+        for (Robot bot : gameEngine.getBots()) {
+            if (bot.calculateScore() > maxScore) {
+                maxScore = bot.calculateScore();
+            }
+        }
+        List<String> winners = gameEngine.getWinners();
+        for (Robot bot : gameEngine.getBots()) {
+            if (bot.calculateScore() == maxScore) {
+                assertTrue(winners.contains(bot.getName()));
+            }
+        }
     }
 
     @Test

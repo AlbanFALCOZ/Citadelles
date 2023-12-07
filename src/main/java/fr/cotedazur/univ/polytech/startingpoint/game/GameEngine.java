@@ -50,9 +50,8 @@ public class GameEngine {
     public void assignCrown(){
         Collections.shuffle(bots);
         bots.get(0).setHasCrown(true);
-        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         System.out.println(bots.get(0).getName() + " has crown");
-
+        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
 
     }
 
@@ -71,13 +70,12 @@ public class GameEngine {
                     System.out.println(bot.statusOfPlayer() + "\n");
                     break;
                 case 1:
-                    bot.setGolds(bot.getGolds() + 2);
+                    bot.addGold(2);
                     System.out.println(bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds());
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.statusOfPlayer() + "\n");
                     break;
                 default:
-                    System.out.println("Vous n'avez pas choisi une option valide");
                     break;
             }
 
