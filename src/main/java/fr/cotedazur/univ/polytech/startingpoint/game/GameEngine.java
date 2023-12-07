@@ -49,9 +49,8 @@ public class GameEngine {
     public void assignCrown(){
         Collections.shuffle(bots);
         bots.get(0).setHasCrown(true);
-        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         System.out.println(bots.get(0).getName() + " has crown");
-
+        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
 
     }
 

@@ -48,7 +48,7 @@ public class RobotTest {
         robot.addDistrict(districtWithCost3);
         assertEquals(2, robot.getGolds());
         String builtDistrictName1 = robot.tryBuild();
-        assertEquals(districtWithCost2.name(), builtDistrictName1);
+        assertEquals("a new " + districtWithCost2.name(), builtDistrictName1);
 
 
     }

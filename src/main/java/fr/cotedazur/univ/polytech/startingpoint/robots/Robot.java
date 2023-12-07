@@ -170,7 +170,9 @@ public class Robot {
     }
 
 
-
+    public boolean getHasCrown() {
+        return hasCrown;
+    }
 }
 
 
