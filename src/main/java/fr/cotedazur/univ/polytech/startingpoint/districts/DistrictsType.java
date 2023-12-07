@@ -53,6 +53,8 @@ public enum DistrictsType {
 
     String color ;
 
+    String colorReset = "\u001B[0m";
+
     int score ;
 
     DistrictsType(String name , int cost , String color , int score ){
@@ -76,5 +78,12 @@ public enum DistrictsType {
 
     public int getScore() {
         return score;
+    }
+
+    public String getColorReset() {
+        return colorReset;
+    }
+    public String toString() {
+        return "(" + getName() + ", " + getCost() + ")";
     }
 }

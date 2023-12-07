@@ -65,7 +65,8 @@ public class GameEngine {
             System.out.println(choice);
             switch (choice) {
                 case 0:
-                    bot.pickDistrictCard();
+                    DistrictsType district = bot.pickDistrictCard();
+                    System.out.println("Le bot a choisi de piocher : " + district.getColor() + district + district.getColorReset());
                     System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.statusOfPlayer() + "\n");
