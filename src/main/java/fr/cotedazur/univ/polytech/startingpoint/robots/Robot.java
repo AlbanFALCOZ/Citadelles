@@ -71,11 +71,6 @@ public class Robot {
     }
 
 
-    public void startTurn() {
-        this.golds += 2; //incrémente de 2 le nb golds du robot
-    }
-
-
     public CharactersType getCharacter() {
         return character;
     }
@@ -93,10 +88,10 @@ public class Robot {
                 city.add(district);
                 setGolds(getGolds() - district.getCost());
                 districtInHand.remove(i);
-                return district.name();
+                return "a new " + district.name();
             }
         }
-        return null;
+        return "nothing";
     }
 
 

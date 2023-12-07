@@ -7,10 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.sql.SQLOutput;
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class GameEngine {
 
@@ -50,11 +47,25 @@ public class GameEngine {
     }
 
     public void playTurns() {
-
         for (Robot bot : bots) {
-            bot.startTurn(); //début du tour pour chaque bot
-            bot.pickDistrictCard();
-            System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds() + " et a dans sa main: " + bot.getNumberOfDistrictInHand());
+            int choice = (int) (Math.random()*2);
+            System.out.println(choice);
+            switch (choice) {
+                case 0:
+                    bot.pickDistrictCard();
+                    System.out.println(bot.getName() + " a maintenant dans sa main: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    break;
+                case 1:
+                    bot.setGolds(bot.getGolds() + 2);
+                    System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds());
+                    System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    break;
+                default:
+                    System.out.println("Vous n'avez pas choisi une option valide");
+                    break;
+            }
+
         }
     }
     public void districtConstructions(){
