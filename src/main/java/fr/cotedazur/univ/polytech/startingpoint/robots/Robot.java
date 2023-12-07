@@ -13,6 +13,7 @@ import java.util.*;
 public class Robot {
 
     private String name;
+    private int score;
     private int golds;
     private Strategies strategies;
     private DeckDistrict district = new DeckDistrict();
@@ -28,11 +29,17 @@ public class Robot {
 
     public Robot(String name) {
         this.name = name;
+        this.score = 0;
         this.districtInHand = new ArrayList<>();
         this.golds = 2;
         this.character = null;
         this.city = new ArrayList<>();
         this.hasCrown = false;
+    }
+
+
+    public int getScore() {
+        return this.score;
     }
 
 
@@ -58,6 +65,10 @@ public class Robot {
 
     public void setGolds(int golds) {
         this.golds = golds;
+    }
+
+    public void setScore(int score){
+        this.score = score;
     }
 
     public void setDistrict(DeckDistrict district) {
