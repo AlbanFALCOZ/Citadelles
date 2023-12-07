@@ -4,17 +4,15 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.ListRobots;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.sql.SQLOutput;
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class GameEngine {
 
-    private List<Robot> bots = new ArrayList<>();
+    private ListRobots bots = new ListRobots();
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
 
@@ -50,11 +48,28 @@ public class GameEngine {
     }
 
     public void playTurns() {
-
         for (Robot bot : bots) {
-            bot.startTurn(); //début du tour pour chaque bot
-            bot.pickDistrictCard();
-            System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds() + " et a dans sa main: " + bot.getNumberOfDistrictInHand());
+            int choice = (int) (Math.random()*2);
+            System.out.println(bot.statusOfPlayer());
+            System.out.println(choice);
+            switch (choice) {
+                case 0:
+                    bot.pickDistrictCard();
+                    System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.statusOfPlayer() + "\n");
+                    break;
+                case 1:
+                    bot.setGolds(bot.getGolds() + 2);
+                    System.out.println(bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds());
+                    System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.statusOfPlayer() + "\n");
+                    break;
+                default:
+                    System.out.println("Vous n'avez pas choisi une option valide");
+                    break;
+            }
+
         }
     }
     public void districtConstructions(){
@@ -86,11 +101,6 @@ public class GameEngine {
 
     }
 
-    public ArrayList<Robot> sortRobots(){
-        ArrayList<Robot> sortedBots = new ArrayList<>();
-         Collections.sort(sortedBots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
-         return sortedBots;
-    }
 
 
 

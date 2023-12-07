@@ -67,7 +67,7 @@ public class RobotTest {
         robot.tryBuild();
         robot.tryBuild();
         assertEquals(2, robot.calculateScore());
-        robot.startTurn();
+        robot.setGolds(2);
         robot.tryBuild();
         System.out.println(robot.statusOfPlayer());
         assertEquals(2, robot.calculateScore());

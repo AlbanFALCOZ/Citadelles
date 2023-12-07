@@ -42,22 +42,7 @@ class GameEngineTest {
     void testPlayTurns() {
         gameEngine.playTurns();
 
-        //si les robots ont 4 golds après le tour.
-        for (Robot bot : gameEngine.getBots()) {
-            assertEquals(4, bot.getGolds(), "Le robot doit avoir 4 golds après un tour.");
-        }
     }
 
-    @Test
-    public void testSortRobots() {
-        GameEngine gameEngine = new GameEngine();
-        gameEngine.initializeBots();
-        gameEngine.assignRandomCharacterToRobots();
-        List<Robot> originalOrder = new ArrayList<>(gameEngine.getBots());
-        ArrayList<Robot> sortedRobots = gameEngine.sortRobots();
-        assertEquals(originalOrder, gameEngine.getBots());
-        for (int i = 1; i < sortedRobots.size(); i++) {
-            assertTrue(sortedRobots.get(i - 1).getCharacter().getNumber() <= sortedRobots.get(i).getCharacter().getNumber());
-        }
-    }
+
 }
