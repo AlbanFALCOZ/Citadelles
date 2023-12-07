@@ -19,6 +19,7 @@ public class Robot {
     private List<DistrictsType> districtInHand;
     private CharactersType character;
     private DeckCharacters deckCharacters;
+    public static final String RESET = "\u001B[0m";
 
     private ArrayList<DistrictsType> city;
 
@@ -108,17 +109,39 @@ public class Robot {
         return districtInHand.size();
     }
 
-    public String statusOfPlayer() {
+    public String statusOfPlayer(boolean showColor) {
+        String color;
+        String endColor;
         String status = "[Status of " + this.name + " : role (" + this.character.getType() + "), " + this.golds + " golds, hand {";
         for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < districtInHand.size(); numberOfDistrictInCity++) {
-            status += "(" + districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + ")";
-        }
+            if (showColor) {
+                color = districtInHand.get(numberOfDistrictInCity).getColor();
+                endColor = RESET;
+            }
+            else {
+                color = "";
+                endColor = "";
+            }
+            status += "(" + color +districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + endColor + ")";
+            }
         status += "}, city {";
         for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < city.size(); numberOfDistrictInCity++) {
-            status += "(" + city.get(numberOfDistrictInCity).getName() + "," + city.get(numberOfDistrictInCity).getCost() + ")";
+            if (showColor) {
+                color = city.get(numberOfDistrictInCity).getColor();
+                endColor = RESET;
+            }
+            else {
+                color = "";
+                endColor = "";
+            }
+            status += "(" + color + city.get(numberOfDistrictInCity).getName() + "," + city.get(numberOfDistrictInCity).getCost() + endColor +")";
         }
         status += "}]";
         return status;
+    }
+
+    public String statusOfPlayer() {
+        return statusOfPlayer(true);
     }
 
     public int calculateScore() {
