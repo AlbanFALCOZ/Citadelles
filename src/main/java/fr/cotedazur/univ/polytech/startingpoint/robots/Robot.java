@@ -111,8 +111,7 @@ public class Robot {
             colorCharacter = character.getColor();
             endColor = RESET;
         }
-        System.out.println(colorCharacter);
-        String status = "[Status of " + this.name + " : role (" + colorCharacter + this.character.getType() + endColor + "), " + this.golds + " golds, hand {";
+        String status = RESET + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getType() + endColor + "), " + this.golds + " golds, hand {";
         status = getString(showColor, status, districtInHand);
         status += "}, city {";
         status = getString(showColor, status, city);
