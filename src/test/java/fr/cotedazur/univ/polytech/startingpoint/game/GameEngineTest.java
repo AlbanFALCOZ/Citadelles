@@ -60,4 +60,53 @@ class GameEngineTest {
             assertTrue(sortedRobots.get(i - 1).getCharacter().getNumber() <= sortedRobots.get(i).getCharacter().getNumber());
         }
     }
+
+
+
+    @Test
+    public void testSingleWinner() {
+        GameEngine game = new GameEngine();
+        game.clearBots();
+
+        Robot robot1 = new Robot("Robot1"); // Score élevé
+        robot1.addDistrict(DistrictsType.PALAIS);
+        robot1.setGolds(6);
+        robot1.tryBuild();
+        game.addRobot(robot1);
+
+        Robot robot2 = new Robot("Robot2"); // Score inférieur
+        robot2.addDistrict(DistrictsType.MANOIR);
+        robot2.setGolds(6);
+        robot2.tryBuild();
+        game.addRobot(robot2);
+
+
+        List<String> winners = game.getWinners();
+        //System.out.println(winners);
+        assertEquals(1, winners.size());
+        assertEquals("Robot1", winners.get(0));
+    }
+
+
+    @Test
+    public void testMultipleWinners() {
+        GameEngine game = new GameEngine();
+
+        Robot robot1 = new Robot("Robot1");
+        robot1.addDistrict(DistrictsType.MONASTERE);
+        robot1.setGolds(6);
+        robot1.tryBuild();
+        game.addRobot(robot1);
+
+        Robot robot2 = new Robot("Robot2");
+        robot2.addDistrict(DistrictsType.MANOIR);
+        robot2.setGolds(6);
+        robot2.tryBuild();
+        game.addRobot(robot2);
+
+        List<String> winners = game.getWinners();
+        assertTrue(winners.size() > 1);
+    }
+
+
 }
