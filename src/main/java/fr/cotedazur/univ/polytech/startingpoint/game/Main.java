@@ -12,7 +12,6 @@ public class Main {
 
         GameEngine Game = new GameEngine();
         Game.assignRandomCharacterToRobots();
-        Game.specialCard();
         Game.playTurns();
         Game.calculateScores();
         List<String> winner = Game.getWinners();
