@@ -8,7 +8,6 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
 import java.util.*;
 
-import static java.lang.Math.random;
 
 
 public class Robot {
@@ -20,8 +19,11 @@ public class Robot {
     private List<DistrictsType> districtInHand;
     private CharactersType character;
     private DeckCharacters deckCharacters;
+    public static final String RESET = "\u001B[0m";
 
     private ArrayList<DistrictsType> city;
+
+    private boolean hasCrown;
 
 
     public Robot(String name) {
@@ -30,6 +32,7 @@ public class Robot {
         this.golds = 2;
         this.character = null;
         this.city = new ArrayList<>();
+        this.hasCrown = false;
     }
 
 
@@ -79,6 +82,11 @@ public class Robot {
         return city;
     }
 
+    public void setHasCrown(boolean hasCrown){
+        this.hasCrown = hasCrown;
+
+    }
+
 
 
     public String tryBuild() {
@@ -104,31 +112,53 @@ public class Robot {
         return districtInHand.size();
     }
 
-    public String statusOfPlayer() {
-        String status = "[Status of " + this.name + " : role (" + this.character.getType() + "), " + this.golds + " golds, hand {";
-        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < districtInHand.size(); numberOfDistrictInCity++) {
-            status += "(" + districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + ")";
+    public String statusOfPlayer(boolean showColor) {
+        String endColor = "";
+        String colorCharacter = "";
+        if (showColor) {
+            colorCharacter = character.getColor();
+            endColor = RESET;
         }
+        String status = RESET + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getType() + endColor + "), " + this.golds + " golds, hand {";
+        status = getString(showColor, status, districtInHand);
         status += "}, city {";
-        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < city.size(); numberOfDistrictInCity++) {
-            status += "(" + city.get(numberOfDistrictInCity).getName() + "," + city.get(numberOfDistrictInCity).getCost() + ")";
-        }
+        status = getString(showColor, status, city);
         status += "}]";
         return status;
     }
 
-    public void pickDistrictCard() {
+    private String getString(boolean showColor, String status, List<DistrictsType> districtInHand) {
+        String color;
+        String endColor;
+        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < districtInHand.size(); numberOfDistrictInCity++) {
+            if (showColor) {
+                color = districtInHand.get(numberOfDistrictInCity).getColor();
+                endColor = RESET;
+            }
+            else {
+                color = endColor = "";
+            }
+            status += "(" + color + districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + endColor + ")";
+            }
+        return status;
+    }
+
+    public String statusOfPlayer() {
+        return statusOfPlayer(true);
+    }
+    public DistrictsType pickDistrictCard() {
         DistrictsType card1 = district.getDistrictsInDeck();
         DistrictsType card2 = district.getDistrictsInDeck();
 
         if (card1.getScore() > card2.getScore()) {
             districtInHand.add(card1);
             district.addDistrictToDeck(card2);
+            return card1;
         } else {
             districtInHand.add(card2);
             district.addDistrictToDeck(card1);
+            return card2;
         }
-
     }
 
     public int calculateScore() {

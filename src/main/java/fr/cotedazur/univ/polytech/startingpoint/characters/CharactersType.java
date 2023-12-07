@@ -8,14 +8,14 @@ package fr.cotedazur.univ.polytech.startingpoint.characters;
  * Version 0.1 du jeu Citadelle.
  */
 public enum CharactersType {
-    ASSASSIN(1, "Assassin", null),
-    VOLEUR(2, "Voleur", null),
-    MAGICIEN(3, "Magicien", null),
-    ROI(4, "Roi", null),
-    EVEQUE(5, "Évêque", null),
-    MARCHAND(6, "Marchand", null),
-    ARCHITECTE(7, "Architecte", null),
-    CONDOTTIERE(8, "Condottière", null);
+    ASSASSIN(1, "Assassin", "\u001B[37;1m"),
+    VOLEUR(2, "Voleur", "\u001B[37;1m"),
+    MAGICIEN(3, "Magicien", "\u001B[37;1m"),
+    ROI(4, "Roi", "\u001B[33m"),
+    EVEQUE(5, "Évêque", "\u001B[34m"),
+    MARCHAND(6, "Marchand", "\u001B[32m"),
+    ARCHITECTE(7, "Architecte", "\u001B[37;1m"),
+    CONDOTTIERE(8, "Condottière", "\u001B[31m");
     int number ;
     String type ;
     String color  ;
@@ -23,7 +23,7 @@ public enum CharactersType {
     CharactersType(int number , String type, String color){
         this.number = number ;
         this.type = type ;
-        this.color = null;
+        this.color = color;
     }
 
     public int getNumber() {

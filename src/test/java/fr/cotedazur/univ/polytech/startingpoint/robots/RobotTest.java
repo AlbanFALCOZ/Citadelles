@@ -23,12 +23,15 @@ public class RobotTest {
         Robot robot = new Robot("Bot avec 8 golds");
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.addGold(6);
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]",robot.statusOfPlayer());
+        System.out.println(robot.statusOfPlayer());
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]",robot.statusOfPlayer(false));
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
         robot.addDistrict(district);
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]",robot.statusOfPlayer());
+        System.out.println(robot.statusOfPlayer());
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]",robot.statusOfPlayer(false));
         robot.tryBuild();
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]",robot.statusOfPlayer());
+        System.out.println(robot.statusOfPlayer());
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]",robot.statusOfPlayer(false));
     }
 
     @Test

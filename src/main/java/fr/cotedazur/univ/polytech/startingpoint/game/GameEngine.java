@@ -41,27 +41,41 @@ public class GameEngine {
     }
 
     public void assignRandomCharacterToRobots() {
-        Collections.shuffle(deckCharacters.getCharactersInHand());
+        List<CharactersType> ListCharacters = deckCharacters.getCharactersInHand();
+        Collections.shuffle(ListCharacters);
 
         for (int i = 0; i < bots.size(); i++) {
-            bots.get(i).setCharacter(deckCharacters.getCharactersInHand().get(i));
+            bots.get(i).setCharacter(ListCharacters.get(i));
         }
     }
 
+    public void assignCrown(){
+        Collections.shuffle(bots);
+
+        bots.get(0).setHasCrown(true);
+        System.out.println(bots.get(0).getName() + " has crown");
+
+
+    }
+
     public void playTurns() {
+        assignCrown();
         for (Robot bot : bots) {
             int choice = (int) (Math.random()*2);
-            System.out.println(choice);
+            System.out.println(bot.statusOfPlayer());
             switch (choice) {
                 case 0:
-                    bot.pickDistrictCard();
-                    System.out.println(bot.getName() + " a maintenant dans sa main: " + bot.getNumberOfDistrictInHand() + " districts");
+                    DistrictsType district = bot.pickDistrictCard();
+                    System.out.println("Le bot a choisi de piocher : " + district.getColor() + district + district.getColorReset());
+                    System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.statusOfPlayer() + "\n");
                     break;
                 case 1:
                     bot.setGolds(bot.getGolds() + 2);
-                    System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds());
+                    System.out.println(bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds());
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.statusOfPlayer() + "\n");
                     break;
                 default:
                     System.out.println("Vous n'avez pas choisi une option valide");
