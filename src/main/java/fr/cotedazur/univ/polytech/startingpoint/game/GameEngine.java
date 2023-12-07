@@ -50,17 +50,20 @@ public class GameEngine {
     public void playTurns() {
         for (Robot bot : bots) {
             int choice = (int) (Math.random()*2);
+            System.out.println(bot.statusOfPlayer());
             System.out.println(choice);
             switch (choice) {
                 case 0:
                     bot.pickDistrictCard();
-                    System.out.println(bot.getName() + " a maintenant dans sa main: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.statusOfPlayer() + "\n");
                     break;
                 case 1:
                     bot.setGolds(bot.getGolds() + 2);
-                    System.out.println(bot.getName() + " gagne 2 golds. Total golds maintenant: " + bot.getGolds());
+                    System.out.println(bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds());
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    System.out.println(bot.statusOfPlayer() + "\n");
                     break;
                 default:
                     System.out.println("Vous n'avez pas choisi une option valide");
