@@ -138,16 +138,18 @@ public class Robot {
     public String statusOfPlayer() {
         return statusOfPlayer(true);
     }
-    public void pickDistrictCard() {
+    public DistrictsType pickDistrictCard() {
         DistrictsType card1 = district.getDistrictsInDeck();
         DistrictsType card2 = district.getDistrictsInDeck();
 
         if (card1.getScore() > card2.getScore()) {
             districtInHand.add(card1);
             district.addDistrictToDeck(card2);
+            return card1;
         } else {
             districtInHand.add(card2);
             district.addDistrictToDeck(card1);
+            return card2;
         }
     }
 
