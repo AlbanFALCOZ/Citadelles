@@ -3,6 +3,8 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
+import java.util.List;
+
 public class Main {
 
     public static void main (String[] args) {
@@ -13,7 +15,7 @@ public class Main {
         Game.specialCard();
         Game.playTurns();
         Game.calculateScores();
-        String winner = Game.getWinner();
+        List<String> winner = Game.getWinners();
         System.out.println("Le gagnant de la partie est " + winner);
 
 

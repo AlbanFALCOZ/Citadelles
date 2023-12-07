@@ -13,6 +13,7 @@ import java.util.*;
 public class Robot {
 
     private String name;
+    private int score;
     private int golds;
     private Strategies strategies;
     private DeckDistrict district = new DeckDistrict();
@@ -28,11 +29,17 @@ public class Robot {
 
     public Robot(String name) {
         this.name = name;
+        this.score = 0;
         this.districtInHand = new ArrayList<>();
         this.golds = 2;
         this.character = null;
         this.city = new ArrayList<>();
         this.hasCrown = false;
+    }
+
+
+    public int getScore() {
+        return this.score;
     }
 
 
@@ -58,6 +65,10 @@ public class Robot {
 
     public void setGolds(int golds) {
         this.golds = golds;
+    }
+
+    public void setScore(int score){
+        this.score = score;
     }
 
     public void setDistrict(DeckDistrict district) {
@@ -120,32 +131,31 @@ public class Robot {
             endColor = RESET;
         }
         String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getType() + endColor + "), " + this.golds + " golds, hand {";
-        status = getString(showColor, status, districtInHand);
-        status += "}, city {";
-        status = getString(showColor, status, city);
-        status += "}]";
-        return status;
-    }
-
-    private String getString(boolean showColor, String status, List<DistrictsType> districtInHand) {
-        String color;
-        String endColor;
-        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < districtInHand.size(); numberOfDistrictInCity++) {
-            if (showColor) {
-                color = districtInHand.get(numberOfDistrictInCity).getColor();
-                endColor = RESET;
-            }
-            else {
-                color = endColor = "";
-            }
-            status += "(" + color + districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + endColor + ")";
-            }
+        status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
         return status;
     }
 
     public String statusOfPlayer() {
         return statusOfPlayer(true);
     }
+
+    private String getString(boolean showColor, List<DistrictsType> listDistrict) {
+        String returedString = "";
+        String color;
+        String endColor;
+        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < listDistrict.size(); numberOfDistrictInCity++) {
+            if (showColor) {
+                color = listDistrict.get(numberOfDistrictInCity).getColor();
+                endColor = RESET;
+            }
+            else {
+                color = endColor = "";
+            }
+            returedString += "(" + color + listDistrict.get(numberOfDistrictInCity).getName() + "," + listDistrict.get(numberOfDistrictInCity).getCost() + endColor + ")";
+            }
+        return returedString;
+    }
+
     public DistrictsType pickDistrictCard() {
         DistrictsType card1 = district.getDistrictsInDeck();
         DistrictsType card2 = district.getDistrictsInDeck();

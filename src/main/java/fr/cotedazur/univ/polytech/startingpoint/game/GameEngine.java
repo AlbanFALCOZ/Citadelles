@@ -17,6 +17,7 @@ public class GameEngine {
     public GameEngine() {
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
+        this.bots = new ArrayList<>();
         initializeBots();
 
     }
@@ -100,15 +101,39 @@ public class GameEngine {
 
     }
 
-    public String getWinner(){
-        Robot winner = bots.get(0);
-        for (Robot bot : bots){
-            if(bot.calculateScore() > winner.calculateScore()){
-                winner = bot;
+
+    public void clearBots() {
+        bots.clear();
+    }
+
+
+    public void addRobot(Robot robot) {
+        this.bots.add(robot);
+    }
+
+    public List<String> getWinners() {
+
+        List<Robot> winners = new ArrayList<>();
+        int highestScore = -1;
+
+        for (Robot bot : bots) {
+            int score = bot.calculateScore();
+            if (score > highestScore) {
+                winners.clear();
+                winners.add(bot);
+                highestScore = score;
+            }
+            else if (score == highestScore) {
+                winners.add(bot);
             }
         }
-        return winner.getName();
 
+        List<String> winnerNames = new ArrayList<>();
+        for (Robot winner : winners) {
+            winnerNames.add(winner.getName());
+        }
+
+        return winnerNames;
     }
 
     public void specialCard(){
@@ -121,19 +146,22 @@ public class GameEngine {
 
 
 
+    public void showWinners() {
+        List<String> winners = getWinners();
+        if (winners.size() == 1) {
+            System.out.println("Le gagnant est : " + winners.get(0));
+        }
+        else {
+            System.out.println("Il y a une égalité ! Les gagnants sont : " + String.join(", ", winners));
+        }
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
+    public ArrayList<Robot> sortRobots(){
+        ArrayList<Robot> sortedBots = new ArrayList<>();
+         Collections.sort(sortedBots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+         return sortedBots;
+    }
 
 
 }
