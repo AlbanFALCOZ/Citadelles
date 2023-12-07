@@ -9,6 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import java.sql.SQLOutput;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GameEngine {
@@ -83,6 +84,14 @@ public class GameEngine {
         return winner.getName();
 
     }
+
+    public ArrayList<Robot> sortRobots(){
+        ArrayList<Robot> sortedBots = new ArrayList<>();
+         Collections.sort(sortedBots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+         return sortedBots;
+    }
+
+
 
 
 
