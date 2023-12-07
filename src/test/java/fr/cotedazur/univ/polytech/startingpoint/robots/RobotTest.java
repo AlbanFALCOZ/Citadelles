@@ -10,6 +10,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RobotTest {
 
+    private Robot robot;
+
+    @BeforeEach
+    void setUp() {
+         robot = new Robot("TestRobot");
+    }
+
 
     @Test
     void showStatus() {
@@ -17,7 +24,7 @@ public class RobotTest {
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.addGold(6);
         System.out.println(robot.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]",robot.statusOfPlayer());
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]",robot.statusOfPlayer(false));
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
         robot.addDistrict(district);
         System.out.println(robot.statusOfPlayer());
@@ -49,7 +56,6 @@ public class RobotTest {
 
     @Test
     void calculateScore() {
-        Robot robot = new Robot("TestRobot");
         robot.setCharacter(CharactersType.ASSASSIN);
         DistrictsType districtWithCost2 = DistrictsType.EGLISE;
         DistrictsType districtWithCost3 = DistrictsType.MANOIR;
@@ -65,5 +71,12 @@ public class RobotTest {
         robot.tryBuild();
         System.out.println(robot.statusOfPlayer());
         assertEquals(2, robot.calculateScore());
+    }
+
+    @Test
+    void testPickDistrictCard() {
+        robot.pickDistrictCard();
+        robot.pickDistrictCard();
+
     }
 }

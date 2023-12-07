@@ -15,7 +15,7 @@ public class Robot {
     private String name;
     private int golds;
     private Strategies strategies;
-    private DeckDistrict district;
+    private DeckDistrict district = new DeckDistrict();
     private List<DistrictsType> districtInHand;
     private CharactersType character;
     private DeckCharacters deckCharacters;
@@ -110,38 +110,51 @@ public class Robot {
     }
 
     public String statusOfPlayer(boolean showColor) {
+        String endColor = "";
+        String colorCharacter = "";
+        if (showColor) {
+            colorCharacter = character.getColor();
+            endColor = RESET;
+        }
+        System.out.println(colorCharacter);
+        String status = "[Status of " + this.name + " : role (" + colorCharacter + this.character.getType() + endColor + "), " + this.golds + " golds, hand {";
+        status = getString(showColor, status, districtInHand);
+        status += "}, city {";
+        status = getString(showColor, status, city);
+        status += "}]";
+        return status;
+    }
+
+    private String getString(boolean showColor, String status, List<DistrictsType> districtInHand) {
         String color;
         String endColor;
-        String status = "[Status of " + this.name + " : role (" + this.character.getType() + "), " + this.golds + " golds, hand {";
         for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < districtInHand.size(); numberOfDistrictInCity++) {
             if (showColor) {
                 color = districtInHand.get(numberOfDistrictInCity).getColor();
                 endColor = RESET;
             }
             else {
-                color = "";
-                endColor = "";
+                color = endColor = "";
             }
-            status += "(" + color +districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + endColor + ")";
+            status += "(" + color + districtInHand.get(numberOfDistrictInCity).getName() + "," + districtInHand.get(numberOfDistrictInCity).getCost() + endColor + ")";
             }
-        status += "}, city {";
-        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < city.size(); numberOfDistrictInCity++) {
-            if (showColor) {
-                color = city.get(numberOfDistrictInCity).getColor();
-                endColor = RESET;
-            }
-            else {
-                color = "";
-                endColor = "";
-            }
-            status += "(" + color + city.get(numberOfDistrictInCity).getName() + "," + city.get(numberOfDistrictInCity).getCost() + endColor +")";
-        }
-        status += "}]";
         return status;
     }
 
     public String statusOfPlayer() {
         return statusOfPlayer(true);
+    }
+    public void pickDistrictCard() {
+        DistrictsType card1 = district.getDistrictsInDeck();
+        DistrictsType card2 = district.getDistrictsInDeck();
+
+        if (card1.getScore() > card2.getScore()) {
+            districtInHand.add(card1);
+            district.addDistrictToDeck(card2);
+        } else {
+            districtInHand.add(card2);
+            district.addDistrictToDeck(card1);
+        }
     }
 
     public int calculateScore() {
