@@ -97,11 +97,6 @@ public class GameEngine {
 
     }
 
-    public ArrayList<Robot> sortRobots(){
-        ArrayList<Robot> sortedBots = new ArrayList<>();
-         Collections.sort(sortedBots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
-         return sortedBots;
-    }
 
 
 
