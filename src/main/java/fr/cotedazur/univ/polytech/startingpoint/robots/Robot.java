@@ -121,6 +121,17 @@ public class Robot {
         return status;
     }
 
+    public void pickRandomDistrictCard() {
+        DistrictsType card1 = district.getDistrictsInDeck();
+        DistrictsType card2 = district.getDistrictsInDeck();
+
+        DistrictsType chosenCard = new Random().nextBoolean() ? card1 : card2;
+        DistrictsType nonChosenCard = chosenCard == card1 ? card2 : card1;
+        //district.putCardBack(nonChosenCard);
+
+        this.addDistrict(chosenCard);
+    }
+
     public int calculateScore() {
         int score = 0;
         for (DistrictsType district : city) {
