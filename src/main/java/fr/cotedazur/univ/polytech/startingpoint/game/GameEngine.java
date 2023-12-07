@@ -62,7 +62,6 @@ public class GameEngine {
         for (Robot bot : bots) {
             int choice = (int) (Math.random()*2);
             System.out.println(bot.statusOfPlayer());
-            System.out.println(choice);
             switch (choice) {
                 case 0:
                     DistrictsType district = bot.pickDistrictCard();
