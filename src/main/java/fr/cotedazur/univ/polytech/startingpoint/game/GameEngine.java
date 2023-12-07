@@ -7,12 +7,13 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.ListRobots;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
+import java.sql.Array;
 import java.sql.SQLOutput;
 import java.util.*;
 
 public class GameEngine {
 
-    private ListRobots bots = new ListRobots();
+    private ArrayList<Robot> bots = new ArrayList<>();
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
 
@@ -97,6 +98,8 @@ public class GameEngine {
         return winner.getName();
 
     }
+
+
 
 
 
