@@ -110,6 +110,10 @@ public class Robot {
         return districtInHand.size();
     }
 
+    public int getNumberOfDistrictInCity() {
+        return city.size();
+    }
+
     public String statusOfPlayer(boolean showColor) {
         String endColor = "";
         String colorCharacter = "";
