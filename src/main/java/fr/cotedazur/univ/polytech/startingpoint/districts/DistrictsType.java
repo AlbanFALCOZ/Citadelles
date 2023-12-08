@@ -44,8 +44,8 @@ public enum DistrictsType {
     CIMETIERE("Cimetière", 5, "\u001B[35m", 5),
     BIBLIOTHEQUE("Bibliothèque", 6, "\u001B[35m", 6),
     ECOLE_DE_MAGIE("École de magie", 6, "\u001B[35m", 6),
-    UNIVERSITE("Université", 6, "\u001B[35m", 6),
-    DRACOPORT("Dracoport", 6, "\u001B[35m", 6);
+    UNIVERSITE("Université", 6, "\u001B[35m", 8),
+    DRACOPORT("Dracoport", 6, "\u001B[35m", 8);
 
 
     int cost ;
