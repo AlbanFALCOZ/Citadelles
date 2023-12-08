@@ -156,6 +156,24 @@ class GameEngineTest {
         assertTrue(winners.size() > 1);
     }
 
+    @Test
+    public void testSpecialCard() {
+        GameEngine game = new GameEngine();
+        game.clearBots();
+
+        Robot robot1 = new Robot("Robot1");
+        robot1.setCharacter(CharactersType.MARCHAND);
+        robot1.addDistrict(DistrictsType.TAVERNE);
+        robot1.setGolds(6);
+        robot1.tryBuild();
+        game.addRobot(robot1);
+
+        game.specialCard();
+
+        assertEquals(6, robot1.getGolds());
+    }
+
+
 
 
 

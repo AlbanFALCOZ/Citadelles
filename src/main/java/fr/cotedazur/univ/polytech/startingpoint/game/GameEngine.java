@@ -56,30 +56,58 @@ public class GameEngine {
     }
 
     public void playTurns() {
-        specialCard();
         assignCrown();
+        specialCard();
         for (Robot bot : bots) {
             int choice = (int) (Math.random()*2);
+            System.out.println("------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n");
+
             System.out.println(bot.statusOfPlayer());
             switch (choice) {
                 case 0:
                     DistrictsType district = bot.pickDistrictCard();
-                    System.out.println("Le bot a choisi de piocher : " + district.getColor() + district + district.getColorReset());
+                    System.out.println("The bot choose to pick : " + district.getColor() + district + district.getColorReset());
                     System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.statusOfPlayer() + "\n");
+                    System.out.println("-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n");
                     break;
                 case 1:
                     bot.addGold(2);
                     System.out.println(bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds());
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.statusOfPlayer() + "\n");
+                    System.out.println("-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n");
+
                     break;
                 default:
                     break;
             }
 
         }
+    }
+
+    public boolean isBuiltEigthDistrict(){
+        for (Robot bot : bots){
+            if(bot.getNumberOfDistrictInCity()==8){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void gameTurns(){
+        System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
+        int comptTurn = 1;
+        while(!isBuiltEigthDistrict()){
+            assignRandomCharacterToRobots();
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            playTurns();
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            comptTurn++;
+        }
+
+
     }
     public void districtConstructions(){
         for (Robot bot : bots){
@@ -94,7 +122,7 @@ public class GameEngine {
     public void calculateScores() {
         for (Robot bot : bots) {
             int score = bot.calculateScore();
-            System.out.println(bot.getName() + " a un score de " + score);
+            System.out.println(bot.getName() + " has a score of " + score);
         }
 
     }
@@ -147,10 +175,10 @@ public class GameEngine {
     public void showWinners() {
         List<String> winners = getWinners();
         if (winners.size() == 1) {
-            System.out.println("Le gagnant est : " + winners.get(0));
+            System.out.println("The winner is : " + winners.get(0));
         }
         else {
-            System.out.println("Il y a une égalité ! Les gagnants sont : " + String.join(", ", winners));
+            System.out.println("This is an equality ! The winners are: " + String.join(", ", winners));
         }
     }
 

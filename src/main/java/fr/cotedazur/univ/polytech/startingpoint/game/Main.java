@@ -11,11 +11,9 @@ public class Main {
 
 
         GameEngine Game = new GameEngine();
-        Game.assignRandomCharacterToRobots();
-        Game.playTurns();
+        Game.gameTurns();
         Game.calculateScores();
-        List<String> winner = Game.getWinners();
-        System.out.println("Le gagnant de la partie est " + winner);
+        Game.showWinners();
 
 
     }
