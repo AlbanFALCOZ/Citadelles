@@ -138,4 +138,16 @@ public class RobotTest {
         assertEquals(5, robot.getGolds());
     }
 
+    @Test
+    void testScoreAvecUniversiteEtDracoport() {
+        robot.setGolds(100);
+        robot.setCharacter(CharactersType.ASSASSIN);
+        robot.addDistrict(DistrictsType.DRACOPORT);
+        robot.addDistrict(DistrictsType.UNIVERSITE);
+        robot.tryBuild();
+        robot.tryBuild();
+        System.out.println(robot.statusOfPlayer(false));
+        assertEquals(16,robot.calculateScore());
+    }
+
 }
