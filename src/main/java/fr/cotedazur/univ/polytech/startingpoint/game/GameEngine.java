@@ -10,7 +10,7 @@ import java.util.*;
 
 public class GameEngine {
 
-    private ArrayList<Robot> bots = new ArrayList<>();
+    private ArrayList<Robot> bots;
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
 
@@ -55,13 +55,34 @@ public class GameEngine {
 
     }
 
+    public void assignCrownForKing() {
+        int cpt = 0;
+        for (Robot bot : bots) {
+            if (bot.isKing()) {
+                cpt++;
+            }
+        }
+        if (cpt == 1) {
+            for (Robot bot : bots) {
+                if (bot.isKing()) {
+                    bot.setHasCrown(true);
+                }
+                if (!bot.isKing()) {
+                    bot.setHasCrown(false);
+                }
+            }
+            Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+            cpt=0;
+        }
+
+    }
+
     public void playTurns() {
-        assignCrown();
         specialCard();
         for (Robot bot : bots) {
+
             int choice = (int) (Math.random()*2);
             System.out.println("------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n");
-
             System.out.println(bot.statusOfPlayer());
             switch (choice) {
                 case 0:
@@ -85,6 +106,7 @@ public class GameEngine {
             }
 
         }
+        assignCrownForKing();
     }
 
     public boolean isBuiltEigthDistrict(){
@@ -99,9 +121,20 @@ public class GameEngine {
     public void gameTurns(){
         System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
-        while(!isBuiltEigthDistrict()){
+        assignRandomCharacterToRobots();
+        assignCrown();
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        playTurns();
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        comptTurn++;
+        while(!isBuiltEigthDistrict() && comptTurn>1){
             assignRandomCharacterToRobots();
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            for (Robot bot : bots) {
+                if (bot.getHasCrown()) {
+                    System.out.println(bot.getName() + " has crown and start the call of the characters");
+                }
+            }
             playTurns();
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
             comptTurn++;
