@@ -74,11 +74,13 @@ public class GameEngine {
             Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
             cpt=0;
         }
+        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
 
     }
 
     public void playTurns() {
         specialCard();
+        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         for (Robot bot : bots) {
 
             int choice = (int) (Math.random()*2);
