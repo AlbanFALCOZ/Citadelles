@@ -24,6 +24,10 @@ public class Robot {
 
     private boolean hasCrown;
 
+    private boolean isKing;
+
+    private boolean isEveque;
+
 
     public Robot(String name) {
         this.name = name;
@@ -54,7 +58,7 @@ public class Robot {
         this.golds = golds;
     }
 
-    public void setScore(int score){
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -76,15 +80,14 @@ public class Robot {
         return character;
     }
 
-    public ArrayList<DistrictsType> getCity(){
+    public ArrayList<DistrictsType> getCity() {
         return city;
     }
 
-    public void setHasCrown(boolean hasCrown){
+    public void setHasCrown(boolean hasCrown) {
         this.hasCrown = hasCrown;
 
     }
-
 
 
     public String tryBuild() {
@@ -99,7 +102,6 @@ public class Robot {
         }
         return "nothing";
     }
-
 
 
     public void addDistrict(DistrictsType district) {
@@ -138,12 +140,11 @@ public class Robot {
             if (showColor) {
                 color = listDistrict.get(numberOfDistrictInCity).getColor();
                 endColor = RESET;
-            }
-            else {
+            } else {
                 color = endColor = "";
             }
             returedString += "(" + color + listDistrict.get(numberOfDistrictInCity).getName() + "," + listDistrict.get(numberOfDistrictInCity).getCost() + endColor + ")";
-            }
+        }
         return returedString;
     }
 
@@ -174,7 +175,25 @@ public class Robot {
     public boolean getHasCrown() {
         return hasCrown;
     }
-}
 
+    public boolean isKing() {
+        if (this.getCharacter().getNumber() == 4) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEveque(){
+        if(this.getCharacter().getNumber()==5){
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+}
 
 
