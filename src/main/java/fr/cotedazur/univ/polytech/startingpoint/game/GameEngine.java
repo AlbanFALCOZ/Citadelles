@@ -122,21 +122,18 @@ public class GameEngine {
                     }
                     System.out.println("The bot choose to pick : {" + cardPicked + "}");
                     System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
-                    System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
-                    System.out.println(bot.statusOfPlayer() + "\n");
-                    System.out.println("-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n");
                     break;
                 case 1:
                     bot.addGold(2);
                     System.out.println(bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds());
-                    System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
-                    System.out.println(bot.statusOfPlayer() + "\n");
-                    System.out.println("-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n");
-
                     break;
                 default:
                     break;
             }
+            System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+            System.out.println(bot.getName() + " has won " + bot.winGoldsByTypeOfBuildings() + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
+            System.out.println(bot.statusOfPlayer() + "\n");
+            System.out.println("-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n");
 
         }
         assignCrownForKing();
