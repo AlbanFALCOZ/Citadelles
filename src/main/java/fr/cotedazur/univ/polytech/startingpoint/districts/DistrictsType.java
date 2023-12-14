@@ -40,6 +40,8 @@ public enum DistrictsType {
     // SPECIAL
     COURT_DES_MIRACLES("Cour des miracles", 2, "\u001B[35m", 2, "default"),
     DONJON("Donjon", 3, "\u001B[35m", 3, "default"),
+    BIBLIOTHEQUE("Bibliothèque", 6, "\u001B[35m", 6, "default"),
+    ECOLE_DE_MAGIE("École de magie", 6, "\u001B[35m", 6, "ecole"),
     LABORATOIRE("Laboratoire", 5, "\u001B[35m", 5, "default"),
     MANUFACTURE("Manufacture", 5, "\u001B[35m", 5, "default"),
     OBSERVATOIRE("Observatoire", 5, "\u001B[35m", 5, "default"),
