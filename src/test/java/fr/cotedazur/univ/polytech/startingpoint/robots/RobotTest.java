@@ -146,8 +146,33 @@ public class RobotTest {
         robot.addDistrict(DistrictsType.UNIVERSITE);
         robot.tryBuild();
         robot.tryBuild();
-        System.out.println(robot.statusOfPlayer(false));
         assertEquals(16,robot.calculateScore());
     }
 
+    @Test
+    void testIsKing(){
+        Robot robot1 = new Robot("Robot1");
+        Robot robot2 = new Robot("Robot2");
+        robot1.setCharacter(CharactersType.ASSASSIN);
+        robot2.setCharacter(CharactersType.ROI);
+        assertEquals(false,robot1.isKing());
+        assertEquals(true,robot2.isKing());
+    }
+
+    @Test
+    void testIsEveque(){
+        Robot robot1 = new Robot("Robot1");
+        Robot robot2 = new Robot("Robot2");
+        robot1.setCharacter(CharactersType.EVEQUE);
+        robot2.setCharacter(CharactersType.ROI);
+        assertEquals(true,robot1.isEveque());
+        assertEquals(false,robot2.isEveque());
+    }
+
+    @Test
+    void testNumberOfCardsDrawnWithObservatoire() {
+        robot.setCharacter(CharactersType.ASSASSIN);
+        robot.setGolds(1000);
+        robot.addDistrict(DistrictsType.OBSERVATOIRE);
+    }
 }

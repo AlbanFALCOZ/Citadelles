@@ -25,6 +25,10 @@ public class Robot {
 
     private boolean hasCrown;
 
+    private boolean isKing;
+
+    private boolean isEveque;
+
 
     public Robot(String name) {
         this.name = name;
@@ -55,7 +59,7 @@ public class Robot {
         this.golds = golds;
     }
 
-    public void setScore(int score){
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -77,15 +81,14 @@ public class Robot {
         return character;
     }
 
-    public ArrayList<DistrictsType> getCity(){
+    public ArrayList<DistrictsType> getCity() {
         return city;
     }
 
-    public void setHasCrown(boolean hasCrown){
+    public void setHasCrown(boolean hasCrown) {
         this.hasCrown = hasCrown;
 
     }
-
 
 
     public String tryBuild() {
@@ -100,7 +103,6 @@ public class Robot {
         }
         return "nothing";
     }
-
 
 
     public void addDistrict(DistrictsType district) {
@@ -139,12 +141,11 @@ public class Robot {
             if (showColor) {
                 color = listDistrict.get(numberOfDistrictInCity).getColor();
                 endColor = RESET;
-            }
-            else {
+            } else {
                 color = endColor = "";
             }
             returedString += "(" + color + listDistrict.get(numberOfDistrictInCity).getName() + "," + listDistrict.get(numberOfDistrictInCity).getCost() + endColor + ")";
-            }
+        }
         return returedString;
     }
 
@@ -155,7 +156,7 @@ public class Robot {
             listDistrict.add(card1);
         }
         listDistrict.sort(compareByCost().reversed());
-        int indice = -1;
+        int indice = listDistrict.size()-1;
         for (int i = 0; i < listDistrict.size();i++) {
             if (listDistrict.get(i).getCost() <= golds) {
                 indice = i;
@@ -163,10 +164,7 @@ public class Robot {
             }
         }
         DistrictsType cardChosen;
-        if (indice == -1) {
-            cardChosen = listDistrict.remove(listDistrict.size()-1);
-        }
-        else cardChosen = listDistrict.remove(indice);
+        cardChosen = listDistrict.remove(indice);
         districtInHand.add(cardChosen);
         for (DistrictsType districtNonChosen: listDistrict) {
             district.addDistrictToDeck(districtNonChosen);
@@ -190,7 +188,25 @@ public class Robot {
     public boolean getHasCrown() {
         return hasCrown;
     }
-}
 
+    public boolean isKing() {
+        if (this.getCharacter().getNumber() == 4) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEveque(){
+        if(this.getCharacter().getNumber()==5){
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+}
 
 

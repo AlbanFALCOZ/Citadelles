@@ -115,20 +115,16 @@ class GameEngineTest {
     public void testSingleWinner() {
         GameEngine game = new GameEngine();
         game.clearBots();
-
         Robot robot1 = new Robot("Robot1"); // Score élevé
         robot1.addDistrict(DistrictsType.PALAIS);
         robot1.setGolds(6);
         robot1.tryBuild();
         game.addRobot(robot1);
-
         Robot robot2 = new Robot("Robot2"); // Score inférieur
         robot2.addDistrict(DistrictsType.MANOIR);
         robot2.setGolds(6);
         robot2.tryBuild();
         game.addRobot(robot2);
-
-
         List<String> winners = game.getWinners();
         //System.out.println(winners);
         assertEquals(1, winners.size());
@@ -172,6 +168,7 @@ class GameEngineTest {
 
         assertEquals(6, robot1.getGolds());
     }
+
 
 
 
