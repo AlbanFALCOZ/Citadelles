@@ -1,8 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.characters;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class DeckCharacters {
     private List<CharactersType> charactersInHand;
@@ -15,5 +13,6 @@ public class DeckCharacters {
         return new ArrayList<>(charactersInHand);
 
     }
+
 }
 

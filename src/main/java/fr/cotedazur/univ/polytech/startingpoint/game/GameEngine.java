@@ -40,8 +40,8 @@ public class GameEngine {
 
     public void assignRandomCharacterToRobots() {
         List<CharactersType> ListCharacters = deckCharacters.getCharactersInHand();
+        destroyCharacters(ListCharacters);
         Collections.shuffle(ListCharacters);
-
         for (int i = 0; i < bots.size(); i++) {
             bots.get(i).setCharacter(ListCharacters.get(i));
         }
@@ -57,6 +57,7 @@ public class GameEngine {
 
     public void assignCrownForKing() {
         int cpt = 0;
+        int index = 0 ;
         for (Robot bot : bots) {
             if (bot.isCharacter("Roi")) {
                 cpt++;
@@ -75,12 +76,14 @@ public class GameEngine {
             cpt=0;
         }
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+        Collections.rotate(bots, -index);
 
     }
 
     public void playTurns() {
         specialCard();
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+        this.sortRobots();
         for (Robot bot : bots) {
 
             int choice = (int) (Math.random()*2);
@@ -218,11 +221,36 @@ public class GameEngine {
     }
 
 
-    public ArrayList<Robot> sortRobots(){
-        ArrayList<Robot> sortedBots = new ArrayList<>();
-         Collections.sort(sortedBots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
-         return sortedBots;
+    public ArrayList<Robot> sortRobots() {
+        ArrayList<Robot> sortedBots = new ArrayList<>(bots);
+
+        // Custom comparator to sort by crown status and then by character number
+        Comparator<Robot> crownComparator = Comparator.comparing((Robot bot) -> !bot.getHasCrown())
+                .thenComparingInt(bot -> bot.getCharacter().getNumber());
+
+        // Sort the list using the custom comparator
+        Collections.sort(sortedBots, crownComparator);
+
+        return sortedBots;
     }
+
+    public void destroyCharacters(List<CharactersType> charactersInHand) {
+            charactersInHand.remove(CharactersType.ROI);
+            Collections.shuffle(charactersInHand, new Random());
+            for (int i = 0; i < 3; i++) {
+                if (!charactersInHand.isEmpty()) {
+                    CharactersType destroyedCharacter = charactersInHand.remove(0);
+                    System.out.println("Destroyed character: " + destroyedCharacter.getType());
+                }
+            }
+
+            charactersInHand.add(CharactersType.ROI);
+
+
+
+    }
+
+
 
 
 }

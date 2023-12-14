@@ -6,6 +6,9 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLOutput;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RobotTest {
@@ -139,27 +142,26 @@ public class RobotTest {
     }
 
     @Test
-    void testIsKing(){
-        Robot robot1 = new Robot("Robot1");
-        Robot robot2 = new Robot("Robot2");
-        robot1.setCharacter(CharactersType.ASSASSIN);
-        robot2.setCharacter(CharactersType.ROI);
-        assertEquals(false,robot1.isKing());
-        assertEquals(true,robot2.isKing());
 
+
+
+    void testCountBuildingsNoMagicSchool() {
+        robot.addDistrict(DistrictsType.CHATEAU); // noble
+        robot.addDistrict(DistrictsType.CASERNE); // militaire
+
+        assertEquals(2, robot.countBuildingsByType());
     }
 
     @Test
-    void testIsEveque(){
-        Robot robot1 = new Robot("Robot1");
-        Robot robot2 = new Robot("Robot2");
-        robot1.setCharacter(CharactersType.EVEQUE);
-        robot2.setCharacter(CharactersType.ROI);
-        assertEquals(true,robot1.isEveque());
-        assertEquals(false,robot2.isEveque());
+    void testCountBuildingsWithMagicSchoolAsNoble() {
+        robot.setCharacter(CharactersType.ROI); // Roi, donc l'école de magie compte comme noble
+        robot.addDistrict(DistrictsType.ECOLE_DE_MAGIE); // ecole
+        robot.addDistrict(DistrictsType.CATHEDRALE); // religieux
 
+        assertEquals(1, robot.countBuildingsByType()); // que l'école de magie compte comme noble
 
     }
+
 
 
 
