@@ -174,5 +174,9 @@ public class RobotTest {
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.setGolds(1000);
         robot.addDistrict(DistrictsType.OBSERVATOIRE);
+        assertEquals(2,robot.getNumberOfCardsDrawn());
+        robot.tryBuild();
+        assertEquals(3,robot.getNumberOfCardsDrawn());
     }
+
 }

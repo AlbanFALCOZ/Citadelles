@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.districts;
 
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+
+
 /**
  * Cet enum prend englobe toutes les cartes quartiers dont on aura besoin
  * le long de la partie
@@ -79,6 +82,12 @@ public enum DistrictsType {
 
     public String getColorReset() {
         return colorReset;
+    }
+
+    public void powerOfDistrict(Robot player) {
+        if (name.equals("Observatoire")) {
+            player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn()+1);
+        }
     }
     public String toString() {
         return "(" + getName() + ", " + getCost() + ")";

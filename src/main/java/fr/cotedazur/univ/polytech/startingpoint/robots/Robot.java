@@ -59,6 +59,14 @@ public class Robot {
         this.golds = golds;
     }
 
+    public int getNumberOfCardsDrawn() {
+        return numberOfCardsDrawn;
+    }
+
+    public void setNumberOfCardsDrawn(int numberOfCardsDrawn) {
+        this.numberOfCardsDrawn = numberOfCardsDrawn;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
@@ -95,6 +103,7 @@ public class Robot {
         for (int i = 0; i < districtInHand.size(); i++) {
             DistrictsType district = districtInHand.get(i);
             if (district.getCost() <= this.getGolds()) {
+                district.powerOfDistrict(this);
                 city.add(district);
                 setGolds(getGolds() - district.getCost());
                 districtInHand.remove(i);
@@ -152,8 +161,8 @@ public class Robot {
     public DistrictsType pickDistrictCard() {
         List<DistrictsType> listDistrict = new ArrayList<>();
         for (int i = 0; i < numberOfCardsDrawn; i++) {
-            DistrictsType card1 = district.getDistrictsInDeck();
-            listDistrict.add(card1);
+            DistrictsType card = district.getDistrictsInDeck();
+            listDistrict.add(card);
         }
         listDistrict.sort(compareByCost().reversed());
         int indice = listDistrict.size()-1;
