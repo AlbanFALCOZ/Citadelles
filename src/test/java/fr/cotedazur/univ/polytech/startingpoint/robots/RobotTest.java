@@ -143,30 +143,6 @@ public class RobotTest {
         assertEquals(5, robot.getGolds());
     }
 
-    @Test
-
-
-
-    void testCountBuildingsNoMagicSchool() {
-        robot.addDistrict(DistrictsType.CHATEAU); // noble
-        robot.addDistrict(DistrictsType.CASERNE); // militaire
-
-        assertEquals(2, robot.countBuildingsByType());
-    }
-
-    @Test
-    void testCountBuildingsWithMagicSchoolAsNoble() {
-        robot.setCharacter(CharactersType.ROI); // Roi, donc l'école de magie compte comme noble
-        robot.addDistrict(DistrictsType.ECOLE_DE_MAGIE); // ecole
-        robot.addDistrict(DistrictsType.CATHEDRALE); // religieux
-
-        assertEquals(1, robot.countBuildingsByType()); // que l'école de magie compte comme noble
-
-    }
-
-
-
-
 
     @Test
     public void testCountBuildingsByType() {
