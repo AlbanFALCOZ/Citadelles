@@ -44,6 +44,9 @@ public class Robot {
         return this.score;
     }
 
+    public String getRESET(){
+        return RESET;
+    }
 
     public String getName() {
         return name;

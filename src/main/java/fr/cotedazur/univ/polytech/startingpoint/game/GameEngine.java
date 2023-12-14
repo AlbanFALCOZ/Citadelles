@@ -38,12 +38,24 @@ public class GameEngine {
         return bots;
     }
 
-    public void assignRandomCharacterToRobots() {
+    public void robotsPickCharacters() {
+        int i = 1;
         List<CharactersType> ListCharacters = deckCharacters.getCharactersInHand();
         destroyCharacters(ListCharacters);
         Collections.shuffle(ListCharacters);
-        for (int i = 0; i < bots.size(); i++) {
-            bots.get(i).setCharacter(ListCharacters.get(i));
+        for (Robot bot : bots ){
+            if(bot.getHasCrown()){
+                bot.setCharacter(ListCharacters.get(0));
+                System.out.println(bot.getName() +" With crown Picked " +ListCharacters.get(0).getColor() + ListCharacters.get(0).getType() + bot.getRESET());
+                ListCharacters.remove(ListCharacters.get(0));
+            }
+        }
+        for (Robot bot : bots){
+            if(!bot.getHasCrown()){
+                bot.setCharacter(ListCharacters.get(i));
+                System.out.println(bot.getName() +" Picked " +ListCharacters.get(i).getColor() + ListCharacters.get(i).getType() + bot.getRESET());
+                i++;
+            }
         }
     }
 
@@ -123,23 +135,38 @@ public class GameEngine {
         return false;
     }
 
+    public void assignRandomCharacterToRobots() {
+        // Get the characters available in hand
+        List<CharactersType> charactersInHand = deckCharacters.getCharactersInHand();
+
+        // Shuffle the characters
+        Collections.shuffle(charactersInHand);
+
+        // Assign characters to each bot
+        for (int i = 0; i < bots.size(); i++) {
+            bots.get(i).setCharacter(charactersInHand.get(i));
+        }
+    }
+
+
     public void gameTurns(){
         System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         assignRandomCharacterToRobots();
         assignCrown();
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        robotsPickCharacters();
         playTurns();
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         comptTurn++;
         while(!isBuiltEigthDistrict() && comptTurn>1){
-            assignRandomCharacterToRobots();
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
                     System.out.println(bot.getName() + " has crown and start the call of the characters");
                 }
             }
+            robotsPickCharacters();
             playTurns();
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
             comptTurn++;
@@ -240,7 +267,7 @@ public class GameEngine {
             for (int i = 0; i < 3; i++) {
                 if (!charactersInHand.isEmpty()) {
                     CharactersType destroyedCharacter = charactersInHand.remove(0);
-                    System.out.println("Destroyed character: " + destroyedCharacter.getType());
+                    System.out.println("Destroyed character: " + destroyedCharacter.getColor() + destroyedCharacter.getType() + bots.get(0).getRESET());
                 }
             }
 
@@ -249,7 +276,6 @@ public class GameEngine {
 
 
     }
-
 
 
 
