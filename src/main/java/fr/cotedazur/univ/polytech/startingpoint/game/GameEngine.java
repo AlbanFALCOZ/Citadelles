@@ -58,16 +58,16 @@ public class GameEngine {
     public void assignCrownForKing() {
         int cpt = 0;
         for (Robot bot : bots) {
-            if (bot.isKing()) {
+            if (bot.isCharacter("Roi")) {
                 cpt++;
             }
         }
         if (cpt == 1) {
             for (Robot bot : bots) {
-                if (bot.isKing()) {
+                if (bot.isCharacter("Roi")) {
                     bot.setHasCrown(true);
                 }
-                if (!bot.isKing()) {
+                if (!bot.isCharacter("Roi")) {
                     bot.setHasCrown(false);
                 }
             }

@@ -176,6 +176,8 @@ public class Robot {
         return hasCrown;
     }
 
+    /*
+
     public boolean isKing() {
         if (this.getCharacter().getNumber() == 4) {
             return true;
@@ -189,6 +191,17 @@ public class Robot {
         }
         return false;
     }
+
+     */
+
+    public boolean isCharacter(String type){
+        if (this.getCharacter().getType().equals(type)) {
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 
