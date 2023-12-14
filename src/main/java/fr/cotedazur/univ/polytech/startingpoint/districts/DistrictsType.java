@@ -12,43 +12,42 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
  * Version 0.1 du jeu citadelle.
  */
 public enum DistrictsType {
-    MANOIR("Manoir", 3,  "\u001B[33m", 3),
-    CHATEAU("Château", 4, "\u001B[33m", 4),
-    PALAIS("Palais", 5, "\u001B[33m", 5),
+    MANOIR("Manoir", 3,  "\u001B[33m", 3, "noble"),
+    CHATEAU("Château", 4, "\u001B[33m", 4, "noble"),
+    PALAIS("Palais", 5, "\u001B[33m", 5, "noble"),
 
     // RELIGION
-    TEMPLE("Temple", 1, "\u001B[34m", 1),
-    EGLISE("Église", 2, "\u001B[34m", 2),
-    MONASTERE("Monastère", 3,"\u001B[34m", 3),
-    CATHEDRALE("Cathédrale", 5,"\u001B[34m", 5),
+    TEMPLE("Temple", 1, "\u001B[34m", 1, "religieux"),
+    EGLISE("Église", 2, "\u001B[34m", 2,"religieux"),
+    MONASTERE("Monastère", 3,"\u001B[34m", 3,"religieux"),
+    CATHEDRALE("Cathédrale", 5,"\u001B[34m", 5,"religieux"),
     // TRADE DISTRICTS
-    TAVERNE("Taverne", 1, "\u001B[32m", 1),
-    ECHOPPE("Échoppe", 2,"\u001B[32m", 2),
-    MARCHE("Marché", 2, "\u001B[32m", 2),
-    COMPTOIR("Comptoir", 3, "\u001B[32m", 3),
-    PORT("Port", 4, "\u001B[32m", 4),
-    HOTEL_DE_VILLE("Hôtel de ville", 5, "\u001B[32m", 5),
+    TAVERNE("Taverne", 1, "\u001B[32m", 1, "marchand"),
+    ECHOPPE("Échoppe", 2,"\u001B[32m", 2, "marchand"),
+    MARCHE("Marché", 2, "\u001B[32m", 2, "marchand"),
+    COMPTOIR("Comptoir", 3, "\u001B[32m", 3, "marchand"),
+    PORT("Port", 4, "\u001B[32m", 4, "marchand"),
+    HOTEL_DE_VILLE("Hôtel de ville", 5, "\u001B[32m", 5, "marchand"),
 
 
     // GUERRE
-    TOUR_DE_GUET("Tour de guet", 1,"\u001B[31m", 1),
-    PRISON("Prison", 2, "\u001B[31m", 2),
-    CASERNE("Caserne", 3, "\u001B[31m", 3),
-    FORTRESSE("Forteresse", 5, "\u001B[31m", 5),
+    TOUR_DE_GUET("Tour de guet", 1,"\u001B[31m", 1, "militaire"),
+    PRISON("Prison", 2, "\u001B[31m", 2, "militaire"),
+    CASERNE("Caserne", 3, "\u001B[31m", 3, "militaire"),
+    FORTRESSE("Forteresse", 5, "\u001B[31m", 5, "militaire"),
 
 
     // SPECIAL
-
-    COURT_DES_MIRACLES("Cour des miracles", 2, "\u001B[35m", 2),
-    DONJON("Donjon", 3, "\u001B[35m", 3),
-    LABORATOIRE("Laboratoire", 5, "\u001B[35m", 5),
-    MANUFACTURE("Manufacture", 5, "\u001B[35m", 5),
-    OBSERVATOIRE("Observatoire", 5, "\u001B[35m", 5),
-    CIMETIERE("Cimetière", 5, "\u001B[35m", 5),
-    BIBLIOTHEQUE("Bibliothèque", 6, "\u001B[35m", 6),
-    ECOLE_DE_MAGIE("École de magie", 6, "\u001B[35m", 6),
-    UNIVERSITE("Université", 6, "\u001B[35m", 8),
-    DRACOPORT("Dracoport", 6, "\u001B[35m", 8);
+    COURT_DES_MIRACLES("Cour des miracles", 2, "\u001B[35m", 2, "default"),
+    DONJON("Donjon", 3, "\u001B[35m", 3, "default"),
+    LABORATOIRE("Laboratoire", 5, "\u001B[35m", 5, "default"),
+    MANUFACTURE("Manufacture", 5, "\u001B[35m", 5, "default"),
+    OBSERVATOIRE("Observatoire", 5, "\u001B[35m", 5, "default"),
+    CIMETIERE("Cimetière", 5, "\u001B[35m", 5, "default"),
+    BIBLIOTHEQUE("Bibliothèque", 6, "\u001B[35m", 6, "default"),
+    ECOLE_DE_MAGIE("École de magie", 6, "\u001B[35m", 6, "ecole"),
+    UNIVERSITE("Université", 6, "\u001B[35m", 8, "default"),
+    DRACOPORT("Dracoport", 6, "\u001B[35m", 8, "default");
 
 
     int cost ;
@@ -56,12 +55,14 @@ public enum DistrictsType {
     String color ;
     String colorReset = "\u001B[0m";
     int score ;
+    String type;
 
-    DistrictsType(String name , int cost , String color , int score ){
+    DistrictsType(String name , int cost , String color , int score, String type ){
         this.cost = cost ;
         this.name = name ;
         this.color = color ;
         this.score = score;
+        this.type=type;
     }
 
     public int getCost() {
@@ -94,5 +95,9 @@ public enum DistrictsType {
     }
     public String toString() {
         return "(" + getName() + ", " + getCost() + ")";
+    }
+
+    public String getType() {
+        return type;
     }
 }

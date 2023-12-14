@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.sql.SQLOutput;
+import java.util.Map;
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RobotTest {
@@ -166,13 +170,30 @@ public class RobotTest {
     }
 
     @Test
-    void testIsEveque(){
+    void testIsEveque() {
         Robot robot1 = new Robot("Robot1");
         Robot robot2 = new Robot("Robot2");
         robot1.setCharacter(CharactersType.EVEQUE);
         robot2.setCharacter(CharactersType.ROI);
-        assertEquals(true,robot1.isEveque());
-        assertEquals(false,robot2.isEveque());
+        assertEquals(true, robot1.isEveque());
+        assertEquals(false, robot2.isEveque());
+    }
+
+    @Test
+    void testCountBuildingsNoMagicSchool() {
+        robot.addDistrict(DistrictsType.CHATEAU); // noble
+        robot.addDistrict(DistrictsType.CASERNE); // militaire
+        robot.setCharacter(CharactersType.ROI);
+        assertEquals(0, robot.countBuildingsByType());
+    }
+
+    @Test
+    void testCountBuildingsWithMagicSchoolAsNoble() {
+        robot.setCharacter(CharactersType.ROI); // Roi, donc l'école de magie compte comme noble
+        robot.addDistrict(DistrictsType.ECOLE_DE_MAGIE); // ecole
+        robot.addDistrict(DistrictsType.CATHEDRALE); // religieux
+        robot.setCharacter(CharactersType.ROI);
+        assertEquals(0, robot.countBuildingsByType()); // que l'école de magie compte comme noble
     }
 
     @Test
@@ -184,5 +205,6 @@ public class RobotTest {
         robot.tryBuild();
         assertEquals(3,robot.getNumberOfCardsDrawn());
     }
+
 
 }
