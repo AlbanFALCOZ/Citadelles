@@ -158,12 +158,7 @@ public class Robot {
         return returedString;
     }
 
-    public DistrictsType pickDistrictCard() {
-        List<DistrictsType> listDistrict = new ArrayList<>();
-        for (int i = 0; i < numberOfCardsDrawn; i++) {
-            DistrictsType card = district.getDistrictsInDeck();
-            listDistrict.add(card);
-        }
+    public DistrictsType pickDistrictCard(List<DistrictsType> listDistrict) {
         listDistrict.sort(compareByCost().reversed());
         int indice = listDistrict.size()-1;
         for (int i = 0; i < listDistrict.size();i++) {
@@ -179,6 +174,15 @@ public class Robot {
             district.addDistrictToDeck(districtNonChosen);
         }
         return cardChosen;
+    }
+
+    public List<DistrictsType> pickListOfDistrict(){
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        for (int i = 0; i < numberOfCardsDrawn; i++) {
+            DistrictsType card = district.getDistrictsInDeck();
+            listDistrict.add(card);
+        }
+        return listDistrict;
     }
 
     private Comparator<DistrictsType> compareByCost() {

@@ -6,6 +6,9 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RobotTest {
@@ -76,8 +79,11 @@ public class RobotTest {
 
     @Test
     void testPickDistrictCard() {
-        robot.pickDistrictCard();
-        robot.pickDistrictCard();
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        listDistrict.add(DistrictsType.TEMPLE);
+        robot.pickDistrictCard(listDistrict);
+        listDistrict.add(DistrictsType.MONASTERE);
+        robot.pickDistrictCard(listDistrict);
 
     }
 

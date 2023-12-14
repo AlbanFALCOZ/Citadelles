@@ -88,8 +88,15 @@ public class GameEngine {
             System.out.println(bot.statusOfPlayer());
             switch (choice) {
                 case 0:
-                    DistrictsType district = bot.pickDistrictCard();
-                    System.out.println("The bot choose to pick : " + district.getColor() + district + district.getColorReset());
+                    List<DistrictsType> listDistrict = bot.pickListOfDistrict();
+                    System.out.print("The bot draw the following cards : {");
+                    for (int i = 0; i < listDistrict.size(); i++) {
+                        DistrictsType districtInListDistrict = listDistrict.get(i);
+                        System.out.print(districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset());
+                        if (i < listDistrict.size()-1) System.out.print(",");
+                    }
+                    DistrictsType district = bot.pickDistrictCard(listDistrict);
+                    System.out.println("}\nThe bot choose to pick : " + district.getColor() + district + district.getColorReset());
                     System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.statusOfPlayer() + "\n");
