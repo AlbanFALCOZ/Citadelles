@@ -88,6 +88,9 @@ public enum DistrictsType {
         if (name.equals("Observatoire")) {
             player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn()+1);
         }
+        if (name.equals("Bibliothèque")) {
+            if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen()+1);
+        }
     }
     public String toString() {
         return "(" + getName() + ", " + getCost() + ")";

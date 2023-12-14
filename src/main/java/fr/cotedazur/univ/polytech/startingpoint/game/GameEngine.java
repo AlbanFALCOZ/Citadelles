@@ -88,15 +88,24 @@ public class GameEngine {
             System.out.println(bot.statusOfPlayer());
             switch (choice) {
                 case 0:
-                    List<DistrictsType> listDistrict = bot.pickListOfDistrict();
-                    System.out.print("The bot draw the following cards : {");
-                    for (int i = 0; i < listDistrict.size(); i++) {
-                        DistrictsType districtInListDistrict = listDistrict.get(i);
-                        System.out.print(districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset());
-                        if (i < listDistrict.size()-1) System.out.print(",");
+                    List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
+
+                    String cardDrawn = "";
+                    String cardPicked = "";
+                    for (int i = 0; i < listDistrictDrawn.size(); i++) {
+                        DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
+                        cardDrawn += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
+                        if (i < listDistrictDrawn.size()-1) cardDrawn += ",";
                     }
-                    DistrictsType district = bot.pickDistrictCard(listDistrict);
-                    System.out.println("}\nThe bot choose to pick : " + district.getColor() + district + district.getColorReset());
+                    System.out.println("The bot drew the following cards : {" + cardDrawn + "}");
+                    List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
+                    for (int i = 0; i < listDistrictPicked.size(); i++) {
+                        DistrictsType districtInListDistrict = listDistrictPicked.get(i);
+                        cardPicked += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
+                        if (i < listDistrictPicked.size()-1) cardPicked += ",";
+                        bot.addDistrict(districtInListDistrict);
+                    }
+                    System.out.println("The bot choose to pick : {" + cardPicked + "}");
                     System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
                     System.out.println(bot.statusOfPlayer() + "\n");
