@@ -6,6 +6,9 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLOutput;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RobotTest {
@@ -126,6 +129,8 @@ public class RobotTest {
         assertEquals(7, robot.getGolds());
     }
 
+
+
     @Test
     void testAddDistrict() {
         robot.addDistrict(DistrictsType.BIBLIOTHEQUE);
@@ -163,4 +168,64 @@ public class RobotTest {
 
 
 
+
+
+    @Test
+    public void testCountBuildingsByType() {
+        Robot robot = new Robot("TestRobot");
+        robot.setCharacter(CharactersType.MARCHAND);
+
+        robot.getCity().add(DistrictsType.CHATEAU); // noble
+        robot.getCity().add(DistrictsType.CHATEAU); // noble
+        robot.getCity().add(DistrictsType.CASERNE); // militaire
+        robot.getCity().add(DistrictsType.TAVERNE); // marchand
+
+        // ordre des compteurs : noble, religieux, marchand, militaire, default
+        assertEquals(1, robot.countBuildingsByType());
+    }
+
+
+    @Test
+    public void testCountBuildingsWithMagicSchool() {
+        Robot robot = new Robot("TestRobot");
+
+        robot.setCharacter(CharactersType.ROI);
+
+        robot.getCity().add(DistrictsType.CHATEAU); // noble
+        robot.getCity().add(DistrictsType.CASERNE); // militaire
+        robot.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "noble" (pcq ROI)
+
+        ;
+
+        // ordre des compteurs : noble, religieux, marchand, militaire, default
+        assertEquals(2, robot.countBuildingsByType());
+    }
+
+    @Test
+    public void testWinGoldsByTypeOfBuildings() {
+        robot.setCharacter(CharactersType.ROI);
+
+        robot.getCity().add(DistrictsType.CHATEAU); // noble
+        robot.getCity().add(DistrictsType.CASERNE); // militaire
+        robot.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "noble" (pcq ROI)
+
+        robot.winGoldsByTypeOfBuildings();
+
+        assertEquals(4, robot.getGolds());
+
+        Robot robotEveque = new Robot("TestRobot2");
+        robotEveque.setCharacter(CharactersType.EVEQUE);
+        robotEveque.getCity().add(DistrictsType.EGLISE); // religieux
+        robotEveque.getCity().add(DistrictsType.CASERNE); // militaire
+        robotEveque.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "religieux" (pcq EVEQUE)
+        robotEveque.getCity().add(DistrictsType.TAVERNE); // marchand
+        robotEveque.getCity().add(DistrictsType.TEMPLE);// religieux
+        robotEveque.getCity().add(DistrictsType.CATHEDRALE);// religieux
+
+        robotEveque.winGoldsByTypeOfBuildings();
+
+        assertEquals(6, robotEveque.getGolds());
+
+    }
 }
+

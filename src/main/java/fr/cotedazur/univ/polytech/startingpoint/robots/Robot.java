@@ -105,7 +105,9 @@ public class Robot {
 
 
     public void addDistrict(DistrictsType district) {
+
         this.districtInHand.add(district);
+
     }
 
     public int getNumberOfDistrictInHand() {
@@ -123,7 +125,7 @@ public class Robot {
             colorCharacter = character.getColor();
             endColor = RESET;
         }
-        String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getType() + endColor + "), " + this.golds + " golds, hand {";
+        String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + endColor + "), " + this.golds + " golds, hand {";
         status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
         return status;
     }
@@ -190,10 +192,47 @@ public class Robot {
         return false;
     }
 
+    public int countBuildingsByType() {
+        int count = 0;
+
+        for (DistrictsType building : city) {
+
+            if(building.getType().equals(this.character.getType()) || building.getType().equals("ecole")){
+                count++;
+            }
+
+        }
+        return count;
+    }
 
 
+    private String getMagicSchoolType() {
+        switch (this.character) {
+            case ROI:
+                return "noble";
+            case EVEQUE:
+                return "religieux";
+            case MARCHAND:
+                return "marchand";
+            case CONDOTTIERE:
+                return "militaire";
+            default:
+                return "default";
+        }
+    }
+    //ex: si perso du robot est Roi
+    //l'ecole de magie est considérée comme un bat de type "noble"
 
-
+    public int winGoldsByTypeOfBuildings() {
+    int oldGolds = this.getGolds();
+        addGold(countBuildingsByType());
+        return this.getGolds() - oldGolds;
+    }
 }
+
+
+
+
+
 
 

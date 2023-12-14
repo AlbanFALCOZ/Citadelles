@@ -8,26 +8,33 @@ package fr.cotedazur.univ.polytech.startingpoint.characters;
  * Version 0.1 du jeu Citadelle.
  */
 public enum CharactersType {
-    ASSASSIN(1, "Assassin", "\u001B[37;1m"),
-    VOLEUR(2, "Voleur", "\u001B[37;1m"),
-    MAGICIEN(3, "Magicien", "\u001B[37;1m"),
-    ROI(4, "Roi", "\u001B[33m"),
-    EVEQUE(5, "Évêque", "\u001B[34m"),
-    MARCHAND(6, "Marchand", "\u001B[32m"),
-    ARCHITECTE(7, "Architecte", "\u001B[37;1m"),
-    CONDOTTIERE(8, "Condottière", "\u001B[31m");
+    ASSASSIN(1, "Assassin", "\u001B[37;1m", "assassin"),
+    VOLEUR(2, "Voleur", "\u001B[37;1m", "voleur"),
+    MAGICIEN(3, "Magicien", "\u001B[37;1m", "magicien"),
+    ROI(4, "Roi", "\u001B[33m", "noble"),
+    EVEQUE(5, "Évêque", "\u001B[34m", "religieux"),
+    MARCHAND(6, "Marchand", "\u001B[32m", "marchand"),
+    ARCHITECTE(7, "Architecte", "\u001B[37;1m", "architecte"),
+    CONDOTTIERE(8, "Condottière", "\u001B[31m", "militaire");
     int number ;
-    String type ;
+    String role;
+
+    String type;
     String color  ;
 
-    CharactersType(int number , String type, String color){
+    CharactersType(int number , String role, String color, String type){
         this.number = number ;
-        this.type = type ;
+        this.role = role;
         this.color = color;
+        this.type = type;
     }
 
     public int getNumber() {
         return number;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public String getType() {
