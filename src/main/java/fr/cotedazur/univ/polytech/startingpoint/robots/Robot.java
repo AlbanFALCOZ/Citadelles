@@ -14,6 +14,7 @@ public class Robot {
     private String name;
     private int score;
     private int golds;
+    private int numberOfCardsDrawn = 2;
     private Strategies strategies;
     private DeckDistrict district = new DeckDistrict();
     private List<DistrictsType> districtInHand;
@@ -148,18 +149,33 @@ public class Robot {
     }
 
     public DistrictsType pickDistrictCard() {
-        DistrictsType card1 = district.getDistrictsInDeck();
-        DistrictsType card2 = district.getDistrictsInDeck();
-
-        if (card1.getScore() > card2.getScore()) {
-            districtInHand.add(card1);
-            district.addDistrictToDeck(card2);
-            return card1;
-        } else {
-            districtInHand.add(card2);
-            district.addDistrictToDeck(card1);
-            return card2;
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        for (int i = 0; i < numberOfCardsDrawn; i++) {
+            DistrictsType card1 = district.getDistrictsInDeck();
+            listDistrict.add(card1);
         }
+        listDistrict.sort(compareByCost().reversed());
+        int indice = -1;
+        for (int i = 0; i < listDistrict.size();i++) {
+            if (listDistrict.get(i).getCost() <= golds) {
+                indice = i;
+                break;
+            }
+        }
+        DistrictsType cardChosen;
+        if (indice == -1) {
+            cardChosen = listDistrict.remove(listDistrict.size()-1);
+        }
+        else cardChosen = listDistrict.remove(indice);
+        districtInHand.add(cardChosen);
+        for (DistrictsType districtNonChosen: listDistrict) {
+            district.addDistrictToDeck(districtNonChosen);
+        }
+        return cardChosen;
+    }
+
+    private Comparator<DistrictsType> compareByCost() {
+        return Comparator.comparingInt(DistrictsType::getCost);
     }
 
     public int calculateScore() {
