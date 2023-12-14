@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.districts;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DeckDistrict {
@@ -50,13 +51,11 @@ public class DeckDistrict {
             districtsInDeck.add(DistrictsType.MANOIR);
             districtsInDeck.add(DistrictsType.TAVERNE);
         }
+        Collections.shuffle(districtsInDeck);
     }
 
     public DistrictsType getDistrictsInDeck() {
-        double indice = Math.random()*districtsInDeck.size();
-        DistrictsType district = districtsInDeck.get((int)indice);
-        districtsInDeck.remove((int)indice);
-        return district;
+        return districtsInDeck.remove(0);
     }
 
     public int getDeckSize() {
