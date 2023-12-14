@@ -44,9 +44,6 @@ public enum DistrictsType {
     MANUFACTURE("Manufacture", 5, "\u001B[35m", 5, "default"),
     OBSERVATOIRE("Observatoire", 5, "\u001B[35m", 5, "default"),
     CIMETIERE("Cimetière", 5, "\u001B[35m", 5, "default"),
-    BIBLIOTHEQUE("Bibliothèque", 6, "\u001B[35m", 6, "default"),
-    ECOLE_DE_MAGIE("École de magie", 6, "\u001B[35m", 6, "ecole"),
-
     UNIVERSITE("Université", 6, "\u001B[35m", 8, "default"),
     DRACOPORT("Dracoport", 6, "\u001B[35m", 8, "default");
 
