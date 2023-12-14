@@ -170,6 +170,46 @@ public class Robot {
     public boolean getHasCrown() {
         return hasCrown;
     }
+
+
+
+
+    public int countBuildingsByType() {
+        int count = 0;
+
+        for (DistrictsType building : city) {
+            String type = building.getType();
+
+            if ("ecole".equals(type)) {
+                type = getMagicSchoolType();
+            }
+
+            //compte le bat si son type correspond un des types spécifiés
+            if ("noble".equals(type) || "religieux".equals(type) ||
+                    "marchand".equals(type) || "militaire".equals(type)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private String getMagicSchoolType() {
+        if (this.character == CharactersType.ROI) {
+            return "noble";
+        } else if (this.character == CharactersType.EVEQUE) {
+            return "religieux";
+        } else if (this.character == CharactersType.MARCHAND) {
+            return "marchand";
+        } else if (this.character == CharactersType.CONDOTTIERE) {
+            return "militaire";
+        } else {
+            return "default";
+        }
+    }
+    //ex: si perso du robot est Roi
+    //l'ecole de magie est considérée comme un bat de type "noble"
+
+
 }
 
 

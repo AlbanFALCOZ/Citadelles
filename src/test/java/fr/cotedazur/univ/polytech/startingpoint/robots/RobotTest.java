@@ -6,6 +6,9 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLOutput;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RobotTest {
@@ -137,5 +140,25 @@ public class RobotTest {
         robot.setGolds(5);
         assertEquals(5, robot.getGolds());
     }
+
+    @Test
+    void testCountBuildingsNoMagicSchool() {
+        robot.addDistrict(DistrictsType.CHATEAU); // noble
+        robot.addDistrict(DistrictsType.CASERNE); // militaire
+
+        assertEquals(2, robot.countBuildingsByType());
+    }
+
+    @Test
+    void testCountBuildingsWithMagicSchoolAsNoble() {
+        robot.setCharacter(CharactersType.ROI); // Roi, donc l'école de magie compte comme noble
+        robot.addDistrict(DistrictsType.ECOLE_DE_MAGIE); // ecole
+        robot.addDistrict(DistrictsType.CATHEDRALE); // religieux
+
+        assertEquals(1, robot.countBuildingsByType()); // que l'école de magie compte comme noble
+    }
+
+
+
 
 }
