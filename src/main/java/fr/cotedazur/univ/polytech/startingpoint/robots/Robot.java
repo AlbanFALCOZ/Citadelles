@@ -173,13 +173,8 @@ public class Robot {
         int costOfDistrictToBeBuilt = 0;
         int indice = 0;
         int i = 0;
-        System.out.println("listDistrict : " + listDistrict);
-        System.out.println("listDistrictToBuild : " + listDistrictToBuild);
         while (i < listDistrict.size()) {
             if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= golds) {
-                System.out.println("i : " + i);
-                System.out.println("listDistrict : " + listDistrict);
-                System.out.println("listDistrictToBuild : " + listDistrictToBuild);
                 costOfDistrictToBeBuilt += listDistrict.get(i).getCost();
                 listDistrictToBuild.add(listDistrict.remove(i));
                 i--;
@@ -190,86 +185,12 @@ public class Robot {
             i++;
         }
         while (listDistrictToBuild.size() < numberOfCardsChosen) listDistrictToBuild.add(listDistrict.remove(listDistrict.size()-1));
-        System.out.println("listDistrict : " + listDistrict);
-        System.out.println("listDistrictToBuild : " + listDistrictToBuild);
-        /*
-        System.out.println("Tour ajout");
-        for (int indiceOfDistrict : listIndice) {
-            cardChosen = listDistrict.remove(indiceOfDistrict);
-            listDistrictToBuild.add(cardChosen);
-            System.out.println("listIndice : " + listIndice);
-            System.out.println("listDistrict : " + listDistrict);
-            System.out.println("listDistrictToBuild : " + listDistrictToBuild);
-        }
-         */
 
 
-        //districtInHand.add(cardChosen);
         for (DistrictsType districtNonChosen: listDistrict) {
             district.addDistrictToDeck(districtNonChosen);
         }
-        //listDistrictToBuild.add(cardChosen);
         return listDistrictToBuild;
-
-        /*
-        //System.out.println("ListDistrict : " + listDistrict);
-        listDistrict.sort(compareByCost().reversed());
-        int indice = 0;
-        int costOfDistrictBuilt = 0;
-        List<Integer> listIndice = new ArrayList<>();
-        List<DistrictsType> listDistrictToBuild = new ArrayList<>();
-        for (int i = 0; i < listDistrict.size();i++) {
-            if (listDistrict.get(i).getCost() - costOfDistrictBuilt <= golds) {
-                costOfDistrictBuilt += listDistrict.get(i).getCost();
-                listIndice.add(i);
-                indice++;
-                if (indice == numberOfCardsChosen) break;
-            }
-        }
-        System.out.println("numberOfCardsChosen : " + numberOfCardsChosen);
-        System.out.println("ListIndice : " + listIndice);
-        for (int i = 0; i < listDistrict.size() && i < numberOfCardsChosen-indice; i++) if (!listIndice.contains(i)) listIndice.add(i);
-        //while (listIndice.size() < numberOfCardsChosen) listIndice.add(indice--);
-        DistrictsType cardChosen;
-        listIndice.sort(Collections.reverseOrder());
-        System.out.println("ListIndice : " + listIndice);
-        System.out.println("ListDistrict : " + listDistrict);
-        System.out.println("listDistrictToBuild : " + listDistrictToBuild);
-        System.out.println("Tour ajout");
-        int length = listIndice.size();
-        for (int i = 0; i < length; i++) {
-            indice = listIndice.remove(length - i);
-            cardChosen = listDistrict.remove(indice);
-            districtInHand.add(cardChosen);
-            listDistrictToBuild.add(cardChosen);
-            System.out.println("ListIndice : " + listIndice);
-            System.out.println("ListDistrict : " + listDistrict);
-            System.out.println("listDistrictToBuild : " + listDistrictToBuild);
-        }
-        //System.out.println("listDistrictToBuild : " + listDistrictToBuild);
-        for (DistrictsType districtNonChosen: listDistrict) {
-            district.addDistrictToDeck(districtNonChosen);
-        }
-        System.out.println("listDistrictToBuild : " + listDistrictToBuild);
-        return listDistrictToBuild;
-         */
-
-        /*listDistrict.sort(compareByCost().reversed());
-        int indice = listDistrict.size()-1;
-        for (int i = 0; i < listDistrict.size();i++) {
-            if (listDistrict.get(i).getCost() <= golds) {
-                indice = i;
-                break;
-            }
-        }
-        DistrictsType cardChosen;
-        cardChosen = listDistrict.remove(indice);
-        districtInHand.add(cardChosen);
-        for (DistrictsType districtNonChosen: listDistrict) {
-            district.addDistrictToDeck(districtNonChosen);
-        }
-        return cardChosen;
-         */
     }
 
     public List<DistrictsType> pickListOfDistrict(){
