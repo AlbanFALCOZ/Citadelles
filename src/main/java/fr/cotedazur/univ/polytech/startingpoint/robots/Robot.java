@@ -14,6 +14,8 @@ public class Robot {
     private String name;
     private int score;
     private int golds;
+    private int numberOfCardsDrawn = 2;
+    private int numberOfCardsChosen = 1;
     private Strategies strategies;
     private DeckDistrict district = new DeckDistrict();
     private List<DistrictsType> districtInHand;
@@ -61,6 +63,22 @@ public class Robot {
         this.golds = golds;
     }
 
+    public int getNumberOfCardsDrawn() {
+        return numberOfCardsDrawn;
+    }
+
+    public void setNumberOfCardsDrawn(int numberOfCardsDrawn) {
+        this.numberOfCardsDrawn = numberOfCardsDrawn;
+    }
+
+    public int getNumberOfCardsChosen() {
+        return numberOfCardsChosen;
+    }
+
+    public void setNumberOfCardsChosen(int numberOfCardsChosen) {
+        this.numberOfCardsChosen = numberOfCardsChosen;
+    }
+
     public void setScore(int score) {
         this.score = score;
     }
@@ -97,6 +115,7 @@ public class Robot {
         for (int i = 0; i < districtInHand.size(); i++) {
             DistrictsType district = districtInHand.get(i);
             if (district.getCost() <= this.getGolds()) {
+                district.powerOfDistrict(this);
                 city.add(district);
                 setGolds(getGolds() - district.getCost());
                 districtInHand.remove(i);
@@ -153,19 +172,43 @@ public class Robot {
         return returedString;
     }
 
-    public DistrictsType pickDistrictCard() {
-        DistrictsType card1 = district.getDistrictsInDeck();
-        DistrictsType card2 = district.getDistrictsInDeck();
+    public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict) {
+        listDistrict.sort(compareByCost().reversed());
+        List<DistrictsType> listDistrictToBuild = new ArrayList<>();
+        int costOfDistrictToBeBuilt = 0;
+        int indice = 0;
+        int i = 0;
+        while (i < listDistrict.size()) {
+            if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= golds) {
+                costOfDistrictToBeBuilt += listDistrict.get(i).getCost();
+                listDistrictToBuild.add(listDistrict.remove(i));
+                i--;
+                indice++;
+                if (indice == numberOfCardsChosen) break;
 
-        if (card1.getScore() > card2.getScore()) {
-            districtInHand.add(card1);
-            district.addDistrictToDeck(card2);
-            return card1;
-        } else {
-            districtInHand.add(card2);
-            district.addDistrictToDeck(card1);
-            return card2;
+            }
+            i++;
         }
+        while (listDistrictToBuild.size() < numberOfCardsChosen) listDistrictToBuild.add(listDistrict.remove(listDistrict.size()-1));
+
+
+        for (DistrictsType districtNonChosen: listDistrict) {
+            district.addDistrictToDeck(districtNonChosen);
+        }
+        return listDistrictToBuild;
+    }
+
+    public List<DistrictsType> pickListOfDistrict(){
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        for (int i = 0; i < numberOfCardsDrawn; i++) {
+            DistrictsType card = district.getDistrictsInDeck();
+            listDistrict.add(card);
+        }
+        return listDistrict;
+    }
+
+    private Comparator<DistrictsType> compareByCost() {
+        return Comparator.comparingInt(DistrictsType::getCost);
     }
 
     public int calculateScore() {
@@ -195,6 +238,14 @@ public class Robot {
         return count;
     }
 
+
+    public int winGoldsByTypeOfBuildings() {
+    int oldGolds = this.getGolds();
+        addGold(countBuildingsByType());
+        return this.getGolds() - oldGolds;
+    }
+
+
     public boolean isCharacter(String type){
         if (this.getCharacter().getType().equals(type)) {
             return true;
@@ -202,11 +253,8 @@ public class Robot {
         return false;
     }
 
-    public int winGoldsByTypeOfBuildings() {
-    int oldGolds = this.getGolds();
-        addGold(countBuildingsByType());
-        return this.getGolds() - oldGolds;
-    }
+
+
 }
 
 

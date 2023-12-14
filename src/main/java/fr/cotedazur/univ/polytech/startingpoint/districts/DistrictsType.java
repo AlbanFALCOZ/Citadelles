@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.districts;
 
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+
+
 /**
  * Cet enum prend englobe toutes les cartes quartiers dont on aura besoin
  * le long de la partie
@@ -35,7 +38,6 @@ public enum DistrictsType {
 
 
     // SPECIAL
-
     COURT_DES_MIRACLES("Cour des miracles", 2, "\u001B[35m", 2, "default"),
     DONJON("Donjon", 3, "\u001B[35m", 3, "default"),
     LABORATOIRE("Laboratoire", 5, "\u001B[35m", 5, "default"),
@@ -44,17 +46,15 @@ public enum DistrictsType {
     CIMETIERE("Cimetière", 5, "\u001B[35m", 5, "default"),
     BIBLIOTHEQUE("Bibliothèque", 6, "\u001B[35m", 6, "default"),
     ECOLE_DE_MAGIE("École de magie", 6, "\u001B[35m", 6, "ecole"),
-    UNIVERSITE("Université", 6, "\u001B[35m", 6, "default"),
-    DRACOPORT("Dracoport", 6, "\u001B[35m", 6, "default");
+
+    UNIVERSITE("Université", 6, "\u001B[35m", 8, "default"),
+    DRACOPORT("Dracoport", 6, "\u001B[35m", 8, "default");
 
 
     int cost ;
     String name ;
-
     String color ;
-
     String colorReset = "\u001B[0m";
-
     int score ;
     String type;
 
@@ -84,6 +84,15 @@ public enum DistrictsType {
 
     public String getColorReset() {
         return colorReset;
+    }
+
+    public void powerOfDistrict(Robot player) {
+        if (name.equals("Observatoire")) {
+            player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn()+1);
+        }
+        if (name.equals("Bibliothèque")) {
+            if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen()+1);
+        }
     }
     public String toString() {
         return "(" + getName() + ", " + getCost() + ")";

@@ -5,9 +5,10 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.sql.SQLOutput;
-import java.util.Map;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,8 +80,11 @@ public class RobotTest {
 
     @Test
     void testPickDistrictCard() {
-        robot.pickDistrictCard();
-        robot.pickDistrictCard();
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        listDistrict.add(DistrictsType.TEMPLE);
+        robot.pickDistrictCard(listDistrict);
+        listDistrict.add(DistrictsType.MONASTERE);
+        robot.pickDistrictCard(listDistrict);
 
     }
 
@@ -201,6 +205,28 @@ public class RobotTest {
         assertEquals(6, robotEveque.getGolds());
 
     }
+
+    @Test
+    void testScoreAvecUniversiteEtDracoport() {
+        robot.setGolds(100);
+        robot.setCharacter(CharactersType.ASSASSIN);
+        robot.addDistrict(DistrictsType.DRACOPORT);
+        robot.addDistrict(DistrictsType.UNIVERSITE);
+        robot.tryBuild();
+        robot.tryBuild();
+        assertEquals(16,robot.calculateScore());
+    }
+
+    @Test
+    void testNumberOfCardsDrawnWithObservatoire() {
+        robot.setCharacter(CharactersType.ASSASSIN);
+        robot.setGolds(1000);
+        robot.addDistrict(DistrictsType.OBSERVATOIRE);
+        assertEquals(2,robot.getNumberOfCardsDrawn());
+        robot.tryBuild();
+        assertEquals(3,robot.getNumberOfCardsDrawn());
+    }
+
 
 }
 
