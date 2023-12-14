@@ -45,6 +45,13 @@ public enum CharactersType {
         return color;
     }
 
+    public boolean isCharacter(String type){
+        if (this.getType() == type) {
+            return true;
+        }
+        return false;
+    }
+
 
 
 

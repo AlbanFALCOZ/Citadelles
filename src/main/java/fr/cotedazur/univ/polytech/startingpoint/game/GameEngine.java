@@ -38,12 +38,24 @@ public class GameEngine {
         return bots;
     }
 
-    public void assignRandomCharacterToRobots() {
+    public void robotsPickCharacters() {
+        int i = 1;
         List<CharactersType> ListCharacters = deckCharacters.getCharactersInHand();
+        destroyCharacters(ListCharacters);
         Collections.shuffle(ListCharacters);
-
-        for (int i = 0; i < bots.size(); i++) {
-            bots.get(i).setCharacter(ListCharacters.get(i));
+        for (Robot bot : bots ){
+            if(bot.getHasCrown()){
+                bot.setCharacter(ListCharacters.get(0));
+                System.out.println(bot.getName() +" With crown Picked " +ListCharacters.get(0).getColor() + ListCharacters.get(0).getType() + bot.getRESET());
+                ListCharacters.remove(ListCharacters.get(0));
+            }
+        }
+        for (Robot bot : bots){
+            if(!bot.getHasCrown()){
+                bot.setCharacter(ListCharacters.get(i));
+                System.out.println(bot.getName() +" Picked " +ListCharacters.get(i).getColor() + ListCharacters.get(i).getType() + bot.getRESET());
+                i++;
+            }
         }
     }
 
@@ -57,17 +69,18 @@ public class GameEngine {
 
     public void assignCrownForKing() {
         int cpt = 0;
+        int index = 0 ;
         for (Robot bot : bots) {
-            if (bot.isKing()) {
+            if (bot.isCharacter("Roi")) {
                 cpt++;
             }
         }
         if (cpt == 1) {
             for (Robot bot : bots) {
-                if (bot.isKing()) {
+                if (bot.isCharacter("Roi")) {
                     bot.setHasCrown(true);
                 }
-                if (!bot.isKing()) {
+                if (!bot.isCharacter("Roi")) {
                     bot.setHasCrown(false);
                 }
             }
@@ -75,12 +88,14 @@ public class GameEngine {
             cpt=0;
         }
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+        Collections.rotate(bots, -index);
 
     }
 
     public void playTurns() {
         specialCard();
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+        this.sortRobots();
         for (Robot bot : bots) {
 
             int choice = (int) (Math.random()*2);
@@ -100,7 +115,7 @@ public class GameEngine {
                     break;
             }
             System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
-            System.out.println(bot.getName() + " has won " + bot.winGoldsByTypeOfBuildings() + " golds and has now " + bot.getGolds() + " golds");
+            System.out.println(bot.getName() + " has won " + bot.winGoldsByTypeOfBuildings() + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
             System.out.println(bot.statusOfPlayer() + "\n");
             System.out.println("-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n");
 
@@ -117,23 +132,38 @@ public class GameEngine {
         return false;
     }
 
+    public void assignRandomCharacterToRobots() {
+        // Get the characters available in hand
+        List<CharactersType> charactersInHand = deckCharacters.getCharactersInHand();
+
+        // Shuffle the characters
+        Collections.shuffle(charactersInHand);
+
+        // Assign characters to each bot
+        for (int i = 0; i < bots.size(); i++) {
+            bots.get(i).setCharacter(charactersInHand.get(i));
+        }
+    }
+
+
     public void gameTurns(){
         System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         assignRandomCharacterToRobots();
         assignCrown();
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        robotsPickCharacters();
         playTurns();
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         comptTurn++;
         while(!isBuiltEigthDistrict() && comptTurn>1){
-            assignRandomCharacterToRobots();
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
                     System.out.println(bot.getName() + " has crown and start the call of the characters");
                 }
             }
+            robotsPickCharacters();
             playTurns();
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
             comptTurn++;
@@ -215,11 +245,35 @@ public class GameEngine {
     }
 
 
-    public ArrayList<Robot> sortRobots(){
-        ArrayList<Robot> sortedBots = new ArrayList<>();
-         Collections.sort(sortedBots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
-         return sortedBots;
+    public ArrayList<Robot> sortRobots() {
+        ArrayList<Robot> sortedBots = new ArrayList<>(bots);
+
+        // Custom comparator to sort by crown status and then by character number
+        Comparator<Robot> crownComparator = Comparator.comparing((Robot bot) -> !bot.getHasCrown())
+                .thenComparingInt(bot -> bot.getCharacter().getNumber());
+
+        // Sort the list using the custom comparator
+        Collections.sort(sortedBots, crownComparator);
+
+        return sortedBots;
     }
+
+    public void destroyCharacters(List<CharactersType> charactersInHand) {
+            charactersInHand.remove(CharactersType.ROI);
+            Collections.shuffle(charactersInHand, new Random());
+            for (int i = 0; i < 3; i++) {
+                if (!charactersInHand.isEmpty()) {
+                    CharactersType destroyedCharacter = charactersInHand.remove(0);
+                    System.out.println("Destroyed character: " + destroyedCharacter.getColor() + destroyedCharacter.getType() + bots.get(0).getRESET());
+                }
+            }
+
+            charactersInHand.add(CharactersType.ROI);
+
+
+
+    }
+
 
 
 }

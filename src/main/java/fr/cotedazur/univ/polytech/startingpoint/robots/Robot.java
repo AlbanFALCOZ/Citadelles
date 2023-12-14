@@ -44,6 +44,9 @@ public class Robot {
         return this.score;
     }
 
+    public String getRESET(){
+        return RESET;
+    }
 
     public String getName() {
         return name;
@@ -178,19 +181,6 @@ public class Robot {
         return hasCrown;
     }
 
-    public boolean isKing() {
-        if (this.getCharacter().getNumber() == 4) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isEveque(){
-        if(this.getCharacter().getNumber()==5){
-            return true;
-        }
-        return false;
-    }
 
     public int countBuildingsByType() {
         int count = 0;
@@ -205,23 +195,12 @@ public class Robot {
         return count;
     }
 
-
-    private String getMagicSchoolType() {
-        switch (this.character) {
-            case ROI:
-                return "noble";
-            case EVEQUE:
-                return "religieux";
-            case MARCHAND:
-                return "marchand";
-            case CONDOTTIERE:
-                return "militaire";
-            default:
-                return "default";
+    public boolean isCharacter(String type){
+        if (this.getCharacter().getType().equals(type)) {
+            return true;
         }
+        return false;
     }
-    //ex: si perso du robot est Roi
-    //l'ecole de magie est considérée comme un bat de type "noble"
 
     public int winGoldsByTypeOfBuildings() {
     int oldGolds = this.getGolds();
