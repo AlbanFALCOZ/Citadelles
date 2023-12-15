@@ -31,7 +31,7 @@ class RoundTest {
     @Test
     public void testSpecialCard() {
         GameEngine game = new GameEngine();
-        Round round = new Round(game.getBots());
+
         game.clearBots();
 
         Robot robot1 = new Robot("Robot1");
@@ -40,7 +40,7 @@ class RoundTest {
         robot1.setGolds(6);
         robot1.tryBuild();
         game.addRobot(robot1);
-
+        Round round = new Round(game.getBots());
         round.specialCard();
 
         assertEquals(6, robot1.getGolds());

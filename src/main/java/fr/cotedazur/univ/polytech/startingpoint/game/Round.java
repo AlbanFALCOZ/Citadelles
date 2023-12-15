@@ -17,6 +17,8 @@ public class Round {
     }
 
 
+
+
     public void assignCrownForKing() {
         int cpt = 0;
         int index = 0 ;
@@ -65,6 +67,7 @@ public class Round {
     }
 
     public void playTurns() {
+        System.out.println(bots);
         specialCard();
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();

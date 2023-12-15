@@ -93,6 +93,8 @@ public class GameEngine {
 
 
     public void gameTurns(){
+        round = new Round(bots);
+        int count = 0;
         System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
@@ -102,7 +104,7 @@ public class GameEngine {
         round.playTurns();
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         comptTurn++;
-        while(!isBuiltEigthDistrict() && comptTurn>1){
+        while(!isBuiltEigthDistrict() && comptTurn>1 && count++ < 200){
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
@@ -113,6 +115,7 @@ public class GameEngine {
             round.playTurns();
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
             comptTurn++;
+            round = new Round(bots);
         }
 
 
