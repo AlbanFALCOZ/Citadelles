@@ -52,16 +52,10 @@ class GameEngineTest {
     }
 
     @Test
-    void testPlayTurns() {
-        gameEngine.assignRandomCharacterToRobots();
-        gameEngine.playTurns();
-
-    }
-
-    @Test
     void testCalculateScores() {
         gameEngine.assignRandomCharacterToRobots();
-        gameEngine.playTurns();
+        Round round = new Round(gameEngine.getBots());
+        round.playTurns();
         gameEngine.calculateScores();
         int maxScore = 0;
         for (Robot bot : gameEngine.getBots()) {
@@ -80,7 +74,8 @@ class GameEngineTest {
     @Test
     void testGetWinner() {
         gameEngine.assignRandomCharacterToRobots();
-        gameEngine.playTurns();
+        Round round = new Round(gameEngine.getBots());
+        round.playTurns();
         gameEngine.calculateScores();
         int maxScore = 0;
         for (Robot bot : gameEngine.getBots()) {
@@ -93,19 +88,6 @@ class GameEngineTest {
             if (bot.calculateScore() == maxScore) {
                 assertTrue(winners.contains(bot.getName()));
             }
-        }
-    }
-
-    @Test
-    public void testSortRobots() {
-        GameEngine gameEngine = new GameEngine();
-        gameEngine.initializeBots();
-        gameEngine.assignRandomCharacterToRobots();
-        List<Robot> originalOrder = new ArrayList<>(gameEngine.getBots());
-        ArrayList<Robot> sortedRobots = gameEngine.sortRobots();
-        assertEquals(originalOrder, gameEngine.getBots());
-        for (int i = 1; i < sortedRobots.size(); i++) {
-            assertTrue(sortedRobots.get(i - 1).getCharacter().getNumber() <= sortedRobots.get(i).getCharacter().getNumber());
         }
     }
 
@@ -152,25 +134,6 @@ class GameEngineTest {
         assertTrue(winners.size() > 1);
     }
 
-    @Test
-    public void testSpecialCard() {
-        GameEngine game = new GameEngine();
-        game.clearBots();
-
-        Robot robot1 = new Robot("Robot1");
-        robot1.setCharacter(CharactersType.MARCHAND);
-        robot1.addDistrict(DistrictsType.TAVERNE);
-        robot1.setGolds(6);
-        robot1.tryBuild();
-        game.addRobot(robot1);
-
-        game.specialCard();
-
-        assertEquals(6, robot1.getGolds());
-    }
-
-
-
-
 
 }
+
