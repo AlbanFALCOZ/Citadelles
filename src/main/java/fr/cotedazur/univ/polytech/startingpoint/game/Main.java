@@ -12,8 +12,9 @@ public class Main {
 
         GameEngine Game = new GameEngine();
         Game.gameTurns();
-        Game.calculateScores();
-        Game.showWinners();
+        Winner winner = new Winner(Game.getBots());
+        System.out.println(winner.calculateScores());
+        System.out.println(winner.showWinners());
 
 
     }

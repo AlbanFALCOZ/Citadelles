@@ -16,9 +16,6 @@ public class Round {
         this.bots = new ArrayList<>(bots);
     }
 
-
-
-
     public void assignCrownForKing() {
         int cpt = 0;
         int index = 0 ;
