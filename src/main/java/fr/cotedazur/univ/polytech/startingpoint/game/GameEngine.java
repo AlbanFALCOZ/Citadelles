@@ -14,7 +14,7 @@ public class GameEngine {
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
     private Round round;
-
+    
     public GameEngine() {
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
@@ -117,16 +117,6 @@ public class GameEngine {
         }
     }
 
-
-    public void calculateScores() {
-        for (Robot bot : bots) {
-            int score = bot.calculateScore();
-            System.out.println(bot.getName() + " has a score of " + score);
-        }
-
-    }
-
-
     public void clearBots() {
         bots.clear();
     }
@@ -135,43 +125,6 @@ public class GameEngine {
     public void addRobot(Robot robot) {
         this.bots.add(robot);
     }
-
-    public List<String> getWinners() {
-
-        List<Robot> winners = new ArrayList<>();
-        int highestScore = -1;
-
-        for (Robot bot : bots) {
-            int score = bot.calculateScore();
-            if (score > highestScore) {
-                winners.clear();
-                winners.add(bot);
-                highestScore = score;
-            }
-            else if (score == highestScore) {
-                winners.add(bot);
-            }
-        }
-
-        List<String> winnerNames = new ArrayList<>();
-        for (Robot winner : winners) {
-            winnerNames.add(winner.getName());
-        }
-
-        return winnerNames;
-    }
-
-
-    public void showWinners() {
-        List<String> winners = getWinners();
-        if (winners.size() == 1) {
-            System.out.println("The winner is : " + winners.get(0));
-        }
-        else {
-            System.out.println("This is an equality ! The winners are: " + String.join(", ", winners));
-        }
-    }
-
 
     public void destroyCharacters(List<CharactersType> charactersInHand) {
         charactersInHand.remove(CharactersType.ROI);
