@@ -227,5 +227,17 @@ public class RobotTest {
         assertEquals(3,robot.getNumberOfCardsDrawn());
     }
 
-
+    @Test
+    void districtAlreadyInCity() {
+        robot.setCharacter(CharactersType.ASSASSIN);
+        robot.setGolds(1000);
+        robot.addDistrict(DistrictsType.OBSERVATOIRE);
+        robot.addDistrict(DistrictsType.OBSERVATOIRE);
+        robot.tryBuild();
+        robot.tryBuild();
+        assertEquals(1,robot.getCity().size());
+        robot.addDistrict(DistrictsType.TAVERNE);
+        robot.tryBuild();
+        assertEquals(2,robot.getCity().size());
+    }
 }
