@@ -94,31 +94,27 @@ public class GameEngine {
 
     public void gameTurns(){
         round = new Round(bots);
-        int count = 0;
+        String turnStarting = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn ";
+        String turnEnding = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
         System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         assignRandomCharacterToRobots();
         assignCrown();
         robotsPickCharacters();
-        round.playTurns();
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-        comptTurn++;
-        while(!isBuiltEigthDistrict() && comptTurn>1 && count++ < 200){
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        while(!isBuiltEigthDistrict() && comptTurn++>=1){
+            System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
+            bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
                     System.out.println(bot.getName() + " has crown and start the call of the characters");
                 }
             }
             robotsPickCharacters();
-            round.playTurns();
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            System.out.println(round.playTurns());
+            System.out.println(turnStarting + comptTurn + " is over" + turnEnding);
             comptTurn++;
             round = new Round(bots);
         }
-
-
     }
 
 
@@ -186,11 +182,7 @@ public class GameEngine {
                 System.out.println("Destroyed character: " + destroyedCharacter.getColor() + destroyedCharacter.getType() + bots.get(0).getRESET());
             }
         }
-
         charactersInHand.add(CharactersType.ROI);
-
-
-
     }
 
 

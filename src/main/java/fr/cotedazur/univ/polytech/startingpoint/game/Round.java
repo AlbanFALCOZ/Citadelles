@@ -66,20 +66,18 @@ public class Round {
         return sortedBots;
     }
 
-    public void playTurns() {
-        System.out.println(bots);
+    public String playTurns() {
+        String infosToPrint = "";
         specialCard();
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         for (Robot bot : bots) {
-
             int choice = (int) (Math.random()*2);
-            System.out.println("------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n");
-            System.out.println(bot.statusOfPlayer());
+            infosToPrint += "------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n";
+            infosToPrint += bot.statusOfPlayer() + "\n";
             switch (choice) {
                 case 0:
                     List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
-
                     String cardDrawn = "";
                     String cardPicked = "";
                     for (int i = 0; i < listDistrictDrawn.size(); i++) {
@@ -87,7 +85,7 @@ public class Round {
                         cardDrawn += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
                         if (i < listDistrictDrawn.size()-1) cardDrawn += ",";
                     }
-                    System.out.println("The bot drew the following cards : {" + cardDrawn + "}");
+                    infosToPrint += "The bot drew the following cards : {" + cardDrawn + "}\n";
                     List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
                     for (int i = 0; i < listDistrictPicked.size(); i++) {
                         DistrictsType districtInListDistrict = listDistrictPicked.get(i);
@@ -95,22 +93,22 @@ public class Round {
                         if (i < listDistrictPicked.size()-1) cardPicked += ",";
                         bot.addDistrict(districtInListDistrict);
                     }
-                    System.out.println("The bot choose to pick : {" + cardPicked + "}");
-                    System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+                    infosToPrint +=  "The bot choose to pick : {" + cardPicked + "}\n";
+                    infosToPrint += bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts\n";
                     break;
                 case 1:
                     bot.addGold(2);
-                    System.out.println(bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds());
+                    infosToPrint += bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds() + "\n";
                     break;
                 default:
                     break;
             }
-            System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
-            System.out.println(bot.getName() + " has won " + bot.winGoldsByTypeOfBuildings() + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
-            System.out.println(bot.statusOfPlayer() + "\n");
-            System.out.println("-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n");
-
+            infosToPrint += bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts\n";
+            infosToPrint += bot.getName() + " has won " + bot.winGoldsByTypeOfBuildings() + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds\n";
+            infosToPrint += bot.statusOfPlayer() + "\n\n";
+            infosToPrint += "-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n\n";
         }
         assignCrownForKing();
+        return infosToPrint;
     }
 }
