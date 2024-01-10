@@ -2,10 +2,16 @@ package fr.cotedazur.univ.polytech.startingpoint.characters;
 
 import java.util.*;
 
+/**
+ * cette classe représente le deck de personnages
+ */
 public class DeckCharacters {
     private List<CharactersType> charactersInHand;
 
 
+    /**
+     * Constructeur de la classe DeckCharacters
+     */
     public DeckCharacters() {
         this.charactersInHand = new ArrayList<>(Arrays.asList(CharactersType.values()));
     }

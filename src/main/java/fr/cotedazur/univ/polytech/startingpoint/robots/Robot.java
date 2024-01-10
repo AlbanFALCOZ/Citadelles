@@ -1,14 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.complements.Strategies;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
 import java.util.*;
 
 
-
+/**
+ * cette classe représente un robot
+ */
 public class Robot {
 
     private String name;
@@ -16,7 +17,6 @@ public class Robot {
     private int golds;
     private int numberOfCardsDrawn = 2;
     private int numberOfCardsChosen = 1;
-    private Strategies strategies;
     private DeckDistrict district = new DeckDistrict();
     private List<DistrictsType> districtInHand;
     private CharactersType character;
@@ -25,12 +25,13 @@ public class Robot {
     private ArrayList<DistrictsType> city;
 
     private boolean hasCrown;
-
-    private boolean isKing;
-
-    private boolean isEveque;
+    private Robot target;
 
 
+    /**
+     * @param name le nom du robot
+     *             Constructeur de la classe Robot
+     */
     public Robot(String name) {
         this.name = name;
         this.score = 0;
@@ -41,76 +42,121 @@ public class Robot {
         this.hasCrown = false;
     }
 
-
-    public int getScore() {
-        return this.score;
-    }
-
+    /**
+     * @return le RESET qui permet d'annuler les couleurs
+     */
     public String getRESET(){
         return RESET;
     }
 
+    /**
+     * @return le nom du robot
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return les golds du robot
+     */
     public int getGolds() {
         return golds;
     }
 
 
+    /**
+     * @param golds les golds du robot
+     *              cette méthode permet de modifier les golds du robot
+     */
     public void setGolds(int golds) {
         this.golds = golds;
     }
 
-    public int getNumberOfCardsDrawn() {
-        return numberOfCardsDrawn;
-    }
-
-    public void setNumberOfCardsDrawn(int numberOfCardsDrawn) {
-        this.numberOfCardsDrawn = numberOfCardsDrawn;
-    }
-
-    public int getNumberOfCardsChosen() {
-        return numberOfCardsChosen;
-    }
-
-    public void setNumberOfCardsChosen(int numberOfCardsChosen) {
-        this.numberOfCardsChosen = numberOfCardsChosen;
-    }
-
+    /**
+     * @param score le score du robot
+     *              cette méthode permet de modifier le score du robot
+     */
     public void setScore(int score) {
         this.score = score;
     }
 
-    public void setDistrict(DeckDistrict district) {
-        this.district = district;
+    /**
+     * @return le nombre de districts tirés
+     */
+    public int getNumberOfCardsDrawn() {
+        return numberOfCardsDrawn;
     }
 
+    /**
+     * @param numberOfCardsDrawn le nombre de districts tirés
+     *                           cette méthode permet de modifier le nombre de cartes tirés
+     */
+    public void setNumberOfCardsDrawn(int numberOfCardsDrawn) {
+        this.numberOfCardsDrawn = numberOfCardsDrawn;
+    }
+
+    /**
+     * @return le nombre de districts choisis
+     * cette méthode permet de modifier le nombre de districts choisis
+     */
+    public int getNumberOfCardsChosen() {
+        return numberOfCardsChosen;
+    }
+
+    /**
+     * @param numberOfCardsChosen le nombre de cartes choisies
+     * cette méthode permet de modifier le nombre de cartes choisies
+     */
+    public void setNumberOfCardsChosen(int numberOfCardsChosen) {
+        this.numberOfCardsChosen = numberOfCardsChosen;
+    }
+
+    /**
+     * @param golds les golds du robot
+     *              cette méthode permet d'ajouter des golds au robot
+     */
     public void addGold(int golds) {
         this.golds += golds;
     }
 
 
+    /**
+     * @param character le personnage du robot
+     *                  cette méthode permet de modifier le personnage du robot
+     */
     public void setCharacter(CharactersType character) {
         this.character = character;
     }
 
 
+    /**
+     * @return le personnage du robot
+     * cette méthode permet de retourner le personnage du robot
+     */
     public CharactersType getCharacter() {
         return character;
     }
 
+    /**
+     * @return la liste des districts construits dans la cité
+     */
     public ArrayList<DistrictsType> getCity() {
         return city;
     }
 
+    /**
+     * @param hasCrown l'attribut disant si le robot a la couronne ou non
+     *                cette méthode permet de modifier l'attribut disant si le robot a la couronne ou non
+     */
     public void setHasCrown(boolean hasCrown) {
         this.hasCrown = hasCrown;
 
     }
 
-
+    /**
+     * @return le district construit
+     * cette méthode permet de construire un district
+     */
     public String tryBuild() {
         for (int i = 0; i < districtInHand.size(); i++) {
             DistrictsType district = districtInHand.get(i);
@@ -126,20 +172,35 @@ public class Robot {
     }
 
 
+    /**
+     * @param district le district à ajouter
+     *                 cette méthode permet d'ajouter un district à la main du robot
+     */
     public void addDistrict(DistrictsType district) {
 
         this.districtInHand.add(district);
 
     }
 
+    /**
+     * @return la liste des districts dans la main du robot
+     * cette méthode permet de retourner la liste des districts dans la main du robot
+     */
     public int getNumberOfDistrictInHand() {
         return districtInHand.size();
     }
 
+    /**
+     * @return la taille de la cité
+     */
     public int getNumberOfDistrictInCity() {
         return city.size();
     }
 
+    /**
+     * @param showColor un booléen qui permet de savoir si on affiche les couleurs ou non
+     * @return le statut du robot
+     */
     public String statusOfPlayer(boolean showColor) {
         String endColor = "";
         String colorCharacter = "";
@@ -152,10 +213,19 @@ public class Robot {
         return status;
     }
 
+    /**
+     * @return le statut du robot
+     * cette méthode permet de retourner le statut du robot en affichant les couleurs
+     */
     public String statusOfPlayer() {
         return statusOfPlayer(true);
     }
 
+    /**
+     * @param showColor un booléen qui permet de savoir si on affiche les couleurs ou non
+     * @param listDistrict la liste des districts
+     * @return la liste des districts sous forme de chaîne de caractères
+     */
     private String getString(boolean showColor, List<DistrictsType> listDistrict) {
         String returedString = "";
         String color;
@@ -172,6 +242,10 @@ public class Robot {
         return returedString;
     }
 
+    /**
+     * @param listDistrict la liste des districts
+     * @return la liste des districts après avoir choisi les districts à construire
+     */
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict) {
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
@@ -198,6 +272,9 @@ public class Robot {
         return listDistrictToBuild;
     }
 
+    /**
+     * @return la liste des districts piochés
+     */
     public List<DistrictsType> pickListOfDistrict(){
         List<DistrictsType> listDistrict = new ArrayList<>();
         for (int i = 0; i < numberOfCardsDrawn; i++) {
@@ -207,10 +284,16 @@ public class Robot {
         return listDistrict;
     }
 
+    /**
+     * @return la comparaison des districts par coût
+     */
     private Comparator<DistrictsType> compareByCost() {
         return Comparator.comparingInt(DistrictsType::getCost);
     }
 
+    /**
+     * @return le score du robot
+     */
     public int calculateScore() {
         int score = 0;
         for (DistrictsType district : city) {
@@ -220,11 +303,17 @@ public class Robot {
     }
 
 
+    /**
+     * @return true si le robot a la couronne, false sinon
+     */
     public boolean getHasCrown() {
         return hasCrown;
     }
 
 
+    /**
+     * @return le nombre de districts construits par le robot par type
+     */
     public int countBuildingsByType() {
         int count = 0;
 
@@ -239,6 +328,9 @@ public class Robot {
     }
 
 
+    /**
+     * @return le nombre de golds gagnés par le robot en fonction du type de bâtiment construit
+     */
     public int winGoldsByTypeOfBuildings() {
     int oldGolds = this.getGolds();
         addGold(countBuildingsByType());
@@ -246,14 +338,34 @@ public class Robot {
     }
 
 
-    public boolean isCharacter(String type){
-        if (this.getCharacter().getType().equals(type)) {
+    /**
+     * @param role le rôle du personnage
+     * @return true si le robot a le personnage donné en paramètre, false sinon
+     */
+    public boolean isCharacter(String role){
+        if (this.getCharacter().getRole().equals(role)) {
             return true;
         }
         return false;
     }
 
 
+    /**
+     * @param otherBots la liste des autres robots
+     *                  cette méthode permet de choisir une cible pour le voleur
+     */
+    public void chooseTarget(List<Robot> otherBots) {
+        //logique pour choisir une cible (pour l'instant aléatoirement)
+        Random random = new Random();
+        Robot target = otherBots.get(random.nextInt(otherBots.size()));
+        this.target = target;
+    }
 
+    /**
+     * @return la cible du voleur
+     */
+    public Robot getTarget() {
+        return target;
+    }
 }
 
