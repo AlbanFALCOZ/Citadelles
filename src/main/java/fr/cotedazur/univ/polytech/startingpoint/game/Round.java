@@ -63,38 +63,34 @@ public class Round {
         return sortedBots;
     }
 
-    public String playTurns() {
-        String infosToPrint = "";
+    public void playTurns() {
         specialCard();
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         for (Robot bot : bots) {
             int choice = bot.getChoice();
-            ActionOfBotDuringARound actionOfBotDuringARound;
-            //infosToPrint += "------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n";
-            //infosToPrint += bot.statusOfPlayer() + "\n";
+            ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
+            actionOfBotDuringARound.startTurnOfBot();
             switch (choice) {
                 case 0:
                     List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
                     List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
-                     actionOfBotDuringARound = new ActionOfBotDuringARound(bot,choice,listDistrictDrawn,listDistrictPicked);
+                     actionOfBotDuringARound.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
                     bot.addDistrict(listDistrictPicked);
-                    actionOfBotDuringARound.showActionOfBotWhoHasBuilt();
+                    actionOfBotDuringARound.printActionOfBotWhoHasBuilt();
                     break;
                 case 1:
                     bot.addGold(2);
                     actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
-                    infosToPrint += bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds() + "\n";
+                    actionOfBotDuringARound.printActionOfBotWhoGainedGold();
                     break;
                 default:
                     break;
             }
-            infosToPrint += bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts\n";
-            infosToPrint += bot.getName() + " has won " + bot.winGoldsByTypeOfBuildings() + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds\n";
-            infosToPrint += bot.statusOfPlayer() + "\n\n";
-            infosToPrint += "-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------\n\n";
+            String hasBuilt = bot.tryBuild();
+            int goldsWon =  bot.winGoldsByTypeOfBuildings();
+            actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
         }
         assignCrownForKing();
-        return infosToPrint;
     }
 }

@@ -119,8 +119,7 @@ public class GameEngine {
                 }
             }
             robotsPickCharacters();
-            if (!systemPrint) round.playTurns();
-            else System.out.println(round.playTurns());
+            round.playTurns();
             if (systemPrint) System.out.println(turnStarting + comptTurn + " is over" + turnEnding);
             comptTurn++;
             round = new Round(bots);
