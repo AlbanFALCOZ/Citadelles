@@ -63,12 +63,28 @@ public class Round {
         return sortedBots;
     }
 
+
+    public void thiefAction(Robot thief) {
+        List<Robot> otherBots = new ArrayList<>(bots);
+        otherBots.remove(thief);
+        thief.chooseTarget(otherBots);
+        Robot target = thief.getTarget();
+
+        int stolenGold = target.getGolds();
+        thief.addGold(stolenGold);
+        target.setGolds(0);
+        System.out.println(thief.getName() + " a volé " + stolenGold + " pièces d'or à " + target.getName());
+    }
+
     public void playTurns() {
         System.out.println(bots);
         specialCard();
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         for (Robot bot : bots) {
+            if (bot.isCharacter("voleur")) {
+                thiefAction(bot);
+            }
 
             int choice = (int) (Math.random()*2);
             System.out.println("------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n");

@@ -16,7 +16,7 @@ public class GameEngine {
     private ArrayList<Robot> bots;
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
-    private Round round;
+    protected Round round;
 
     /**
      * Constructeur de la classe GameEngine
