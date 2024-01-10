@@ -148,12 +148,6 @@ class RobotRandomTest {
         robotRandom.winGoldsByTypeOfBuildings();
         assertEquals(4, robotRandom.getGolds());
     }
-    @Test
-    void isCharacter() {
-        robotRandom.setCharacter(CharactersType.ROI);
-        System.out.println(robotRandom.getCharacter());
-        assertTrue(robotRandom.isCharacter("ROI"));
-    }
 
     @Test
     void getChoice() {
