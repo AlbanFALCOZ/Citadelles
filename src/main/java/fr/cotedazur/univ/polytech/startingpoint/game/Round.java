@@ -73,6 +73,23 @@ public class Round {
         this.sortRobots();
         for (Robot bot : bots) {
 
+            //si le bot est le voleur
+            if (bot.isCharacter("voleur")) {
+                List<Robot> otherBots = new ArrayList<>(bots);
+                otherBots.remove(bot); //enleve le voleur de la liste des cibles
+                bot.chooseTarget(otherBots); //choisir une cible
+                //voler l'or de la cible
+                Robot target = bot.getTarget();
+                //if (target not exist){
+                    //System.out.println(bot.getName() + " n'a rien volé);
+                    //break;
+                int stolenGold = target.getGolds();
+                bot.addGold(stolenGold);
+                target.setGolds(0);
+
+                System.out.println(bot.getName() + " a volé " + stolenGold + " pièces d'or à " + target.getName());
+            }
+
             int choice = (int) (Math.random()*2);
             System.out.println("------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n");
             System.out.println(bot.statusOfPlayer());

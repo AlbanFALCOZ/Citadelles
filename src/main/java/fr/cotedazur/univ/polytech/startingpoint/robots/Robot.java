@@ -29,6 +29,7 @@ public class Robot {
     private boolean isKing;
 
     private boolean isEveque;
+    private Robot target;
 
 
     public Robot(String name) {
@@ -254,6 +255,15 @@ public class Robot {
     }
 
 
+    public void chooseTarget(List<Robot> otherBots) {
+        //logique pour choisir une cible (pour l'instant aléatoirement)
+        Random random = new Random();
+        Robot target = otherBots.get(random.nextInt(otherBots.size()));
+        this.target = target;
+    }
 
+    public Robot getTarget() {
+        return target;
+    }
 }
 

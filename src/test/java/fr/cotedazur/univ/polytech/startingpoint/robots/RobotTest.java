@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -225,6 +226,19 @@ public class RobotTest {
         assertEquals(2,robot.getNumberOfCardsDrawn());
         robot.tryBuild();
         assertEquals(3,robot.getNumberOfCardsDrawn());
+    }
+
+
+    @Test
+    public void testTargetSelection() {
+        Robot thief = new Robot("Thief");
+        Robot target1 = new Robot("Target1");
+        Robot target2 = new Robot("Target2");
+
+        List<Robot> otherBots = Arrays.asList(target1, target2);
+        thief.chooseTarget(otherBots);
+
+        assertTrue(otherBots.contains(thief.getTarget()), "La cible devrait être parmi les autres bots");
     }
 
 

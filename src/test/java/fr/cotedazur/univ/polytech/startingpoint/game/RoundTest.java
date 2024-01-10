@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,6 +45,30 @@ class RoundTest {
         round.specialCard();
 
         assertEquals(6, robot1.getGolds());
+    }
+
+
+    @Test
+    public void testGoldStealing() {
+        GameEngine game = new GameEngine();
+        Robot thief = new Robot("Thief");
+        Robot target = new Robot("Target");
+
+        thief.setGolds(2);
+        target.setGolds(5);
+
+        thief.setCharacter(CharactersType.VOLEUR);
+        target.setCharacter(CharactersType.ROI);
+
+        game.addRobot(thief);
+        game.addRobot(target);
+
+        thief.chooseTarget(Collections.singletonList(target));
+
+        game.round.playTurns();
+
+        assertEquals(7, thief.getGolds(), "Le voleur devrait avoir 7 pièces d'or après vol");
+        assertEquals(0, target.getGolds(), "La cible devrait avoir 0 pièce d'or restante après vol");
     }
 
 
