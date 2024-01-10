@@ -9,7 +9,7 @@ import java.util.*;
 
 
 
-public class RobotRandom implements Robot {
+public class RobotRandom implements Robot{
 
     private final String name;
     private int score;
@@ -39,6 +39,10 @@ public class RobotRandom implements Robot {
         this.character = null;
         this.city = new ArrayList<>();
         this.hasCrown = false;
+    }
+
+    public List<DistrictsType> getDistrictInHand() {
+        return districtInHand;
     }
 
 

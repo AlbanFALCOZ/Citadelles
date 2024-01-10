@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoundTest {
 
     @Test
-    public void testSortRobots() {
+    void testSortRobots() {
         GameEngine gameEngine = new GameEngine();
         Round round = new Round(gameEngine.getBots());
         gameEngine.initializeBots();
@@ -30,7 +30,7 @@ class RoundTest {
 
 
     @Test
-    public void testSpecialCard() {
+    void testSpecialCard() {
         GameEngine game = new GameEngine();
 
         game.clearBots();
