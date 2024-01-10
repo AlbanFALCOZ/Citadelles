@@ -70,31 +70,20 @@ public class Round {
         this.sortRobots();
         for (Robot bot : bots) {
             int choice = bot.getChoice();
-            infosToPrint += "------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n";
-            infosToPrint += bot.statusOfPlayer() + "\n";
+            ActionOfBotDuringARound actionOfBotDuringARound;
+            //infosToPrint += "------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n";
+            //infosToPrint += bot.statusOfPlayer() + "\n";
             switch (choice) {
                 case 0:
                     List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
-                    String cardDrawn = "";
-                    String cardPicked = "";
-                    for (int i = 0; i < listDistrictDrawn.size(); i++) {
-                        DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
-                        cardDrawn += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
-                        if (i < listDistrictDrawn.size()-1) cardDrawn += ",";
-                    }
-                    infosToPrint += "The bot drew the following cards : {" + cardDrawn + "}\n";
                     List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
-                    for (int i = 0; i < listDistrictPicked.size(); i++) {
-                        DistrictsType districtInListDistrict = listDistrictPicked.get(i);
-                        cardPicked += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
-                        if (i < listDistrictPicked.size()-1) cardPicked += ",";
-                        bot.addDistrict(districtInListDistrict);
-                    }
-                    infosToPrint +=  "The bot choose to pick : {" + cardPicked + "}\n";
-                    infosToPrint += bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts\n";
+                     actionOfBotDuringARound = new ActionOfBotDuringARound(bot,choice,listDistrictDrawn,listDistrictPicked);
+                    bot.addDistrict(listDistrictPicked);
+                    actionOfBotDuringARound.showActionOfBotWhoHasBuilt();
                     break;
                 case 1:
                     bot.addGold(2);
+                    actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
                     infosToPrint += bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds() + "\n";
                     break;
                 default:

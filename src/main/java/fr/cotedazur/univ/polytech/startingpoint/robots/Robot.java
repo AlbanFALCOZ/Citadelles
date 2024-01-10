@@ -44,6 +44,8 @@ public interface Robot {
 
     void addDistrict(DistrictsType district);
 
+    void addDistrict(List<DistrictsType> listDistrict);
+
     int getNumberOfDistrictInHand();
 
     int getNumberOfDistrictInCity();

@@ -133,9 +133,11 @@ public class RobotRandom implements Robot{
 
 
     public void addDistrict(DistrictsType district) {
-
         this.districtInHand.add(district);
+    }
 
+    public void addDistrict(List<DistrictsType> listDistrict) {
+        this.districtInHand.addAll(listDistrict);
     }
 
     public int getNumberOfDistrictInHand() {
