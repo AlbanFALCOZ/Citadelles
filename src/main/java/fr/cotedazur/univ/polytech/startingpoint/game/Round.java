@@ -69,7 +69,7 @@ public class Round {
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         for (Robot bot : bots) {
-            int choice = (int) (Math.random()*2);
+            int choice = bot.getChoice();
             infosToPrint += "------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n";
             infosToPrint += bot.statusOfPlayer() + "\n";
             switch (choice) {

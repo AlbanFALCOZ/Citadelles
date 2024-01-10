@@ -1,258 +1,72 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.complements.Strategies;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
-import java.util.*;
+import java.util.List;
 
+public interface Robot {
 
+    int getScore();
 
-public class Robot {
+    String getRESET();
 
-    private final String name;
-    private int score;
-    private int golds;
-    private int numberOfCardsDrawn = 2;
-    private int numberOfCardsChosen = 1;
-    private Strategies strategies;
-    private DeckDistrict district = new DeckDistrict();
-    private List<DistrictsType> districtInHand;
-    private CharactersType character;
-    public static final String RESET = "\u001B[0m";
+    String getName();
 
-    private ArrayList<DistrictsType> city;
+    int getGolds();
 
-    private boolean hasCrown;
+    void setGolds(int golds);
 
-    private boolean isKing;
+    int getNumberOfCardsDrawn();
 
-    private boolean isEveque;
+    void setNumberOfCardsDrawn(int numberOfCardsDrawn);
 
+    int getNumberOfCardsChosen();
 
-    public Robot(String name) {
-        this.name = name;
-        this.score = 0;
-        this.districtInHand = new ArrayList<>();
-        this.golds = 2;
-        this.character = null;
-        this.city = new ArrayList<>();
-        this.hasCrown = false;
-    }
+    void setNumberOfCardsChosen(int numberOfCardsChosen);
 
+    void setScore(int score);
 
-    public int getScore() {
-        return this.score;
-    }
+    void setDistrict(DeckDistrict district);
 
-    public String getRESET(){
-        return RESET;
-    }
+    void addGold(int golds);
 
-    public String getName() {
-        return name;
-    }
+    void setCharacter(CharactersType character);
 
-    public int getGolds() {
-        return golds;
-    }
+    CharactersType getCharacter();
 
+    List<DistrictsType> getCity();
 
-    public void setGolds(int golds) {
-        this.golds = golds;
-    }
+    void setHasCrown(boolean hasCrown);
 
-    public int getNumberOfCardsDrawn() {
-        return numberOfCardsDrawn;
-    }
+    String tryBuild();
 
-    public void setNumberOfCardsDrawn(int numberOfCardsDrawn) {
-        this.numberOfCardsDrawn = numberOfCardsDrawn;
-    }
+    void addDistrict(DistrictsType district);
 
-    public int getNumberOfCardsChosen() {
-        return numberOfCardsChosen;
-    }
+    int getNumberOfDistrictInHand();
 
-    public void setNumberOfCardsChosen(int numberOfCardsChosen) {
-        this.numberOfCardsChosen = numberOfCardsChosen;
-    }
+    int getNumberOfDistrictInCity();
 
-    public void setScore(int score) {
-        this.score = score;
-    }
+    String statusOfPlayer(boolean showColor);
 
-    public void setDistrict(DeckDistrict district) {
-        this.district = district;
-    }
+    String statusOfPlayer();
 
-    public void addGold(int golds) {
-        this.golds += golds;
-    }
+    List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict);
 
+    List<DistrictsType> pickListOfDistrict();
 
-    public void setCharacter(CharactersType character) {
-        this.character = character;
-    }
+    int calculateScore();
 
+    boolean getHasCrown();
 
-    public CharactersType getCharacter() {
-        return character;
-    }
+    int countBuildingsByType();
 
-    public ArrayList<DistrictsType> getCity() {
-        return city;
-    }
+    int winGoldsByTypeOfBuildings();
 
-    public void setHasCrown(boolean hasCrown) {
-        this.hasCrown = hasCrown;
+    boolean isCharacter(String type);
 
-    }
+    int getChoice();
 
-
-    public String tryBuild() {
-        List<String> listDistrictName = new ArrayList<>();
-        for (DistrictsType districtsType : city) listDistrictName.add(districtsType.getName());
-        for (int i = 0; i < districtInHand.size(); i++) {
-            DistrictsType district = districtInHand.get(i);
-            if (district.getCost() <= this.getGolds() && !listDistrictName.contains(district.getName()) ) {
-                district.powerOfDistrict(this);
-                city.add(district);
-                setGolds(getGolds() - district.getCost());
-                districtInHand.remove(i);
-                return "a new " + district.name();
-            }
-        }
-        return "nothing";
-    }
-
-
-    public void addDistrict(DistrictsType district) {
-
-        this.districtInHand.add(district);
-
-    }
-
-    public int getNumberOfDistrictInHand() {
-        return districtInHand.size();
-    }
-
-    public int getNumberOfDistrictInCity() {
-        return city.size();
-    }
-
-    public String statusOfPlayer(boolean showColor) {
-        String endColor = "";
-        String colorCharacter = "";
-        if (showColor) {
-            colorCharacter = character.getColor();
-            endColor = RESET;
-        }
-        String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + endColor + "), " + this.golds + " golds, hand {";
-        status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
-        return status;
-    }
-
-    public String statusOfPlayer() {
-        return statusOfPlayer(true);
-    }
-
-    private String getString(boolean showColor, List<DistrictsType> listDistrict) {
-        String returedString = "";
-        String color;
-        String endColor;
-        for (DistrictsType districtsType : listDistrict) {
-            if (showColor) {
-                color = districtsType.getColor();
-                endColor = RESET;
-            } else {
-                color = endColor = "";
-            }
-            returedString += "(" + color + districtsType.getName() + "," + districtsType.getCost() + endColor + ")";
-        }
-        return returedString;
-    }
-
-    public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict) {
-        listDistrict.sort(compareByCost().reversed());
-        List<DistrictsType> listDistrictToBuild = new ArrayList<>();
-        int costOfDistrictToBeBuilt = 0;
-        int indice = 0;
-        int i = 0;
-        while (i < listDistrict.size()) {
-            if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= golds) {
-                costOfDistrictToBeBuilt += listDistrict.get(i).getCost();
-                listDistrictToBuild.add(listDistrict.remove(i));
-                i--;
-                indice++;
-                if (indice == numberOfCardsChosen) break;
-
-            }
-            i++;
-        }
-        while (listDistrictToBuild.size() < numberOfCardsChosen) listDistrictToBuild.add(listDistrict.remove(listDistrict.size()-1));
-
-
-        for (DistrictsType districtNonChosen: listDistrict) {
-            district.addDistrictToDeck(districtNonChosen);
-        }
-        return listDistrictToBuild;
-    }
-
-    public List<DistrictsType> pickListOfDistrict(){
-        List<DistrictsType> listDistrict = new ArrayList<>();
-        for (int i = 0; i < numberOfCardsDrawn; i++) {
-            DistrictsType card = district.getDistrictsInDeck();
-            listDistrict.add(card);
-        }
-        return listDistrict;
-    }
-
-    private Comparator<DistrictsType> compareByCost() {
-        return Comparator.comparingInt(DistrictsType::getCost);
-    }
-
-    public int calculateScore() {
-        int score = 0;
-        for (DistrictsType district : city) {
-            score += district.getScore();
-        }
-        return score;
-    }
-
-
-    public boolean getHasCrown() {
-        return hasCrown;
-    }
-
-
-    public int countBuildingsByType() {
-        int count = 0;
-
-        for (DistrictsType building : city) {
-
-            if(building.getType().equals(this.character.getType()) || building.getType().equals("ecole")){
-                count++;
-            }
-
-        }
-        return count;
-    }
-
-
-    public int winGoldsByTypeOfBuildings() {
-    int oldGolds = this.getGolds();
-        addGold(countBuildingsByType());
-        return this.getGolds() - oldGolds;
-    }
-
-
-    public boolean isCharacter(String type){
-        return this.getCharacter().getType().equals(type);
-    }
-
-
-
+    boolean canBuildADistrictInHand();
 }
-

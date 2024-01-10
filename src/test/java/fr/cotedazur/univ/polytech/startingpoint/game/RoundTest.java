@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ class RoundTest {
 
         game.clearBots();
 
-        Robot robot1 = new Robot("Robot1");
+        Robot robot1 = new RobotRandom("Robot1");
         robot1.setCharacter(CharactersType.MARCHAND);
         robot1.addDistrict(DistrictsType.TAVERNE);
         robot1.setGolds(6);

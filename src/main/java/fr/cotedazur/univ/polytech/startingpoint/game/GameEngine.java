@@ -5,6 +5,8 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
 
 import java.util.*;
 
@@ -32,7 +34,9 @@ public class GameEngine {
     public void initializeBots() {
         String name[] = {"Alban","Sara","Stacy","Nora"};
         for (int i = 0; i < 4; i++) {
-            Robot bot = new Robot(name[i]);
+            Robot bot;
+            if (i == 0)  bot = new RobotWithChoice(name[i]);
+            else bot = new RobotRandom(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
             }
