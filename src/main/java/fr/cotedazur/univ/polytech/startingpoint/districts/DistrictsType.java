@@ -128,6 +128,9 @@ public enum DistrictsType {
         return "(" + getName() + ", " + getCost() + ")";
     }
 
+    /**
+     * @return le type du quartier
+     */
     public String getType() {
         return type;
     }

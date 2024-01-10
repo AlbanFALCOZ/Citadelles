@@ -22,7 +22,8 @@ class WinnerTest {
 
     @Test
     void testCalculateScores() {
-        gameEngine.assignRandomCharacterToRobots();
+        gameEngine.assignCrown();
+        gameEngine.robotsPickCharacters();
         Round round = new Round(gameEngine.getBots());
         round.playTurns();
         winner.calculateScores();
@@ -42,7 +43,8 @@ class WinnerTest {
 
     @Test
     void testGetWinner() {
-        gameEngine.assignRandomCharacterToRobots();
+        gameEngine.assignCrown();
+        gameEngine.robotsPickCharacters();
         Round round = new Round(gameEngine.getBots());
         round.playTurns();
         winner.calculateScores();

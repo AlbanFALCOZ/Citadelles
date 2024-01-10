@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.complements.Strategies;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
@@ -16,7 +15,6 @@ public class Robot {
     private int golds;
     private int numberOfCardsDrawn = 2;
     private int numberOfCardsChosen = 1;
-    private Strategies strategies;
     private DeckDistrict district = new DeckDistrict();
     private List<DistrictsType> districtInHand;
     private CharactersType character;
@@ -246,8 +244,8 @@ public class Robot {
     }
 
 
-    public boolean isCharacter(String type){
-        if (this.getCharacter().getType().equals(type)) {
+    public boolean isCharacter(String role){
+        if (this.getCharacter().getRole().equals(role)) {
             return true;
         }
         return false;

@@ -21,7 +21,7 @@ class GameEngineTest {
         gameEngine = new GameEngine();
     }
 
-
+    @Test
     void testInitializeBots() {
         for (Robot bot : gameEngine.getBots()) {
             assertEquals(4, bot.getNumberOfDistrictInHand(), "Chaque robot doit avoir 4 districts uniques");
@@ -29,18 +29,7 @@ class GameEngineTest {
     }
 
     @Test
-    void assignRandomCharacterToRobots() {
-        gameEngine.assignRandomCharacterToRobots();
-        Set<CharactersType> characters = new HashSet<>();
-        for (Robot bot : gameEngine.getBots()) {
-            characters.add(bot.getCharacter());
-        }
-        assertEquals(4, characters.size());
-    }
-
-    @Test
     void testassignCrown() {
-        gameEngine.assignRandomCharacterToRobots();
         gameEngine.assignCrown();
         int numberOfCrown = 0;
         for (Robot bot : gameEngine.getBots()) {
