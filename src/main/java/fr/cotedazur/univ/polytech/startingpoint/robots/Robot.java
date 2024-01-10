@@ -68,7 +68,15 @@ public interface Robot {
 
     boolean isCharacter(String type);
 
+
+
+    void setPower(Power aPower);
+
     int getChoice();
 
     boolean canBuildADistrictInHand();
+
+    Power getPower();
+
+
 }

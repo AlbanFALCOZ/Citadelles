@@ -45,8 +45,8 @@ public class ActionOfBotDuringARound {
         System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
     }
 
-    public void printActionOfBotWhoGainedGold() {
-        System.out.println(bot.getName() + " earn 2 golds. Total golds now: " + bot.getGolds());
+    public void printActionOfBotWhoGainedGold(int goldGained ) {
+        System.out.println(bot.getName() + " earn " + goldGained +" golds. Total golds now: " + bot.getGolds());
     }
 
     public void printBuildingAndPowerOfBot(String hasBuilt, int goldsWon) {
@@ -55,4 +55,6 @@ public class ActionOfBotDuringARound {
         System.out.println(bot.statusOfPlayer());
         System.out.println("\n-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
     }
+
+
 }

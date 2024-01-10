@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
@@ -17,7 +18,9 @@ public class GameEngine {
     private DeckCharacters deckCharacters;
     private Round round;
     private boolean systemPrint = false;
-    
+
+    private Power power = new Power("a power") ;
+
     public GameEngine(boolean systemPrint) {
         this.systemPrint = systemPrint;
         deckDistricts = new DeckDistrict();
@@ -39,6 +42,7 @@ public class GameEngine {
             else bot = new RobotRandom(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
+                bot.setPower(power);
             }
             bots.add(bot);
         }
