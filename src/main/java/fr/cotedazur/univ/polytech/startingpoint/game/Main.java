@@ -5,10 +5,16 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.List;
 
+/**
+ * cette classe permet de jouer une partie de Citadelle et de déterminer le gagnant
+ */
 public class Main {
 
+    /**
+     * @param args les arguments
+     * cette méthode permet de jouer une partie de Citadelle et de déterminer le gagnant
+     */
     public static void main (String[] args) {
-
 
         GameEngine Game = new GameEngine();
         Game.gameTurns();
