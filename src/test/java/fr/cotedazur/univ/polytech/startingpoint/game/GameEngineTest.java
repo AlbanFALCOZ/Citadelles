@@ -74,5 +74,4 @@ class GameEngineTest {
         assertTrue(gameEngine.isBuiltEigthDistrict(), "Le jeu doit être terminé");
     }
 
-
 }
