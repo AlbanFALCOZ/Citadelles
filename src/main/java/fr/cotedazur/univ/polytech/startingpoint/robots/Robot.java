@@ -81,13 +81,6 @@ public class Robot {
     }
 
     /**
-     * @return le score du robot
-     */
-    public int getScore() {
-        return score;
-    }
-
-    /**
      * @return le nombre de districts tirés
      */
     public int getNumberOfCardsDrawn() {
