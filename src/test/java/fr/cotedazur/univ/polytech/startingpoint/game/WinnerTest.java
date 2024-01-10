@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import org.junit.jupiter.api.Test;
@@ -60,6 +61,17 @@ class WinnerTest {
                 assertTrue(winners.contains(bot.getName()));
             }
         }
+    }
+
+    @Test
+    void testShowWinners() {
+        Robot robot1 = new Robot("Robot1");
+        Robot robot2 = new Robot("Robot2");
+        robot1.setScore(10);
+        robot2.setScore(10);
+        Winner winner = new Winner(List.of(robot1, robot2));
+        assertEquals("This is an equality ! The winners are: Robot1, Robot2", winner.showWinners());
+
     }
 
 

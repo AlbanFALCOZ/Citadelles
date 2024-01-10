@@ -73,6 +73,21 @@ public class Robot {
     }
 
     /**
+     * @param score le score du robot
+     *              cette méthode permet de modifier le score du robot
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    /**
+     * @return le score du robot
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
      * @return le nombre de districts tirés
      */
     public int getNumberOfCardsDrawn() {
