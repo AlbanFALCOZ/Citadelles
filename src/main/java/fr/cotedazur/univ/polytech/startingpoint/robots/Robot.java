@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Robot {
 
-    private String name;
+    private final String name;
     private int score;
     private int golds;
     private int numberOfCardsDrawn = 2;
@@ -112,9 +112,11 @@ public class Robot {
 
 
     public String tryBuild() {
+        List<String> listDistrictName = new ArrayList<>();
+        for (DistrictsType districtsType : city) listDistrictName.add(districtsType.getName());
         for (int i = 0; i < districtInHand.size(); i++) {
             DistrictsType district = districtInHand.get(i);
-            if (district.getCost() <= this.getGolds()) {
+            if (district.getCost() <= this.getGolds() && !listDistrictName.contains(district.getName()) ) {
                 district.powerOfDistrict(this);
                 city.add(district);
                 setGolds(getGolds() - district.getCost());
@@ -160,14 +162,14 @@ public class Robot {
         String returedString = "";
         String color;
         String endColor;
-        for (int numberOfDistrictInCity = 0; numberOfDistrictInCity < listDistrict.size(); numberOfDistrictInCity++) {
+        for (DistrictsType districtsType : listDistrict) {
             if (showColor) {
-                color = listDistrict.get(numberOfDistrictInCity).getColor();
+                color = districtsType.getColor();
                 endColor = RESET;
             } else {
                 color = endColor = "";
             }
-            returedString += "(" + color + listDistrict.get(numberOfDistrictInCity).getName() + "," + listDistrict.get(numberOfDistrictInCity).getCost() + endColor + ")";
+            returedString += "(" + color + districtsType.getName() + "," + districtsType.getCost() + endColor + ")";
         }
         return returedString;
     }
@@ -247,10 +249,7 @@ public class Robot {
 
 
     public boolean isCharacter(String type){
-        if (this.getCharacter().getType().equals(type)) {
-            return true;
-        }
-        return false;
+        return this.getCharacter().getType().equals(type);
     }
 
 
