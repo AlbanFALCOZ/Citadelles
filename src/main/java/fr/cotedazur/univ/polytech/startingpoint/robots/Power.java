@@ -63,12 +63,28 @@ public class Power {
             }
         } else {
             System.out.println("Salut");
+        }
+    }
 
+    public DistrictsType districtToDestroy(Robot destructeur, Robot victime){
+        if(destructeur.getGolds() == victime.priceOfDistrictInCity()) {
+            return victime.districtWithPrice(victime.priceOfDistrictInCity());
+        }
+        return null;
+    }
 
+    public int condottiere(Robot destructeur, Robot victime){
+        DistrictsType district = districtToDestroy(destructeur, victime);
+        int destructeur_golds = destructeur.getGolds() + 1;
+        if(destructeur.getCharacter().getType().equals("condottiere")){
+            if(!(victime.getCharacter().getType().equals("eveque"))){
+                victime.getCity().remove(district);
+                destructeur.setGolds(destructeur_golds - district.getCost());
+                return destructeur.getGolds();
+
+            }
 
         }
-
-
-
+        return 0;
     }
 }

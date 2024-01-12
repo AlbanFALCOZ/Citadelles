@@ -267,6 +267,23 @@ public class RobotRandom implements Robot{
         return false;
     }
 
+    public int priceOfDistrictInCity(){
+        if(this.getNumberOfCardsDrawn() != 0){
+            for(DistrictsType district : city){
+                return district.getCost();
+            }
+        }
+        return 0;
+
+    }
+
+    public DistrictsType districtWithPrice(int cost){
+        for (DistrictsType district : city){
+            return district;
+        }
+        return null;
+    }
+
     /*
     public Power getPower(){
         return power ;
