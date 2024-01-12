@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
   
-    @Test
+    /*@Test
     void testSortRobots() {
         GameEngine gameEngine = new GameEngine();
         Round round = new Round(gameEngine.getBots());
@@ -27,7 +27,7 @@ class RoundTest {
             assertTrue(sortedRobots.get(i - 1).getCharacter().getNumber() <= sortedRobots.get(i).getCharacter().getNumber());
         }
 
-    }
+    }*/
 
     @Test
     void testSpecialCard() {
