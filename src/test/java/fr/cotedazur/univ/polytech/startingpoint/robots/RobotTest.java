@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -207,7 +208,7 @@ public class RobotTest {
     }
 
     @Test
-    void testScoreAvecUniversiteEtDracoport() {
+    public void testScoreAvecUniversiteEtDracoport() {
         robot.setGolds(100);
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.addDistrict(DistrictsType.DRACOPORT);
@@ -218,7 +219,7 @@ public class RobotTest {
     }
 
     @Test
-    void testNumberOfCardsDrawnWithObservatoire() {
+    public void testNumberOfCardsDrawnWithObservatoire() {
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.setGolds(1000);
         robot.addDistrict(DistrictsType.OBSERVATOIRE);
@@ -228,7 +229,7 @@ public class RobotTest {
     }
 
     @Test
-    void districtAlreadyInCity() {
+    public void districtAlreadyInCity() {
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.setGolds(1000);
         robot.addDistrict(DistrictsType.OBSERVATOIRE);
@@ -240,4 +241,17 @@ public class RobotTest {
         robot.tryBuild();
         assertEquals(2,robot.getCity().size());
     }
+
+    @Test
+    public void testTargetSelection() {
+        Robot thief = new Robot("Thief");
+        Robot target1 = new Robot("Target1");
+        Robot target2 = new Robot("Target2");
+
+        List<Robot> otherBots = Arrays.asList(target1, target2);
+        thief.chooseTarget(otherBots);
+
+        assertTrue(otherBots.contains(thief.getTarget()), "La cible devrait être parmi les autres bots");
+    }
+
 }

@@ -8,9 +8,13 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 
+/**
+ * cette classe permet de jouer une partie de Citadelle et de déterminer le gagnant
+ */
 public class Main {
 
-    public static void main (String[] args) throws FileNotFoundException {
+
+    public static void main (String[] args) {
         //testBots();
         showGame();
     }

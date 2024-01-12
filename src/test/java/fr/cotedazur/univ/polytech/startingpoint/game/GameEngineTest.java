@@ -21,7 +21,7 @@ class GameEngineTest {
         gameEngine = new GameEngine();
     }
 
-
+    @Test
     void testInitializeBots() {
         for (Robot bot : gameEngine.getBots()) {
             assertEquals(4, bot.getNumberOfDistrictInHand(), "Chaque robot doit avoir 4 districts uniques");
@@ -29,18 +29,7 @@ class GameEngineTest {
     }
 
     @Test
-    void assignRandomCharacterToRobots() {
-        gameEngine.assignRandomCharacterToRobots();
-        Set<CharactersType> characters = new HashSet<>();
-        for (Robot bot : gameEngine.getBots()) {
-            characters.add(bot.getCharacter());
-        }
-        assertEquals(4, characters.size());
-    }
-
-    @Test
     void testassignCrown() {
-        gameEngine.assignRandomCharacterToRobots();
         gameEngine.assignCrown();
         int numberOfCrown = 0;
         for (Robot bot : gameEngine.getBots()) {
@@ -50,4 +39,39 @@ class GameEngineTest {
         }
         assertEquals(1, numberOfCrown);
     }
+
+    @Test
+    void testRobotsPickCharacters() {
+        gameEngine.assignCrown();
+        gameEngine.robotsPickCharacters();
+        Set<CharactersType> characters = new HashSet<>();
+        for (Robot bot : gameEngine.getBots()) {
+            characters.add(bot.getCharacter());
+        }
+        assertEquals(4, characters.size(), "Chaque robot doit avoir un personnage unique");
+    }
+
+    @Test
+    void testClearBots() {
+        gameEngine.clearBots();
+        assertEquals(0, gameEngine.getBots().size(), "La liste des robots doit être vide");
+    }
+
+    @Test
+    void testAddRobot() {
+        gameEngine.clearBots();
+        Robot robot = new Robot("Robot");
+        gameEngine.addRobot(robot);
+        assertEquals(1, gameEngine.getBots().size(), "La liste des robots doit contenir un robot");
+    }
+
+    @Test
+    void testIsBuiltEigthDistrict() {
+        gameEngine.assignCrown();
+        gameEngine.robotsPickCharacters();
+        Round round = new Round(gameEngine.getBots());
+        gameEngine.gameTurns();
+        assertTrue(gameEngine.isBuiltEigthDistrict(), "Le jeu doit être terminé");
+    }
+
 }
