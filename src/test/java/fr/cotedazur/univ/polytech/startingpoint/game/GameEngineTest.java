@@ -1,15 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +19,7 @@ class GameEngineTest {
         gameEngine = new GameEngine();
     }
 
-
+    @Test
     void testInitializeBots() {
         for (Robot bot : gameEngine.getBots()) {
             assertEquals(4, bot.getNumberOfDistrictInHand(), "Chaque robot doit avoir 4 districts uniques");
@@ -29,18 +27,7 @@ class GameEngineTest {
     }
 
     @Test
-    void assignRandomCharacterToRobots() {
-        gameEngine.assignRandomCharacterToRobots();
-        Set<CharactersType> characters = new HashSet<>();
-        for (Robot bot : gameEngine.getBots()) {
-            characters.add(bot.getCharacter());
-        }
-        assertEquals(4, characters.size());
-    }
-
-    @Test
     void testassignCrown() {
-        gameEngine.assignRandomCharacterToRobots();
         gameEngine.assignCrown();
         int numberOfCrown = 0;
         for (Robot bot : gameEngine.getBots()) {
@@ -51,89 +38,99 @@ class GameEngineTest {
         assertEquals(1, numberOfCrown);
     }
 
-    @Test
-    void testCalculateScores() {
-        gameEngine.assignRandomCharacterToRobots();
-        Round round = new Round(gameEngine.getBots());
-        round.playTurns();
-        gameEngine.calculateScores();
-        int maxScore = 0;
-        for (Robot bot : gameEngine.getBots()) {
-            if (bot.calculateScore() > maxScore) {
-                maxScore = bot.calculateScore();
-            }
-        }
-        List<String> winners = gameEngine.getWinners();
-        for (Robot bot : gameEngine.getBots()) {
-            if (bot.calculateScore() == maxScore) {
-                assertTrue(winners.contains(bot.getName()));
-            }
-        }
-    }
 
     @Test
-    void testGetWinner() {
-        gameEngine.assignRandomCharacterToRobots();
-        Round round = new Round(gameEngine.getBots());
-        round.playTurns();
-        gameEngine.calculateScores();
-        int maxScore = 0;
-        for (Robot bot : gameEngine.getBots()) {
-            if (bot.calculateScore() > maxScore) {
-                maxScore = bot.calculateScore();
-            }
-        }
-        List<String> winners = gameEngine.getWinners();
-        for (Robot bot : gameEngine.getBots()) {
-            if (bot.calculateScore() == maxScore) {
-                assertTrue(winners.contains(bot.getName()));
-            }
-        }
-    }
-
-
-
-    @Test
-    public void testSingleWinner() {
+    void testIsBuiltEigthDistrict_OneRobotHasEightDistricts() {
         GameEngine game = new GameEngine();
-        game.clearBots();
-        Robot robot1 = new Robot("Robot1"); // Score élevé
-        robot1.addDistrict(DistrictsType.PALAIS);
-        robot1.setGolds(6);
-        robot1.tryBuild();
-        game.addRobot(robot1);
-        Robot robot2 = new Robot("Robot2"); // Score inférieur
-        robot2.addDistrict(DistrictsType.MANOIR);
-        robot2.setGolds(6);
-        robot2.tryBuild();
-        game.addRobot(robot2);
-        List<String> winners = game.getWinners();
-        //System.out.println(winners);
-        assertEquals(1, winners.size());
-        assertEquals("Robot1", winners.get(0));
+        Robot bot = gameEngine.getBots().get(0);
+
+        bot.setCharacter(CharactersType.MARCHAND);
+        bot.setGolds(30);
+        bot.addDistrict(DistrictsType.PRISON);
+        bot.addDistrict(DistrictsType.PALAIS);
+        bot.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        bot.addDistrict(DistrictsType.TEMPLE);
+        bot.addDistrict(DistrictsType.PORT);
+        bot.addDistrict(DistrictsType.TAVERNE);
+        bot.addDistrict(DistrictsType.MANOIR);
+        bot.addDistrict(DistrictsType.CHATEAU);
+
+
+        for (int i = 0; i < 8; i++) {
+                bot.tryBuild();
+        }
+
+        assertTrue(gameEngine.isBuiltEigthDistrict(), "Un robot devrait avoir construit 8 districts.");
     }
 
 
     @Test
-    public void testMultipleWinners() {
+    void testRobotsPickCharacters() {
+        GameEngine game = new GameEngine();
+        gameEngine.assignCrown();
+
+        gameEngine.robotsPickCharacters();
+
+        for (Robot bot : gameEngine.getBots()) {
+            assertNotNull(bot.getCharacter(), "Chaque robot doit avoir un personnage.");
+        }
+
+        Robot robotWithCrown = null;
+        for (Robot bot : gameEngine.getBots()) {
+            if (bot.getHasCrown()) {
+                robotWithCrown = bot;
+                break;
+            }
+        }
+
+        assertNotNull(robotWithCrown, "Il devrait y avoir un robot avec la couronne.");
+
+        CharactersType characterOfCrowned = robotWithCrown.getCharacter();
+        assertNotNull(characterOfCrowned, "Le robot avec la couronne doit avoir un personnage.");
+
+        boolean roiDistributed = gameEngine.getBots().stream()
+                .anyMatch(bot -> bot.getCharacter() == CharactersType.ROI);
+        assertTrue(roiDistributed, "Le personnage ROI doit être distribué.");
+    }
+
+
+    @Test
+    void testGameTurns() {
         GameEngine game = new GameEngine();
 
-        Robot robot1 = new Robot("Robot1");
-        robot1.addDistrict(DistrictsType.MONASTERE);
-        robot1.setGolds(6);
-        robot1.tryBuild();
-        game.addRobot(robot1);
+        for (Robot bot : gameEngine.getBots()) {
+            assertEquals(0, bot.getNumberOfDistrictInCity(), "Les robots ne devraient pas avoir de districts construits au début.");
+        }
 
-        Robot robot2 = new Robot("Robot2");
-        robot2.addDistrict(DistrictsType.MANOIR);
-        robot2.setGolds(6);
-        robot2.tryBuild();
-        game.addRobot(robot2);
+        gameEngine.gameTurns();
 
-        List<String> winners = game.getWinners();
-        assertTrue(winners.size() > 1);
+        boolean atLeastOneDistrictBuilt = gameEngine.getBots().stream()
+                .anyMatch(bot -> bot.getNumberOfDistrictInCity() > 0);
+        assertTrue(atLeastOneDistrictBuilt, "Au moins un robot devrait avoir construit des districts.");
+
+        assertTrue(gameEngine.isBuiltEigthDistrict(),
+                "Le jeu devrait se terminer par un robot ayant construit 8 districts.");
     }
+
+
+    @Test
+    void testDestroyCharacters() {
+        GameEngine gameEngine = new GameEngine();
+
+        DeckCharacters deckCharacters = new DeckCharacters();
+        List<CharactersType> charactersInHand = deckCharacters.getCharactersInHand();
+
+        int originalSize = charactersInHand.size();
+
+        gameEngine.destroyCharacters(charactersInHand);
+        assertEquals(originalSize - 3, charactersInHand.size(), "3 personnages doivent être retirés de la main.");
+
+        assertTrue(charactersInHand.contains(CharactersType.ROI), "Le personnage 'ROI' doit être présent dans la main.");
+
+        int roiCount = Collections.frequency(charactersInHand, CharactersType.ROI);
+        assertEquals(1, roiCount, "Il ne doit y avoir qu'un seul 'ROI' dans la main.");
+    }
+
 
 
 }
-

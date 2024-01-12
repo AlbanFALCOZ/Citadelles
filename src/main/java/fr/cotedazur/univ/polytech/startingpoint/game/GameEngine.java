@@ -8,6 +8,9 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.*;
 
+/**
+ * cette classe représente le moteur du jeu
+ */
 public class GameEngine {
 
     private ArrayList<Robot> bots;
@@ -15,6 +18,14 @@ public class GameEngine {
     private DeckCharacters deckCharacters;
     protected Round round;
 
+    /**
+     * Constructeur de la classe GameEngine
+     * On initialise le deck de districts
+     * On initialise le deck de personnages
+     * On initialise la liste des robots*
+     * On initialise le round
+     * On initialise les robots
+     */
     public GameEngine() {
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
@@ -24,6 +35,12 @@ public class GameEngine {
 
     }
 
+    /**
+     * cette méthode permet d'initialiser les robots
+     * On ajoute 4 robots dans la liste des robots
+     * On ajoute 4 districts dans la main de chaque robot
+     * On mélange les districts
+     */
     public void initializeBots() {
         String name[] = {"Alban","Sara","Stacy","Nora"};
         for (int i = 0; i < 4; i++) {
@@ -36,10 +53,20 @@ public class GameEngine {
 
     }
 
+    /**
+     * @return la liste des robots
+     */
     public List<Robot> getBots() {
         return bots;
     }
 
+    /**
+     * cette méthode permet de distribuer les personnages aux robots
+     * On mélange les personnages
+     * on donne au robot qui a la couronne son personnage en premier
+     * on donne aux autres robots leurs personnages
+     * on affiche le personnage de chaque robot
+     */
     public void robotsPickCharacters() {
         int i = 1;
         List<CharactersType> ListCharacters = deckCharacters.getCharactersInHand();
@@ -48,27 +75,36 @@ public class GameEngine {
         for (Robot bot : bots ){
             if(bot.getHasCrown()){
                 bot.setCharacter(ListCharacters.get(0));
-                System.out.println(bot.getName() +" With crown Picked " +ListCharacters.get(0).getColor() + ListCharacters.get(0).getType() + bot.getRESET());
+                System.out.println(bot.getName() +" With crown Picked " +ListCharacters.get(0).getColor() + ListCharacters.get(0).getRole() + bot.getRESET());
                 ListCharacters.remove(ListCharacters.get(0));
             }
         }
         for (Robot bot : bots){
             if(!bot.getHasCrown()){
                 bot.setCharacter(ListCharacters.get(i));
-                System.out.println(bot.getName() +" Picked " +ListCharacters.get(i).getColor() + ListCharacters.get(i).getType() + bot.getRESET());
+                System.out.println(bot.getName() +" Picked " +ListCharacters.get(i).getColor() + ListCharacters.get(i).getRole() + bot.getRESET());
                 i++;
             }
         }
     }
 
+    /**
+     * cette méthode permet de donner la couronne à un robot
+     * On mélange les robots
+     * On donne la couronne au premier robot de la liste
+     * On trie les robots par ordre croissant de numéro de personnage
+     */
     public void assignCrown(){
         Collections.shuffle(bots);
         bots.get(0).setHasCrown(true);
         System.out.println(bots.get(0).getName() + " has crown and start the call of the characters");
-        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+        //Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
 
     }
 
+    /**
+     * @return true si un robot a construit 8 districts
+     */
     public boolean isBuiltEigthDistrict(){
         for (Robot bot : bots){
             if(bot.getNumberOfDistrictInCity()==8){
@@ -78,27 +114,19 @@ public class GameEngine {
         return false;
     }
 
-    public void assignRandomCharacterToRobots() {
-        // Get the characters available in hand
-        List<CharactersType> charactersInHand = deckCharacters.getCharactersInHand();
 
-        // Shuffle the characters
-        Collections.shuffle(charactersInHand);
-
-        // Assign characters to each bot
-        for (int i = 0; i < bots.size(); i++) {
-            bots.get(i).setCharacter(charactersInHand.get(i));
-        }
-    }
-
-
+    /**
+     * cette méthode permet de jouer les tours du jeu
+     * On crée un nouveau round
+     * On donne la couronne au premier robot de la liste
+     *
+     */
     public void gameTurns(){
         round = new Round(bots);
         int count = 0;
         System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-        assignRandomCharacterToRobots();
         assignCrown();
         robotsPickCharacters();
         round.playTurns();
@@ -118,18 +146,7 @@ public class GameEngine {
             round = new Round(bots);
         }
 
-
     }
-
-
-    public void calculateScores() {
-        for (Robot bot : bots) {
-            int score = bot.calculateScore();
-            System.out.println(bot.getName() + " has a score of " + score);
-        }
-
-    }
-
 
     public void clearBots() {
         bots.clear();
@@ -140,50 +157,13 @@ public class GameEngine {
         this.bots.add(robot);
     }
 
-    public List<String> getWinners() {
-
-        List<Robot> winners = new ArrayList<>();
-        int highestScore = -1;
-
-        for (Robot bot : bots) {
-            int score = bot.calculateScore();
-            if (score > highestScore) {
-                winners.clear();
-                winners.add(bot);
-                highestScore = score;
-            }
-            else if (score == highestScore) {
-                winners.add(bot);
-            }
-        }
-
-        List<String> winnerNames = new ArrayList<>();
-        for (Robot winner : winners) {
-            winnerNames.add(winner.getName());
-        }
-
-        return winnerNames;
-    }
-
-
-    public void showWinners() {
-        List<String> winners = getWinners();
-        if (winners.size() == 1) {
-            System.out.println("The winner is : " + winners.get(0));
-        }
-        else {
-            System.out.println("This is an equality ! The winners are: " + String.join(", ", winners));
-        }
-    }
-
-
     public void destroyCharacters(List<CharactersType> charactersInHand) {
         charactersInHand.remove(CharactersType.ROI);
         Collections.shuffle(charactersInHand, new Random());
         for (int i = 0; i < 3; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
-                System.out.println("Destroyed character: " + destroyedCharacter.getColor() + destroyedCharacter.getType() + bots.get(0).getRESET());
+                System.out.println("Destroyed character: " + destroyedCharacter.getColor() + destroyedCharacter.getRole() + bots.get(0).getRESET());
             }
         }
 
@@ -192,7 +172,5 @@ public class GameEngine {
 
 
     }
-
-
 
 }

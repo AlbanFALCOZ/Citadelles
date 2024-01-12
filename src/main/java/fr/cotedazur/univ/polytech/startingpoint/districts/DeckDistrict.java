@@ -4,10 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * cette classe représente le deck de districts
+ */
 public class DeckDistrict {
 
     private List<DistrictsType> districtsInDeck;
 
+    /**
+     * Constructeur de la classe DeckDistrict
+     * On ajoute les cartes dans le deck
+     * On mélange le deck
+     */
     public DeckDistrict() {
         this.districtsInDeck = new ArrayList<>();
         for (int numbOfCard = 0; numbOfCard < 5; numbOfCard++) {
@@ -54,23 +62,17 @@ public class DeckDistrict {
         Collections.shuffle(districtsInDeck);
     }
 
+    /**
+     * @return la liste des districts dans le deck
+     */
     public DistrictsType getDistrictsInDeck() {
         return districtsInDeck.remove(0);
     }
 
-    public int getDeckSize() {
-        return districtsInDeck.size();
-    }
-
-
-
-    public static void main (String[] args){
-        DeckDistrict deckDistrict = new DeckDistrict();
-        System.out.println(deckDistrict.getDistrictsInDeck().name);
-        System.out.println(deckDistrict.getDeckSize());
-    }
-
-
+    /**
+     * @param district le district à ajouter au deck
+     *                 ajoute un district au deck
+     */
     public void addDistrictToDeck(DistrictsType district) {
         this.districtsInDeck.add(district);
     }

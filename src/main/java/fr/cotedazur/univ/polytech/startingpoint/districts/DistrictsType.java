@@ -4,7 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 
 /**
- * Cet enum prend englobe toutes les cartes quartiers dont on aura besoin
+ * Cet enum englobe toutes les cartes quartiers dont on aura besoin
  * le long de la partie
  * les quartiers posséde , un nom , un cout , une couleur et un score
  * les couleurs sont null car elles ne seront pas prise en considération
@@ -47,7 +47,7 @@ public enum DistrictsType {
     OBSERVATOIRE("Observatoire", 5, "\u001B[35m", 5, "default"),
     CIMETIERE("Cimetière", 5, "\u001B[35m", 5, "default"),
     UNIVERSITE("Université", 6, "\u001B[35m", 8, "default"),
-    DRACOPORT("Dracoport", 6, "\u001B[35m", 8, "default");
+    DRACOPORT("Dracoport", 6, "\u001B[35m", 8, "default")   ;
 
 
     int cost ;
@@ -57,6 +57,14 @@ public enum DistrictsType {
     int score ;
     String type;
 
+    /**
+     * Il s'agit du constructeur de l'enum DistrictsType
+     * @param name nom du quartier
+     * @param cost cout du quartier
+     * @param color couleur du quartier
+     * @param score score du quartier
+     * @param type type du quartier
+     */
     DistrictsType(String name , int cost , String color , int score, String type ){
         this.cost = cost ;
         this.name = name ;
@@ -65,26 +73,45 @@ public enum DistrictsType {
         this.type=type;
     }
 
+    /**
+     * @return le cout du quartier
+     */
     public int getCost() {
         return cost;
     }
 
+    /**
+     * @return le nom du quartier
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return la couleur du quartier
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * @return le score du quartier
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * @return la couleur de reset
+     */
     public String getColorReset() {
         return colorReset;
     }
 
+    /**
+     * @param player le joueur qui possède le quartier
+     * on vérifie si le quartier est un quartier spécial c'est à dire un quartier qui a un pouvoir
+     */
     public void powerOfDistrict(Robot player) {
         if (name.equals("Observatoire")) {
             player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn()+1);
@@ -93,10 +120,17 @@ public enum DistrictsType {
             if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen()+1);
         }
     }
+
+    /**
+     * @return le nom et le cout du quartier
+     */
     public String toString() {
         return "(" + getName() + ", " + getCost() + ")";
     }
 
+    /**
+     * @return le type du quartier
+     */
     public String getType() {
         return type;
     }
