@@ -47,7 +47,7 @@ public enum DistrictsType {
     OBSERVATOIRE("Observatoire", 5, "\u001B[35m", 5, "default"),
     CIMETIERE("Cimetière", 5, "\u001B[35m", 5, "default"),
     UNIVERSITE("Université", 6, "\u001B[35m", 8, "default"),
-    DRACOPORT("Dracoport", 6, "\u001B[35m", 8, "default");
+    DRACOPORT("Dracoport", 6, "\u001B[35m", 8, "default")   ;
 
 
     int cost ;

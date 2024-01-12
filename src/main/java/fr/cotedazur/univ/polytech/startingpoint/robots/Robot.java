@@ -25,6 +25,7 @@ public class Robot {
     private ArrayList<DistrictsType> city;
 
     private boolean hasCrown;
+
     private Robot target;
 
 
@@ -338,6 +339,7 @@ public class Robot {
     }
 
 
+
     /**
      * @param role le rôle du personnage
      * @return true si le robot a le personnage donné en paramètre, false sinon
@@ -348,6 +350,7 @@ public class Robot {
         }
         return false;
     }
+
 
 
     /**
@@ -361,6 +364,7 @@ public class Robot {
         this.target = target;
     }
 
+  
     /**
      * @return la cible du voleur
      */

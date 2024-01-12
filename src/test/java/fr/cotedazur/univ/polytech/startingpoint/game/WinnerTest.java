@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
+
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
@@ -62,6 +63,7 @@ class WinnerTest {
             }
         }
     }
+
 
     @Test
     void testShowWinners() {
