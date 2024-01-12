@@ -14,7 +14,14 @@ public class Power {
 
 
 
-
+    public void choosePowerOfBot(Robot bot) {
+        if (bot.getCharacter().isCharacter("marchand")) {
+            marchand(bot);
+        }
+        else if (bot.getCharacter().isCharacter("architecte")) {
+            //architecte(bot);
+        }
+    }
    
     public void marchand(Robot bot){
         //Nouvelle action
@@ -22,7 +29,8 @@ public class Power {
         //Since the player is a seller , he earns 1 gold
         bot.addGold(1);
         //Then the classic scenario occurs
-        action.printActionOfBotWhoGainedGold(1);
+        action.printActionOfSellerBotWhoGainedGold();
+        /*
         bot.addGold(2);
         action.printActionOfBotWhoGainedGold(2);
         List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
@@ -32,7 +40,7 @@ public class Power {
         bot.tryBuild();
         action.printActionOfBotWhoHasBuilt();
 
-
+         */
     }
 
 

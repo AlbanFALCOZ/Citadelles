@@ -114,7 +114,7 @@ public class GameEngine {
         assignRandomCharacterToRobots();
         assignCrown();
         robotsPickCharacters();
-        while(!isBuiltEigthDistrict() && comptTurn++>=1){
+        while(!isBuiltEigthDistrict()){
             if (systemPrint) System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
             bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
             for (Robot bot : bots) {

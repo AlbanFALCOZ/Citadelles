@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.ArrayList;
@@ -70,9 +71,13 @@ public class Round {
         this.sortRobots();
         for (Robot bot : bots) {
             int choice = bot.getChoice();
+            /*
             if(bot.getCharacter() == CharactersType.MARCHAND){
                 choice = 2;
             }
+             */
+            Power powerOfBot = new Power(bot.getName());
+            powerOfBot.choosePowerOfBot(bot);
 
             ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
             actionOfBotDuringARound.startTurnOfBot();
@@ -89,12 +94,15 @@ public class Round {
                     actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
                     actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
                     break;
+                /*
                 case 2 :
                     bot.getPower().marchand(bot);
                     break ;
                 case 3 :
                     bot.getPower().architecte(bot);
                     break;
+
+                 */
                 default:
                     break;
             }

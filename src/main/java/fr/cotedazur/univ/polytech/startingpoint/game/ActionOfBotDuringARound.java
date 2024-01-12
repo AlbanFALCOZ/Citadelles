@@ -23,6 +23,7 @@ public class ActionOfBotDuringARound {
 
     public void addListOfDistrict(List<DistrictsType> listDistrictDrawn, List<DistrictsType> listDistrictPicked) {
         this.listDistrictDrawn = listDistrictDrawn;
+        listDistrictDrawn.addAll(listDistrictPicked);
         this.listDistrictPicked = listDistrictPicked;
     }
 
@@ -45,8 +46,13 @@ public class ActionOfBotDuringARound {
         System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
     }
 
-    public void printActionOfBotWhoGainedGold(int goldGained ) {
-        System.out.println(bot.getName() + " earn " + goldGained +" golds. Total golds now: " + bot.getGolds());
+    public void printActionOfBotWhoGainedGold(int goldGained) {
+        System.out.println(bot.getName() + " earned " + goldGained +" golds. Total golds now: " + bot.getGolds());
+    }
+
+    public void printActionOfSellerBotWhoGainedGold() {
+        System.out.println("Yolo");
+        System.out.println("By being a seller, " + bot.getName() + " earned 1 gold. Total golds now: " + bot.getGolds());
     }
 
     public void printBuildingAndPowerOfBot(String hasBuilt, int goldsWon) {

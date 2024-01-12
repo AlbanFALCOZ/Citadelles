@@ -46,7 +46,7 @@ public enum CharactersType {
     }
 
     public boolean isCharacter(String type){
-        if (this.getType() == type) {
+        if (this.getType().equals(type)) {
             return true;
         }
         return false;
