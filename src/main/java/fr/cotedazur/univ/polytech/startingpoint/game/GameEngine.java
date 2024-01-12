@@ -19,7 +19,7 @@ public class GameEngine {
     private Round round;
     private boolean systemPrint = false;
 
-    private Power power = new Power("a power") ;
+    //private Power power = new Power("a power") ;
 
     public GameEngine(boolean systemPrint) {
         this.systemPrint = systemPrint;
@@ -42,7 +42,7 @@ public class GameEngine {
             else bot = new RobotRandom(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
-                bot.setPower(power);
+                //bot.setPower(power);
             }
             bots.add(bot);
         }

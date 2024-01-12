@@ -7,15 +7,17 @@ import java.util.List;
 
 public class Power {
 
-    String name ;
-    public Power(String name){
+    private String name ;
+    private ActionOfBotDuringARound action;
+    public Power(String name, ActionOfBotDuringARound action){
         this.name = name ;
+        this.action = action;
     }
 
 
 
     public void choosePowerOfBot(Robot bot) {
-        if (bot.getCharacter().isCharacter("marchand")) {
+        if (bot.getCharacter().getType().equals("marchand")) {
             marchand(bot);
         }
         else if (bot.getCharacter().isCharacter("architecte")) {
@@ -25,7 +27,7 @@ public class Power {
    
     public void marchand(Robot bot){
         //Nouvelle action
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
+        //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         //Since the player is a seller , he earns 1 gold
         bot.addGold(1);
         //Then the classic scenario occurs
@@ -39,14 +41,13 @@ public class Power {
         bot.addDistrict(listDistrictPicked);
         bot.tryBuild();
         action.printActionOfBotWhoHasBuilt();
-
          */
     }
 
 
 
     public void architecte(Robot bot) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
+        //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
         if(i == 0 ) {
             bot.addGold(2);

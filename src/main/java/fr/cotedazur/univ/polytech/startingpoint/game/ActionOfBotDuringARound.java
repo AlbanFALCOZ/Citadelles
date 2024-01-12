@@ -40,7 +40,7 @@ public class ActionOfBotDuringARound {
             DistrictsType districtInListDistrict = listDistrictPicked.get(i);
             cardPicked += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listDistrictPicked.size()-1) cardPicked += ",";
-            bot.addDistrict(districtInListDistrict);
+            //bot.addDistrict(districtInListDistrict);
         }
         System.out.println("The bot choose to pick : {" + cardPicked + "}");
         System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
@@ -51,13 +51,12 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfSellerBotWhoGainedGold() {
-        System.out.println("Yolo");
         System.out.println("By being a seller, " + bot.getName() + " earned 1 gold. Total golds now: " + bot.getGolds());
     }
 
     public void printBuildingAndPowerOfBot(String hasBuilt, int goldsWon) {
-        if (!hasBuilt.equals("nothing")) System.out.println(bot.getName() + " built " + bot.tryBuild() + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
-        if (goldsWon > 0) System.out.println(bot.getName() + " has won " + bot.winGoldsByTypeOfBuildings() + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
+        if (!hasBuilt.equals("nothing")) System.out.println(bot.getName() + " built " + hasBuilt + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+        if (goldsWon > 0) System.out.println(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
         System.out.println(bot.statusOfPlayer());
         System.out.println("\n-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
     }

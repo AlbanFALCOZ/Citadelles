@@ -30,7 +30,7 @@ public class RobotRandom implements Robot{
 
     private boolean isEveque;
 
-    private Power power = new Power("a power") ;
+    //private Power power = new Power("a power") ;
 
 
     public RobotRandom(String name) {
@@ -41,7 +41,7 @@ public class RobotRandom implements Robot{
         this.character = null;
         this.city = new ArrayList<>();
         this.hasCrown = false;
-        this.power = power ;
+        //this.power = power ;
 
     }
 
@@ -129,7 +129,7 @@ public class RobotRandom implements Robot{
                 city.add(district);
                 setGolds(getGolds() - district.getCost());
                 districtInHand.remove(i);
-                return "a new " + district.name();
+                return "a new " + district.getName();
             }
         }
         return "nothing";
@@ -269,16 +269,20 @@ public class RobotRandom implements Robot{
         return false;
     }
 
-
+    /*
     public Power getPower(){
         return power ;
     }
 
+     */
 
+    /*
     @Override
     public void setPower(Power aPower) {
         this.power = aPower ;
     }
+
+     */
 
     public int getChoice() {
         return (int) (Math.random()*2);

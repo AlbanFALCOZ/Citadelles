@@ -70,13 +70,13 @@ public interface Robot {
 
 
 
-    void setPower(Power aPower);
+    //void setPower(Power aPower);
 
     int getChoice();
 
     boolean canBuildADistrictInHand();
 
-    Power getPower();
+    //Power getPower();
 
 
 }

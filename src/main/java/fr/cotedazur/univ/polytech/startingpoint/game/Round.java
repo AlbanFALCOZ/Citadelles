@@ -76,8 +76,7 @@ public class Round {
                 choice = 2;
             }
              */
-            Power powerOfBot = new Power(bot.getName());
-            powerOfBot.choosePowerOfBot(bot);
+
 
             ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
             actionOfBotDuringARound.startTurnOfBot();
@@ -106,6 +105,8 @@ public class Round {
                 default:
                     break;
             }
+            Power powerOfBot = new Power(bot.getName(), actionOfBotDuringARound);
+            powerOfBot.choosePowerOfBot(bot);
             String hasBuilt = bot.tryBuild();
             int goldsWon =  bot.winGoldsByTypeOfBuildings();
             actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
