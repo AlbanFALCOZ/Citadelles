@@ -86,6 +86,8 @@ public class GameEngine {
         List<CharactersType> ListCharacters = deckCharacters.getCharactersInHand();
         destroyCharacters(ListCharacters);
         Collections.shuffle(ListCharacters);
+
+
         for (Robot bot : bots ){
             if(bot.getHasCrown()){
                 bot.setCharacter(ListCharacters.get(0));
@@ -145,8 +147,9 @@ public class GameEngine {
         int comptTurn = 1;
         //Pas necessaire il me semble
         //assignRandomCharacterToRobots();
-        assignCrown();
         robotsPickCharacters();
+        assignCrown();
+
         while(!isBuiltEigthDistrict()){
             if (systemPrint) System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
             bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));

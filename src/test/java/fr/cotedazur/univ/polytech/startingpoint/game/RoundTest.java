@@ -19,7 +19,6 @@ class RoundTest {
         GameEngine gameEngine = new GameEngine();
         Round round = new Round(gameEngine.getBots());
         gameEngine.initializeBots();
-        /*
         gameEngine.robotsPickCharacters();
         List<Robot> originalOrder = new ArrayList<>(gameEngine.getBots());
         ArrayList<Robot> sortedRobots = round.sortRobots();
@@ -27,7 +26,7 @@ class RoundTest {
         for (int i = 1; i < sortedRobots.size(); i++) {
             assertTrue(sortedRobots.get(i - 1).getCharacter().getNumber() <= sortedRobots.get(i).getCharacter().getNumber());
         }
-         */
+
     }
 
     @Test
