@@ -19,13 +19,13 @@ public class RobotTest {
 
     @BeforeEach
     void setUp() {
-         robot = new Robot("TestRobot");
+         robot = new RobotRandom("TestRobot");
     }
 
 
     @Test
     void showStatus() {
-        Robot robot = new Robot("Bot avec 8 golds");
+        Robot robot = new RobotRandom("Bot avec 8 golds");
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.addGold(6);
         System.out.println(robot.statusOfPlayer());
@@ -41,7 +41,7 @@ public class RobotTest {
 
     @Test
     void testTryBuild() {
-        Robot robot = new Robot("TestRobot");
+        Robot robot = new RobotRandom("TestRobot");
         DeckDistrict deckDistrict = new DeckDistrict();
 
         // Assuming you have some districts in the deck for testing
@@ -53,7 +53,7 @@ public class RobotTest {
         robot.addDistrict(districtWithCost3);
         assertEquals(2, robot.getGolds());
         String builtDistrictName1 = robot.tryBuild();
-        assertEquals("a new " + districtWithCost2.name(), builtDistrictName1);
+        assertEquals("a new " + districtWithCost2.getName(), builtDistrictName1);
 
 
 
@@ -151,7 +151,7 @@ public class RobotTest {
 
     @Test
     public void testCountBuildingsByType() {
-        Robot robot = new Robot("TestRobot");
+        Robot robot = new RobotRandom("TestRobot");
         robot.setCharacter(CharactersType.MARCHAND);
 
         robot.getCity().add(DistrictsType.CHATEAU); // noble
@@ -166,7 +166,7 @@ public class RobotTest {
 
     @Test
     public void testCountBuildingsWithMagicSchool() {
-        Robot robot = new Robot("TestRobot");
+        Robot robot = new RobotRandom("TestRobot");
 
         robot.setCharacter(CharactersType.ROI);
 
@@ -192,7 +192,7 @@ public class RobotTest {
 
         assertEquals(4, robot.getGolds());
 
-        Robot robotEveque = new Robot("TestRobot2");
+        Robot robotEveque = new RobotRandom("TestRobot2");
         robotEveque.setCharacter(CharactersType.EVEQUE);
         robotEveque.getCity().add(DistrictsType.EGLISE); // religieux
         robotEveque.getCity().add(DistrictsType.CASERNE); // militaire
@@ -208,7 +208,7 @@ public class RobotTest {
     }
 
     @Test
-    void testScoreAvecUniversiteEtDracoport() {
+    public void testScoreAvecUniversiteEtDracoport() {
         robot.setGolds(100);
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.addDistrict(DistrictsType.DRACOPORT);
@@ -219,7 +219,7 @@ public class RobotTest {
     }
 
     @Test
-    void testNumberOfCardsDrawnWithObservatoire() {
+    public void testNumberOfCardsDrawnWithObservatoire() {
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.setGolds(1000);
         robot.addDistrict(DistrictsType.OBSERVATOIRE);
@@ -228,6 +228,19 @@ public class RobotTest {
         assertEquals(3,robot.getNumberOfCardsDrawn());
     }
 
+    @Test
+    public void districtAlreadyInCity() {
+        robot.setCharacter(CharactersType.ASSASSIN);
+        robot.setGolds(1000);
+        robot.addDistrict(DistrictsType.OBSERVATOIRE);
+        robot.addDistrict(DistrictsType.OBSERVATOIRE);
+        robot.tryBuild();
+        robot.tryBuild();
+        assertEquals(1,robot.getCity().size());
+        robot.addDistrict(DistrictsType.TAVERNE);
+        robot.tryBuild();
+        assertEquals(2,robot.getCity().size());
+    }
 
     @Test
     public void testTargetSelection() {
@@ -240,6 +253,5 @@ public class RobotTest {
 
         assertTrue(otherBots.contains(thief.getTarget()), "La cible devrait être parmi les autres bots");
     }
-
 
 }

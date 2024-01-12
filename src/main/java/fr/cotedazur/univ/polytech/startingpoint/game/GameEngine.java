@@ -4,7 +4,10 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
 
 import java.util.*;
 
@@ -16,7 +19,14 @@ public class GameEngine {
     private ArrayList<Robot> bots;
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
-    protected Round round;
+    private Round round;
+    private boolean systemPrint = false;
+
+    //private Power power = new Power("a power") ;
+
+    public GameEngine(boolean systemPrint) {
+        this.systemPrint = systemPrint;
+    }
 
     /**
      * Constructeur de la classe GameEngine
@@ -26,13 +36,17 @@ public class GameEngine {
      * On initialise le round
      * On initialise les robots
      */
-    public GameEngine() {
+   public GameEngine(boolean systemPrint) {
+        this.systemPrint = systemPrint;
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
         this.bots = new ArrayList<>();
         round = new Round(bots);
         initializeBots();
+    }
 
+    public GameEngine() {
+        this(true);
     }
 
     /**
@@ -44,9 +58,12 @@ public class GameEngine {
     public void initializeBots() {
         String name[] = {"Alban","Sara","Stacy","Nora"};
         for (int i = 0; i < 4; i++) {
-            Robot bot = new Robot(name[i]);
+            Robot bot;
+            if (i == 0)  bot = new RobotWithChoice(name[i]);
+            else bot = new RobotRandom(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
+                //bot.setPower(power);
             }
             bots.add(bot);
         }
@@ -75,14 +92,14 @@ public class GameEngine {
         for (Robot bot : bots ){
             if(bot.getHasCrown()){
                 bot.setCharacter(ListCharacters.get(0));
-                System.out.println(bot.getName() +" With crown Picked " +ListCharacters.get(0).getColor() + ListCharacters.get(0).getRole() + bot.getRESET());
+                if (systemPrint) System.out.println(bot.getName() +" With crown Picked " +ListCharacters.get(0).getColor() + ListCharacters.get(0).getRole() + bot.getRESET());
                 ListCharacters.remove(ListCharacters.get(0));
             }
         }
         for (Robot bot : bots){
             if(!bot.getHasCrown()){
                 bot.setCharacter(ListCharacters.get(i));
-                System.out.println(bot.getName() +" Picked " +ListCharacters.get(i).getColor() + ListCharacters.get(i).getRole() + bot.getRESET());
+                if (systemPrint) System.out.println(bot.getName() +" Picked " +ListCharacters.get(i).getColor() + ListCharacters.get(i).getRole()  + bot.getRESET());
                 i++;
             }
         }
@@ -97,9 +114,8 @@ public class GameEngine {
     public void assignCrown(){
         Collections.shuffle(bots);
         bots.get(0).setHasCrown(true);
-        System.out.println(bots.get(0).getName() + " has crown and start the call of the characters");
-        //Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
-
+        if (systemPrint) System.out.println(bots.get(0).getName() + " has crown and start the call of the characters");
+        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
     }
 
     /**
@@ -126,29 +142,28 @@ public class GameEngine {
      */
     public void gameTurns(){
         round = new Round(bots);
-        int count = 0;
-        System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
+        String turnStarting = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn ";
+        String turnEnding = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+        if (systemPrint) System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        //Pas necessaire il me semble
+        //assignRandomCharacterToRobots();
         assignCrown();
         robotsPickCharacters();
-        round.playTurns();
-        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-        comptTurn++;
-        while(!isBuiltEigthDistrict() && comptTurn>1 && count++ < 200){
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is starting+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        while(!isBuiltEigthDistrict()){
+            if (systemPrint) System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
+            bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
-                    System.out.println(bot.getName() + " has crown and start the call of the characters");
+                    if (systemPrint) System.out.println(bot.getName() + " has crown and start the call of the characters");
                 }
             }
             robotsPickCharacters();
             round.playTurns();
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn " + comptTurn + " is over+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+            if (systemPrint) System.out.println(turnStarting + comptTurn + " is over" + turnEnding);
             comptTurn++;
             round = new Round(bots);
         }
-
     }
 
 
@@ -179,14 +194,10 @@ public class GameEngine {
         for (int i = 0; i < 3; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
-                System.out.println("Destroyed character: " + destroyedCharacter.getColor() + destroyedCharacter.getRole() + bots.get(0).getRESET());
+                if (systemPrint) System.out.println("Destroyed character: " + destroyedCharacter.getColor() + destroyedCharacter.getRole() + bots.get(0).getRESET());
             }
         }
-
         charactersInHand.add(CharactersType.ROI);
-
-
-
     }
 
 }

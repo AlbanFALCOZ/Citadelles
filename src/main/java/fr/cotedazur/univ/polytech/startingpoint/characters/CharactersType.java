@@ -66,5 +66,4 @@ public enum CharactersType {
 
 
 
-
 }
