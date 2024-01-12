@@ -185,7 +185,7 @@ class RobotRandomTest {
         robotRandom.addDistrict(districtWithCost3);
         assertEquals(2, robotRandom.getGolds());
         String builtDistrictName1 = robotRandom.tryBuild();
-        assertEquals("a new " + districtWithCost2.name(), builtDistrictName1);
+        assertEquals("a new " + districtWithCost2.getName(), builtDistrictName1);
 
 
 
