@@ -20,55 +20,48 @@ public class Power {
         if (bot.getCharacter().getType().equals("marchand")) {
             marchand(bot);
         }
-        //else if (bot.getCharacter().isCharacter("architecte")) {
-            //architecte(bot);
-        //}
+        else if (bot.getCharacter().getType().equals("architecte")) {
+            architecte(bot);
+        }
     }
    
     public void marchand(Robot bot){
-        //Nouvelle action
-        //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
-        //Since the player is a seller , he earns 1 gold
         bot.addGold(1);
-        //Then the classic scenario occurs
         action.printActionOfSellerBotWhoGainedGold();
-        /*
-        bot.addGold(2);
-        action.printActionOfBotWhoGainedGold(2);
-        List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
-        List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
-        action.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
-        bot.addDistrict(listDistrictPicked);
-        bot.tryBuild();
-        action.printActionOfBotWhoHasBuilt();
-         */
+
     }
 
 
 
     public void architecte(Robot bot) {
-        //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
-        int i = bot.getChoice();
+        int i = bot.generateChoice();
+        System.out.println(i);
         if(i == 0 ) {
-            bot.addGold(2);
-            action.printActionOfBotWhoGainedGold(2);
+            bot.setChoice(7);
+            System.out.println(bot.getChoice());
+            System.out.println(bot.getChoice());
             List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
+            listDistrictDrawn.add(bot.pickListOfDistrict().get(0)) ;
+            listDistrictDrawn.add(bot.pickListOfDistrict().get(1)) ;
             List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
-            action.addListOfDistrict(listDistrictDrawn, listDistrictPicked);
+            action.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
             bot.addDistrict(listDistrictPicked);
-
-            for (int j = 0; j < 3; j++) {
-                bot.tryBuild();
-                action.printActionOfBotWhoHasBuilt();
+            action.printActionOfBotWhoHasBuilt();
             }
-        } else {
-            System.out.println("Salut");
-
-
-
+        else {
+            bot.addGold(2);
+            action= new ActionOfBotDuringARound(bot);
+            action.printActionOfBotWhoGainedGold(2);
+            bot.setChoice(0);
+            System.out.println(bot.getChoice());
         }
-
-
-
+        String hasBuilt = bot.tryBuild();
+        action.printBuildingOfBot(hasBuilt);
+        String hasBuilt2 = bot.tryBuild();
+        action.printBuildingOfBot(hasBuilt2);
+        }
     }
-}
+
+
+
+

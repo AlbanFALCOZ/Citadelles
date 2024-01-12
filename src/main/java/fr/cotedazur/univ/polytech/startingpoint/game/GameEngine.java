@@ -112,7 +112,7 @@ public class GameEngine {
         Collections.shuffle(bots);
         bots.get(0).setHasCrown(true);
         if (systemPrint) System.out.println(bots.get(0).getName() + " has crown and start the call of the characters");
-        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+
     }
 
     /**

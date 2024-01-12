@@ -124,18 +124,15 @@ public class Round {
         specialCard();
         Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
-        for (Robot bot : bots) {
-            int choice = bot.getChoice();
-            /*
-            if (bot.isCharacter("voleur")) {
-                thiefAction(bot);
-            }}
-             */
-            
 
+        for (Robot bot : bots) {
+
+            bot.setChoice(bot.generateChoice());
             ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
             actionOfBotDuringARound.startTurnOfBot();
-            switch (choice) {
+            Power powerOfBot = new Power(bot.getName(), actionOfBotDuringARound);
+            powerOfBot.choosePowerOfBot(bot);
+            switch (bot.getChoice()) {
                 case 0:
                     List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
                     List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
@@ -148,20 +145,11 @@ public class Round {
                     actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
                     actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
                     break;
-                /*
-                case 2 :
-                    bot.getPower().marchand(bot);
-                    break ;
-                case 3 :
-                    bot.getPower().architecte(bot);
-                    break;
 
-                 */
                 default:
                     break;
             }
-            Power powerOfBot = new Power(bot.getName(), actionOfBotDuringARound);
-            powerOfBot.choosePowerOfBot(bot);
+
             String hasBuilt = bot.tryBuild();
             int goldsWon =  bot.winGoldsByTypeOfBuildings();
             actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
