@@ -61,6 +61,7 @@ class GameEngineTest {
         }
 
         assertTrue(gameEngine.isBuiltEigthDistrict(), "Un robot devrait avoir construit 8 districts.");
+
     }
 
 
@@ -110,8 +111,20 @@ class GameEngineTest {
 
         assertTrue(gameEngine.isBuiltEigthDistrict(),
                 "Le jeu devrait se terminer par un robot ayant construit 8 districts.");
+
+    @Test
+    void testClearBots() {
+        gameEngine.clearBots();
+        assertEquals(0, gameEngine.getBots().size(), "La liste des robots doit être vide");
     }
 
+    @Test
+    void testAddRobot() {
+        gameEngine.clearBots();
+        Robot robot = new Robot("Robot");
+        gameEngine.addRobot(robot);
+        assertEquals(1, gameEngine.getBots().size(), "La liste des robots doit contenir un robot");
+    }
 
     @Test
     void testDestroyCharacters() {
