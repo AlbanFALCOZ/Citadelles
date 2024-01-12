@@ -25,6 +25,7 @@ public class Round {
         this.bots = new ArrayList<>(bots);
     }
 
+  
     /**
      * cette méthode permet d'assigner la couronne au roi
      */
@@ -82,6 +83,7 @@ public class Round {
     }
 
 
+
     /**
      * @param thief le robot voleur
      *              cette méthode permet au voleur de voler de l'or à un autre robot
@@ -97,6 +99,7 @@ public class Round {
         target.setGolds(0);
         System.out.println(thief.getName() + " a volé " + stolenGold + " pièces d'or à " + target.getName());
     }
+
 
     /**
      * cette méthode permet de jouer les tours de jeu

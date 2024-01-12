@@ -135,6 +135,7 @@ public class GameEngine {
      * cette méthode permet de jouer les tours du jeu
      * On crée un nouveau round
      * On donne la couronne au premier robot de la liste
+     *
      * On appelle la méthode robotsPickCharacters pour que les robots choisissent leurs personnages
      * On appelle la méthode playTurns pour que les robots jouent leurs tours
      * On répète les étapes précédentes jusqu'à ce qu'un robot construise 8 districts
@@ -165,6 +166,7 @@ public class GameEngine {
         }
     }
 
+
     /**
      * cette méthode permet de vider la liste des robots
      */
@@ -181,6 +183,7 @@ public class GameEngine {
         this.bots.add(robot);
     }
 
+
     /**
      * @param charactersInHand la liste des personnages
      *                         cette méthode permet de détruire 3 personnages
@@ -196,7 +199,5 @@ public class GameEngine {
         }
         charactersInHand.add(CharactersType.ROI);
     }
-
-
 
 }

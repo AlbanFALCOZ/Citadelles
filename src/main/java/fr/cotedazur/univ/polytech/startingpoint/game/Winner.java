@@ -5,12 +5,14 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * cette classe permet de calculer les scores des robots et de déterminer le gagnant
  */
 public class Winner {
 
     private List<Robot> bots;
+
 
     /**
      * @param bots la liste des robots
@@ -20,6 +22,7 @@ public class Winner {
         this.bots = new ArrayList<>(bots);
 
     }
+
 
 
     /**
@@ -35,6 +38,7 @@ public class Winner {
         return scores;
 
     }
+
 
     /**
      * @return la liste des gagnants
@@ -63,6 +67,7 @@ public class Winner {
 
         return winnerNames;
     }
+
 
 
     /**
