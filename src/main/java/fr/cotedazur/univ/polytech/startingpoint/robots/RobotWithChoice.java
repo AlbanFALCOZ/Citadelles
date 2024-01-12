@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.complements.Strategies;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 

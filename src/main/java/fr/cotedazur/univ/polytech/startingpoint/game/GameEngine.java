@@ -24,10 +24,6 @@ public class GameEngine {
 
     //private Power power = new Power("a power") ;
 
-    public GameEngine(boolean systemPrint) {
-        this.systemPrint = systemPrint;
-    }
-
     /**
      * Constructeur de la classe GameEngine
      * On initialise le deck de districts
@@ -36,7 +32,7 @@ public class GameEngine {
      * On initialise le round
      * On initialise les robots
      */
-   public GameEngine(boolean systemPrint) {
+    public GameEngine(boolean systemPrint) {
         this.systemPrint = systemPrint;
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
@@ -48,6 +44,7 @@ public class GameEngine {
     public GameEngine() {
         this(true);
     }
+
 
     /**
      * cette méthode permet d'initialiser les robots

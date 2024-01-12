@@ -89,6 +89,7 @@ public class Round {
      *              cette méthode permet au voleur de voler de l'or à un autre robot
      */
     public void thiefAction(Robot thief) {
+        /*
         List<Robot> otherBots = new ArrayList<>(bots);
         otherBots.remove(thief);
         thief.chooseTarget(otherBots);
@@ -98,6 +99,8 @@ public class Round {
         thief.addGold(stolenGold);
         target.setGolds(0);
         System.out.println(thief.getName() + " a volé " + stolenGold + " pièces d'or à " + target.getName());
+
+         */
     }
 
 

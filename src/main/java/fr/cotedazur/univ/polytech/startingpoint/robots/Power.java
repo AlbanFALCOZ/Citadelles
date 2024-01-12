@@ -20,9 +20,9 @@ public class Power {
         if (bot.getCharacter().getType().equals("marchand")) {
             marchand(bot);
         }
-        else if (bot.getCharacter().isCharacter("architecte")) {
+        //else if (bot.getCharacter().isCharacter("architecte")) {
             //architecte(bot);
-        }
+        //}
     }
    
     public void marchand(Robot bot){

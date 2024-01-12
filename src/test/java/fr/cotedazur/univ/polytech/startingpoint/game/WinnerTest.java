@@ -4,6 +4,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -24,6 +25,7 @@ class WinnerTest {
 
     @Test
     void testCalculateScores() {
+        gameEngine.robotsPickCharacters();
         gameEngine.assignCrown();
         gameEngine.robotsPickCharacters();
         Round round = new Round(gameEngine.getBots());
@@ -45,6 +47,7 @@ class WinnerTest {
 
     @Test
     void testGetWinner() {
+        gameEngine.robotsPickCharacters();
         gameEngine.assignCrown();
         gameEngine.robotsPickCharacters();
         Round round = new Round(gameEngine.getBots());
@@ -67,8 +70,8 @@ class WinnerTest {
 
     @Test
     void testShowWinners() {
-        Robot robot1 = new Robot("Robot1");
-        Robot robot2 = new Robot("Robot2");
+        Robot robot1 = new RobotRandom("Robot1");
+        Robot robot2 = new RobotRandom("Robot2");
         robot1.setScore(10);
         robot2.setScore(10);
         Winner winner = new Winner(List.of(robot1, robot2));
