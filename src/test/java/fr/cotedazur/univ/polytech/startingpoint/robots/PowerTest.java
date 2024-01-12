@@ -10,24 +10,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class PowerTest {
 
     @Test
-    void districtToDestroy() {
-        RobotRandom destructeur = new RobotRandom("destructeur");
-        RobotRandom victime = new RobotRandom("victime");
-        Power power = new Power(destructeur.getName(), new ActionOfBotDuringARound(destructeur));
-        destructeur.setCharacter(CharactersType.CONDOTTIERE);
-        victime.setCharacter(CharactersType.MARCHAND);
-        victime.setGolds(30);
-        victime.addDistrict(DistrictsType.TAVERNE);
-        victime.addDistrict(DistrictsType.PALAIS);
-        victime.addDistrict(DistrictsType.PRISON);
+    void canDestroyDistrict() {
+        RobotRandom destructor = new RobotRandom("destructor");
+        RobotRandom victim = new RobotRandom("victim");
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
+        destructor.setCharacter(CharactersType.CONDOTTIERE);
+        victim.setCharacter(CharactersType.MAGICIEN);
+        victim.addDistrict(DistrictsType.TAVERNE);
+        victim.tryBuild();
+        victim.addDistrict(DistrictsType.PALAIS);
+        victim.tryBuild();
+        victim.addDistrict(DistrictsType.PRISON);
+        victim.tryBuild();
 
-        for (int i = 0; i < victime.getNumberOfDistrictInHand(); i++){
-            victime.tryBuild();
-        }
-
-        destructeur.setGolds(1);
-
-        assertEquals(1, power.condottiere(destructeur, victime));
+        assertTrue(power.canDestroyDistrict(victim, DistrictsType.TAVERNE));
+        destructor.setGolds(1);
+        assertFalse(power.canDestroyDistrict(victim, DistrictsType.PRISON));
+        assertFalse(power.canDestroyDistrict(victim, DistrictsType.PALAIS));
+        destructor.setGolds(5);
+        assertFalse(power.canDestroyDistrict(victim, DistrictsType.MANOIR));
+        
 
 
 
@@ -36,5 +38,30 @@ class PowerTest {
 
     @Test
     void condottiere() {
+        RobotRandom destructor = new RobotRandom("destructor");
+        RobotRandom victim = new RobotRandom("victim");
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
+        destructor.setCharacter(CharactersType.CONDOTTIERE);
+        victim.setCharacter(CharactersType.MARCHAND);
+        victim.setGolds(30);
+        victim.addDistrict(DistrictsType.TAVERNE);
+        victim.tryBuild();
+        victim.addDistrict(DistrictsType.PALAIS);
+        victim.tryBuild();
+        victim.addDistrict(DistrictsType.PRISON);
+        victim.tryBuild();
+
+        destructor.setGolds(5);
+        power.condottiere(victim);
+        assertEquals(1, destructor.getGolds());
+        power.condottiere(victim);
+        assertEquals(1, destructor.getGolds());
+        power.condottiere(victim);
+        assertEquals(1, destructor.getGolds());
+
+        victim.setCharacter(CharactersType.EVEQUE);
+        destructor.setGolds(5);
+        power.condottiere(victim);
+        assertEquals(5, destructor.getGolds());
     }
 }

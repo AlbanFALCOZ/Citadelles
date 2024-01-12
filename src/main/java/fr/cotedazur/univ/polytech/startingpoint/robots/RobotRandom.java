@@ -24,12 +24,6 @@ public class RobotRandom implements Robot{
 
     private boolean hasCrown;
 
-    private boolean isKing;
-
-    private boolean isEveque;
-
-    //private Power power = new Power("a power") ;
-
 
     public RobotRandom(String name) {
         this.name = name;
@@ -39,7 +33,6 @@ public class RobotRandom implements Robot{
         this.character = null;
         this.city = new ArrayList<>();
         this.hasCrown = false;
-        //this.power = power ;
 
     }
 
@@ -267,37 +260,7 @@ public class RobotRandom implements Robot{
         return false;
     }
 
-    public int priceOfDistrictInCity(){
-        if(this.getNumberOfCardsDrawn() != 0){
-            for(DistrictsType district : city){
-                return district.getCost();
-            }
-        }
-        return 0;
 
-    }
-
-    public DistrictsType districtWithPrice(int cost){
-        for (DistrictsType district : city){
-            return district;
-        }
-        return null;
-    }
-
-    /*
-    public Power getPower(){
-        return power ;
-    }
-
-     */
-
-    /*
-    @Override
-    public void setPower(Power aPower) {
-        this.power = aPower ;
-    }
-
-     */
 
     public int getChoice() {
         return (int) (Math.random()*2);

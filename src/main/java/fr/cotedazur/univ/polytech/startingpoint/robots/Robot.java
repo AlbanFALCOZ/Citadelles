@@ -78,9 +78,5 @@ public interface Robot {
 
     //Power getPower();
 
-    int priceOfDistrictInCity();
-
-    DistrictsType districtWithPrice(int cost);
-
 
 }

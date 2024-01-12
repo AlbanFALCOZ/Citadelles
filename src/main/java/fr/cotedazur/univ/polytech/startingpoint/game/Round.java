@@ -5,10 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * cette classe permet de gérer les tours de jeu
@@ -103,6 +100,30 @@ public class Round {
          */
     }
 
+    public void choosePowerOfBot(Robot bot) {
+        List<Robot> robots = new ArrayList<>(this.bots);
+        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
+        ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
+        Power powerOfBot = new Power(bot, actionOfBotDuringARound);
+        switch (bot.getCharacter()) {
+            case MARCHAND:
+                powerOfBot.marchand();
+                break;
+            /*case ARCHITECTE:
+                powerOfBot.architecte();
+                break;*/
+            case CONDOTTIERE:
+                Collections.shuffle(robots);
+                if (!robots.isEmpty()) {
+                    powerOfBot.condottiere(robots.get(0));
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
 
     /**
      * cette méthode permet de jouer les tours de jeu
@@ -122,16 +143,10 @@ public class Round {
      */
     public void playTurns() {
         specialCard();
-        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+        bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         for (Robot bot : bots) {
             int choice = bot.getChoice();
-            /*
-            if (bot.isCharacter("voleur")) {
-                thiefAction(bot);
-            }}
-             */
-            
 
             ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
             actionOfBotDuringARound.startTurnOfBot();
@@ -148,20 +163,11 @@ public class Round {
                     actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
                     actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
                     break;
-                /*
-                case 2 :
-                    bot.getPower().marchand(bot);
-                    break ;
-                case 3 :
-                    bot.getPower().architecte(bot);
-                    break;
-
-                 */
                 default:
                     break;
             }
-            Power powerOfBot = new Power(bot.getName(), actionOfBotDuringARound);
-            powerOfBot.choosePowerOfBot(bot);
+
+            choosePowerOfBot(bot);
             String hasBuilt = bot.tryBuild();
             int goldsWon =  bot.winGoldsByTypeOfBuildings();
             actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
