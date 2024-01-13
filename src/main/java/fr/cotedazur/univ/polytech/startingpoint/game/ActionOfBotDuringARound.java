@@ -51,7 +51,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfSellerBotWhoGainedGold() {
-        System.out.println("By being a seller, " + bot.getName() + " earned 1 gold. Total golds now: " + bot.getGolds());
+        System.out.println("By being a merchant, " + bot.getName() + " earned 1 gold. Total golds now: " + bot.getGolds());
     }
 
     public void printBuildingAndPowerOfBot(String hasBuilt, int goldsWon) {
@@ -62,4 +62,15 @@ public class ActionOfBotDuringARound {
     }
 
 
+    public void printActionOfDestroyDistrict(Robot victim, DistrictsType district, int goldsRestarts) {
+        System.out.println(bot.getName() + " destroyed " + district + " of " + victim.getName() + " and now has " + goldsRestarts + " golds");
+    }
+
+    public void printActionOfNoneDistrictDestroyed(Robot victim, int destructorGolds) {
+        System.out.println(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds");
+    }
+
+    public void printEvequeImmune(Robot victim, DistrictsType district) {
+        System.out.println(bot.getName() + " can't destroy " + district + " of " + victim.getName() + " because he is " + victim.getCharacter().getRole());
+    }
 }
