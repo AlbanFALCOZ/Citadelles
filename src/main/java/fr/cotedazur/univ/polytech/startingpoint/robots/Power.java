@@ -75,11 +75,11 @@ public class Power {
                 } else {
                     action.printEvequeImmune(victim, district);
                 }
-                break;
+                return;
             }
-            action.printActionOfNoneDistrictDestroyed(victim, district, bot.getGolds());
-            break;
+
         }
+        action.printActionOfNoneDistrictDestroyed(victim, bot.getGolds());
 
 
     }

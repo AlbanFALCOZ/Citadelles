@@ -66,8 +66,8 @@ public class ActionOfBotDuringARound {
         System.out.println(bot.getName() + " destroyed " + district + " of " + victim.getName() + " and now has " + goldsRestarts + " golds");
     }
 
-    public void printActionOfNoneDistrictDestroyed(Robot victim, DistrictsType district, int destructorGolds) {
-        System.out.println(bot.getName() + " can't destroy  " + district + " of " + victim.getName() + " because he has only " + destructorGolds + " golds");
+    public void printActionOfNoneDistrictDestroyed(Robot victim, int destructorGolds) {
+        System.out.println(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds");
     }
 
     public void printEvequeImmune(Robot victim, DistrictsType district) {
