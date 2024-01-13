@@ -110,7 +110,7 @@ public class Round {
                 powerOfBot.marchand();
                 break;
             case ARCHITECTE:
-                powerOfBot.architecte();
+                powerOfBot.architecte(bot);
                 break;
             case CONDOTTIERE:
                 Collections.shuffle(robots);
@@ -145,13 +145,11 @@ public class Round {
         specialCard();
         bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
-
-
-
         for (Robot bot : bots) {
-            bot.setChoice(bot.generateChoice());
+
             ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
             actionOfBotDuringARound.startTurnOfBot();
+            bot.setChoice(bot.generateChoice());
             choosePowerOfBot(bot);
             switch (bot.getChoice()) {
                 case 0:

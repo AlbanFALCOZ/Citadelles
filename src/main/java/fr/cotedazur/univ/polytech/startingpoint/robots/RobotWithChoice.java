@@ -13,7 +13,7 @@ public class RobotWithChoice extends RobotRandom implements Robot{
     }
 
     @Override
-    public int getChoice() {
+    public int generateChoice() {
         if (getDistrictInHand().isEmpty()) return 0;
         if (!canBuildADistrictInHand()) return 1;
         return (int) (Math.random()*2);

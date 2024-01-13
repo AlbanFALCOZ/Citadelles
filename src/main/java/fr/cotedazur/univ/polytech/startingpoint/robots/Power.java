@@ -31,10 +31,9 @@ public class Power {
 
 
 
-    public void architecte() {
+    public void architecte(Robot bot) {
         //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
-
         if(i == 0 ) {
             bot.setChoice(7);
             List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
@@ -46,7 +45,7 @@ public class Power {
             action.printActionOfBotWhoHasBuilt();
             }
 
-        else {
+        if(i == 1) {
             bot.setChoice(0);
             bot.addGold(2);
             action= new ActionOfBotDuringARound(bot);
