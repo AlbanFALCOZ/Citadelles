@@ -1,31 +1,28 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
-import java.util.List;
+import java.util.*;
 
 public class Power {
-
-    private String name ;
     private ActionOfBotDuringARound action;
-    public Power(String name, ActionOfBotDuringARound action){
-        this.name = name ;
+    private Robot bot;
+
+    public static final String MILITAIRE = "militaire";
+    public static final String RELIGIEUX = "religieux";
+
+    public Power(Robot bot, ActionOfBotDuringARound action){
+        this.bot = bot;
         this.action = action;
+
     }
 
 
-
-    public void choosePowerOfBot(Robot bot) {
-        if (bot.getCharacter().getType().equals("marchand")) {
-            marchand(bot);
-        }
-        else if (bot.getCharacter().getType().equals("architecte")) {
-            architecte(bot);
-        }
-    }
    
-    public void marchand(Robot bot){
+    public void marchand(){
+
         bot.addGold(1);
         action.printActionOfSellerBotWhoGainedGold();
 
@@ -33,12 +30,13 @@ public class Power {
 
 
 
-    public void architecte(Robot bot) {
-        int i = bot.generateChoice();
-        System.out.println(i);
+
+    public void architecte() {
+        //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
+        int i = bot.getChoice();
+
         if(i == 0 ) {
             bot.setChoice(7);
-            System.out.println(bot.getChoice());
             List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
             listDistrictDrawn.add(bot.pickListOfDistrict().get(0)) ;
             listDistrictDrawn.add(bot.pickListOfDistrict().get(1)) ;
@@ -47,20 +45,61 @@ public class Power {
             bot.addDistrict(listDistrictPicked);
             action.printActionOfBotWhoHasBuilt();
             }
+
         else {
             bot.setChoice(0);
             bot.addGold(2);
             action= new ActionOfBotDuringARound(bot);
             action.printActionOfBotWhoGainedGold(2);
-            System.out.println(bot.getChoice());
+
         }
         String hasBuilt = bot.tryBuild();
         action.printBuildingOfBot(hasBuilt);
         String hasBuilt2 = bot.tryBuild();
         action.printBuildingOfBot(hasBuilt2);
         }
+
+
+
+
+
+    public boolean canDestroyDistrict(Robot victim, DistrictsType district){
+        int destructorGolds = bot.getGolds();
+        boolean districtInCity = victim.getCity().contains(district);
+        return destructorGolds >= district.getCost() && districtInCity;
+    }
+
+    public void condottiere(Robot victim) {
+        int destructorGolds = bot.getGolds();
+        List<DistrictsType> victimDistricts = victim.getCity();
+
+        victimDistricts.sort(Comparator.comparingInt(DistrictsType::getCost).reversed());
+
+        for (DistrictsType district : victimDistricts) {
+            boolean verify = canDestroyDistrict(victim, district);
+
+            if (verify) {
+                if (bot.getCharacter().getType().equals(MILITAIRE) &&
+                        !victim.getCharacter().getType().equals(RELIGIEUX)) {
+                    victim.getCity().remove(district);
+                    int goldsAfterDestruction = destructorGolds - district.getCost();
+                    bot.setGolds(goldsAfterDestruction + 1);
+                    action.printActionOfDestroyDistrict(victim, district, bot.getGolds());
+                } else {
+                    action.printEvequeImmune(victim, district);
+                }
+                return;
+            }
+
+        }
+        action.printActionOfNoneDistrictDestroyed(victim, bot.getGolds());
+
+
+
     }
 
 
 
+
+}
 

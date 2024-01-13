@@ -27,12 +27,6 @@ public class RobotRandom implements Robot{
     private boolean hasCrown;
 
 
-    private boolean isKing;
-
-    private boolean isEveque;
-
-    //private Power power = new Power("a power") ;
-
 
     public RobotRandom(String name) {
         this.name = name;
@@ -42,7 +36,6 @@ public class RobotRandom implements Robot{
         this.character = null;
         this.city = new ArrayList<>();
         this.hasCrown = false;
-        //this.power = power ;
 
     }
 
@@ -270,20 +263,7 @@ public class RobotRandom implements Robot{
         return false;
     }
 
-    /*
-    public Power getPower(){
-        return power ;
-    }
 
-     */
-
-    /*
-    @Override
-    public void setPower(Power aPower) {
-        this.power = aPower ;
-    }
-
-     */
 
     public int generateChoice() {
         return (int) (Math.random()*2);

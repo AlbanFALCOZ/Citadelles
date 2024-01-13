@@ -69,11 +69,8 @@ class GameEngineTest {
 
     @Test
     void testRobotsPickCharacters() {
-        GameEngine game = new GameEngine();
         gameEngine.robotsPickCharacters();
         gameEngine.assignCrown();
-
-        gameEngine.robotsPickCharacters();
 
         for (Robot bot : gameEngine.getBots()) {
             assertNotNull(bot.getCharacter(), "Chaque robot doit avoir un personnage.");
@@ -91,17 +88,11 @@ class GameEngineTest {
 
         CharactersType characterOfCrowned = robotWithCrown.getCharacter();
         assertNotNull(characterOfCrowned, "Le robot avec la couronne doit avoir un personnage.");
-
-        boolean roiDistributed = gameEngine.getBots().stream()
-                .anyMatch(bot -> bot.getCharacter() == CharactersType.ROI);
-        //assertTrue(roiDistributed, "Le personnage ROI doit être distribué.");
     }
 
 
     @Test
     void testGameTurns() {
-        GameEngine game = new GameEngine();
-
         for (Robot bot : gameEngine.getBots()) {
             assertEquals(0, bot.getNumberOfDistrictInCity(), "Les robots ne devraient pas avoir de districts construits au début.");
         }

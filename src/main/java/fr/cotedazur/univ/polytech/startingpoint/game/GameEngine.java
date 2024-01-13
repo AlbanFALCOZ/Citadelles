@@ -53,14 +53,13 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        String name[] = {"Alban","Sara","Stacy","Nora"};
+        String[] name = {"Alban","Sara","Stacy","Nora"};
         for (int i = 0; i < 4; i++) {
             Robot bot;
             if (i == 0)  bot = new RobotWithChoice(name[i]);
             else bot = new RobotRandom(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
-                //bot.setPower(power);
             }
             bots.add(bot);
         }
@@ -86,6 +85,8 @@ public class GameEngine {
         List<CharactersType> ListCharacters = deckCharacters.getCharactersInHand();
         destroyCharacters(ListCharacters);
         Collections.shuffle(ListCharacters);
+
+
         for (Robot bot : bots ){
             if(bot.getHasCrown()){
                 bot.setCharacter(ListCharacters.get(0));
@@ -143,10 +144,10 @@ public class GameEngine {
         String turnEnding = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
         if (systemPrint) System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
-        //Pas necessaire il me semble
-        //assignRandomCharacterToRobots();
-        assignCrown();
+
         robotsPickCharacters();
+        assignCrown();
+
         while(!isBuiltEigthDistrict()){
             if (systemPrint) System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
             bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
