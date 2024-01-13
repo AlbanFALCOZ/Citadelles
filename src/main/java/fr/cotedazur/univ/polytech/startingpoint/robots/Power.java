@@ -39,7 +39,6 @@ public class Power {
         if(i == 0 ) {
             bot.setChoice(7);
             System.out.println(bot.getChoice());
-            System.out.println(bot.getChoice());
             List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
             listDistrictDrawn.add(bot.pickListOfDistrict().get(0)) ;
             listDistrictDrawn.add(bot.pickListOfDistrict().get(1)) ;
@@ -49,10 +48,10 @@ public class Power {
             action.printActionOfBotWhoHasBuilt();
             }
         else {
+            bot.setChoice(0);
             bot.addGold(2);
             action= new ActionOfBotDuringARound(bot);
             action.printActionOfBotWhoGainedGold(2);
-            bot.setChoice(0);
             System.out.println(bot.getChoice());
         }
         String hasBuilt = bot.tryBuild();
