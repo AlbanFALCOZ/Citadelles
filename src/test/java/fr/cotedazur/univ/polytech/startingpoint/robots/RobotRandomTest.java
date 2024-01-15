@@ -113,14 +113,14 @@ class RobotRandomTest {
         List<DistrictsType> listDistrict = new ArrayList<>();
         listDistrict.add(DistrictsType.CHATEAU);
         listDistrict.add(DistrictsType.MANOIR);
-        List<DistrictsType> pickedDistricts = robotRandom.pickDistrictCard(listDistrict);
+        List<DistrictsType> pickedDistricts = robotRandom.pickDistrictCard(listDistrict, new DeckDistrict());
         assertEquals(1, pickedDistricts.size());
         assertTrue(pickedDistricts.contains(DistrictsType.CHATEAU) || pickedDistricts.contains(DistrictsType.MANOIR));
     }
 
     @Test
     void pickListOfDistrict() {
-        List<DistrictsType> pickedDistricts = robotRandom.pickListOfDistrict();
+        List<DistrictsType> pickedDistricts = robotRandom.pickListOfDistrict(new DeckDistrict());
         assertEquals(2, pickedDistricts.size());
     }
 

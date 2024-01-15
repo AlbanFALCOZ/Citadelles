@@ -8,7 +8,7 @@ package fr.cotedazur.univ.polytech.startingpoint.characters;
  * Version 0.1 du jeu Citadelle.
  */
 public enum CharactersType {
-   ASSASSIN(1, "Assassin", "\u001B[37;1m", "assassin"),
+    ASSASSIN(1, "Assassin", "\u001B[37;1m", "assassin"),
     VOLEUR(2, "Voleur", "\u001B[37;1m", "voleur"),
     MAGICIEN(3, "Magicien", "\u001B[37;1m", "magicien"),
     ROI(4, "Roi", "\u001B[33m", "noble"),
@@ -62,8 +62,6 @@ public enum CharactersType {
     public String getColor() {
         return color;
     }
-
-
 
 
 }
