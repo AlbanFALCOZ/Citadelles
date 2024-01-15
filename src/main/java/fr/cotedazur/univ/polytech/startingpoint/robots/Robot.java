@@ -76,6 +76,10 @@ public interface Robot {
 
     boolean canBuildADistrictInHand();
 
+    int generateChoice();
+
+    void setChoice(int choice);
+
     //Power getPower();
 
 

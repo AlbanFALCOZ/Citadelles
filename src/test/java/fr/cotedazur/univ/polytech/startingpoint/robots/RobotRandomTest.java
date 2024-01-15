@@ -355,5 +355,12 @@ class RobotRandomTest {
         robotRandom.tryBuild();
         assertEquals(2,robotRandom.getCity().size());
     }
+
+    @Test
+    void setChoice() {
+        Robot bot = new RobotRandom("Vermouth") ;
+        bot.setChoice(2);
+        assertEquals(bot.getChoice() , 2);
+    }
 }
 

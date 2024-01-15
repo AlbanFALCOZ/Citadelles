@@ -19,35 +19,47 @@ public class Power {
 
     }
 
+
+   
     public void marchand(){
 
         bot.addGold(1);
-        //Then the classic scenario occurs
         action.printActionOfSellerBotWhoGainedGold();
 
     }
 
 
 
-    public void architecte() {
+
+    public void architecte(Robot bot) {
         //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
         if(i == 0 ) {
-            bot.addGold(2);
-            action.printActionOfBotWhoGainedGold(2);
+            bot.setChoice(7);
             List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
+            listDistrictDrawn.add(bot.pickListOfDistrict().get(0)) ;
+            listDistrictDrawn.add(bot.pickListOfDistrict().get(1)) ;
             List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
-            action.addListOfDistrict(listDistrictDrawn, listDistrictPicked);
+            action.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
             bot.addDistrict(listDistrictPicked);
-
-            for (int j = 0; j < 3; j++) {
-                bot.tryBuild();
-                action.printActionOfBotWhoHasBuilt();
+            action.printActionOfBotWhoHasBuilt();
             }
-        } else {
-            System.out.println("Salut");
+
+        if(i == 1) {
+            bot.setChoice(0);
+            bot.addGold(2);
+            action= new ActionOfBotDuringARound(bot);
+            action.printActionOfBotWhoGainedGold(2);
+
         }
-    }
+        String hasBuilt = bot.tryBuild();
+        action.printBuildingOfBot(hasBuilt);
+        String hasBuilt2 = bot.tryBuild();
+        action.printBuildingOfBot(hasBuilt2);
+        }
+
+
+
 
 
     public boolean canDestroyDistrict(Robot victim, DistrictsType district){
@@ -82,8 +94,11 @@ public class Power {
         action.printActionOfNoneDistrictDestroyed(victim, bot.getGolds());
 
 
+
     }
 
 
 
+
 }
+

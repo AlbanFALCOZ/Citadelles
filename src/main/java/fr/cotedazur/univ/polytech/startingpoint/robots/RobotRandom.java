@@ -20,9 +20,12 @@ public class RobotRandom implements Robot{
     private CharactersType character;
     public static final String RESET = "\u001B[0m";
 
+    public int choice ;
+
     private ArrayList<DistrictsType> city;
 
     private boolean hasCrown;
+
 
 
     public RobotRandom(String name) {
@@ -262,9 +265,19 @@ public class RobotRandom implements Robot{
 
 
 
-    public int getChoice() {
+    public int generateChoice() {
         return (int) (Math.random()*2);
     }
+
+    public void setChoice(int choice){
+        this.choice = choice ;
+    }
+
+    public int getChoice(){
+        return choice ;
+    }
+
+
 
 
 
