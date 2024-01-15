@@ -81,28 +81,13 @@ public class Round {
 
 
 
-    /**
-     * @param thief le robot voleur
-     *              cette méthode permet au voleur de voler de l'or à un autre robot
-     */
-    public void thiefAction(Robot thief) {
-        /*
-        List<Robot> otherBots = new ArrayList<>(bots);
-        otherBots.remove(thief);
-        thief.chooseTarget(otherBots);
-        Robot target = thief.getTarget();
 
-        int stolenGold = target.getGolds();
-        thief.addGold(stolenGold);
-        target.setGolds(0);
-        System.out.println(thief.getName() + " a volé " + stolenGold + " pièces d'or à " + target.getName());
-
-         */
-    }
 
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(this.bots);
         robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
+        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.MAGICIEN));
+        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
         ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
@@ -118,6 +103,18 @@ public class Round {
                     powerOfBot.condottiere(robots.get(0));
                 }
                 break;
+            case VOLEUR:
+                Collections.shuffle(robots);
+                if (!robots.isEmpty()) {
+                    powerOfBot.voleur(robots.get(0));
+                }
+                break ;
+            case MAGICIEN:
+                Collections.shuffle(robots);
+                if (!robots.isEmpty()) {
+                    powerOfBot.magicien(robots.get(0));
+                }
+                break ;
             default:
                 break;
         }
@@ -130,7 +127,6 @@ public class Round {
      * On trie les robots par ordre croissant de numéro de personnage
      * @see Round#specialCard() pour donner une pièce d'or au marchand
      * @see Round#sortRobots() pour trier les robots par ordre de couronne et de numéro de personnage
-     * @see Round#thiefAction(Robot) pour voler de l'or à un autre robot
      * @see Robot#pickListOfDistrict() pour piocher une liste de cartes
      * @see Robot#pickDistrictCard(List) pour choisir une carte dans la liste de cartes piochées
      * @see Robot#addDistrict(DistrictsType) pour ajouter une carte dans la main du robot

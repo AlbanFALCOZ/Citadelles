@@ -61,6 +61,8 @@ public class ActionOfBotDuringARound {
         System.out.println("\n-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
     }
 
+
+
     public void printBuildingOfBot(String hasBuilt){
         if (!hasBuilt.equals("nothing")){
             System.out.println(bot.getName() + " built " + hasBuilt + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
@@ -85,5 +87,17 @@ public class ActionOfBotDuringARound {
 
     public void printEvequeImmune(Robot victim, DistrictsType district) {
         System.out.println(bot.getName() + " can't destroy " + district + " of " + victim.getName() + " because he is " + victim.getCharacter().getRole());
+    }
+
+    public void printMagicianSwap(Robot victim){
+        System.out.println(bot.getName() + " swapped cards with " + victim.getName()) ;
+    }
+
+    public void printThiefStill(Robot victim){
+        System.out.println(bot.getName() + " a volé " + victim.getGolds() + " pièces d'or à " + victim.getName() +"Total golds now " + bot.getGolds());
+    }
+
+    public void printMagicianSwapWithDeck(){
+        System.out.println(bot.getName() + "choosed to swap with deck");
     }
 }

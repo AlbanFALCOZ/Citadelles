@@ -70,7 +70,7 @@ class RoundTest {
 
         List<Robot> otherBots = Collections.singletonList(target); //liste avec uniquement la cible
         //thief.chooseTarget(otherBots);
-        round.thiefAction(thief);
+        //round.thiefAction(thief);
 
         //assertEquals(7, thief.getGolds(), "Le voleur devrait avoir 7 pièces d'or après le vol");
         //assertEquals(0, target.getGolds(), "La cible devrait avoir 0 pièce d'or après le vol");

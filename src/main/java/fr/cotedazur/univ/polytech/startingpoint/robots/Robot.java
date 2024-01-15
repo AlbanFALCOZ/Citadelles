@@ -80,6 +80,15 @@ public interface Robot {
 
     void setChoice(int choice);
 
+    List<DistrictsType> getDistrictInHand();
+
+
+
+    void setDistrictInHand(List<DistrictsType> districtInHand);
+
+    void emptyListOfCardsInHand() ;
+
+
     //Power getPower();
 
 

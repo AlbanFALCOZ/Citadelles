@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
@@ -93,11 +94,48 @@ public class Power {
         }
         action.printActionOfNoneDistrictDestroyed(victim, bot.getGolds());
 
+    }
 
+   public void swapCards(Robot victim){
+       List<DistrictsType> botDistrictInHand = bot.getDistrictInHand() ;
+       bot.setDistrictInHand(victim.getDistrictInHand()) ;
+       victim.setDistrictInHand(botDistrictInHand);
+   }
 
+    public void magicien(Robot victim) {
+
+        int i = bot.generateChoice() ;
+        if (i == 0) {
+            swapCards(victim);
+            action.printMagicianSwap(victim);
+            System.out.println(bot.statusOfPlayer());
+        }
+        if (i == 1){
+
+            int a = bot.getNumberOfDistrictInHand() ;
+            bot.emptyListOfCardsInHand();
+            bot.setNumberOfCardsDrawn(a);
+            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
+            for ( int j = 0 ; j < a ; j++){
+                bot.addDistrict(listDistrictDrawn.get(j));
+            }
+            action.printMagicianSwapWithDeck();
+            System.out.println(bot.statusOfPlayer());
+
+        }
+        bot.setNumberOfCardsDrawn(2);
     }
 
 
+
+
+    public void voleur(Robot victim) {
+        int stolenGold = victim.getGolds();
+        bot.addGold(stolenGold);
+        action.printThiefStill(victim);
+        victim.setGolds(0);
+
+    }
 
 
 }

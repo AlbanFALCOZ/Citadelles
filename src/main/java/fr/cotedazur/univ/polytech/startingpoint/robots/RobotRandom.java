@@ -277,9 +277,25 @@ public class RobotRandom implements Robot{
         return choice ;
     }
 
+    public void setDistrictInHand(List<DistrictsType> listDistrict){
+        this.districtInHand = listDistrict ;
 
+    }
 
+    @Override
+    public void emptyListOfCardsInHand() {
+        int a = this.getNumberOfDistrictInHand();
+        for (int i = 0; i < a; i++) {
+            this.districtInHand.remove(0);
+        }
+
+    }
 
 
 }
+
+
+
+
+
 
