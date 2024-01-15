@@ -28,8 +28,6 @@ public interface Robot {
 
     void setScore(int score);
 
-    void setDistrict(DeckDistrict district);
-
     void addGold(int golds);
 
     void setCharacter(CharactersType character);
@@ -54,9 +52,9 @@ public interface Robot {
 
     String statusOfPlayer();
 
-    List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict);
+    List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
 
-    List<DistrictsType> pickListOfDistrict();
+    List<DistrictsType> pickListOfDistrict(DeckDistrict deck);
 
     int calculateScore();
 

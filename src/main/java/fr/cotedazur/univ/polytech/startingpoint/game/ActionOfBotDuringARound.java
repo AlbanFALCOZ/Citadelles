@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
@@ -42,7 +43,7 @@ public class ActionOfBotDuringARound {
             if (i < listDistrictPicked.size()-1) cardPicked += ",";
             //bot.addDistrict(districtInListDistrict);
         }
-        System.out.println("The bot choose to pick : {" + cardPicked + "}");
+        System.out.println(bot.getName() + " choose to pick : {" + cardPicked + "}");
         System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
     }
 
@@ -93,11 +94,24 @@ public class ActionOfBotDuringARound {
         System.out.println(bot.getName() + " swapped cards with " + victim.getName()) ;
     }
 
+    public void printChoiceOfThief(Robot bot,int numberOfCharacter) {
+        System.out.println(bot.getName() + " chose to steal from " + getNameOfCharacterFromNumber(numberOfCharacter));
+    }
+
     public void printThiefStill(Robot victim){
-        System.out.println(bot.getName() + " a volé " + victim.getGolds() + " pièces d'or à " + victim.getName() +"Total golds now " + bot.getGolds());
+        System.out.println(bot.getName() + " stole " + victim.getGolds() + " golds from " + victim.getName() +". Total golds now " + bot.getGolds());
     }
 
     public void printMagicianSwapWithDeck(){
-        System.out.println(bot.getName() + "choosed to swap with deck");
+        System.out.println(bot.getName() + " choosed to swap with deck");
+    }
+
+    public String getNameOfCharacterFromNumber(int number) {
+        String[] listName = {"Assassin","Voleur","Magicien","Roi","Évêque","Marchand","Architecte","Condottière"};
+        return listName[number-1];
     }
 }
+
+
+
+

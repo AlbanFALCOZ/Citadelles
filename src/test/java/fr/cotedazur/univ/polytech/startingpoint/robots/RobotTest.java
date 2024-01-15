@@ -83,9 +83,9 @@ public class RobotTest {
     void testPickDistrictCard() {
         List<DistrictsType> listDistrict = new ArrayList<>();
         listDistrict.add(DistrictsType.TEMPLE);
-        robot.pickDistrictCard(listDistrict);
+        robot.pickDistrictCard(listDistrict, new DeckDistrict());
         listDistrict.add(DistrictsType.MONASTERE);
-        robot.pickDistrictCard(listDistrict);
+        robot.pickDistrictCard(listDistrict, new DeckDistrict());
 
     }
 
