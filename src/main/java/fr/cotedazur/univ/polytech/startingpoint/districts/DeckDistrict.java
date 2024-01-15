@@ -18,6 +18,12 @@ public class DeckDistrict {
      */
     public DeckDistrict() {
         this.districtsInDeck = new ArrayList<>();
+        addAllDistrictToDeck();
+        Collections.shuffle(districtsInDeck);
+    }
+
+
+    public void addAllDistrictToDeck() {
         for (int numbOfCard = 0; numbOfCard < 5; numbOfCard++) {
             if (numbOfCard < 1) {
                 districtsInDeck.add(DistrictsType.COURT_DES_MIRACLES);
@@ -59,15 +65,17 @@ public class DeckDistrict {
             districtsInDeck.add(DistrictsType.MANOIR);
             districtsInDeck.add(DistrictsType.TAVERNE);
         }
-        Collections.shuffle(districtsInDeck);
     }
 
     /**
      * @return la liste des districts dans le deck
      */
     public DistrictsType getDistrictsInDeck() {
+        if (districtsInDeck.isEmpty()) addAllDistrictToDeck();
         return districtsInDeck.remove(0);
     }
+
+    public int getSizeOfDeck() {return districtsInDeck.size();}
 
     /**
      * @param district le district à ajouter au deck

@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
@@ -13,14 +14,23 @@ import java.util.*;
 public class Round {
 
     private List<Robot> bots;
+    private boolean systemPrint;
+    private DeckDistrict deck;
+    private int numberOfCharacterToStealFrom = 0;
+    private Robot voleur;
+    private Robot victimOfVoleur;
 
     /**
      * @param bots la liste des robots
      *             Constructeur de la classe Round
      */
-    public Round(List<Robot> bots) {
+    public Round(List<Robot> bots, boolean systemPrint, DeckDistrict deck) {
         this.bots = new ArrayList<>(bots);
+        this.systemPrint = systemPrint;
+        this.deck = deck;
     }
+
+    public Round(List<Robot> bots) { this(bots,true,new DeckDistrict());}
 
   
     /**
@@ -70,54 +80,63 @@ public class Round {
 
 
 
-    /**
-     * @param thief le robot voleur
-     *              cette méthode permet au voleur de voler de l'or à un autre robot
-     */
-    public void thiefAction(Robot thief) {
-        /*
-        List<Robot> otherBots = new ArrayList<>(bots);
-        otherBots.remove(thief);
-        thief.chooseTarget(otherBots);
-        Robot target = thief.getTarget();
 
-        int stolenGold = target.getGolds();
-        thief.addGold(stolenGold);
-        target.setGolds(0);
-        System.out.println(thief.getName() + " a volé " + stolenGold + " pièces d'or à " + target.getName());
-
-         */
-    }
 
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(this.bots);
+
+        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
+        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.MAGICIEN));
+        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
         ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
-            case ASSASSIN:
+            /*case ASSASSIN:
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.ASSASSIN));
                 Collections.shuffle(robots);
                 if (!robots.isEmpty()) {
                     powerOfBot.assassin(robots.get(0), bots);
                 }
-                break;
+                break;*/
             case MARCHAND:
                 powerOfBot.marchand();
                 break;
             case ARCHITECTE:
-                powerOfBot.architecte(bot);
+                powerOfBot.architecte(bot, deck);
                 break;
             case CONDOTTIERE:
-                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
+                //robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
                 Collections.shuffle(robots);
                 if (!robots.isEmpty()) {
                     powerOfBot.condottiere(robots.get(0));
                 }
                 break;
+            case VOLEUR:
+                if (numberOfCharacterToStealFrom == 0) {
+                    numberOfCharacterToStealFrom = (int) (Math.random()*6 + 2);
+                    this.voleur = bot;
+                    actionOfBotDuringARound.printChoiceOfThief(voleur, numberOfCharacterToStealFrom);
+                }
+                else {
+                    powerOfBot.voleur(victimOfVoleur);
+                }
+                break;
+            case MAGICIEN:
+                Collections.shuffle(robots);
+                if (!robots.isEmpty()) {
+                    powerOfBot.magicien(robots.get(0), deck);
+                }
+                break ;
             default:
                 break;
         }
 
+    }
+
+    public Robot getRandomRobotDifferentFrom(Robot bot) {
+        Collections.shuffle(bots);
+        while (bots.get(0).getName().equals(bot.getName())) Collections.shuffle(bots);
+        return bots.get(0);
     }
 
 
@@ -125,9 +144,8 @@ public class Round {
      * cette méthode permet de jouer les tours de jeu
      * On trie les robots par ordre croissant de numéro de personnage
      * @see Round#sortRobots() pour trier les robots par ordre de couronne et de numéro de personnage
-     * @see Round#thiefAction(Robot) pour voler de l'or à un autre robot
-     * @see Robot#pickListOfDistrict() pour piocher une liste de cartes
-     * @see Robot#pickDistrictCard(List) pour choisir une carte dans la liste de cartes piochées
+     * @see Robot#pickListOfDistrict(DeckDistrict) pour piocher une liste de cartes
+     * @see Robot#pickDistrictCard(List, DeckDistrict) pour choisir une carte dans la liste de cartes piochées
      * @see Robot#addDistrict(DistrictsType) pour ajouter une carte dans la main du robot
      * @see Robot#addGold(int) pour ajouter de l'or au robot
      * @see Robot#tryBuild() pour construire un district
@@ -136,19 +154,24 @@ public class Round {
      * @see Robot#isCharacter(String) pour savoir si un robot a un personnage donné
      *
      */
-    public void playTurns() {
+
+    public void playTurns() {;
         bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
+        numberOfCharacterToStealFrom = 0;
         for (Robot bot : bots) {
-
             ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
             actionOfBotDuringARound.startTurnOfBot();
+            if (bot.getCharacter().getNumber() == numberOfCharacterToStealFrom) {
+                this.victimOfVoleur = bot;
+                choosePowerOfBot(voleur);
+            }
             bot.setChoice(bot.generateChoice());
             choosePowerOfBot(bot);
             switch (bot.getChoice()) {
                 case 0:
-                    List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
-                    List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
+                    List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
+                    List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn, deck);
                      actionOfBotDuringARound.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
                     bot.addDistrict(listDistrictPicked);
                     actionOfBotDuringARound.printActionOfBotWhoHasBuilt();

@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
@@ -28,15 +30,15 @@ public class Power {
     }
 
 
-    public void architecte(Robot bot) {
+    public void architecte(Robot bot, DeckDistrict deck) {
         //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
         if(i == 0 ) {
             bot.setChoice(7);
-            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
-            listDistrictDrawn.add(bot.pickListOfDistrict().get(0)) ;
-            listDistrictDrawn.add(bot.pickListOfDistrict().get(1)) ;
-            List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
+            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
+            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(0)) ;
+            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(1)) ;
+            List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn,deck);
             action.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
             bot.addDistrict(listDistrictPicked);
             action.printActionOfBotWhoHasBuilt();
@@ -87,8 +89,36 @@ public class Power {
         }
         action.printActionOfNoneDistrictDestroyed(victim, bot.getGolds());
 
+    }
 
+   public void swapCards(Robot victim){
+       List<DistrictsType> botDistrictInHand = bot.getDistrictInHand() ;
+       bot.setDistrictInHand(victim.getDistrictInHand()) ;
+       victim.setDistrictInHand(botDistrictInHand);
+   }
 
+    public void magicien(Robot victim, DeckDistrict deck) {
+
+        int i = bot.generateChoice() ;
+        if (i == 0) {
+            swapCards(victim);
+            action.printMagicianSwap(victim);
+            System.out.println(bot.statusOfPlayer());
+        }
+        if (i == 1){
+
+            int a = bot.getNumberOfDistrictInHand() ;
+            bot.emptyListOfCardsInHand();
+            bot.setNumberOfCardsDrawn(a);
+            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
+            for ( int j = 0 ; j < a ; j++){
+                bot.addDistrict(listDistrictDrawn.get(j));
+            }
+            action.printMagicianSwapWithDeck();
+            System.out.println(bot.statusOfPlayer());
+
+        }
+        bot.setNumberOfCardsDrawn(2);
     }
 
     public void assassin(Robot victim, List<Robot> bots){
@@ -99,6 +129,15 @@ public class Power {
     }
 
 
+
+
+    public void voleur(Robot victim) {
+        int stolenGold = victim.getGolds();
+        bot.addGold(stolenGold);
+        action.printThiefStill(victim);
+        victim.setGolds(0);
+
+    }
 
 
 }

@@ -139,7 +139,7 @@ public class GameEngine {
      * On répète les étapes précédentes jusqu'à ce qu'un robot construise 8 districts
      */
     public void gameTurns(){
-        round = new Round(bots);
+        round = new Round(bots,systemPrint,deckDistricts);
         String turnStarting = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn ";
         String turnEnding = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
         if (systemPrint) System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
@@ -160,7 +160,7 @@ public class GameEngine {
             round.playTurns();
             if (systemPrint) System.out.println(turnStarting + comptTurn + " is over" + turnEnding);
             comptTurn++;
-            round = new Round(bots);
+            round = new Round(bots,systemPrint,deckDistricts);
         }
     }
 

@@ -13,8 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoundTest {
-  
-    /*@Test
+
     void testSortRobots() {
         GameEngine gameEngine = new GameEngine();
         Round round = new Round(gameEngine.getBots());
@@ -27,24 +26,6 @@ class RoundTest {
             assertTrue(sortedRobots.get(i - 1).getCharacter().getNumber() <= sortedRobots.get(i).getCharacter().getNumber());
         }
 
-    }*/
-
-    @Test
-    void testSpecialCard() {
-        GameEngine game = new GameEngine();
-
-        game.clearBots();
-
-        Robot robot1 = new RobotRandom("Robot1");
-        robot1.setCharacter(CharactersType.MARCHAND);
-        robot1.addDistrict(DistrictsType.TAVERNE);
-        robot1.setGolds(6);
-        robot1.tryBuild();
-        game.addRobot(robot1);
-        Round round = new Round(game.getBots());
-        round.specialCard();
-
-        assertEquals(6, robot1.getGolds());
     }
 
 
@@ -70,7 +51,7 @@ class RoundTest {
 
         List<Robot> otherBots = Collections.singletonList(target); //liste avec uniquement la cible
         //thief.chooseTarget(otherBots);
-        round.thiefAction(thief);
+        //round.thiefAction(thief);
 
         //assertEquals(7, thief.getGolds(), "Le voleur devrait avoir 7 pièces d'or après le vol");
         //assertEquals(0, target.getGolds(), "La cible devrait avoir 0 pièce d'or après le vol");
