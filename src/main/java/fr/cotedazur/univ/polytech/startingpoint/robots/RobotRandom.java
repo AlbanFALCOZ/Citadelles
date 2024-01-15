@@ -22,6 +22,8 @@ public class RobotRandom implements Robot{
 
     public int choice ;
 
+    private boolean hasFiveColors;
+
     private ArrayList<DistrictsType> city;
 
     private boolean hasCrown;
@@ -289,6 +291,16 @@ public class RobotRandom implements Robot{
             this.districtInHand.remove(0);
         }
 
+    }
+
+    @Override
+    public void setHasFriveColors(boolean b) {
+        this.hasFiveColors = b ;
+    }
+
+    @Override
+    public boolean hasFiveColors() {
+        return this.hasFiveColors;
     }
 
 

@@ -88,8 +88,15 @@ public interface Robot {
 
     void emptyListOfCardsInHand() ;
 
+    void setHasFriveColors(boolean b ) ;
+
+    boolean hasFiveColors();
+}
+
+
+
 
     //Power getPower();
 
 
-}
+

@@ -69,13 +69,12 @@ public class Round {
     public ArrayList<Robot> sortRobots() {
         ArrayList<Robot> sortedBots = new ArrayList<>(bots);
 
-        // Custom comparator to sort by crown status and then by character number
+
         Comparator<Robot> crownComparator = Comparator.comparing((Robot bot) -> !bot.getHasCrown())
                 .thenComparingInt(bot -> bot.getCharacter().getNumber());
 
-        // Sort the list using the custom comparator
-        Collections.sort(sortedBots, crownComparator);
 
+        Collections.sort(sortedBots, crownComparator);
         return sortedBots;
     }
 
@@ -160,15 +159,15 @@ public class Round {
                     actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
                     actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
                     break;
-
                 default:
                     break;
             }
-
             String hasBuilt = bot.tryBuild();
             int goldsWon =  bot.winGoldsByTypeOfBuildings();
             actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
+
         }
         assignCrownForKing();
+
     }
 }

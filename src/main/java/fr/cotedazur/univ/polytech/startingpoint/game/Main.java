@@ -23,7 +23,7 @@ public class Main {
         GameEngine Game = new GameEngine();
         Game.gameTurns();
         Winner winner = new Winner(Game.getBots());
-        System.out.println(winner.calculateScores());
+        System.out.println(winner.printScore());
         System.out.println(winner.showWinners());
     }
 
@@ -61,7 +61,5 @@ public class Main {
         long timeElapsed = finish - start;
         System.out.println(timeElapsed/1000 + "sec");
     }
-
-
 
 }

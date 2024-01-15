@@ -30,7 +30,7 @@ class WinnerTest {
         gameEngine.robotsPickCharacters();
         Round round = new Round(gameEngine.getBots());
         round.playTurns();
-        winner.calculateScores();
+        winner.printScore();
         int maxScore = 0;
         for (Robot bot : gameEngine.getBots()) {
             if (bot.calculateScore() > maxScore) {
