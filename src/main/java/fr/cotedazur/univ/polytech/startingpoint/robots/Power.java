@@ -97,7 +97,8 @@ public class Power {
        victim.setDistrictInHand(botDistrictInHand);
    }
 
-    public void magicien(Robot victim, DeckDistrict deck) {
+
+   public void magicien(Robot victim, DeckDistrict deck) {
 
         int i = bot.generateChoice() ;
         if (i == 0) {
@@ -126,7 +127,6 @@ public class Power {
             victim.setIsAssassinated(true);
             action.printVictimAssassined(victim);
         }
-
     }
 
     public void voleur(Robot victim) {

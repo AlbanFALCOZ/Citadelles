@@ -148,7 +148,7 @@ public class Round {
      *
      */
 
-    public void playTurns() {
+   public void playTurns() {
         bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         numberOfCharacterToStealFrom = 0;
