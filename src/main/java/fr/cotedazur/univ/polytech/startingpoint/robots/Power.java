@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
@@ -10,15 +9,15 @@ public class Power {
     private ActionOfBotDuringARound action;
     private Robot bot;
 
-    public static final String MILITAIRE = "militaire";
-    public static final String RELIGIEUX = "religieux";
+    public static final String MILITATE = "militaire";
+    public static final String RELIGIOUS = "religieux";
+    public static final String ASSASSIN = "assassin";
 
     public Power(Robot bot, ActionOfBotDuringARound action){
         this.bot = bot;
         this.action = action;
 
     }
-
 
    
     public void marchand(){
@@ -27,8 +26,6 @@ public class Power {
         action.printActionOfSellerBotWhoGainedGold();
 
     }
-
-
 
 
     public void architecte(Robot bot) {
@@ -59,9 +56,6 @@ public class Power {
         }
 
 
-
-
-
     public boolean canDestroyDistrict(Robot victim, DistrictsType district){
         int destructorGolds = bot.getGolds();
         boolean districtInCity = victim.getCity().contains(district);
@@ -78,8 +72,8 @@ public class Power {
             boolean verify = canDestroyDistrict(victim, district);
 
             if (verify) {
-                if (bot.getCharacter().getType().equals(MILITAIRE) &&
-                        !victim.getCharacter().getType().equals(RELIGIEUX)) {
+                if (bot.getCharacter().getType().equals(MILITATE) &&
+                        !victim.getCharacter().getType().equals(RELIGIOUS)) {
                     victim.getCity().remove(district);
                     int goldsAfterDestruction = destructorGolds - district.getCost();
                     bot.setGolds(goldsAfterDestruction + 1);
@@ -95,6 +89,13 @@ public class Power {
 
 
 
+    }
+
+    public void assassin(Robot victim, List<Robot> bots){
+        if(bot.getCharacter().getType().equals(ASSASSIN)){
+            bots.remove(victim);
+            action.printVictimAssassined(victim);
+        }
     }
 
 

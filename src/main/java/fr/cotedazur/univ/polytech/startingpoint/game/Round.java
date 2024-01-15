@@ -53,17 +53,6 @@ public class Round {
 
 
     /**
-     * cette méthode permet de donner une pièce d'or au marchand
-     */
-    public void specialCard(){
-        for (Robot bot : bots){
-            if(bot.getCharacter().getNumber()==6){
-                bot.addGold(1);
-            }
-        }
-    }
-
-    /**
      * @return la liste des robots triée par ordre de couronne et de numéro de personnage
      */
     public ArrayList<Robot> sortRobots() {
@@ -102,10 +91,16 @@ public class Round {
 
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(this.bots);
-        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
         ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
+            case ASSASSIN:
+                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.ASSASSIN));
+                Collections.shuffle(robots);
+                if (!robots.isEmpty()) {
+                    powerOfBot.assassin(robots.get(0), bots);
+                }
+                break;
             case MARCHAND:
                 powerOfBot.marchand();
                 break;
@@ -113,6 +108,7 @@ public class Round {
                 powerOfBot.architecte(bot);
                 break;
             case CONDOTTIERE:
+                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
                 Collections.shuffle(robots);
                 if (!robots.isEmpty()) {
                     powerOfBot.condottiere(robots.get(0));
@@ -128,7 +124,6 @@ public class Round {
     /**
      * cette méthode permet de jouer les tours de jeu
      * On trie les robots par ordre croissant de numéro de personnage
-     * @see Round#specialCard() pour donner une pièce d'or au marchand
      * @see Round#sortRobots() pour trier les robots par ordre de couronne et de numéro de personnage
      * @see Round#thiefAction(Robot) pour voler de l'or à un autre robot
      * @see Robot#pickListOfDistrict() pour piocher une liste de cartes
@@ -142,7 +137,6 @@ public class Round {
      *
      */
     public void playTurns() {
-        specialCard();
         bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         for (Robot bot : bots) {
