@@ -64,4 +64,21 @@ class PowerTest {
         power.condottiere(victim);
         assertEquals(5, destructor.getGolds());
     }
+
+    @Test
+    public void tryDestroyDonjon() {
+        RobotRandom destructor = new RobotRandom("destructor");
+        RobotRandom victim = new RobotRandom("victim");
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
+        destructor.setCharacter(CharactersType.CONDOTTIERE);
+        victim.setCharacter(CharactersType.MARCHAND);
+        victim.setGolds(30);
+        victim.addDistrict(DistrictsType.DONJON);
+        victim.tryBuild();
+
+        destructor.setGolds(5);
+        power.condottiere(victim);
+        assertEquals(5, destructor.getGolds());
+        assertEquals(1,victim.getNumberOfDistrictInCity());
+    }
 }

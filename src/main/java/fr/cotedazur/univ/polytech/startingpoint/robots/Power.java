@@ -11,15 +11,15 @@ public class Power {
     private ActionOfBotDuringARound action;
     private Robot bot;
 
-    public static final String MILITAIRE = "militaire";
-    public static final String RELIGIEUX = "religieux";
+    public static final String MILITATE = "militaire";
+    public static final String RELIGIOUS = "religieux";
+    public static final String ASSASSIN = "assassin";
 
     public Power(Robot bot, ActionOfBotDuringARound action){
         this.bot = bot;
         this.action = action;
 
     }
-
 
    
     public void marchand(){
@@ -30,17 +30,15 @@ public class Power {
     }
 
 
-
-
-    public void architecte(Robot bot) {
+    public void architecte(Robot bot, DeckDistrict deck) {
         //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
         if(i == 0 ) {
             bot.setChoice(7);
-            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
-            listDistrictDrawn.add(bot.pickListOfDistrict().get(0)) ;
-            listDistrictDrawn.add(bot.pickListOfDistrict().get(1)) ;
-            List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
+            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
+            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(0)) ;
+            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(1)) ;
+            List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn,deck);
             action.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
             bot.addDistrict(listDistrictPicked);
             action.printActionOfBotWhoHasBuilt();
@@ -60,9 +58,6 @@ public class Power {
         }
 
 
-
-
-
     public boolean canDestroyDistrict(Robot victim, DistrictsType district){
         int destructorGolds = bot.getGolds();
         boolean districtInCity = victim.getCity().contains(district);
@@ -79,8 +74,8 @@ public class Power {
             boolean verify = canDestroyDistrict(victim, district);
 
             if (verify) {
-                if (bot.getCharacter().getType().equals(MILITAIRE) &&
-                        !victim.getCharacter().getType().equals(RELIGIEUX)) {
+                if (bot.getCharacter().getType().equals(MILITATE) &&
+                        !victim.getCharacter().getType().equals(RELIGIOUS)) {
                     victim.getCity().remove(district);
                     int goldsAfterDestruction = destructorGolds - district.getCost();
                     bot.setGolds(goldsAfterDestruction + 1);
@@ -102,7 +97,8 @@ public class Power {
        victim.setDistrictInHand(botDistrictInHand);
    }
 
-    public void magicien(Robot victim) {
+
+   public void magicien(Robot victim, DeckDistrict deck) {
 
         int i = bot.generateChoice() ;
         if (i == 0) {
@@ -115,7 +111,7 @@ public class Power {
             int a = bot.getNumberOfDistrictInHand() ;
             bot.emptyListOfCardsInHand();
             bot.setNumberOfCardsDrawn(a);
-            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
+            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
             for ( int j = 0 ; j < a ; j++){
                 bot.addDistrict(listDistrictDrawn.get(j));
             }
@@ -126,8 +122,12 @@ public class Power {
         bot.setNumberOfCardsDrawn(2);
     }
 
-
-
+    public void assassin(Robot victim){
+        if(bot.getCharacter().getType().equals(ASSASSIN)){
+            victim.setIsAssassinated(true);
+            action.printVictimAssassined(victim);
+        }
+    }
 
     public void voleur(Robot victim) {
         int stolenGold = victim.getGolds();

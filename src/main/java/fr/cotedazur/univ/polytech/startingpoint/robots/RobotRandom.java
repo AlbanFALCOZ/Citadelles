@@ -15,7 +15,7 @@ public class RobotRandom implements Robot{
     private int golds;
     private int numberOfCardsDrawn = 2;
     private int numberOfCardsChosen = 1;
-    private DeckDistrict district = new DeckDistrict();
+    //private DeckDistrict district;
     private List<DistrictsType> districtInHand;
     private CharactersType character;
     public static final String RESET = "\u001B[0m";
@@ -28,6 +28,8 @@ public class RobotRandom implements Robot{
 
     private boolean hasCrown;
 
+    private boolean IsAssassinated;
+
 
 
     public RobotRandom(String name) {
@@ -38,11 +40,20 @@ public class RobotRandom implements Robot{
         this.character = null;
         this.city = new ArrayList<>();
         this.hasCrown = false;
+        this.IsAssassinated = false;
 
     }
 
     public List<DistrictsType> getDistrictInHand() {
         return districtInHand;
+    }
+
+    public boolean getIsAssassinated() {
+        return IsAssassinated;
+    }
+
+    public void setIsAssassinated(boolean IsAssassinated) {
+        this.IsAssassinated = IsAssassinated;
     }
 
 
@@ -85,10 +96,6 @@ public class RobotRandom implements Robot{
 
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public void setDistrict(DeckDistrict district) {
-        this.district = district;
     }
 
     public void addGold(int golds) {
@@ -180,7 +187,7 @@ public class RobotRandom implements Robot{
         return returedString;
     }
 
-    public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict) {
+    public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int costOfDistrictToBeBuilt = 0;
@@ -201,15 +208,15 @@ public class RobotRandom implements Robot{
 
 
         for (DistrictsType districtNonChosen: listDistrict) {
-            district.addDistrictToDeck(districtNonChosen);
+            deck.addDistrictToDeck(districtNonChosen);
         }
         return listDistrictToBuild;
     }
 
-    public List<DistrictsType> pickListOfDistrict(){
+    public List<DistrictsType> pickListOfDistrict(DeckDistrict deck){
         List<DistrictsType> listDistrict = new ArrayList<>();
         for (int i = 0; i < numberOfCardsDrawn; i++) {
-            DistrictsType card = district.getDistrictsInDeck();
+            DistrictsType card = deck.getDistrictsInDeck();
             listDistrict.add(card);
         }
         return listDistrict;

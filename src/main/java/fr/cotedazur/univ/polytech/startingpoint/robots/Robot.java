@@ -28,8 +28,6 @@ public interface Robot {
 
     void setScore(int score);
 
-    void setDistrict(DeckDistrict district);
-
     void addGold(int golds);
 
     void setCharacter(CharactersType character);
@@ -54,9 +52,9 @@ public interface Robot {
 
     String statusOfPlayer();
 
-    List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict);
+    List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
 
-    List<DistrictsType> pickListOfDistrict();
+    List<DistrictsType> pickListOfDistrict(DeckDistrict deck);
 
     int calculateScore();
 
@@ -67,7 +65,6 @@ public interface Robot {
     int winGoldsByTypeOfBuildings();
 
     boolean isCharacter(String type);
-
 
 
     //void setPower(Power aPower);
@@ -82,15 +79,19 @@ public interface Robot {
 
     List<DistrictsType> getDistrictInHand();
 
-
-
     void setDistrictInHand(List<DistrictsType> districtInHand);
 
-    void emptyListOfCardsInHand() ;
+    void emptyListOfCardsInHand();
 
-    void setHasFriveColors(boolean b ) ;
+
+    void setHasFriveColors(boolean b);
 
     boolean hasFiveColors();
+
+
+    boolean getIsAssassinated();
+
+    void setIsAssassinated(boolean IsAssassinated);
 }
 
 
