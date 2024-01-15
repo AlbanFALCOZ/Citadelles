@@ -91,9 +91,10 @@ public class ActionOfBotDuringARound {
     }
 
     public void printVictimAssassined(Robot victim) {
-        System.out.println(bot.getName() + " murdered " + victim.getName());
+        System.out.println(bot.getName() + " murdered " + victim.getCharacter().getRole());
 
     }
+
     public void printMagicianSwap(Robot victim){
         System.out.println(bot.getName() + " swapped cards with " + victim.getName()) ;
     }

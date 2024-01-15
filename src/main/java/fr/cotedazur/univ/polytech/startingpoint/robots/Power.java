@@ -121,15 +121,13 @@ public class Power {
         bot.setNumberOfCardsDrawn(2);
     }
 
-    public void assassin(Robot victim, List<Robot> bots){
+    public void assassin(Robot victim){
         if(bot.getCharacter().getType().equals(ASSASSIN)){
-            bots.remove(victim);
+            victim.setIsMurdered(true);
             action.printVictimAssassined(victim);
         }
+
     }
-
-
-
 
     public void voleur(Robot victim) {
         int stolenGold = victim.getGolds();

@@ -40,23 +40,22 @@ public class Round {
         int cpt = 0;
         int index = 0 ;
         for (Robot bot : bots) {
-            if (bot.isCharacter("Roi")) {
+            if (bot.isCharacter("noble")) {
                 cpt++;
             }
         }
         if (cpt == 1) {
             for (Robot bot : bots) {
-                if (bot.isCharacter("Roi")) {
+                if (bot.isCharacter("noble")) {
                     bot.setHasCrown(true);
                 }
-                if (!bot.isCharacter("Roi")) {
+                if (!bot.isCharacter("noble")) {
                     bot.setHasCrown(false);
                 }
             }
-            Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
-            cpt=0;
+            bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         }
-        Collections.sort(bots, Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+        bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         Collections.rotate(bots, -index);
 
     }
@@ -65,7 +64,7 @@ public class Round {
     /**
      * @return la liste des robots triée par ordre de couronne et de numéro de personnage
      */
-    public ArrayList<Robot> sortRobots() {
+    public List<Robot> sortRobots() {
         ArrayList<Robot> sortedBots = new ArrayList<>(bots);
 
         // Custom comparator to sort by crown status and then by character number
@@ -78,26 +77,19 @@ public class Round {
         return sortedBots;
     }
 
-
-
-
-
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(this.bots);
 
-        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
-        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.MAGICIEN));
-        robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
         ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
-            /*case ASSASSIN:
+            case ASSASSIN:
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.ASSASSIN));
                 Collections.shuffle(robots);
                 if (!robots.isEmpty()) {
-                    powerOfBot.assassin(robots.get(0), bots);
+                    powerOfBot.assassin(robots.get(0));
                 }
-                break;*/
+                break;
             case MARCHAND:
                 powerOfBot.marchand();
                 break;
@@ -105,7 +97,7 @@ public class Round {
                 powerOfBot.architecte(bot, deck);
                 break;
             case CONDOTTIERE:
-                //robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
+                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
                 Collections.shuffle(robots);
                 if (!robots.isEmpty()) {
                     powerOfBot.condottiere(robots.get(0));
@@ -122,6 +114,7 @@ public class Round {
                 }
                 break;
             case MAGICIEN:
+                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.MAGICIEN));
                 Collections.shuffle(robots);
                 if (!robots.isEmpty()) {
                     powerOfBot.magicien(robots.get(0), deck);
@@ -155,40 +148,46 @@ public class Round {
      *
      */
 
-    public void playTurns() {;
+    public void playTurns() {
         bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         numberOfCharacterToStealFrom = 0;
         for (Robot bot : bots) {
-            ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
-            actionOfBotDuringARound.startTurnOfBot();
-            if (bot.getCharacter().getNumber() == numberOfCharacterToStealFrom) {
-                this.victimOfVoleur = bot;
-                choosePowerOfBot(voleur);
-            }
-            bot.setChoice(bot.generateChoice());
-            choosePowerOfBot(bot);
-            switch (bot.getChoice()) {
-                case 0:
-                    List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
-                    List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn, deck);
-                     actionOfBotDuringARound.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
-                    bot.addDistrict(listDistrictPicked);
-                    actionOfBotDuringARound.printActionOfBotWhoHasBuilt();
-                    break;
-                case 1:
-                    bot.addGold(2);
-                    actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
-                    actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
-                    break;
+            if(!bot.getIsMurdered()){
+                ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
+                actionOfBotDuringARound.startTurnOfBot();
+                if (bot.getCharacter().getNumber() == numberOfCharacterToStealFrom) {
+                    this.victimOfVoleur = bot;
+                    choosePowerOfBot(voleur);
+                }
+                bot.setChoice(bot.generateChoice());
+                choosePowerOfBot(bot);
+                switch (bot.getChoice()) {
+                    case 0:
+                        List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
+                        List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn, deck);
+                        actionOfBotDuringARound.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
+                        bot.addDistrict(listDistrictPicked);
+                        actionOfBotDuringARound.printActionOfBotWhoHasBuilt();
+                        break;
+                    case 1:
+                        bot.addGold(2);
+                        actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
+                        actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+
+                String hasBuilt = bot.tryBuild();
+                int goldsWon =  bot.winGoldsByTypeOfBuildings();
+                actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
             }
 
-            String hasBuilt = bot.tryBuild();
-            int goldsWon =  bot.winGoldsByTypeOfBuildings();
-            actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
+        }
+        for(Robot bot : bots){
+            bot.setIsMurdered(false);
         }
         assignCrownForKing();
     }
