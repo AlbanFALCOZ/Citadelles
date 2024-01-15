@@ -80,11 +80,14 @@ public interface Robot {
 
     List<DistrictsType> getDistrictInHand();
 
-
-
     void setDistrictInHand(List<DistrictsType> districtInHand);
 
     void emptyListOfCardsInHand() ;
+
+    boolean getIsAssassinated();
+
+    void setIsAssassinated(boolean IsAssassinated);
+
 
 
     //Power getPower();

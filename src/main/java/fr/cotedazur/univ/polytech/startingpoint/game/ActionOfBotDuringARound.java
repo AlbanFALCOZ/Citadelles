@@ -36,7 +36,7 @@ public class ActionOfBotDuringARound {
             cardDrawn += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listDistrictDrawn.size()-1) cardDrawn += ",";
         }
-        System.out.println("The bot drew the following cards : {" + cardDrawn + "}");
+        System.out.println(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
         for (int i = 0; i < listDistrictPicked.size(); i++) {
             DistrictsType districtInListDistrict = listDistrictPicked.get(i);
             cardPicked += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
@@ -88,6 +88,11 @@ public class ActionOfBotDuringARound {
 
     public void printEvequeImmune(Robot victim, DistrictsType district) {
         System.out.println(bot.getName() + " can't destroy " + district + " of " + victim.getName() + " because he is " + victim.getCharacter().getRole());
+    }
+
+    public void printVictimAssassined(Robot victim) {
+        System.out.println(bot.getName() + " murdered " + victim.getCharacter().getRole());
+
     }
 
     public void printMagicianSwap(Robot victim){
