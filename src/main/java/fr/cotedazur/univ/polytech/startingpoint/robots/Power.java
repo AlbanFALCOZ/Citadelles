@@ -123,7 +123,7 @@ public class Power {
 
     public void assassin(Robot victim){
         if(bot.getCharacter().getType().equals(ASSASSIN)){
-            victim.setIsMurdered(true);
+            victim.setIsAssassinated(true);
             action.printVictimAssassined(victim);
         }
 

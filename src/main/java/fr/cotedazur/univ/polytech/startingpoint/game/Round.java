@@ -153,7 +153,7 @@ public class Round {
         this.sortRobots();
         numberOfCharacterToStealFrom = 0;
         for (Robot bot : bots) {
-            if(!bot.getIsMurdered()){
+            if(!bot.getIsAssassinated()){
                 ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
                 actionOfBotDuringARound.startTurnOfBot();
                 if (bot.getCharacter().getNumber() == numberOfCharacterToStealFrom) {
@@ -187,7 +187,7 @@ public class Round {
 
         }
         for(Robot bot : bots){
-            bot.setIsMurdered(false);
+            bot.setIsAssassinated(false);
         }
         assignCrownForKing();
     }

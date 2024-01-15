@@ -84,9 +84,9 @@ public interface Robot {
 
     void emptyListOfCardsInHand() ;
 
-    boolean getIsMurdered();
+    boolean getIsAssassinated();
 
-    void setIsMurdered(boolean isMurdered);
+    void setIsAssassinated(boolean IsAssassinated);
 
 
 

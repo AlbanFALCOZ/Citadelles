@@ -26,7 +26,7 @@ public class RobotRandom implements Robot{
 
     private boolean hasCrown;
 
-    private boolean isMurdered;
+    private boolean IsAssassinated;
 
 
 
@@ -38,7 +38,7 @@ public class RobotRandom implements Robot{
         this.character = null;
         this.city = new ArrayList<>();
         this.hasCrown = false;
-        this.isMurdered = false;
+        this.IsAssassinated = false;
 
     }
 
@@ -46,12 +46,12 @@ public class RobotRandom implements Robot{
         return districtInHand;
     }
 
-    public boolean getIsMurdered() {
-        return isMurdered;
+    public boolean getIsAssassinated() {
+        return IsAssassinated;
     }
 
-    public void setIsMurdered(boolean isMurdered) {
-        this.isMurdered = isMurdered;
+    public void setIsAssassinated(boolean IsAssassinated) {
+        this.IsAssassinated = IsAssassinated;
     }
 
 
