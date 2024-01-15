@@ -175,32 +175,6 @@ public class Round {
                         actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
                         break;
 
-<<<<<<< HEAD
-            ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
-            actionOfBotDuringARound.startTurnOfBot();
-            bot.setChoice(bot.generateChoice());
-            choosePowerOfBot(bot);
-            switch (bot.getChoice()) {
-                case 0:
-                    List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict();
-                    List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn);
-                     actionOfBotDuringARound.addListOfDistrict(listDistrictDrawn,listDistrictPicked);
-                    bot.addDistrict(listDistrictPicked);
-                    actionOfBotDuringARound.printActionOfBotWhoHasBuilt();
-                    break;
-                case 1:
-                    bot.addGold(2);
-                    actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
-                    actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
-                    break;
-                default:
-                    break;
-            }
-            String hasBuilt = bot.tryBuild();
-            int goldsWon =  bot.winGoldsByTypeOfBuildings();
-            actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
-
-=======
                     default:
                         break;
                 }
@@ -213,7 +187,7 @@ public class Round {
         }
         for(Robot bot : bots){
             bot.setIsAssassinated(false);
->>>>>>> 36c21a8fe525834fa36e64ed5b2b5c4ad71a3463
+
         }
         assignCrownForKing();
 

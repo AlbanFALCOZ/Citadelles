@@ -38,7 +38,6 @@ public class Winner {
         }
         awardEndGameBonus();
         awardDistrictColorBonus();
-
     }
     /**
      * @return les scores des robots
@@ -63,10 +62,10 @@ public class Winner {
 
         List<Robot> winners = new ArrayList<>();
         int highestScore = -1;
-        System.out.println("Je suis dans trouver winners");
+
         for (Robot bot : bots) {
             int score = bot.getScore();
-            System.out.println(bot.getName() + " has a score of " + score); // Debug output
+
             if (score > highestScore) {
                 winners.clear();
                 winners.add(bot);
@@ -104,9 +103,14 @@ public class Winner {
         Iterator<Robot> iterator = bots.iterator();
         while (iterator.hasNext()) {
             Robot bot = iterator.next();
+            int originalScore = bot.getScore(); // Store the original score
+
             if (bot.getNumberOfDistrictInCity() == 8) {
-                bot.setScore(bot.getScore() + 8);
+                bot.setScore(originalScore + 8);
+                System.out.println(bot.getName() + "'s score before bonus: " + originalScore);
                 System.out.println(bot.getName() + " ended the game, they get 8 extra points");
+                System.out.println(bot.getName() + "'s score after bonus: " + bot.getScore());
+                System.out.println("-----------------------------------------------------");
                 break;
             }
         }
@@ -115,18 +119,22 @@ public class Winner {
 
     public void awardDistrictColorBonus() {
         for (Robot bot : bots) {
-            Set<String> uniqueColors = new HashSet<>();
-            for (DistrictsType district : bot.getDistrictInHand()) {
-                uniqueColors.add(district.getColor());
+            int originalScore = bot.getScore();
+
+            Set<String> uniqueColorsInCity = new HashSet<>();
+            for (DistrictsType district : bot.getCity()) {
+                uniqueColorsInCity.add(district.getColor());
             }
-            if (uniqueColors.size() >= 5) {
-                bot.setScore(bot.getScore()+5);
-                System.out.println(bot.getName() + "Earned 5 extra points for having 5 different colors");
+
+            if (uniqueColorsInCity.size() >= 5) {
+                bot.setScore(originalScore + 5);
+                System.out.println(bot.getName() + "'s score before color bonus: " + originalScore);
+                System.out.println(bot.getName() + " earned 5 extra points for having 5 or more different colors in the city");
+                System.out.println(bot.getName() + "'s score after color bonus: " + bot.getScore());
+                System.out.println("--------------------------------------------------");
             }
         }
     }
-
-
 
 
 }
