@@ -5,13 +5,13 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RobotTest {
 
@@ -19,7 +19,7 @@ public class RobotTest {
 
     @BeforeEach
     void setUp() {
-         robot = new RobotRandom("TestRobot");
+        robot = new RobotRandom("TestRobot");
     }
 
 
@@ -29,14 +29,14 @@ public class RobotTest {
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.addGold(6);
         System.out.println(robot.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]",robot.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]", robot.statusOfPlayer(false));
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
         robot.addDistrict(district);
         System.out.println(robot.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]",robot.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]", robot.statusOfPlayer(false));
         robot.tryBuild();
         System.out.println(robot.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]",robot.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]", robot.statusOfPlayer(false));
     }
 
     @Test
@@ -53,7 +53,6 @@ public class RobotTest {
         assertEquals(2, robot.getGolds());
         String builtDistrictName1 = robot.tryBuild();
         assertEquals("a new " + districtWithCost2.getName(), builtDistrictName1);
-
 
 
     }
@@ -131,7 +130,6 @@ public class RobotTest {
         robot.addGold(5);
         assertEquals(7, robot.getGolds());
     }
-
 
 
     @Test
@@ -213,7 +211,7 @@ public class RobotTest {
         robot.addDistrict(DistrictsType.UNIVERSITE);
         robot.tryBuild();
         robot.tryBuild();
-        assertEquals(16,robot.calculateScore());
+        assertEquals(16, robot.calculateScore());
     }
 
     @Test
@@ -221,9 +219,9 @@ public class RobotTest {
         robot.setCharacter(CharactersType.ASSASSIN);
         robot.setGolds(1000);
         robot.addDistrict(DistrictsType.OBSERVATOIRE);
-        assertEquals(2,robot.getNumberOfCardsDrawn());
+        assertEquals(2, robot.getNumberOfCardsDrawn());
         robot.tryBuild();
-        assertEquals(3,robot.getNumberOfCardsDrawn());
+        assertEquals(3, robot.getNumberOfCardsDrawn());
     }
 
     @Test
@@ -234,10 +232,10 @@ public class RobotTest {
         robot.addDistrict(DistrictsType.OBSERVATOIRE);
         robot.tryBuild();
         robot.tryBuild();
-        assertEquals(1,robot.getCity().size());
+        assertEquals(1, robot.getCity().size());
         robot.addDistrict(DistrictsType.TAVERNE);
         robot.tryBuild();
-        assertEquals(2,robot.getCity().size());
+        assertEquals(2, robot.getCity().size());
     }
 
     @Test

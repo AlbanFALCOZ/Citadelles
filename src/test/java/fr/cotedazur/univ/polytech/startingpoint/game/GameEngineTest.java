@@ -8,7 +8,8 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,7 +60,7 @@ class GameEngineTest {
 
 
         for (int i = 0; i < 8; i++) {
-                bot.tryBuild();
+            bot.tryBuild();
         }
 
         assertTrue(gameEngine.isBuiltEigthDistrict(), "Un robot devrait avoir construit 8 districts.");
@@ -138,7 +139,6 @@ class GameEngineTest {
         int roiCount = Collections.frequency(charactersInHand, CharactersType.ROI);
         assertEquals(1, roiCount, "Il ne doit y avoir qu'un seul 'ROI' dans la main.");
     }
-
 
 
 }

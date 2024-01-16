@@ -24,7 +24,6 @@ public class Winner {
     }
 
 
-
     /**
      * @return les scores des robots
      * cette méthode permet de calculer les scores des robots
@@ -54,8 +53,7 @@ public class Winner {
                 winners.clear();
                 winners.add(bot);
                 highestScore = score;
-            }
-            else if (score == highestScore) {
+            } else if (score == highestScore) {
                 winners.add(bot);
             }
         }
@@ -69,7 +67,6 @@ public class Winner {
     }
 
 
-
     /**
      * @return le gagnant ou les gagnants
      */
@@ -77,8 +74,7 @@ public class Winner {
         List<String> winners = getWinners();
         if (winners.size() == 1) {
             return "The winner is : " + winners.get(0);
-        }
-        else {
+        } else {
             return "This is an equality ! The winners are: " + String.join(", ", winners);
         }
     }

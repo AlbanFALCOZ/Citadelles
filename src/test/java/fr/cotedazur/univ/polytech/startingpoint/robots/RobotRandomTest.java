@@ -1,20 +1,20 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RobotRandomTest {
     private RobotRandom robotRandom;
     private DeckDistrict deck;
-    
 
     @BeforeEach
     void setUp() {
@@ -163,14 +163,14 @@ class RobotRandomTest {
         robotRandom.setCharacter(CharactersType.ASSASSIN);
         robotRandom.addGold(6);
         System.out.println(robotRandom.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]",robotRandom.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]", robotRandom.statusOfPlayer(false));
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
         robotRandom.addDistrict(district);
         System.out.println(robotRandom.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]",robotRandom.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]", robotRandom.statusOfPlayer(false));
         robotRandom.tryBuild();
         System.out.println(robotRandom.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]",robotRandom.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]", robotRandom.statusOfPlayer(false));
     }
 
     @Test
@@ -187,7 +187,6 @@ class RobotRandomTest {
         assertEquals(2, robotRandom.getGolds());
         String builtDistrictName1 = robotRandom.tryBuild();
         assertEquals("a new " + districtWithCost2.getName(), builtDistrictName1);
-
 
 
     }
@@ -248,7 +247,6 @@ class RobotRandomTest {
         robotRandom.addGold(5);
         assertEquals(7, robotRandom.getGolds());
     }
-
 
 
     @Test
@@ -330,7 +328,7 @@ class RobotRandomTest {
         robotRandom.addDistrict(DistrictsType.UNIVERSITE);
         robotRandom.tryBuild();
         robotRandom.tryBuild();
-        assertEquals(16,robotRandom.calculateScore());
+        assertEquals(16, robotRandom.calculateScore());
     }
 
     @Test
@@ -338,9 +336,9 @@ class RobotRandomTest {
         robotRandom.setCharacter(CharactersType.ASSASSIN);
         robotRandom.setGolds(1000);
         robotRandom.addDistrict(DistrictsType.OBSERVATOIRE);
-        assertEquals(2,robotRandom.getNumberOfCardsDrawn());
+        assertEquals(2, robotRandom.getNumberOfCardsDrawn());
         robotRandom.tryBuild();
-        assertEquals(3,robotRandom.getNumberOfCardsDrawn());
+        assertEquals(3, robotRandom.getNumberOfCardsDrawn());
     }
 
     @Test
@@ -351,20 +349,21 @@ class RobotRandomTest {
         robotRandom.addDistrict(DistrictsType.OBSERVATOIRE);
         robotRandom.tryBuild();
         robotRandom.tryBuild();
-        assertEquals(1,robotRandom.getCity().size());
+        assertEquals(1, robotRandom.getCity().size());
         robotRandom.addDistrict(DistrictsType.TAVERNE);
         robotRandom.tryBuild();
-        assertEquals(2,robotRandom.getCity().size());
+        assertEquals(2, robotRandom.getCity().size());
     }
 
     @Test
     void setChoice() {
-        Robot bot = new RobotRandom("Vermouth") ;
+        Robot bot = new RobotRandom("Vermouth");
         bot.setChoice(2);
-        assertEquals(bot.getChoice() , 2);
+        assertEquals(bot.getChoice(), 2);
     }
 
     @Test
+
     void pickThreeDistrictWithObservatoire() {
         robotRandom.addGold(1000);
         List<DistrictsType> listOfDistrictPicked = robotRandom.pickListOfDistrict(deck);
@@ -403,5 +402,17 @@ class RobotRandomTest {
         listDistrictChosen = robotRandom.pickDistrictCard(listOfDistrictPicked,deck);
         assertEquals(2,listDistrictChosen.size());
     }
+
+    void testManufacture() {
+        robotRandom.setGolds(10);
+        robotRandom.getCity().add(DistrictsType.MANUFACTURE);
+        DeckDistrict deck = new DeckDistrict();
+
+        robotRandom.manufacture(deck);
+
+        assertEquals(7, robotRandom.getGolds(), "Le robot devrait avoir 7 pièces d'or après l'utilisation de MANUFACTURE");
+        assertEquals(3, robotRandom.getDistrictInHand().size(), "Le robot devrait avoir pioché 3 cartes de district");
+    }
+
 }
 

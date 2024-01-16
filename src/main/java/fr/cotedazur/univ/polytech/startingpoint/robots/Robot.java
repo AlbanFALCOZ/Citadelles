@@ -10,6 +10,8 @@ public interface Robot {
 
     int getScore();
 
+    void setScore(int score);
+
     String getRESET();
 
     String getName();
@@ -26,17 +28,13 @@ public interface Robot {
 
     void setNumberOfCardsChosen(int numberOfCardsChosen);
 
-    void setScore(int score);
-
     void addGold(int golds);
-
-    void setCharacter(CharactersType character);
 
     CharactersType getCharacter();
 
-    List<DistrictsType> getCity();
+    void setCharacter(CharactersType character);
 
-    void setHasCrown(boolean hasCrown);
+    List<DistrictsType> getCity();
 
     String tryBuild();
 
@@ -60,6 +58,8 @@ public interface Robot {
 
     boolean getHasCrown();
 
+    void setHasCrown(boolean hasCrown);
+
     int countBuildingsByType();
 
     int winGoldsByTypeOfBuildings();
@@ -67,30 +67,28 @@ public interface Robot {
     boolean isCharacter(String type);
 
 
-
     //void setPower(Power aPower);
 
     int getChoice();
+
+    void setChoice(int choice);
 
     boolean canBuildADistrictInHand();
 
     int generateChoice();
 
-    void setChoice(int choice);
-
     List<DistrictsType> getDistrictInHand();
 
     void setDistrictInHand(List<DistrictsType> districtInHand);
 
-    void emptyListOfCardsInHand() ;
+    void emptyListOfCardsInHand();
 
     boolean getIsAssassinated();
 
     void setIsAssassinated(boolean IsAssassinated);
 
 
-
     //Power getPower();
-
+    void manufacture(DeckDistrict deck);
 
 }
