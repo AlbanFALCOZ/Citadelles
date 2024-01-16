@@ -33,7 +33,6 @@ class PowerTest {
 
 
 
-
     }
 
     @Test

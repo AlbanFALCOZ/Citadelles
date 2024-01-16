@@ -362,5 +362,18 @@ class RobotRandomTest {
         bot.setChoice(2);
         assertEquals(bot.getChoice() , 2);
     }
+
+    @Test
+    void testManufacture() {
+        robotRandom.setGolds(10);
+        robotRandom.getCity().add(DistrictsType.MANUFACTURE);
+        DeckDistrict deck = new DeckDistrict();
+
+        robotRandom.manufacture(deck);
+
+        assertEquals(7, robotRandom.getGolds(), "Le robot devrait avoir 7 pièces d'or après l'utilisation de MANUFACTURE");
+        assertEquals(3, robotRandom.getDistrictInHand().size(), "Le robot devrait avoir pioché 3 cartes de district");
+    }
+
 }
 

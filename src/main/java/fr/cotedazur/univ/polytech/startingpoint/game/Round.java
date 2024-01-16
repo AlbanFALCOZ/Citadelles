@@ -180,6 +180,7 @@ public class Round {
                         break;
                 }
 
+                bot.manufacture(deck);
                 String hasBuilt = bot.tryBuild();
                 int goldsWon =  bot.winGoldsByTypeOfBuildings();
                 actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);

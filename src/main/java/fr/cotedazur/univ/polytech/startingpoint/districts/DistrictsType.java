@@ -119,7 +119,9 @@ public enum DistrictsType {
         if (name.equals("Bibliothèque")) {
             if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen()+1);
         }
+
     }
+
 
     /**
      * @return le nom et le cout du quartier

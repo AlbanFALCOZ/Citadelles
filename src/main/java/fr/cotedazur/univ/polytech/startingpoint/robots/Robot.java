@@ -91,6 +91,6 @@ public interface Robot {
 
 
     //Power getPower();
-
+    void manufacture(DeckDistrict deck);
 
 }

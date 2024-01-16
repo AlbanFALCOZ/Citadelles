@@ -119,7 +119,6 @@ public class RobotRandom implements Robot{
 
     }
 
-
     public String tryBuild() {
         List<String> listDistrictName = new ArrayList<>();
         for (DistrictsType districtsType : city) listDistrictName.add(districtsType.getName());
@@ -298,6 +297,16 @@ public class RobotRandom implements Robot{
 
     }
 
+
+    public void manufacture(DeckDistrict deck) {
+        if (getGolds() >= 3 && getCity().contains(DistrictsType.MANUFACTURE)) {
+            setGolds(getGolds() - 3); // dépense 3 or
+            for (int i = 0; i < 3; i++) {
+                DistrictsType card = deck.getDistrictsInDeck();
+                addDistrict(card);
+            }
+        }
+    }
 
 }
 
