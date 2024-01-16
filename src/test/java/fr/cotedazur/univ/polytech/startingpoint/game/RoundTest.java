@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RoundTest {
 
@@ -27,8 +27,6 @@ class RoundTest {
         }
 
     }
-
-
 
 
     @Test
