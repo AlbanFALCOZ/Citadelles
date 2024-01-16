@@ -29,9 +29,6 @@ class PowerTest {
         assertFalse(power.canDestroyDistrict(victim, DistrictsType.PALAIS));
         destructor.setGolds(5);
         assertFalse(power.canDestroyDistrict(victim, DistrictsType.MANOIR));
-        
-
-
 
     }
 
@@ -78,6 +75,13 @@ class PowerTest {
         destructor.setGolds(5);
         power.condottiere(victim);
         assertEquals(5, destructor.getGolds());
-        assertEquals(1,victim.getNumberOfDistrictInCity());
+        assertEquals(1, victim.getNumberOfDistrictInCity());
+        victim.addDistrict(DistrictsType.CASERNE);
+        victim.tryBuild();
+        victim.addDistrict(DistrictsType.CHATEAU);
+        victim.tryBuild();
+        power.condottiere(victim);
+        assertEquals(2, destructor.getGolds());
+        assertEquals(2, victim.getNumberOfDistrictInCity());
     }
 }
