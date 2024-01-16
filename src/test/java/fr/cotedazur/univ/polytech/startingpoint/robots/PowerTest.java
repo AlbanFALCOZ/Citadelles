@@ -80,5 +80,12 @@ class PowerTest {
         power.condottiere(victim);
         assertEquals(5, destructor.getGolds());
         assertEquals(1,victim.getNumberOfDistrictInCity());
+        victim.addDistrict(DistrictsType.CASERNE);
+        victim.tryBuild();
+        victim.addDistrict(DistrictsType.CHATEAU);
+        victim.tryBuild();
+        power.condottiere(victim);
+        assertEquals(2, destructor.getGolds());
+        assertEquals(2,victim.getNumberOfDistrictInCity());
     }
 }

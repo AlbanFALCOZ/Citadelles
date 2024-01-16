@@ -115,6 +115,10 @@ public class ActionOfBotDuringARound {
         String[] listName = {"Assassin","Voleur","Magicien","Roi","Évêque","Marchand","Architecte","Condottière"};
         return listName[number-1];
     }
+
+    public void printCantAffectVictim(Robot victim) {
+        System.out.println(bot.getName() + " can't use his power on " + victim.getName() + " because he has been assassinated");
+    }
 }
 
 

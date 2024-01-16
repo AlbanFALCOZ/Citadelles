@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -69,11 +68,10 @@ public class Power {
         List<DistrictsType> victimDistricts = victim.getCity();
 
         victimDistricts.sort(Comparator.comparingInt(DistrictsType::getCost).reversed());
-
+        System.out.println("City of " + victim.getName() + " : " + victimDistricts);
         for (DistrictsType district : victimDistricts) {
             boolean verify = canDestroyDistrict(victim, district);
-
-            if (verify) {
+            if (!district.getName().equals("Donjon") && (verify)) {
                 if (bot.getCharacter().getType().equals(MILITATE) &&
                         !victim.getCharacter().getType().equals(RELIGIOUS)) {
                     victim.getCity().remove(district);
@@ -83,9 +81,8 @@ public class Power {
                 } else {
                     action.printEvequeImmune(victim, district);
                 }
-                return;
+                return;                                                                                 
             }
-
         }
         action.printActionOfNoneDistrictDestroyed(victim, bot.getGolds());
 
@@ -130,11 +127,13 @@ public class Power {
     }
 
     public void voleur(Robot victim) {
-        int stolenGold = victim.getGolds();
-        bot.addGold(stolenGold);
-        action.printThiefStill(victim);
-        victim.setGolds(0);
-
+        if (!victim.getIsAssassinated()){
+            int stolenGold = victim.getGolds();
+            bot.addGold(stolenGold);
+            action.printThiefStill(victim);
+            victim.setGolds(0);
+        }
+        action.printCantAffectVictim(victim);
     }
 
 
