@@ -134,7 +134,6 @@ public class Power {
         bot.addGold(stolenGold);
         action.printThiefStill(victim);
         victim.setGolds(0);
-
     }
 
 

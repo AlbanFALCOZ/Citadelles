@@ -291,11 +291,7 @@ public class RobotRandom implements Robot{
 
     @Override
     public void emptyListOfCardsInHand() {
-        int a = this.getNumberOfDistrictInHand();
-        for (int i = 0; i < a; i++) {
-            this.districtInHand.remove(0);
-        }
-
+        districtInHand.clear();
     }
 
 

@@ -78,7 +78,42 @@ class PowerTest {
 
         destructor.setGolds(5);
         power.condottiere(victim);
-        assertEquals(5, destructor.getGolds());
-        assertEquals(1,victim.getNumberOfDistrictInCity());
+        assertEquals(3, destructor.getGolds());
+        assertEquals(0,victim.getNumberOfDistrictInCity());
     }
+
+    @Test
+    public void marchand() {
+        RobotRandom marchand = new RobotRandom("marchand");
+        Power power = new Power(marchand,new ActionOfBotDuringARound(marchand));
+        marchand.setCharacter(CharactersType.MARCHAND);
+        assertEquals(2,marchand.getGolds());
+        power.marchand();
+        assertEquals(3,marchand.getGolds());
+        marchand.winGoldsByTypeOfBuildings();
+        assertEquals(3,marchand.getGolds());
+        marchand.addDistrict(DistrictsType.TAVERNE);
+        marchand.addGold(1);//Pour compenser la construction de la taverne
+        marchand.addDistrict(DistrictsType.ECHOPPE);
+        marchand.addGold(2);//Pour compenser la construction de l'échoppe
+        marchand.tryBuild();
+        marchand.tryBuild();
+        marchand.winGoldsByTypeOfBuildings();
+        assertEquals(5,marchand.getGolds());
+    }
+
+    @Test
+    void testAssassin() {
+        RobotRandom assassin = new RobotRandom("Assassin");
+        RobotRandom victim = new RobotRandom("Victim");
+        Power power = new Power(assassin,new ActionOfBotDuringARound(assassin));
+        assassin.setCharacter(CharactersType.ASSASSIN);
+        victim.setCharacter(CharactersType.MARCHAND);
+        assertFalse(victim.getIsAssassinated());
+        power.assassin(victim);
+        assertTrue(victim.getIsAssassinated());
+    }
+
+
+
 }
