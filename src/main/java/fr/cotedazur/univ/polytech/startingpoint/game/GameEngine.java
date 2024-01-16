@@ -82,26 +82,26 @@ public class GameEngine {
      */
     public void robotsPickCharacters() {
         int i = 1;
-        List<CharactersType> ListCharacters = deckCharacters.getCharactersInHand();
-        destroyCharacters(ListCharacters);
-        Collections.shuffle(ListCharacters);
-
+        List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
+        destroyCharacters(listCharacters);
+        Collections.shuffle(listCharacters);
 
         for (Robot bot : bots ){
             if(bot.getHasCrown()){
-                bot.setCharacter(ListCharacters.get(0));
-                if (systemPrint) System.out.println(bot.getName() +" With crown Picked " +ListCharacters.get(0).getColor() + ListCharacters.get(0).getRole() + bot.getRESET());
-                ListCharacters.remove(ListCharacters.get(0));
+                bot.setCharacter(listCharacters.get(0));
+                if (systemPrint) System.out.println(bot.getName() +" With crown Picked " +listCharacters.get(0).getColor() + listCharacters.get(0).getRole() + bot.getRESET());
+                listCharacters.remove(listCharacters.get(0));
             }
         }
         for (Robot bot : bots){
             if(!bot.getHasCrown()){
-                bot.setCharacter(ListCharacters.get(i));
-                if (systemPrint) System.out.println(bot.getName() +" Picked " +ListCharacters.get(i).getColor() + ListCharacters.get(i).getRole()  + bot.getRESET());
+                bot.setCharacter(listCharacters.get(i));
+                if (systemPrint) System.out.println(bot.getName() +" Picked " +listCharacters.get(i).getColor() + listCharacters.get(i).getRole()  + bot.getRESET());
                 i++;
             }
         }
     }
+
 
     /**
      * cette méthode permet de donner la couronne à un robot
@@ -112,7 +112,6 @@ public class GameEngine {
     public void assignCrown(){
         Collections.shuffle(bots);
         bots.get(0).setHasCrown(true);
-        if (systemPrint) System.out.println(bots.get(0).getName() + " has crown and start the call of the characters");
 
     }
 
@@ -144,19 +143,18 @@ public class GameEngine {
         String turnEnding = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
         if (systemPrint) System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
-
-        robotsPickCharacters();
         assignCrown();
 
         while(!isBuiltEigthDistrict()){
-            if (systemPrint) System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
-            bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
                     if (systemPrint) System.out.println(bot.getName() + " has crown and start the call of the characters");
                 }
             }
             robotsPickCharacters();
+            if (systemPrint) System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
+            bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
+
             round.playTurns();
             if (systemPrint) System.out.println(turnStarting + comptTurn + " is over" + turnEnding);
             comptTurn++;
