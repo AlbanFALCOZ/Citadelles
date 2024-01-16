@@ -16,20 +16,21 @@ public enum CharactersType {
     MARCHAND(6, "Marchand", "\u001B[32m", "marchand"),
     ARCHITECTE(7, "Architecte", "\u001B[37;1m", "architecte"),
     CONDOTTIERE(8, "Condottière", "\u001B[31m", "militaire");
-    int number ;
+
+    int number;
     String role;
 
     String type;
-    String color  ;
+    String color;
 
     /**
      * @param number numéro du personnage
-     * @param role role du personnage
-     * @param color couleur du personnage
-     * @param type type du personnage
+     * @param role   role du personnage
+     * @param color  couleur du personnage
+     * @param type   type du personnage
      */
-    CharactersType(int number , String role, String color, String type){
-        this.number = number ;
+    CharactersType(int number, String role, String color, String type) {
+        this.number = number;
         this.role = role;
         this.color = color;
         this.type = type;

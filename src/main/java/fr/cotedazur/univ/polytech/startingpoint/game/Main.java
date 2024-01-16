@@ -1,20 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.util.List;
-
 /**
  * cette classe permet de jouer une partie de Citadelle et de déterminer le gagnant
  */
 public class Main {
 
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         //testBots();
         showGame();
     }
@@ -55,13 +48,12 @@ public class Main {
         }
 
         for (int i = 0; i < listWinners.length; i++) {
-            System.out.println("Winrate N°" + i + " : " + (float)listWinners[i]/numberOfGames*100 + "%");
+            System.out.println("Winrate N°" + i + " : " + (float) listWinners[i] / numberOfGames * 100 + "%");
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
-        System.out.println(timeElapsed/1000 + "sec");
+        System.out.println(timeElapsed / 1000 + "sec");
     }
-
 
 
 }
