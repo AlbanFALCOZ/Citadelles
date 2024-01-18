@@ -131,12 +131,6 @@ public class Round {
 
     }
 
-    public Robot getRandomRobotDifferentFrom(Robot bot) {
-        Collections.shuffle(bots);
-        while (bots.get(0).getName().equals(bot.getName())) Collections.shuffle(bots);
-        return bots.get(0);
-    }
-
 
     /**
      * cette méthode permet de jouer les tours de jeu

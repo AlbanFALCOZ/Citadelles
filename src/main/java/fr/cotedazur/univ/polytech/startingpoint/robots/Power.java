@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -78,6 +79,14 @@ public class Power {
                     int goldsAfterDestruction = destructorGolds - district.getCost();
                     bot.setGolds(goldsAfterDestruction + 1);
                     action.printActionOfDestroyDistrict(victim, district, bot.getGolds());
+
+                    if (victim.getCity().stream().anyMatch(d -> d.getName().equals("Cimetière")) &&
+                            victim.getGolds() >= 1 &&
+                            !victim.getCharacter().equals(CharactersType.CONDOTTIERE)) {
+                        victim.addDistrict(district);
+                        victim.setGolds(victim.getGolds() - 1);
+                        action.printDistrictRecovered(victim, district);
+                    }
                 } else {
                     action.printEvequeImmune(victim, district);
                 }
@@ -86,6 +95,7 @@ public class Power {
         }
         action.printActionOfNoneDistrictDestroyed(victim, bot.getGolds());
     }
+
 
     public void swapCards(Robot victim) {
         List<DistrictsType> botDistrictInHand = bot.getDistrictInHand();

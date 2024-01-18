@@ -48,10 +48,13 @@ class PowerTest {
         victim.tryBuild();
         victim.addDistrict(DistrictsType.PRISON);
         victim.tryBuild();
+        victim.addDistrict(DistrictsType.CIMETIERE);
+        victim.tryBuild();
 
         destructor.setGolds(5);
         power.condottiere(victim);
         assertEquals(1, destructor.getGolds());
+        victim.setCharacter(CharactersType.CONDOTTIERE);
         power.condottiere(victim);
         assertEquals(1, destructor.getGolds());
         power.condottiere(victim);
