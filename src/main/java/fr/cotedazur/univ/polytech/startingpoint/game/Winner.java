@@ -42,6 +42,7 @@ public class Winner {
         for(Robot bot : bots) {
             bot.setScore(bot.getScore() + bot.calculateScore());
         }
+
         awardDistrictColorBonus();
 
 
@@ -113,7 +114,7 @@ public class Winner {
         for (Robot bot  : bots){
             if(bot.getCity().contains(DistrictsType.COURT_DES_MIRACLES)){
                 int index = bot.getCity().indexOf(DistrictsType.COURT_DES_MIRACLES);
-               if( index != 8 ) {
+               if( index != bot.getCity().size()-1 ) {
                    Colors randomColor =Colors.getRandomColorCode() ;
                    bot.getCity().get(index).setColor(randomColor);
                    System.out.println(bot.getName() + " choosed to change the color of their miracle card to " + randomColor);

@@ -1,10 +1,16 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PowerTest {
@@ -34,6 +40,16 @@ class PowerTest {
     }
 
     @Test
+    void marchand() {
+        RobotRandom sellerBot = new RobotRandom("sellerBot");
+        Power power = new Power(sellerBot, new ActionOfBotDuringARound(sellerBot));
+        sellerBot.setGolds(0);
+        power.marchand();
+        assertEquals(1, sellerBot.getGolds());
+    }
+
+
+    @Test
     void condottiere() {
         RobotRandom destructor = new RobotRandom("destructor");
         RobotRandom victim = new RobotRandom("victim");
@@ -61,6 +77,8 @@ class PowerTest {
         power.condottiere(victim);
         assertEquals(5, destructor.getGolds());
     }
+
+
 
     /*
     @Test
