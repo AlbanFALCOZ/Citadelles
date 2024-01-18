@@ -1,11 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-<<<<<<< HEAD
-import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
-=======
-import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
->>>>>>> 54532bf28e9245a34d416b15e25f390f2fe52272
+
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -39,21 +35,11 @@ class PowerTest {
         assertFalse(power.canDestroyDistrict(victim, DistrictsType.PALAIS));
         destructor.setGolds(5);
         assertFalse(power.canDestroyDistrict(victim, DistrictsType.MANOIR));
-<<<<<<< HEAD
 
-=======
->>>>>>> 54532bf28e9245a34d416b15e25f390f2fe52272
 
     }
 
-    @Test
-    void marchand() {
-        RobotRandom sellerBot = new RobotRandom("sellerBot");
-        Power power = new Power(sellerBot, new ActionOfBotDuringARound(sellerBot));
-        sellerBot.setGolds(0);
-        power.marchand();
-        assertEquals(1, sellerBot.getGolds());
-    }
+
 
 
     @Test
@@ -116,7 +102,7 @@ class PowerTest {
     }
 <<<<<<< HEAD
 */
-=======
+
 
     @Test
     public void marchand() {
@@ -129,9 +115,9 @@ class PowerTest {
         marchand.winGoldsByTypeOfBuildings();
         assertEquals(3,marchand.getGolds());
         marchand.addDistrict(DistrictsType.TAVERNE);
-        marchand.addGold(1);//Pour compenser la construction de la taverne
+        marchand.addGold(1);
         marchand.addDistrict(DistrictsType.ECHOPPE);
-        marchand.addGold(2);//Pour compenser la construction de l'échoppe
+        marchand.addGold(2);
         marchand.tryBuild();
         marchand.tryBuild();
         marchand.winGoldsByTypeOfBuildings();
@@ -164,5 +150,5 @@ class PowerTest {
 
 
 
->>>>>>> 54532bf28e9245a34d416b15e25f390f2fe52272
+
 }

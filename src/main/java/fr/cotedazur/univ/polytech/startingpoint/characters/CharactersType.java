@@ -40,7 +40,6 @@ public enum CharactersType {
 
     CharactersType(int number , String role, Colors color, String type){
         this.number = number ;
-
         this.role = role;
         this.color = color;
         this.type = type;

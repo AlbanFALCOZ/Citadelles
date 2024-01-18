@@ -91,7 +91,7 @@ public class GameEngine {
             if (bot.getHasCrown()) {
                 bot.setCharacter(listCharacters.get(0));
                 if (systemPrint)
-                    System.out.println(bot.getName() + " With crown Picked " + listCharacters.get(0).getColor() + listCharacters.get(0).getRole() + bot.getRESET());
+                    System.out.println(bot.getName() + " With crown Picked " + listCharacters.get(0).getColor().getColorDisplay() + listCharacters.get(0).getRole() + bot.getRESET());
                 listCharacters.remove(listCharacters.get(0));
             }
         }
@@ -99,7 +99,7 @@ public class GameEngine {
             if (!bot.getHasCrown()) {
                 bot.setCharacter(listCharacters.get(i));
                 if (systemPrint)
-                    System.out.println(bot.getName() + " Picked " + listCharacters.get(i).getColor() + listCharacters.get(i).getRole() + bot.getRESET());
+                    System.out.println(bot.getName() + " Picked " + listCharacters.get(i).getColor().getColorDisplay() + listCharacters.get(i).getRole() + bot.getRESET());
                 i++;
             }
         }
@@ -151,8 +151,6 @@ public class GameEngine {
 
         while (!isBuiltEigthDistrict()) {
 
-            if (systemPrint) System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
-            bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
 
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
