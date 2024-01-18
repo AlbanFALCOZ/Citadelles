@@ -4,15 +4,24 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
+
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
-public class RobotRandom implements Robot{
 
+
+public class RobotRandom implements Robot {
+
+    public static final String RESET = "\u001B[0m";
     private final String name;
+    public int choice;
     private int score;
     private int golds;
     private int numberOfCardsDrawn = 2;
@@ -20,18 +29,17 @@ public class RobotRandom implements Robot{
     //private DeckDistrict district;
     private List<DistrictsType> districtInHand;
     private CharactersType character;
-    public static final String RESET = "\u001B[0m";
 
-    public int choice ;
+
 
     private boolean hasFiveColors;
+
 
     private ArrayList<DistrictsType> city;
 
     private boolean hasCrown;
 
     private boolean IsAssassinated;
-
 
 
     public RobotRandom(String name) {
@@ -50,6 +58,11 @@ public class RobotRandom implements Robot{
         return districtInHand;
     }
 
+    public void setDistrictInHand(List<DistrictsType> listDistrict) {
+        this.districtInHand = listDistrict;
+
+    }
+
     public boolean getIsAssassinated() {
         return IsAssassinated;
     }
@@ -57,6 +70,7 @@ public class RobotRandom implements Robot{
     public void setIsAssassinated(boolean IsAssassinated) {
         this.IsAssassinated = IsAssassinated;
     }
+
 
     @Override
     public boolean hasEightDistrict() {
@@ -67,11 +81,16 @@ public class RobotRandom implements Robot{
     }
 
 
+
     public int getScore() {
         return this.score;
     }
 
-    public String getRESET(){
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getRESET() {
         return RESET;
     }
 
@@ -82,7 +101,6 @@ public class RobotRandom implements Robot{
     public int getGolds() {
         return golds;
     }
-
 
     public void setGolds(int golds) {
         this.golds = golds;
@@ -104,31 +122,20 @@ public class RobotRandom implements Robot{
         this.numberOfCardsChosen = numberOfCardsChosen;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public void addGold(int golds) {
         this.golds += golds;
     }
-
-
-    public void setCharacter(CharactersType character) {
-        this.character = character;
-    }
-
 
     public CharactersType getCharacter() {
         return character;
     }
 
-    public ArrayList<DistrictsType> getCity() {
-        return city;
+    public void setCharacter(CharactersType character) {
+        this.character = character;
     }
 
-    public void setHasCrown(boolean hasCrown) {
-        this.hasCrown = hasCrown;
-
+    public ArrayList<DistrictsType> getCity() {
+        return city;
     }
 
 
@@ -137,7 +144,7 @@ public class RobotRandom implements Robot{
         for (DistrictsType districtsType : city) listDistrictName.add(districtsType.getName());
         for (int i = 0; i < districtInHand.size(); i++) {
             DistrictsType district = districtInHand.get(i);
-            if (district.getCost() <= this.getGolds() && !listDistrictName.contains(district.getName()) ) {
+            if (district.getCost() <= this.getGolds() && !listDistrictName.contains(district.getName())) {
                 district.powerOfDistrict(this);
                 city.add(district);
                 setGolds(getGolds() - district.getCost());
@@ -214,16 +221,17 @@ public class RobotRandom implements Robot{
             }
             i++;
         }
-        while (listDistrictToBuild.size() < numberOfCardsChosen) listDistrictToBuild.add(listDistrict.remove(listDistrict.size()-1));
+        while (listDistrictToBuild.size() < numberOfCardsChosen)
+            listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
 
 
-        for (DistrictsType districtNonChosen: listDistrict) {
+        for (DistrictsType districtNonChosen : listDistrict) {
             deck.addDistrictToDeck(districtNonChosen);
         }
         return listDistrictToBuild;
     }
 
-    public List<DistrictsType> pickListOfDistrict(DeckDistrict deck){
+    public List<DistrictsType> pickListOfDistrict(DeckDistrict deck) {
         List<DistrictsType> listDistrict = new ArrayList<>();
         for (int i = 0; i < numberOfCardsDrawn; i++) {
             DistrictsType card = deck.getDistrictsInDeck();
@@ -249,13 +257,17 @@ public class RobotRandom implements Robot{
         return hasCrown;
     }
 
+    public void setHasCrown(boolean hasCrown) {
+        this.hasCrown = hasCrown;
+
+    }
 
     public int countBuildingsByType() {
         int count = 0;
 
         for (DistrictsType building : city) {
 
-            if(building.getType().equals(this.character.getType()) || building.getType().equals("ecole")){
+            if (building.getType().equals(this.character.getType()) || building.getType().equals("ecole")) {
                 count++;
             }
 
@@ -263,15 +275,13 @@ public class RobotRandom implements Robot{
         return count;
     }
 
-
     public int winGoldsByTypeOfBuildings() {
         int oldGolds = this.getGolds();
         addGold(countBuildingsByType());
         return this.getGolds() - oldGolds;
     }
 
-
-    public boolean isCharacter(String type){
+    public boolean isCharacter(String type) {
         return this.getCharacter().getType().equals(type);
     }
 
@@ -282,47 +292,59 @@ public class RobotRandom implements Robot{
         return false;
     }
 
-
-
     public int generateChoice() {
-        return (int) (Math.random()*2);
+        return (int) (Math.random() * 2);
     }
 
-    public void setChoice(int choice){
-        this.choice = choice ;
+    public int getChoice() {
+        return choice;
     }
 
-    public int getChoice(){
-        return choice ;
-    }
-
-    public void setDistrictInHand(List<DistrictsType> listDistrict){
-        this.districtInHand = listDistrict ;
-
+    public void setChoice(int choice) {
+        this.choice = choice;
     }
 
     @Override
     public void emptyListOfCardsInHand() {
-        int a = this.getNumberOfDistrictInHand();
-        for (int i = 0; i < a; i++) {
-            this.districtInHand.remove(0);
+        districtInHand.clear();
+    }
+
+
+    public void specialCards(DeckDistrict deck, ActionOfBotDuringARound action) {
+        if (getCity().contains(DistrictsType.MANUFACTURE)) {
+            List<DistrictsType> listOfDistrictPicked = manufacture(deck);
+            if (!listOfDistrictPicked.isEmpty()) action.printManufactureAction(listOfDistrictPicked);
         }
-
+        if (getCity().contains(DistrictsType.LABORATOIRE)) {
+            List<DistrictsType> listOfDistrictRemoved = laboratoire(deck);
+            if (!listOfDistrictRemoved.isEmpty()) action.printLaboratoryAction(listOfDistrictRemoved);
+        }
     }
 
-    @Override
-    public void setHasFriveColors(boolean b) {
-        this.hasFiveColors = b ;
+    public List<DistrictsType> manufacture(DeckDistrict deck) {
+        List<DistrictsType> listOfDistrictPicked = new ArrayList<>();
+        if (getGolds() >= 3) {
+            setGolds(getGolds() - 3); // dépense 3 or
+            for (int i = 0; i < 3; i++) {
+                DistrictsType card = deck.getDistrictsInDeck();
+                listOfDistrictPicked.add(card);
+                addDistrict(card);
+            }
+        }
+        return listOfDistrictPicked;
     }
 
-    @Override
-    public boolean hasFiveColors() {
-        return this.hasFiveColors;
+    public List<DistrictsType> laboratoire(DeckDistrict deck){
+        List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
+        if (getNumberOfDistrictInHand() >= 1) {
+            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
+            DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
+            listOfDistrictRemoved.add(card);
+            deck.addDistrictToDeck(card);
+            setGolds(getGolds()+1);
+        }
+        return listOfDistrictRemoved;
     }
-
-
-
-
 
 
 }

@@ -19,6 +19,7 @@ import java.util.Random;
 public enum DistrictsType {
 
 
+
     MANOIR("Manoir", 3, Colors.YELLOW, 3, "noble"),
     CHATEAU("Château", 4, Colors.YELLOW, 4, "noble"),
     PALAIS("Palais", 5, Colors.YELLOW, 5, "noble"),
@@ -64,25 +65,29 @@ public enum DistrictsType {
     int cost ;
     String name ;
     Colors color ;
+
     String colorReset = "\u001B[0m";
-    int score ;
+    int score;
     String type;
 
 
     /**
      * Il s'agit du constructeur de l'enum DistrictsType
-     * @param name nom du quartier
-     * @param cost cout du quartier
+     *
+     * @param name  nom du quartier
+     * @param cost  cout du quartier
      * @param color couleur du quartier
      * @param score score du quartier
-     * @param type type du quartier
+     * @param type  type du quartier
      */
+
     DistrictsType(String name , int cost , Colors color , int score, String type ){
         this.cost = cost ;
         this.name = name ;
         this.color = color ;
+
         this.score = score;
-        this.type=type;
+        this.type = type;
     }
 
     /**
@@ -124,17 +129,18 @@ public enum DistrictsType {
 
     /**
      * @param player le joueur qui possède le quartier
-     * on vérifie si le quartier est un quartier spécial c'est à dire un quartier qui a un pouvoir
+     *               on vérifie si le quartier est un quartier spécial c'est à dire un quartier qui a un pouvoir
      */
     public void powerOfDistrict(Robot player) {
         if (name.equals("Observatoire")) {
-            player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn()+1);
+            player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn() + 1);
         }
         if (name.equals("Bibliothèque")) {
-            if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen()+1);
+            if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen() + 1);
         }
 
     }
+
 
     /**
      * @return le nom et le cout du quartier

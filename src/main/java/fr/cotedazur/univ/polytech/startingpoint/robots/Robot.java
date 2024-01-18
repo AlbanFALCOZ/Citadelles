@@ -3,12 +3,15 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.List;
 
 public interface Robot {
 
     int getScore();
+
+    void setScore(int score);
 
     String getRESET();
 
@@ -26,17 +29,13 @@ public interface Robot {
 
     void setNumberOfCardsChosen(int numberOfCardsChosen);
 
-    void setScore(int score);
-
     void addGold(int golds);
-
-    void setCharacter(CharactersType character);
 
     CharactersType getCharacter();
 
-    List<DistrictsType> getCity();
+    void setCharacter(CharactersType character);
 
-    void setHasCrown(boolean hasCrown);
+    List<DistrictsType> getCity();
 
     String tryBuild();
 
@@ -60,6 +59,8 @@ public interface Robot {
 
     boolean getHasCrown();
 
+    void setHasCrown(boolean hasCrown);
+
     int countBuildingsByType();
 
     int winGoldsByTypeOfBuildings();
@@ -71,11 +72,11 @@ public interface Robot {
 
     int getChoice();
 
+    void setChoice(int choice);
+
     boolean canBuildADistrictInHand();
 
     int generateChoice();
-
-    void setChoice(int choice);
 
     List<DistrictsType> getDistrictInHand();
 
@@ -84,22 +85,18 @@ public interface Robot {
     void emptyListOfCardsInHand();
 
 
-    void setHasFriveColors(boolean b);
-
-    boolean hasFiveColors();
-
-
     boolean getIsAssassinated();
 
     void setIsAssassinated(boolean IsAssassinated);
 
     boolean hasEightDistrict();
-}
-
-
 
 
     //Power getPower();
+    List<DistrictsType> manufacture(DeckDistrict deck);
 
+    List<DistrictsType> laboratoire(DeckDistrict deck);
 
+    void specialCards(DeckDistrict deck, ActionOfBotDuringARound action);
 
+}

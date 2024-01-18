@@ -45,7 +45,7 @@ public class DeckDistrict {
                 districtsInDeck.add(DistrictsType.DONJON);
             }
 
-            if (numbOfCard < 3 ){
+            if (numbOfCard < 3) {
                 districtsInDeck.add(DistrictsType.TEMPLE);
                 districtsInDeck.add(DistrictsType.MONASTERE);
                 districtsInDeck.add(DistrictsType.ECHOPPE);
@@ -56,7 +56,7 @@ public class DeckDistrict {
                 districtsInDeck.add(DistrictsType.CASERNE);
             }
 
-            if (numbOfCard < 4 ) {
+            if (numbOfCard < 4) {
                 districtsInDeck.add(DistrictsType.EGLISE);
                 districtsInDeck.add(DistrictsType.CHATEAU);
                 districtsInDeck.add(DistrictsType.MARCHE);
@@ -74,8 +74,6 @@ public class DeckDistrict {
         if (districtsInDeck.isEmpty()) addAllDistrictToDeck();
         return districtsInDeck.remove(0);
     }
-
-    public int getSizeOfDeck() {return districtsInDeck.size();}
 
     /**
      * @param district le district à ajouter au deck

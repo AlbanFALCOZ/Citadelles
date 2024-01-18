@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
@@ -29,6 +28,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfBotWhoHasBuilt() {
+
         String cardDrawn = "";
         String cardPicked = "";
         for (int i = 0; i < listDistrictDrawn.size(); i++) {
@@ -43,12 +43,24 @@ public class ActionOfBotDuringARound {
             if (i < listDistrictPicked.size()-1) cardPicked += ",";
             //bot.addDistrict(districtInListDistrict);
         }
+
         System.out.println(bot.getName() + " choose to pick : {" + cardPicked + "}");
         System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
     }
 
+    private String getStringOfListOfDistrict(List<DistrictsType> listOfDistrict) {
+        String stringOfDistricts = "";
+        for (int i = 0; i < listOfDistrict.size(); i++) {
+            DistrictsType districtInListDistrict = listOfDistrict.get(i);
+            stringOfDistricts += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
+            if (i < listOfDistrict.size() - 1) stringOfDistricts += ",";
+            //bot.addDistrict(districtInListDistrict);
+        }
+        return stringOfDistricts;
+    }
+
     public void printActionOfBotWhoGainedGold(int goldGained) {
-        System.out.println(bot.getName() + " earned " + goldGained +" golds. Total golds now: " + bot.getGolds());
+        System.out.println(bot.getName() + " earned " + goldGained + " golds. Total golds now: " + bot.getGolds());
     }
 
     public void printActionOfSellerBotWhoGainedGold() {
@@ -56,25 +68,19 @@ public class ActionOfBotDuringARound {
     }
 
     public void printBuildingAndPowerOfBot(String hasBuilt, int goldsWon) {
-        if (!hasBuilt.equals("nothing")) System.out.println(bot.getName() + " built " + hasBuilt + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
-        if (goldsWon > 0) System.out.println(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
+        if (!hasBuilt.equals("nothing"))
+            System.out.println(bot.getName() + " built " + hasBuilt + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+        if (goldsWon > 0)
+            System.out.println(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
         System.out.println(bot.statusOfPlayer());
         System.out.println("\n-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
     }
 
 
-
-    public void printBuildingOfBot(String hasBuilt){
-        if (!hasBuilt.equals("nothing")){
+    public void printBuildingOfBot(String hasBuilt) {
+        if (!hasBuilt.equals("nothing")) {
             System.out.println(bot.getName() + " built " + hasBuilt + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
         }
-    }
-
-
-    public void printPowerAndGoldEarned(int goldsWon){
-        if (goldsWon > 0) System.out.println(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
-        System.out.println(bot.statusOfPlayer());
-        System.out.println("\n-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
     }
 
 
@@ -83,7 +89,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfNoneDistrictDestroyed(Robot victim, int destructorGolds) {
-        System.out.println(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds");
+        System.out.println(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds or the district is a Donjon");
     }
 
     public void printEvequeImmune(Robot victim, DistrictsType district) {
@@ -95,25 +101,41 @@ public class ActionOfBotDuringARound {
 
     }
 
-    public void printMagicianSwap(Robot victim){
-        System.out.println(bot.getName() + " swapped cards with " + victim.getName()) ;
+    public void printMagicianSwap(Robot victim) {
+        System.out.println(bot.getName() + " swapped cards with " + victim.getName());
     }
 
-    public void printChoiceOfThief(Robot bot,int numberOfCharacter) {
+    public void printChoiceOfThief(Robot bot, int numberOfCharacter) {
         System.out.println(bot.getName() + " chose to steal from " + getNameOfCharacterFromNumber(numberOfCharacter));
     }
 
-    public void printThiefStill(Robot victim){
-        System.out.println(bot.getName() + " stole " + victim.getGolds() + " golds from " + victim.getName() +". Total golds now " + bot.getGolds());
+    public void printThiefStill(Robot victim) {
+        System.out.println(bot.getName() + " stole " + victim.getGolds() + " golds from " + victim.getName() + ". Total golds now " + bot.getGolds());
     }
 
-    public void printMagicianSwapWithDeck(){
+    public void printMagicianSwapWithDeck() {
         System.out.println(bot.getName() + " choosed to swap with deck");
     }
 
     public String getNameOfCharacterFromNumber(int number) {
-        String[] listName = {"Assassin","Voleur","Magicien","Roi","Évêque","Marchand","Architecte","Condottière"};
-        return listName[number-1];
+        String[] listName = {"Assassin", "Voleur", "Magicien", "Roi", "Évêque", "Marchand", "Architecte", "Condottière"};
+        return listName[number - 1];
+    }
+
+    public void printCantAffectVictim(Robot victim) {
+        System.out.println(bot.getName() + " can't steal " + victim.getName() + " because he has been assassinated");
+    }
+
+    public void printDistrictRecovered(Robot victim, DistrictsType district) {
+        System.out.println(victim.getName() + " got district " + district.getName() + " back into his hand by paying 1 gold thanks to district Cimetière.");
+    }
+
+    public void printLaboratoryAction(List<DistrictsType> listOfDistrictRemoved) {
+        System.out.println("Thanks to the laboratory, " + bot.getName() + " has removed " + getStringOfListOfDistrict(listOfDistrictRemoved) + " and has gained one gold");
+    }
+
+    public void printManufactureAction(List<DistrictsType> listOfDistrictPicked) {
+        System.out.println("Thanks to the manufacture, " + bot.getName() + " lost 3 golds but added {" + getStringOfListOfDistrict(listOfDistrictPicked) + "} to his hand");
     }
 }
 

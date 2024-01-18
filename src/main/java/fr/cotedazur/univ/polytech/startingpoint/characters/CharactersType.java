@@ -10,6 +10,7 @@ import java.awt.*;
  * Version 0.1 du jeu Citadelle.
  */
 public enum CharactersType {
+
     ASSASSIN(1, "Assassin", Colors.GRAY, "assassin"),
     VOLEUR(2, "Voleur", Colors.GRAY, "voleur"),
     MAGICIEN(3, "Magicien", Colors.GRAY, "magicien"),
@@ -32,12 +33,14 @@ public enum CharactersType {
 
     /**
      * @param number numéro du personnage
-     * @param role role du personnage
-     * @param color couleur du personnage
-     * @param type type du personnage
+     * @param role   role du personnage
+     * @param color  couleur du personnage
+     * @param type   type du personnage
      */
+
     CharactersType(int number , String role, Colors color, String type){
         this.number = number ;
+
         this.role = role;
         this.color = color;
         this.type = type;

@@ -8,7 +8,8 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,7 +60,7 @@ class GameEngineTest {
 
 
         for (int i = 0; i < 8; i++) {
-                bot.tryBuild();
+            bot.tryBuild();
         }
 
         assertTrue(gameEngine.isBuiltEigthDistrict(), "Un robot devrait avoir construit 8 districts.");
@@ -140,7 +141,10 @@ class GameEngineTest {
     }
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 54532bf28e9245a34d416b15e25f390f2fe52272
 }
