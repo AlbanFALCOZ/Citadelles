@@ -103,6 +103,7 @@ public class Round {
                 }
                 break;
             case VOLEUR:
+                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
                 if (numberOfCharacterToStealFrom == 0) {
                     numberOfCharacterToStealFrom = (int) (Math.random()*6 + 2);
                     this.voleur = bot;
@@ -183,6 +184,7 @@ public class Round {
                 int goldsWon =  bot.winGoldsByTypeOfBuildings();
                 actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
             }
+
 
         }
         for(Robot bot : bots){

@@ -1,11 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
+import java.awt.*;
 import java.util.*;
-
+import java.util.List;
 
 
 public class RobotRandom implements Robot{
@@ -54,6 +56,14 @@ public class RobotRandom implements Robot{
 
     public void setIsAssassinated(boolean IsAssassinated) {
         this.IsAssassinated = IsAssassinated;
+    }
+
+    @Override
+    public boolean hasEightDistrict() {
+        if (this.getNumberOfDistrictInCity()==8){
+            return true ;
+        }
+        return false ;
     }
 
 
@@ -159,8 +169,8 @@ public class RobotRandom implements Robot{
         String endColor = "";
         String colorCharacter = "";
         if (showColor) {
-            colorCharacter = character.getColor();
-            endColor = RESET;
+            colorCharacter = character.getColor().getColorDisplay();
+            endColor = Colors.RESET.getColorDisplay();
         }
         String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + endColor + "), " + this.golds + " golds, hand {";
         status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
@@ -177,7 +187,7 @@ public class RobotRandom implements Robot{
         String endColor;
         for (DistrictsType districtsType : listDistrict) {
             if (showColor) {
-                color = districtsType.getColor();
+                color = districtsType.getColor().getColorDisplay();
                 endColor = RESET;
             } else {
                 color = endColor = "";
@@ -309,6 +319,10 @@ public class RobotRandom implements Robot{
     public boolean hasFiveColors() {
         return this.hasFiveColors;
     }
+
+
+
+
 
 
 }

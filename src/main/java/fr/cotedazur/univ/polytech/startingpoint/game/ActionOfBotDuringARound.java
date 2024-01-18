@@ -33,13 +33,13 @@ public class ActionOfBotDuringARound {
         String cardPicked = "";
         for (int i = 0; i < listDistrictDrawn.size(); i++) {
             DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
-            cardDrawn += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
+            cardDrawn += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listDistrictDrawn.size()-1) cardDrawn += ",";
         }
         System.out.println(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
         for (int i = 0; i < listDistrictPicked.size(); i++) {
             DistrictsType districtInListDistrict = listDistrictPicked.get(i);
-            cardPicked += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
+            cardPicked += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listDistrictPicked.size()-1) cardPicked += ",";
             //bot.addDistrict(districtInListDistrict);
         }

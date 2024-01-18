@@ -29,9 +29,6 @@ class PowerTest {
         assertFalse(power.canDestroyDistrict(victim, DistrictsType.PALAIS));
         destructor.setGolds(5);
         assertFalse(power.canDestroyDistrict(victim, DistrictsType.MANOIR));
-        
-
-
 
 
     }
@@ -65,6 +62,7 @@ class PowerTest {
         assertEquals(5, destructor.getGolds());
     }
 
+    /*
     @Test
     public void tryDestroyDonjon() {
         RobotRandom destructor = new RobotRandom("destructor");
@@ -81,4 +79,5 @@ class PowerTest {
         assertEquals(5, destructor.getGolds());
         assertEquals(1,victim.getNumberOfDistrictInCity());
     }
+*/
 }

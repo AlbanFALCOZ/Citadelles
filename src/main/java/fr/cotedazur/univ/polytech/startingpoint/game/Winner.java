@@ -1,9 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 
@@ -14,11 +16,9 @@ public class Winner {
 
     private List<Robot> bots;
 
+    private List<Robot> winnerBots ;
+
     private boolean hasFiveColors = false ;
-
-
-
-
 
 
     /**
@@ -32,12 +32,19 @@ public class Winner {
 
 
 
+    public List<Robot> getWinnerBots(){
+        return winnerBots;
+    }
+
+
+
     public void setScores(){
         for(Robot bot : bots) {
-            bot.setScore(bot.calculateScore());
+            bot.setScore(bot.getScore() + bot.calculateScore());
         }
-        awardEndGameBonus();
         awardDistrictColorBonus();
+
+
     }
     /**
      * @return les scores des robots
@@ -99,19 +106,19 @@ public class Winner {
             return "There is an equality! The winners are: " + String.join(", ", winners);
         }
     }
-    public void awardEndGameBonus() {
-        Iterator<Robot> iterator = bots.iterator();
-        while (iterator.hasNext()) {
-            Robot bot = iterator.next();
-            int originalScore = bot.getScore(); // Store the original score
 
-            if (bot.getNumberOfDistrictInCity() == 8) {
-                bot.setScore(originalScore + 8);
-                System.out.println(bot.getName() + "'s score before bonus: " + originalScore);
-                System.out.println(bot.getName() + " ended the game, they get 8 extra points");
-                System.out.println(bot.getName() + "'s score after bonus: " + bot.getScore());
-                System.out.println("-----------------------------------------------------");
-                break;
+
+
+    public void miracleDistrictEffect(){
+        for (Robot bot  : bots){
+            if(bot.getCity().contains(DistrictsType.COURT_DES_MIRACLES)){
+                int index = bot.getCity().indexOf(DistrictsType.COURT_DES_MIRACLES);
+               if( index != 8 ) {
+                   Colors randomColor = DistrictsType.getRandomColorCode() ;
+                   bot.getCity().get(index).setColor(randomColor);
+                   System.out.println(bot.getName() + " choosed to change the color of their miracle card to " + randomColor);
+
+               }
             }
         }
     }
@@ -120,21 +127,22 @@ public class Winner {
     public void awardDistrictColorBonus() {
         for (Robot bot : bots) {
             int originalScore = bot.getScore();
-
             Set<String> uniqueColorsInCity = new HashSet<>();
             for (DistrictsType district : bot.getCity()) {
-                uniqueColorsInCity.add(district.getColor());
+                uniqueColorsInCity.add(district.getColor().getColorDisplay());
             }
-
             if (uniqueColorsInCity.size() >= 5) {
-                bot.setScore(originalScore + 5);
-                System.out.println(bot.getName() + "'s score before color bonus: " + originalScore);
-                System.out.println(bot.getName() + " earned 5 extra points for having 5 or more different colors in the city");
-                System.out.println(bot.getName() + "'s score after color bonus: " + bot.getScore());
+                System.out.println(bot.getName() + " has " + bot.getScore() + " points ");
+                System.out.println(bot.getName() + " has 5 districts in their city they earn 3 extra points ");
+                bot.setScore(originalScore + 3);
+                System.out.println(bot.getName() + " has now " + bot.getScore());
                 System.out.println("--------------------------------------------------");
+
             }
         }
     }
+
+
 
 
 }

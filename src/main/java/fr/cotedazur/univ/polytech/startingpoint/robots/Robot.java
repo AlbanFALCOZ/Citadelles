@@ -92,6 +92,8 @@ public interface Robot {
     boolean getIsAssassinated();
 
     void setIsAssassinated(boolean IsAssassinated);
+
+    boolean hasEightDistrict();
 }
 
 
