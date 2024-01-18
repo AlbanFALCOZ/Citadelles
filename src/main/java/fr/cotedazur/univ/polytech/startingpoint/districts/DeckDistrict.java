@@ -64,7 +64,6 @@ public class DeckDistrict {
             //Cas 5 cartes
             districtsInDeck.add(DistrictsType.MANOIR);
             districtsInDeck.add(DistrictsType.TAVERNE);
-
         }
     }
 

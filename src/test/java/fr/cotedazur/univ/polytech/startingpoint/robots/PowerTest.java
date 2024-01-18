@@ -1,6 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import org.junit.jupiter.api.Test;
@@ -84,4 +86,51 @@ class PowerTest {
         assertEquals(2, destructor.getGolds());
         assertEquals(2, victim.getNumberOfDistrictInCity());
     }
+
+    @Test
+    public void marchand() {
+        RobotRandom marchand = new RobotRandom("marchand");
+        Power power = new Power(marchand,new ActionOfBotDuringARound(marchand));
+        marchand.setCharacter(CharactersType.MARCHAND);
+        assertEquals(2,marchand.getGolds());
+        power.marchand();
+        assertEquals(3,marchand.getGolds());
+        marchand.winGoldsByTypeOfBuildings();
+        assertEquals(3,marchand.getGolds());
+        marchand.addDistrict(DistrictsType.TAVERNE);
+        marchand.addGold(1);//Pour compenser la construction de la taverne
+        marchand.addDistrict(DistrictsType.ECHOPPE);
+        marchand.addGold(2);//Pour compenser la construction de l'échoppe
+        marchand.tryBuild();
+        marchand.tryBuild();
+        marchand.winGoldsByTypeOfBuildings();
+        assertEquals(5,marchand.getGolds());
+    }
+
+    @Test
+    void testAssassin() {
+        RobotRandom assassin = new RobotRandom("Assassin");
+        RobotRandom victim = new RobotRandom("Victim");
+        Power power = new Power(assassin,new ActionOfBotDuringARound(assassin));
+        assassin.setCharacter(CharactersType.ASSASSIN);
+        victim.setCharacter(CharactersType.MARCHAND);
+        assertFalse(victim.getIsAssassinated());
+        power.assassin(victim);
+        assertTrue(victim.getIsAssassinated());
+    }
+
+    @Test
+    void testMagicien() {
+        RobotRandom magicien = new RobotRandom("Magicien");
+        magicien.setCharacter(CharactersType.MAGICIEN);
+        DeckDistrict deck = new DeckDistrict();
+        for (int i = 0; i < 5; i++) magicien.addDistrict(deck.getDistrictsInDeck());
+        int numberOfCardInHand = magicien.getNumberOfDistrictInHand();
+        assertEquals(5,numberOfCardInHand);
+        //Power power = mock(Power.class);
+        //power.magicien();
+    }
+
+
+
 }

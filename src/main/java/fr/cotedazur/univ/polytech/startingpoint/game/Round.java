@@ -184,8 +184,7 @@ public class Round {
                     default:
                         break;
                 }
-
-                bot.manufacture(deck);
+                bot.specialCards(deck, actionOfBotDuringARound);
                 String hasBuilt = bot.tryBuild();
                 int goldsWon = bot.winGoldsByTypeOfBuildings();
                 actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);

@@ -42,7 +42,6 @@ public class RobotTest {
     @Test
     void testTryBuild() {
         Robot robot = new RobotRandom("TestRobot");
-        DeckDistrict deckDistrict = new DeckDistrict();
 
         // Assuming you have some districts in the deck for testing
         DistrictsType districtWithCost2 = DistrictsType.EGLISE;
@@ -82,10 +81,9 @@ public class RobotTest {
     void testPickDistrictCard() {
         List<DistrictsType> listDistrict = new ArrayList<>();
         listDistrict.add(DistrictsType.TEMPLE);
-        robot.pickDistrictCard(listDistrict, new DeckDistrict());
         listDistrict.add(DistrictsType.MONASTERE);
-        robot.pickDistrictCard(listDistrict, new DeckDistrict());
-
+        robot.addDistrict(robot.pickDistrictCard(listDistrict, new DeckDistrict()));
+        assertEquals(robot.getNumberOfDistrictInHand(),1);
     }
 
     @Test

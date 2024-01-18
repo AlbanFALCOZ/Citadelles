@@ -126,6 +126,7 @@ public class Power {
     }
 
     public void voleur(Robot victim) {
+
         if (!victim.getIsAssassinated()) {
             int stolenGold = victim.getGolds();
             bot.addGold(stolenGold);
