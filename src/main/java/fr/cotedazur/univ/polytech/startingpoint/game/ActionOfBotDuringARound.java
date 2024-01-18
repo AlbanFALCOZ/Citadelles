@@ -84,7 +84,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfNoneDistrictDestroyed(Robot victim, int destructorGolds) {
-        System.out.println(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds");
+        System.out.println(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds or the district is a Donjon");
     }
 
     public void printEvequeImmune(Robot victim, DistrictsType district) {
@@ -118,7 +118,11 @@ public class ActionOfBotDuringARound {
     }
 
     public void printCantAffectVictim(Robot victim) {
-        System.out.println(bot.getName() + " can't use his power on " + victim.getName() + " because he has been assassinated");
+        System.out.println(bot.getName() + " can't steal " + victim.getName() + " because he has been assassinated");
+    }
+
+    public void printDistrictRecovered(Robot victim, DistrictsType district) {
+        System.out.println(victim.getName() + " got district " + district.getName() + " back into his hand by paying 1 gold thanks to district Cimetière.");
     }
 }
 
