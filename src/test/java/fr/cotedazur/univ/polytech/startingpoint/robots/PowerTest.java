@@ -1,6 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import org.junit.jupiter.api.Test;
@@ -117,6 +119,16 @@ class PowerTest {
         assertTrue(victim.getIsAssassinated());
     }
 
-
+    @Test
+    void testMagicien() {
+        RobotRandom magicien = new RobotRandom("Magicien");
+        magicien.setCharacter(CharactersType.MAGICIEN);
+        DeckDistrict deck = new DeckDistrict();
+        for (int i = 0; i < 5; i++) magicien.addDistrict(deck.getDistrictsInDeck());
+        int numberOfCardInHand = magicien.getNumberOfDistrictInHand();
+        assertEquals(5,numberOfCardInHand);
+        Power power = new Power(magicien,new ActionOfBotDuringARound(magicien));
+        //power.magicien();
+    }
 
 }
