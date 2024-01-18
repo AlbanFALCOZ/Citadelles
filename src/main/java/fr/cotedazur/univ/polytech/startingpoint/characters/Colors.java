@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.characters;
 
+import java.util.Random;
+
 public enum Colors {
     GREEN("\u001B[32m"),
     RED("\u001B[31m"),
@@ -19,6 +21,20 @@ public enum Colors {
     Colors(String colorDisplay){
         this.colorDisplay = colorDisplay ;
     }
+
+    public static Colors getRandomColorCode() {
+        Random random = new Random();
+        Colors[] allowedColors = {
+                Colors.BLUE,
+                Colors.GREEN,
+                Colors.RED,
+                Colors.YELLOW
+        };
+        int randomIndex = random.nextInt(allowedColors.length);
+        return allowedColors[randomIndex];
+    }
+
+
 
 
 

@@ -114,7 +114,7 @@ public class Winner {
             if(bot.getCity().contains(DistrictsType.COURT_DES_MIRACLES)){
                 int index = bot.getCity().indexOf(DistrictsType.COURT_DES_MIRACLES);
                if( index != 8 ) {
-                   Colors randomColor = DistrictsType.getRandomColorCode() ;
+                   Colors randomColor =Colors.getRandomColorCode() ;
                    bot.getCity().get(index).setColor(randomColor);
                    System.out.println(bot.getName() + " choosed to change the color of their miracle card to " + randomColor);
 

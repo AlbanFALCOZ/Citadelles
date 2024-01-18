@@ -152,18 +152,6 @@ public enum DistrictsType {
 
 
 
-    public static Colors getRandomColorCode() {
-        Random random = new Random();
-        Colors[] allowedColors = {
-                Colors.BLUE,
-                Colors.GREEN,
-                Colors.RED,
-                Colors.YELLOW
-        };
-        int randomIndex = random.nextInt(allowedColors.length);
-        return allowedColors[randomIndex];
-    }
-
     public void setColor(Colors color) {
         this.color = color;
     }
