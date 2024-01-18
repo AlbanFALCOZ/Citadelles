@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.List;
 
@@ -89,6 +90,10 @@ public interface Robot {
 
 
     //Power getPower();
-    void manufacture(DeckDistrict deck);
+    List<DistrictsType> manufacture(DeckDistrict deck);
+
+    List<DistrictsType> laboratoire(DeckDistrict deck);
+
+    void specialCards(DeckDistrict deck, ActionOfBotDuringARound action);
 
 }

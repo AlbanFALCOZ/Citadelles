@@ -28,22 +28,22 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfBotWhoHasBuilt() {
-        String cardDrawn = "";
-        String cardPicked = "";
-        for (int i = 0; i < listDistrictDrawn.size(); i++) {
-            DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
-            cardDrawn += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listDistrictDrawn.size() - 1) cardDrawn += ",";
-        }
+        String cardDrawn = getStringOfListOfDistrict(listDistrictDrawn);
         System.out.println(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
-        for (int i = 0; i < listDistrictPicked.size(); i++) {
-            DistrictsType districtInListDistrict = listDistrictPicked.get(i);
-            cardPicked += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listDistrictPicked.size() - 1) cardPicked += ",";
-            //bot.addDistrict(districtInListDistrict);
-        }
+        String cardPicked = getStringOfListOfDistrict(listDistrictPicked);
         System.out.println(bot.getName() + " choose to pick : {" + cardPicked + "}");
         System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+    }
+
+    private String getStringOfListOfDistrict(List<DistrictsType> listOfDistrict) {
+        String stringOfDistricts = "";
+        for (int i = 0; i < listOfDistrict.size(); i++) {
+            DistrictsType districtInListDistrict = listOfDistrict.get(i);
+            stringOfDistricts += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
+            if (i < listOfDistrict.size() - 1) stringOfDistricts += ",";
+            //bot.addDistrict(districtInListDistrict);
+        }
+        return stringOfDistricts;
     }
 
     public void printActionOfBotWhoGainedGold(int goldGained) {
@@ -119,6 +119,14 @@ public class ActionOfBotDuringARound {
 
     public void printCantAffectVictim(Robot victim) {
         System.out.println(bot.getName() + " can't use his power on " + victim.getName() + " because he has been assassinated");
+    }
+
+    public void printLaboratoryAction(List<DistrictsType> listOfDistrictRemoved) {
+        System.out.println("Thanks to the laboratory, " + bot.getName() + " has removed " + getStringOfListOfDistrict(listOfDistrictRemoved) + " and has gained one gold");
+    }
+
+    public void printManufactureAction(List<DistrictsType> listOfDistrictPicked) {
+        System.out.println("Thanks to the manufacture, " + bot.getName() + " lost 3 golds but added {" + getStringOfListOfDistrict(listOfDistrictPicked) + "} to his hand");
     }
 }
 

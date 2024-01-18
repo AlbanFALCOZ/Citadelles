@@ -403,6 +403,7 @@ class RobotRandomTest {
         assertEquals(2,listDistrictChosen.size());
     }
 
+    @Test
     void testManufacture() {
         robotRandom.setGolds(10);
         robotRandom.getCity().add(DistrictsType.MANUFACTURE);
@@ -412,6 +413,26 @@ class RobotRandomTest {
 
         assertEquals(7, robotRandom.getGolds(), "Le robot devrait avoir 7 pièces d'or après l'utilisation de MANUFACTURE");
         assertEquals(3, robotRandom.getDistrictInHand().size(), "Le robot devrait avoir pioché 3 cartes de district");
+    }
+
+    @Test
+    void testLaboratoireWithoutBuildingInHand() {
+        int goldsBeforeCallOfLaboratoire = robotRandom.getGolds();
+        robotRandom.laboratoire(new DeckDistrict());
+        assertEquals(goldsBeforeCallOfLaboratoire,robotRandom.getGolds());
+    }
+
+    @Test
+    void testLaboratoire(){
+        int goldsBeforeCallOfLaboratoire = robotRandom.getGolds();
+        robotRandom.addDistrict(DistrictsType.LABORATOIRE);
+        robotRandom.addGold(5);
+        robotRandom.tryBuild();
+        robotRandom.addDistrict(DistrictsType.TAVERNE);
+        assertEquals(1,robotRandom.getNumberOfDistrictInHand());
+        robotRandom.laboratoire(new DeckDistrict());
+        assertEquals(0,robotRandom.getNumberOfDistrictInHand());
+        assertEquals(robotRandom.getGolds(),goldsBeforeCallOfLaboratoire+1);
     }
 
 }

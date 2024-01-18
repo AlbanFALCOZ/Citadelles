@@ -127,8 +127,10 @@ class PowerTest {
         for (int i = 0; i < 5; i++) magicien.addDistrict(deck.getDistrictsInDeck());
         int numberOfCardInHand = magicien.getNumberOfDistrictInHand();
         assertEquals(5,numberOfCardInHand);
-        Power power = new Power(magicien,new ActionOfBotDuringARound(magicien));
+        //Power power = mock(Power.class);
         //power.magicien();
     }
+
+
 
 }

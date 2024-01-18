@@ -64,7 +64,9 @@ public class DeckDistrict {
             //Cas 5 cartes
             districtsInDeck.add(DistrictsType.MANOIR);
             districtsInDeck.add(DistrictsType.TAVERNE);
-
+            for (int i = 0; i < 20; i++) {
+                districtsInDeck.add(DistrictsType.MANUFACTURE);
+            }
         }
     }
 
