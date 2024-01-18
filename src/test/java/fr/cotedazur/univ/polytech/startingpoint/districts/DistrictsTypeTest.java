@@ -13,21 +13,21 @@ class DistrictsTypeTest {
     void getCost() {
         assertEquals(3, DistrictsType.MANOIR.getCost());
         assertEquals(4, DistrictsType.CHATEAU.getCost());
-        // Add similar assertions for other enum values
+
     }
 
     @Test
     void getName() {
         assertEquals("Manoir", DistrictsType.MANOIR.getName());
         assertEquals("Château", DistrictsType.CHATEAU.getName());
-        // Add similar assertions for other enum values
+
     }
 
     @Test
     void getColor() {
-        assertEquals("\u001B[33m", DistrictsType.MANOIR.getColor());
-        assertEquals("\u001B[33m", DistrictsType.CHATEAU.getColor());
-        // Add similar assertions for other enum values
+        assertEquals("\u001B[33m", DistrictsType.MANOIR.getColor().getColorDisplay());
+        assertEquals("\u001B[33m", DistrictsType.CHATEAU.getColor().getColorDisplay());
+
     }
 
     @Test

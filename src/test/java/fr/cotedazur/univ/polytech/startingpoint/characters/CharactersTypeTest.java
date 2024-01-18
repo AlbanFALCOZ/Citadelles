@@ -29,8 +29,8 @@ class CharactersTypeTest {
 
     @Test
     void getColor() {
-        assertEquals("\u001B[37;1m", CharactersType.ASSASSIN.getColor());
-        assertEquals("\u001B[37;1m", CharactersType.VOLEUR.getColor());
+        assertEquals("\u001B[37;1m", CharactersType.ASSASSIN.getColor().getColorDisplay());
+        assertEquals("\u001B[37;1m", CharactersType.VOLEUR.getColor().getColorDisplay());
 
     }
 }

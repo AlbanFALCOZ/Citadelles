@@ -50,7 +50,7 @@ class WinnerTest {
         }
     }
 
-    /*
+
     @Test
     void testGetWinner() {
         gameEngine.robotsPickCharacters();
@@ -58,7 +58,7 @@ class WinnerTest {
         gameEngine.robotsPickCharacters();
         Round round = new Round(gameEngine.getBots());
         round.playTurns();
-        winner.calculateScores();
+        winner.setScores();
         int maxScore = 0;
         for (Robot bot : gameEngine.getBots()) {
             if (bot.calculateScore() > maxScore) {
@@ -72,7 +72,7 @@ class WinnerTest {
             }
         }
     }
-    */
+
 
 
     @Test
@@ -125,12 +125,12 @@ class WinnerTest {
 
     @Test
     void testMiracleDistrictEffect() {
-        // Create a list of robots
+
         RobotRandom robot1 = new RobotRandom("Robot1");
         RobotRandom robot2 = new RobotRandom("Robot2");
         RobotRandom robot3 = new RobotRandom("Robot3");
 
-        // Add districts to the cities of the robots
+
         robot1.getCity().add(DistrictsType.MARCHE);
         robot1.getCity().add(DistrictsType.COURT_DES_MIRACLES);
         robot1.getCity().add(DistrictsType.PORT);

@@ -38,6 +38,11 @@ public class Round {
     }
 
 
+    public List<Robot> getBots(){
+        return bots;
+    }
+
+
     /**
      * cette méthode permet d'assigner la couronne au roi
      */
@@ -106,7 +111,6 @@ public class Round {
                 if (!robots.isEmpty()) {
                     powerOfBot.condottiere(robots.get(0));
                 }
-
                 break;
             case VOLEUR:
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
@@ -183,12 +187,9 @@ public class Round {
                 int goldsWon = bot.winGoldsByTypeOfBuildings();
                 actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
             }
-
-
         }
         for (Robot bot : bots) {
             bot.setIsAssassinated(false);
-
         }
         assignCrownForKing();
 
