@@ -71,14 +71,6 @@ public class ActionOfBotDuringARound {
     }
 
 
-    public void printPowerAndGoldEarned(int goldsWon) {
-        if (goldsWon > 0)
-            System.out.println(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
-        System.out.println(bot.statusOfPlayer());
-        System.out.println("\n-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
-    }
-
-
     public void printActionOfDestroyDistrict(Robot victim, DistrictsType district, int goldsRestarts) {
         System.out.println(bot.getName() + " destroyed " + district + " of " + victim.getName() + " and now has " + goldsRestarts + " golds");
     }

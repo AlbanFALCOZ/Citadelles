@@ -76,10 +76,6 @@ public class DeckDistrict {
         return districtsInDeck.remove(0);
     }
 
-    public int getSizeOfDeck() {
-        return districtsInDeck.size();
-    }
-
     /**
      * @param district le district à ajouter au deck
      *                 ajoute un district au deck
