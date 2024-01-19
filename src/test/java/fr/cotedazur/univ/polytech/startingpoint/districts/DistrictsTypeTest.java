@@ -1,7 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.districts;
 
-import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

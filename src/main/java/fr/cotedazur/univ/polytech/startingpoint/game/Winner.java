@@ -1,11 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotNora;
 
-import java.sql.SQLOutput;
 import java.util.*;
 
 
@@ -14,9 +13,9 @@ import java.util.*;
  */
 public class Winner {
 
-    private List<Robot> bots;
+    private List<RobotNora> bots;
 
-    private List<Robot> winnerBots ;
+    private List<RobotNora> winnerBots ;
 
     private boolean hasFiveColors = false ;
 
@@ -25,7 +24,7 @@ public class Winner {
      * @param bots la liste des robots
      *             Constructeur de la classe Winner
      */
-    public Winner(List<Robot> bots) {
+    public Winner(List<RobotNora> bots) {
         this.bots = new ArrayList<>(bots);
 
     }
@@ -33,14 +32,14 @@ public class Winner {
 
 
 
-    public List<Robot> getWinnerBots(){
+    public List<RobotNora> getWinnerBots(){
         return winnerBots;
     }
 
 
 
     public void setScores(){
-        for(Robot bot : bots) {
+        for(RobotNora bot : bots) {
             bot.setScore(bot.getScore() + bot.calculateScore());
         }
 
@@ -58,7 +57,7 @@ public class Winner {
     public String printScore(){
         String scores = "" ;
         setScores();
-        for (Robot bot : bots){
+        for (RobotNora bot : bots){
             scores += bot.getName() + " has a score of " + bot.getScore() + "\n";
         }
         return scores;
@@ -70,10 +69,10 @@ public class Winner {
      */
     public List<String> getWinners() {
 
-        List<Robot> winners = new ArrayList<>();
+        List<RobotNora> winners = new ArrayList<>();
         int highestScore = -1;
 
-        for (Robot bot : bots) {
+        for (RobotNora bot : bots) {
             int score = bot.getScore();
 
             if (score > highestScore) {
@@ -86,7 +85,7 @@ public class Winner {
         }
 
         List<String> winnerNames = new ArrayList<>();
-        for (Robot winner : winners) {
+        for (RobotNora winner : winners) {
             winnerNames.add(winner.getName());
         }
 
@@ -113,7 +112,7 @@ public class Winner {
 
 
     public void miracleDistrictEffect(){
-        for (Robot bot  : bots){
+        for (RobotNora bot  : bots){
             if(bot.getCity().contains(DistrictsType.COURT_DES_MIRACLES)){
                 int index = bot.getCity().indexOf(DistrictsType.COURT_DES_MIRACLES);
                if( index != bot.getCity().size()-1 ) {
@@ -128,7 +127,7 @@ public class Winner {
 
 
     public void awardDistrictColorBonus() {
-        for (Robot bot : bots) {
+        for (RobotNora bot : bots) {
             int originalScore = bot.getScore();
             Set<String> uniqueColorsInCity = new HashSet<>();
             for (DistrictsType district : bot.getCity()) {

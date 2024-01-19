@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotNora;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,29 +17,29 @@ import java.util.List;
  */
 public class Round {
 
-    private List<Robot> bots;
+    private List<RobotNora> bots;
     private boolean systemPrint;
     private DeckDistrict deck;
     private int numberOfCharacterToStealFrom = 0;
-    private Robot voleur;
-    private Robot victimOfVoleur;
+    private RobotNora voleur;
+    private RobotNora victimOfVoleur;
 
     /**
      * @param bots la liste des robots
      *             Constructeur de la classe Round
      */
-    public Round(List<Robot> bots, boolean systemPrint, DeckDistrict deck) {
+    public Round(List<RobotNora> bots, boolean systemPrint, DeckDistrict deck) {
         this.bots = new ArrayList<>(bots);
         this.systemPrint = systemPrint;
         this.deck = deck;
     }
 
-    public Round(List<Robot> bots) {
+    public Round(List<RobotNora> bots) {
         this(bots, true, new DeckDistrict());
     }
 
 
-    public List<Robot> getBots(){
+    public List<RobotNora> getBots(){
         return bots;
     }
 
@@ -86,8 +87,8 @@ public class Round {
         return sortedBots;
     }
 
-    public void choosePowerOfBot(Robot bot) {
-        List<Robot> robots = new ArrayList<>(this.bots);
+    public void choosePowerOfBot(RobotNora bot) {
+        List<RobotNora> robots = new ArrayList<>(bots);
 
         ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
@@ -155,7 +156,7 @@ public class Round {
         bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
         this.sortRobots();
         numberOfCharacterToStealFrom = 0;
-        for (Robot bot : bots) {
+        for (RobotNora bot : bots) {
             if (!bot.getIsAssassinated()) {
                 ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
                 actionOfBotDuringARound.startTurnOfBot();

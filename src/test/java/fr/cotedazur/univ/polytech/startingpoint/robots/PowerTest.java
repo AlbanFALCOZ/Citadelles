@@ -17,8 +17,8 @@ class PowerTest {
 
     @Test
     void canDestroyDistrict() {
-        RobotRandom destructor = new RobotRandom("destructor");
-        RobotRandom victim = new RobotRandom("victim");
+        RobotNora destructor = new RobotNora("destructor");
+        RobotNora victim = new RobotNora("victim");
         Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MAGICIEN);
@@ -44,8 +44,8 @@ class PowerTest {
 
     @Test
     void condottiere() {
-        RobotRandom destructor = new RobotRandom("destructor");
-        RobotRandom victim = new RobotRandom("victim");
+        RobotNora destructor = new RobotNora("destructor");
+        RobotNora victim = new RobotNora("victim");
         Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MARCHAND);
@@ -79,8 +79,8 @@ class PowerTest {
     /*
     @Test
     public void tryDestroyDonjon() {
-        RobotRandom destructor = new RobotRandom("destructor");
-        RobotRandom victim = new RobotRandom("victim");
+        RobotNora destructor = new RobotNora("destructor");
+        RobotNora victim = new RobotNora("victim");
         Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MARCHAND);
@@ -106,7 +106,7 @@ class PowerTest {
 
     @Test
     public void marchand() {
-        RobotRandom marchand = new RobotRandom("marchand");
+        RobotNora marchand = new RobotNora("marchand");
         Power power = new Power(marchand,new ActionOfBotDuringARound(marchand));
         marchand.setCharacter(CharactersType.MARCHAND);
         assertEquals(2,marchand.getGolds());
@@ -126,8 +126,8 @@ class PowerTest {
 
     @Test
     void testAssassin() {
-        RobotRandom assassin = new RobotRandom("Assassin");
-        RobotRandom victim = new RobotRandom("Victim");
+        RobotNora assassin = new RobotNora("Assassin");
+        RobotNora victim = new RobotNora("Victim");
         Power power = new Power(assassin,new ActionOfBotDuringARound(assassin));
         assassin.setCharacter(CharactersType.ASSASSIN);
         victim.setCharacter(CharactersType.MARCHAND);
@@ -138,7 +138,7 @@ class PowerTest {
 
     @Test
     void testMagicien() {
-        RobotRandom magicien = new RobotRandom("Magicien");
+        RobotNora magicien = new RobotNora("Magicien");
         magicien.setCharacter(CharactersType.MAGICIEN);
         DeckDistrict deck = new DeckDistrict();
         for (int i = 0; i < 5; i++) magicien.addDistrict(deck.getDistrictsInDeck());
