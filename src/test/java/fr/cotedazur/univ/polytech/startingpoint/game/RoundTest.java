@@ -1,7 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotNora;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -15,13 +16,13 @@ class RoundTest {
     @Test
     void testGetBots() {
 
-        RobotNora robot1 = new RobotNora("Robot1");
-        RobotNora robot2 = new RobotNora("Robot2");
-        RobotNora robot3 = new RobotNora("Robot3");
-        List<RobotNora> initialBots = List.of(robot1, robot2, robot3);
+        Robot robot1 = new RobotRandom("Robot1");
+        Robot robot2 = new RobotRandom("Robot2");
+        Robot robot3 = new RobotRandom("Robot3");
+        List<Robot> initialBots = List.of(robot1, robot2, robot3);
         Round round = new Round(initialBots);
 
-        List<RobotNora> retrievedBots = round.getBots();
+        List<Robot> retrievedBots = round.getBots();
 
 
         assertEquals(initialBots, retrievedBots);
@@ -32,15 +33,15 @@ class RoundTest {
     @Test
     void testSortRobots() {
         // Arrange
-        RobotNora nobleRobot1 = new RobotNora("Franz Kafka");
+        Robot nobleRobot1 = new RobotRandom("Franz Kafka");
         nobleRobot1.setCharacter(CharactersType.ROI);
         nobleRobot1.setHasCrown(true);
 
-        RobotNora nobleRobot2 = new RobotNora("Leo Tolstoy");
+        Robot nobleRobot2 = new RobotRandom("Leo Tolstoy");
         nobleRobot2.setCharacter(CharactersType.ROI);
         nobleRobot2.setHasCrown(false);
 
-        RobotNora openRobot = new RobotNora("Simone De Beauvoir");
+        Robot openRobot = new RobotRandom("Simone De Beauvoir");
         openRobot.setCharacter(CharactersType.ASSASSIN);
 
         Round round = new Round(List.of(nobleRobot1, nobleRobot2, openRobot));
@@ -60,8 +61,8 @@ class RoundTest {
         GameEngine game = new GameEngine();
         game.clearBots();
 
-        RobotNora thief = new RobotNora("Thief");
-        RobotNora target = new RobotNora("Target");
+        Robot thief = new RobotRandom("Thief");
+        Robot target = new RobotRandom("Target");
 
         thief.setCharacter(CharactersType.VOLEUR);
         target.setCharacter(CharactersType.ROI);
@@ -73,7 +74,7 @@ class RoundTest {
 
         Round round = new Round(game.getBots());
 
-        List<RobotNora> otherBots = Collections.singletonList(target); //liste avec uniquement la cible
+        List<Robot> otherBots = Collections.singletonList(target); //liste avec uniquement la cible
         //thief.chooseTarget(otherBots);
         //round.thiefAction(thief);
 
@@ -84,7 +85,7 @@ class RoundTest {
     @Test
     void testAssignCrownForKing_OneNobleCharacter() {
 
-        RobotNora nobleRobot = new RobotNora("Franz Kafka");
+        Robot nobleRobot = new RobotRandom("Franz Kafka");
         nobleRobot.setCharacter(CharactersType.ROI);
         nobleRobot.setHasCrown(false);
         Round round = new Round(List.of(nobleRobot));

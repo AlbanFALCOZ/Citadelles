@@ -3,7 +3,8 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotNora;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class GameEngineTest {
 
     @Test
     void testInitializeBots() {
-        for (RobotNora bot : gameEngine.getBots()) {
+        for (Robot bot : gameEngine.getBots()) {
             assertEquals(4, bot.getNumberOfDistrictInHand(), "Chaque robot doit avoir 4 districts uniques");
         }
     }
@@ -32,7 +33,7 @@ class GameEngineTest {
         gameEngine.robotsPickCharacters();
         gameEngine.assignCrown();
         int numberOfCrown = 0;
-        for (RobotNora bot : gameEngine.getBots()) {
+        for (Robot bot : gameEngine.getBots()) {
             if (bot.getHasCrown()) {
                 numberOfCrown++;
             }
@@ -44,7 +45,7 @@ class GameEngineTest {
     @Test
     void testIsBuiltEigthDistrict_OneRobotHasEightDistricts() {
         GameEngine game = new GameEngine();
-        RobotNora bot = gameEngine.getBots().get(0);
+        Robot bot = gameEngine.getBots().get(0);
 
         bot.setCharacter(CharactersType.MARCHAND);
         bot.setGolds(30);
@@ -72,12 +73,12 @@ class GameEngineTest {
         gameEngine.robotsPickCharacters();
         gameEngine.assignCrown();
 
-        for (RobotNora bot : gameEngine.getBots()) {
+        for (Robot bot : gameEngine.getBots()) {
             assertNotNull(bot.getCharacter(), "Chaque robot doit avoir un personnage.");
         }
 
-        RobotNora robotWithCrown = null;
-        for (RobotNora bot : gameEngine.getBots()) {
+        Robot robotWithCrown = null;
+        for (Robot bot : gameEngine.getBots()) {
             if (bot.getHasCrown()) {
                 robotWithCrown = bot;
                 break;
@@ -93,7 +94,7 @@ class GameEngineTest {
 
     @Test
     void testGameTurns() {
-        for (RobotNora bot : gameEngine.getBots()) {
+        for (Robot bot : gameEngine.getBots()) {
             assertEquals(0, bot.getNumberOfDistrictInCity(), "Les robots ne devraient pas avoir de districts construits au début.");
         }
         gameEngine.robotsPickCharacters();
@@ -116,7 +117,7 @@ class GameEngineTest {
     @Test
     void testAddRobot() {
         gameEngine.clearBots();
-        RobotNora robot = new RobotNora("Robot");
+        Robot robot = new RobotRandom("Robot");
         gameEngine.addRobot(robot);
         assertEquals(1, gameEngine.getBots().size(), "La liste des robots doit contenir un robot");
     }

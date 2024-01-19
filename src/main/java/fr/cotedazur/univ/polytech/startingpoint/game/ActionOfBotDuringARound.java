@@ -2,18 +2,17 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotNora;
 
 import java.util.List;
 
 public class ActionOfBotDuringARound {
 
 
-    private RobotNora bot;
+    private Robot bot;
     private List<DistrictsType> listDistrictDrawn;
     private List<DistrictsType> listDistrictPicked;
 
-    public ActionOfBotDuringARound(RobotNora bot) {
+    public ActionOfBotDuringARound(Robot bot) {
         this.bot = bot;
     }
 
@@ -85,32 +84,32 @@ public class ActionOfBotDuringARound {
     }
 
 
-    public void printActionOfDestroyDistrict(RobotNora victim, DistrictsType district, int goldsRestarts) {
+    public void printActionOfDestroyDistrict(Robot victim, DistrictsType district, int goldsRestarts) {
         System.out.println(bot.getName() + " destroyed " + district + " of " + victim.getName() + " and now has " + goldsRestarts + " golds");
     }
 
-    public void printActionOfNoneDistrictDestroyed(RobotNora victim, int destructorGolds) {
+    public void printActionOfNoneDistrictDestroyed(Robot victim, int destructorGolds) {
         System.out.println(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds or the district is a Donjon");
     }
 
-    public void printEvequeImmune(RobotNora victim, DistrictsType district) {
+    public void printEvequeImmune(Robot victim, DistrictsType district) {
         System.out.println(bot.getName() + " can't destroy " + district + " of " + victim.getName() + " because he is " + victim.getCharacter().getRole());
     }
 
-    public void printVictimAssassined(RobotNora victim) {
+    public void printVictimAssassined(Robot victim) {
         System.out.println(bot.getName() + " murdered " + victim.getCharacter().getRole());
 
     }
 
-    public void printMagicianSwap(RobotNora victim) {
+    public void printMagicianSwap(Robot victim) {
         System.out.println(bot.getName() + " swapped cards with " + victim.getName());
     }
 
-    public void printChoiceOfThief(RobotNora bot, int numberOfCharacter) {
+    public void printChoiceOfThief(Robot bot, int numberOfCharacter) {
         System.out.println(bot.getName() + " chose to steal from " + getNameOfCharacterFromNumber(numberOfCharacter));
     }
 
-    public void printThiefStill(RobotNora victim) {
+    public void printThiefStill(Robot victim) {
         System.out.println(bot.getName() + " stole " + victim.getGolds() + " golds from " + victim.getName() + ". Total golds now " + bot.getGolds());
     }
 
@@ -123,11 +122,11 @@ public class ActionOfBotDuringARound {
         return listName[number - 1];
     }
 
-    public void printCantAffectVictim(RobotNora victim) {
+    public void printCantAffectVictim(Robot victim) {
         System.out.println(bot.getName() + " can't steal " + victim.getName() + " because he has been assassinated");
     }
 
-    public void printDistrictRecovered(RobotNora victim, DistrictsType district) {
+    public void printDistrictRecovered(Robot victim, DistrictsType district) {
         System.out.println(victim.getName() + " got district " + district.getName() + " back into his hand by paying 1 gold thanks to district Cimetière.");
     }
 

@@ -8,44 +8,47 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class RobotWithChoice implements StrategyBot {
-    private RobotNora bot;
+public class RobotWithChoice extends Robot {
+    public RobotWithChoice(String name) {
+        super(name);
+    }
 
+    @Override
     public String tryBuild() {
         List<String> listDistrictName = new ArrayList<>();
-        for (DistrictsType districtsType : bot.getCity()) listDistrictName.add(districtsType.getName());
-        for (int i = 0; i < bot.getDistrictInHand().size(); i++) {
-            DistrictsType district = bot.getDistrictInHand().get(i);
-            if (district.getCost() <= bot.getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(bot);
-                bot.getCity().add(district);
-                bot.setGolds(bot.getGolds() - district.getCost());
-                bot.getDistrictInHand().remove(i);
+        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
+        for (int i = 0; i < getDistrictInHand().size(); i++) {
+            DistrictsType district = getDistrictInHand().get(i);
+            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+                district.powerOfDistrict(this);
+                getCity().add(district);
+                setGolds(getGolds() - district.getCost());
+                getDistrictInHand().remove(i);
                 return "a new " + district.getName();
             }
         }
         return "nothing";
     }
 
-
+    @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
-        listDistrict.sort(bot.compareByCost().reversed());
+        listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int costOfDistrictToBeBuilt = 0;
         int indice = 0;
         int i = 0;
         while (i < listDistrict.size()) {
-            if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= bot.getGolds()) {
+            if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= getGolds()) {
                 costOfDistrictToBeBuilt += listDistrict.get(i).getCost();
                 listDistrictToBuild.add(listDistrict.remove(i));
                 i--;
                 indice++;
-                if (indice == bot.getNumberOfCardsChosen()) break;
+                if (indice == getNumberOfCardsChosen()) break;
 
             }
             i++;
         }
-        while (listDistrictToBuild.size() < bot.getNumberOfCardsChosen())
+        while (listDistrictToBuild.size() < getNumberOfCardsChosen())
             listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
 
 
@@ -55,35 +58,36 @@ public class RobotWithChoice implements StrategyBot {
         return listDistrictToBuild;
     }
 
-
+    @Override
     public int generateChoice() {
         return (int) (Math.random() * 2);
     }
 
+    @Override
     public List<DistrictsType> manufacture(DeckDistrict deck) {
         List<DistrictsType> listOfDistrictPicked = new ArrayList<>();
-        if (bot.getGolds() >= 3) {
-            bot.setGolds(bot.getGolds() - 3); // dépense 3 or
+        if (getGolds() >= 3) {
+            setGolds(getGolds() - 3); // dépense 3 or
             for (int i = 0; i < 3; i++) {
                 DistrictsType card = deck.getDistrictsInDeck();
                 listOfDistrictPicked.add(card);
-                bot.addDistrict(card);
+                addDistrict(card);
             }
         }
         return listOfDistrictPicked;
     }
 
+    @Override
     public List<DistrictsType> laboratoire(DeckDistrict deck){
         List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
-        if (bot.getNumberOfDistrictInHand() >= 1) {
-            int indexOfDistrictInHandToRemove = (int) (Math.random()*bot.getNumberOfDistrictInHand());
-            DistrictsType card = bot.districtInHand.remove(indexOfDistrictInHandToRemove);
+        if (getNumberOfDistrictInHand() >= 1) {
+            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
+            DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
             listOfDistrictRemoved.add(card);
             deck.addDistrictToDeck(card);
-            bot.setGolds(bot.getGolds()+1);
+            setGolds(getGolds()+1);
         }
         return listOfDistrictRemoved;
     }
-
 }
 

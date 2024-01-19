@@ -4,9 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotNora;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
 
 import java.util.*;
 
@@ -15,7 +13,7 @@ import java.util.*;
  */
 public class GameEngine {
 
-    private ArrayList<RobotNora> bots;
+    private ArrayList<Robot> bots;
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
     private Round round;
@@ -57,9 +55,9 @@ public class GameEngine {
     public void initializeBots() {
         String[] name = {"Alban", "Sara", "Stacy", "Nora"};
         for (int i = 0; i < 4; i++) {
-            RobotNora bot;
-            if (i == 0) bot = new RobotNora(name[i]);
-            else bot = new RobotNora(name[i]);
+            Robot bot;
+            if (i == 0) bot = new RobotRandom(name[i]);
+            else bot = new RobotRandom(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
             }
@@ -71,7 +69,7 @@ public class GameEngine {
     /**
      * @return la liste des robots
      */
-    public List<RobotNora> getBots() {
+    public List<Robot> getBots() {
         return bots;
     }
 
@@ -172,7 +170,7 @@ public class GameEngine {
 
         {
         int i = 0;
-        for (RobotNora bot : bots) {
+        for (Robot bot : bots) {
             if (bot.hasEightDistrict()) {
                 bot.setScore(bot.getScore() + list[i]);
                 if(i!=0){
@@ -201,7 +199,7 @@ public class GameEngine {
      * @param robot le robot à ajouter
      *              cette méthode permet d'ajouter un robot à la liste des robots
      */
-    public void addRobot(RobotNora robot) {
+    public void addRobot(Robot robot) {
         this.bots.add(robot);
     }
 

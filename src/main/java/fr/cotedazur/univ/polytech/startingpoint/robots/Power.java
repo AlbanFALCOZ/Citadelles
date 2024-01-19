@@ -15,7 +15,7 @@ public class Power {
     private ActionOfBotDuringARound action;
     private Robot bot;
 
-    public Power(RobotNora bot, ActionOfBotDuringARound action) {
+    public Power(Robot bot, ActionOfBotDuringARound action) {
         this.bot = bot;
         this.action = action;
 
@@ -30,7 +30,7 @@ public class Power {
     }
 
 
-    public void architecte(RobotNora bot, DeckDistrict deck) {
+    public void architecte(Robot bot, DeckDistrict deck) {
         //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
         if (i == 0) {
@@ -64,7 +64,7 @@ public class Power {
         return destructorGolds >= district.getCost() && districtInCity;
     }
 
-    public void condottiere(RobotNora victim) {
+    public void condottiere(Robot victim) {
         int destructorGolds = bot.getGolds();
         List<DistrictsType> victimDistricts = victim.getCity();
 
@@ -97,14 +97,14 @@ public class Power {
     }
 
 
-    public void swapCards(RobotNora victim) {
+    public void swapCards(Robot victim) {
         List<DistrictsType> botDistrictInHand = bot.getDistrictInHand();
         bot.setDistrictInHand(victim.getDistrictInHand());
         victim.setDistrictInHand(botDistrictInHand);
     }
 
 
-    public void magicien(RobotNora victim, DeckDistrict deck) {
+    public void magicien(Robot victim, DeckDistrict deck) {
 
         int i = bot.generateChoice();
         if (i == 0) {
@@ -128,14 +128,14 @@ public class Power {
         bot.setNumberOfCardsDrawn(2);
     }
 
-    public void assassin(RobotNora victim) {
+    public void assassin(Robot victim) {
         if (bot.getCharacter().getType().equals(ASSASSIN)) {
             victim.setIsAssassinated(true);
             action.printVictimAssassined(victim);
         }
     }
 
-    public void voleur(RobotNora victim) {
+    public void voleur(Robot victim) {
 
         if (!victim.getIsAssassinated()) {
             int stolenGold = victim.getGolds();

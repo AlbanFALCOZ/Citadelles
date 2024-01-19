@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class Robot{
+public abstract class Robot{
 
     public static final String RESET = "\u001B[0m";
     protected String name;
@@ -26,9 +26,7 @@ public class Robot{
 
     protected boolean hasCrown;
 
-    private StrategyBot strategy;
-
-    public Robot(String name, StrategyBot strategy) {
+    public Robot(String name) {
         this.name = name;
         score = 0;
         districtInHand = new ArrayList<>();
@@ -37,17 +35,10 @@ public class Robot{
         city = new ArrayList<>();
         hasCrown = false;
         IsAssassinated = false;
-        this.strategy = strategy;
+        //this.strategy = strategy;
 
     }
 
-    public StrategyBot getStrategy() {
-        return strategy;
-    }
-
-    public void setStrategy(StrategyBot strategy) {
-        this.strategy = strategy;
-    }
 
     protected boolean IsAssassinated;
     public List<DistrictsType> getDistrictInHand() {
@@ -268,25 +259,17 @@ public class Robot{
     }
 
 
-    public String tryBuild() {
-        return strategy.tryBuild();
-    }
+    public abstract String tryBuild();
 
-    public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck){
-        return strategy.pickDistrictCard(listDistrict, deck);
-    }
+    public abstract List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
 
-    public int generateChoice(){
-        return strategy.generateChoice();
-    }
+    public abstract int generateChoice();
 
-    public List<DistrictsType> laboratoire(DeckDistrict deck){
-        return strategy.laboratoire(deck);
-    }
+    public abstract List<DistrictsType> laboratoire(DeckDistrict deck);
 
-    public List<DistrictsType> manufacture(DeckDistrict deck){
-        return strategy.manufacture(deck);
-    }
+    public abstract List<DistrictsType> manufacture(DeckDistrict deck);
+
+
 
 
 }

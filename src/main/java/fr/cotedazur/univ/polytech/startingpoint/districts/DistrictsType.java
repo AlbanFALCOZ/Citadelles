@@ -1,9 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.districts;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotNora;
-
-import java.awt.*;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
 
 
 /**
@@ -129,7 +128,7 @@ public enum DistrictsType {
      * @param player le joueur qui possède le quartier
      *               on vérifie si le quartier est un quartier spécial c'est à dire un quartier qui a un pouvoir
      */
-    public void powerOfDistrict(RobotNora player) {
+    public void powerOfDistrict(Robot player) {
         if (name.equals("Observatoire")) {
             player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn() + 1);
         }

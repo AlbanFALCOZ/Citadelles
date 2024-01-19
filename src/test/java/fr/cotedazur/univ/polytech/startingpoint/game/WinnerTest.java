@@ -5,7 +5,8 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotNora;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,13 +36,13 @@ class WinnerTest {
         round.playTurns();
         winner.printScore();
         int maxScore = 0;
-        for (RobotNora bot : gameEngine.getBots()) {
+        for (Robot bot : gameEngine.getBots()) {
             if (bot.calculateScore() > maxScore) {
                 maxScore = bot.calculateScore();
             }
         }
         List<String> winners = winner.getWinners();
-        for (RobotNora bot : gameEngine.getBots()) {
+        for (Robot bot : gameEngine.getBots()) {
             if (bot.calculateScore() == maxScore) {
                 assertTrue(winners.contains(bot.getName()));
             }
@@ -58,13 +59,13 @@ class WinnerTest {
         round.playTurns();
         winner.setScores();
         int maxScore = 0;
-        for (RobotNora bot : gameEngine.getBots()) {
+        for (Robot bot : gameEngine.getBots()) {
             if (bot.calculateScore() > maxScore) {
                 maxScore = bot.calculateScore();
             }
         }
         List<String> winners = winner.getWinners();
-        for (RobotNora bot : gameEngine.getBots()) {
+        for (Robot bot : gameEngine.getBots()) {
             if (bot.calculateScore() == maxScore) {
                 assertTrue(winners.contains(bot.getName()));
             }
@@ -75,8 +76,8 @@ class WinnerTest {
 
     @Test
     void testShowWinners() {
-        RobotNora robot1 = new RobotNora("Robot1");
-        RobotNora robot2 = new RobotNora("Robot2");
+        Robot robot1 = new RobotRandom("Robot1");
+        Robot robot2 = new RobotRandom("Robot2");
         robot1.setScore(10);
         robot2.setScore(10);
         Winner winner = new Winner(List.of(robot1, robot2));
@@ -88,10 +89,10 @@ class WinnerTest {
     @Test
     void testSetScoresIncludeBonus() {
 
-        List<RobotNora> robots = new ArrayList<>();
-        RobotNora robot1 = new RobotNora("Robot1");
-        RobotNora robot2 = new RobotNora("Robot2");
-        RobotNora robot3 = new RobotNora("Robot3");
+        List<Robot> robots = new ArrayList<>();
+        Robot robot1 = new RobotRandom("Robot1");
+        Robot robot2 = new RobotRandom("Robot2");
+        Robot robot3 = new RobotRandom("Robot3");
         robots.addAll(Arrays.asList(robot1, robot2, robot3));
 
 
@@ -124,9 +125,9 @@ class WinnerTest {
     @Test
     void testMiracleDistrictEffect() {
 
-        RobotNora robot1 = new RobotNora("Robot1");
-        RobotNora robot2 = new RobotNora("Robot2");
-        RobotNora robot3 = new RobotNora("Robot3");
+        Robot robot1 = new RobotRandom("Robot1");
+        Robot robot2 = new RobotRandom("Robot2");
+        Robot robot3 = new RobotRandom("Robot3");
 
 
         robot1.getCity().add(DistrictsType.MARCHE);
@@ -151,7 +152,7 @@ class WinnerTest {
         Colors[] allowedColors = {Colors.GREEN, Colors.BLUE, Colors.RED, Colors.YELLOW};
 
 
-        for (RobotNora bot : List.of(robot1, robot2, robot3)) {
+        for (Robot bot : List.of(robot1, robot2, robot3)) {
             if (bot.getCity().contains(DistrictsType.COURT_DES_MIRACLES)) {
                 int index = bot.getCity().indexOf(DistrictsType.COURT_DES_MIRACLES);
                 if (index != bot.getCity().size() - 1) {

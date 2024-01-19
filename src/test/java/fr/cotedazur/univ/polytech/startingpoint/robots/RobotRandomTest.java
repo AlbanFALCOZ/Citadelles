@@ -12,13 +12,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class RobotNoraTest {
-    private RobotNora RobotNora;
+class RobotRandomTest {
+    private RobotRandom RobotNora;
     private DeckDistrict deck;
 
     @BeforeEach
     void setUp() {
-        RobotNora = new RobotNora("testRobot");
+        RobotNora = new RobotRandom("testRobot");
         deck = new DeckDistrict();
     }
 
@@ -159,7 +159,7 @@ class RobotNoraTest {
 
     @Test
     void showStatus() {
-        RobotNora RobotNora = new RobotNora("Bot avec 8 golds");
+        Robot RobotNora = new RobotRandom("Bot avec 8 golds");
         RobotNora.setCharacter(CharactersType.ASSASSIN);
         RobotNora.addGold(6);
         System.out.println(RobotNora.statusOfPlayer());
@@ -175,7 +175,7 @@ class RobotNoraTest {
 
     @Test
     void testTryBuild() {
-        RobotNora RobotNora = new RobotNora("TestRobotNora");
+        Robot RobotNora = new RobotRandom("TestRobotNora");
 
         // Assuming you have some districts in the deck for testing
         DistrictsType districtWithCost2 = DistrictsType.EGLISE;
@@ -264,7 +264,7 @@ class RobotNoraTest {
 
     @Test
     public void testCountBuildingsByType() {
-        RobotNora RobotNora = new RobotNora("TestRobotNora");
+        Robot RobotNora = new RobotRandom("TestRobotNora");
         RobotNora.setCharacter(CharactersType.MARCHAND);
 
         RobotNora.getCity().add(DistrictsType.CHATEAU); // noble
@@ -279,7 +279,7 @@ class RobotNoraTest {
 
     @Test
     public void testCountBuildingsWithMagicSchool() {
-        RobotNora RobotNora = new RobotNora("TestRobotNora");
+        Robot RobotNora = new RobotRandom("TestRobotNora");
 
         RobotNora.setCharacter(CharactersType.ROI);
 
@@ -305,7 +305,7 @@ class RobotNoraTest {
 
         assertEquals(4, RobotNora.getGolds());
 
-        RobotNora RobotNoraEveque = new RobotNora("TestRobotNora2");
+        Robot RobotNoraEveque = new RobotRandom("TestRobotNora2");
         RobotNoraEveque.setCharacter(CharactersType.EVEQUE);
         RobotNoraEveque.getCity().add(DistrictsType.EGLISE); // religieux
         RobotNoraEveque.getCity().add(DistrictsType.CASERNE); // militaire
@@ -357,7 +357,7 @@ class RobotNoraTest {
 
     @Test
     void setChoice() {
-        Robot bot = new RobotNora("Vermouth");
+        Robot bot = new RobotRandom("Vermouth");
         bot.setChoice(2);
         assertEquals(bot.getChoice(), 2);
     }
