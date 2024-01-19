@@ -1,13 +1,20 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
 
 
 public class RobotRandom implements Robot {
@@ -22,6 +29,12 @@ public class RobotRandom implements Robot {
     //private DeckDistrict district;
     private List<DistrictsType> districtInHand;
     private CharactersType character;
+
+
+
+    private boolean hasFiveColors;
+
+
     private ArrayList<DistrictsType> city;
 
     private boolean hasCrown;
@@ -57,6 +70,17 @@ public class RobotRandom implements Robot {
     public void setIsAssassinated(boolean IsAssassinated) {
         this.IsAssassinated = IsAssassinated;
     }
+
+
+    @Override
+    public boolean hasEightDistrict() {
+        if (this.getNumberOfDistrictInCity()==8){
+            return true ;
+        }
+        return false ;
+    }
+
+
 
     public int getScore() {
         return this.score;
@@ -152,8 +176,8 @@ public class RobotRandom implements Robot {
         String endColor = "";
         String colorCharacter = "";
         if (showColor) {
-            colorCharacter = character.getColor();
-            endColor = RESET;
+            colorCharacter = character.getColor().getColorDisplay();
+            endColor = Colors.RESET.getColorDisplay();
         }
         String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + endColor + "), " + this.golds + " golds, hand {";
         status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
@@ -170,7 +194,7 @@ public class RobotRandom implements Robot {
         String endColor;
         for (DistrictsType districtsType : listDistrict) {
             if (showColor) {
-                color = districtsType.getColor();
+                color = districtsType.getColor().getColorDisplay();
                 endColor = RESET;
             } else {
                 color = endColor = "";
@@ -285,6 +309,7 @@ public class RobotRandom implements Robot {
         districtInHand.clear();
     }
 
+
     public void specialCards(DeckDistrict deck, ActionOfBotDuringARound action) {
         if (getCity().contains(DistrictsType.MANUFACTURE)) {
             List<DistrictsType> listOfDistrictPicked = manufacture(deck);
@@ -320,6 +345,7 @@ public class RobotRandom implements Robot {
         }
         return listOfDistrictRemoved;
     }
+
 
 }
 

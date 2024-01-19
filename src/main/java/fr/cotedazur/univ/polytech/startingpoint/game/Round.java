@@ -38,6 +38,11 @@ public class Round {
     }
 
 
+    public List<Robot> getBots(){
+        return bots;
+    }
+
+
     /**
      * cette méthode permet d'assigner la couronne au roi
      */
@@ -72,13 +77,12 @@ public class Round {
     public List<Robot> sortRobots() {
         ArrayList<Robot> sortedBots = new ArrayList<>(bots);
 
-        // Custom comparator to sort by crown status and then by character number
+
         Comparator<Robot> crownComparator = Comparator.comparing((Robot bot) -> !bot.getHasCrown())
                 .thenComparingInt(bot -> bot.getCharacter().getNumber());
 
-        // Sort the list using the custom comparator
-        Collections.sort(sortedBots, crownComparator);
 
+        Collections.sort(sortedBots, crownComparator);
         return sortedBots;
     }
 
@@ -107,9 +111,9 @@ public class Round {
                 if (!robots.isEmpty()) {
                     powerOfBot.condottiere(robots.get(0));
                 }
-
                 break;
             case VOLEUR:
+                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
                 if (numberOfCharacterToStealFrom == 0) {
                     numberOfCharacterToStealFrom = (int) (Math.random() * 6 + 2);
                     this.voleur = bot;
@@ -183,11 +187,11 @@ public class Round {
                 int goldsWon = bot.winGoldsByTypeOfBuildings();
                 actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
             }
-
         }
         for (Robot bot : bots) {
             bot.setIsAssassinated(false);
         }
         assignCrownForKing();
+
     }
 }

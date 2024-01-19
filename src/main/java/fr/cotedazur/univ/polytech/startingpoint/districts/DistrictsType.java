@@ -1,6 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.districts;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+
+import java.awt.*;
+import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -12,50 +17,59 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
  * Version 0.1 du jeu citadelle.
  */
 public enum DistrictsType {
-    MANOIR("Manoir", 3, "\u001B[33m", 3, "noble"),
-    CHATEAU("Château", 4, "\u001B[33m", 4, "noble"),
-    PALAIS("Palais", 5, "\u001B[33m", 5, "noble"),
+
+
+
+    MANOIR("Manoir", 3, Colors.YELLOW, 3, "noble"),
+    CHATEAU("Château", 4, Colors.YELLOW, 4, "noble"),
+    PALAIS("Palais", 5, Colors.YELLOW, 5, "noble"),
 
     // RELIGION
-    TEMPLE("Temple", 1, "\u001B[34m", 1, "religieux"),
-    EGLISE("Église", 2, "\u001B[34m", 2, "religieux"),
-    MONASTERE("Monastère", 3, "\u001B[34m", 3, "religieux"),
-    CATHEDRALE("Cathédrale", 5, "\u001B[34m", 5, "religieux"),
+    TEMPLE("Temple", 1, Colors.BLUE, 1, "religieux"),
+    EGLISE("Église", 2, Colors.BLUE, 2,"religieux"),
+    MONASTERE("Monastère", 3,Colors.BLUE, 3,"religieux"),
+    CATHEDRALE("Cathédrale", 5,Colors.BLUE, 5,"religieux"),
     // TRADE DISTRICTS
-    TAVERNE("Taverne", 1, "\u001B[32m", 1, "marchand"),
-    ECHOPPE("Échoppe", 2, "\u001B[32m", 2, "marchand"),
-    MARCHE("Marché", 2, "\u001B[32m", 2, "marchand"),
-    COMPTOIR("Comptoir", 3, "\u001B[32m", 3, "marchand"),
-    PORT("Port", 4, "\u001B[32m", 4, "marchand"),
-    HOTEL_DE_VILLE("Hôtel de ville", 5, "\u001B[32m", 5, "marchand"),
+    TAVERNE("Taverne", 1, Colors.GREEN, 1, "marchand"),
+    ECHOPPE("Échoppe", 2,Colors.GREEN, 2, "marchand"),
+    MARCHE("Marché", 2, Colors.GREEN, 2, "marchand"),
+    COMPTOIR("Comptoir", 3, Colors.GREEN, 3, "marchand"),
+    PORT("Port", 4, Colors.GREEN, 4, "marchand"),
+    HOTEL_DE_VILLE("Hôtel de ville", 5, Colors.GREEN, 5, "marchand"),
 
 
     // GUERRE
-    TOUR_DE_GUET("Tour de guet", 1, "\u001B[31m", 1, "militaire"),
-    PRISON("Prison", 2, "\u001B[31m", 2, "militaire"),
-    CASERNE("Caserne", 3, "\u001B[31m", 3, "militaire"),
-    FORTRESSE("Forteresse", 5, "\u001B[31m", 5, "militaire"),
+    TOUR_DE_GUET("Tour de guet", 1,Colors.RED, 1, "militaire"),
+    PRISON("Prison", 2, Colors.RED, 2, "militaire"),
+    CASERNE("Caserne", 3, Colors.RED, 3, "militaire"),
+    FORTRESSE("Forteresse", 5, Colors.RED, 5, "militaire"),
 
 
     // SPECIAL
-    COURT_DES_MIRACLES("Cour des miracles", 2, "\u001B[35m", 2, "default"),
-    DONJON("Donjon", 3, "\u001B[35m", 3, "default"),
-    BIBLIOTHEQUE("Bibliothèque", 6, "\u001B[35m", 6, "default"),
-    ECOLE_DE_MAGIE("École de magie", 6, "\u001B[35m", 6, "ecole"),
-    LABORATOIRE("Laboratoire", 5, "\u001B[35m", 5, "default"),
-    MANUFACTURE("Manufacture", 5, "\u001B[35m", 5, "default"),
-    OBSERVATOIRE("Observatoire", 5, "\u001B[35m", 5, "default"),
-    CIMETIERE("Cimetière", 5, "\u001B[35m", 5, "default"),
-    UNIVERSITE("Université", 6, "\u001B[35m", 8, "default"),
-    DRACOPORT("Dracoport", 6, "\u001B[35m", 8, "default");
+    COURT_DES_MIRACLES("Cour des miracles", 2, Colors.PURPLE, 2, "default"),
+    DONJON("Donjon", 3, Colors.PURPLE, 3, "default"),
+    BIBLIOTHEQUE("Bibliothèque", 6, Colors.PURPLE, 6, "default"),
+    ECOLE_DE_MAGIE("École de magie", 6, Colors.PURPLE, 6, "ecole"),
+    LABORATOIRE("Laboratoire", 5, Colors.PURPLE, 5, "default"),
+    MANUFACTURE("Manufacture", 5, Colors.PURPLE, 5, "default"),
+    OBSERVATOIRE("Observatoire", 5, Colors.PURPLE, 5, "default"),
+    CIMETIERE("Cimetière", 5, Colors.PURPLE, 5, "default"),
+    UNIVERSITE("Université", 6, Colors.PURPLE, 8, "default"),
+    DRACOPORT("Dracoport", 6, Colors.PURPLE, 8, "default")   ;
 
 
-    int cost;
-    String name;
-    String color;
+
+
+
+
+    int cost ;
+    String name ;
+    Colors color ;
+
     String colorReset = "\u001B[0m";
     int score;
     String type;
+
 
     /**
      * Il s'agit du constructeur de l'enum DistrictsType
@@ -66,10 +80,12 @@ public enum DistrictsType {
      * @param score score du quartier
      * @param type  type du quartier
      */
-    DistrictsType(String name, int cost, String color, int score, String type) {
-        this.cost = cost;
-        this.name = name;
-        this.color = color;
+
+    DistrictsType(String name , int cost , Colors color , int score, String type ){
+        this.cost = cost ;
+        this.name = name ;
+        this.color = color ;
+
         this.score = score;
         this.type = type;
     }
@@ -91,7 +107,7 @@ public enum DistrictsType {
     /**
      * @return la couleur du quartier
      */
-    public String getColor() {
+    public Colors getColor() {
         return color;
     }
 
@@ -101,6 +117,8 @@ public enum DistrictsType {
     public int getScore() {
         return score;
     }
+
+
 
     /**
      * @return la couleur de reset
@@ -137,4 +155,13 @@ public enum DistrictsType {
     public String getType() {
         return type;
     }
+
+
+
+    public void setColor(Colors color) {
+        this.color = color;
+    }
+
+
+
 }

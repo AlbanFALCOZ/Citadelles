@@ -28,9 +28,22 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfBotWhoHasBuilt() {
-        String cardDrawn = getStringOfListOfDistrict(listDistrictDrawn);
+
+        String cardDrawn = "";
+        String cardPicked = "";
+        for (int i = 0; i < listDistrictDrawn.size(); i++) {
+            DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
+            cardDrawn += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
+            if (i < listDistrictDrawn.size()-1) cardDrawn += ",";
+        }
         System.out.println(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
-        String cardPicked = getStringOfListOfDistrict(listDistrictPicked);
+        for (int i = 0; i < listDistrictPicked.size(); i++) {
+            DistrictsType districtInListDistrict = listDistrictPicked.get(i);
+            cardPicked += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
+            if (i < listDistrictPicked.size()-1) cardPicked += ",";
+            //bot.addDistrict(districtInListDistrict);
+        }
+
         System.out.println(bot.getName() + " choose to pick : {" + cardPicked + "}");
         System.out.println(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
     }
@@ -39,7 +52,7 @@ public class ActionOfBotDuringARound {
         String stringOfDistricts = "";
         for (int i = 0; i < listOfDistrict.size(); i++) {
             DistrictsType districtInListDistrict = listOfDistrict.get(i);
-            stringOfDistricts += districtInListDistrict.getColor() + districtInListDistrict + districtInListDistrict.getColorReset();
+            stringOfDistricts += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listOfDistrict.size() - 1) stringOfDistricts += ",";
             //bot.addDistrict(districtInListDistrict);
         }

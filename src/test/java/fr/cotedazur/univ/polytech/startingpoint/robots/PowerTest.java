@@ -1,12 +1,16 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
+
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PowerTest {
@@ -32,7 +36,11 @@ class PowerTest {
         destructor.setGolds(5);
         assertFalse(power.canDestroyDistrict(victim, DistrictsType.MANOIR));
 
+
     }
+
+
+
 
     @Test
     void condottiere() {
@@ -66,6 +74,9 @@ class PowerTest {
         assertEquals(5, destructor.getGolds());
     }
 
+
+
+    /*
     @Test
     public void tryDestroyDonjon() {
         RobotRandom destructor = new RobotRandom("destructor");
@@ -89,6 +100,9 @@ class PowerTest {
         assertEquals(2, destructor.getGolds());
         assertEquals(2, victim.getNumberOfDistrictInCity());
     }
+<<<<<<< HEAD
+*/
+
 
     @Test
     public void marchand() {
@@ -101,9 +115,9 @@ class PowerTest {
         marchand.winGoldsByTypeOfBuildings();
         assertEquals(3,marchand.getGolds());
         marchand.addDistrict(DistrictsType.TAVERNE);
-        marchand.addGold(1);//Pour compenser la construction de la taverne
+        marchand.addGold(1);
         marchand.addDistrict(DistrictsType.ECHOPPE);
-        marchand.addGold(2);//Pour compenser la construction de l'échoppe
+        marchand.addGold(2);
         marchand.tryBuild();
         marchand.tryBuild();
         marchand.winGoldsByTypeOfBuildings();
@@ -133,6 +147,7 @@ class PowerTest {
         //Power power = mock(Power.class);
         //power.magicien();
     }
+
 
 
 

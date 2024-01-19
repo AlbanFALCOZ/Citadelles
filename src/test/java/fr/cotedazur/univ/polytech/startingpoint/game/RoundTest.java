@@ -14,19 +14,47 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RoundTest {
 
+    @Test
+    void testGetBots() {
+
+        RobotRandom robot1 = new RobotRandom("Robot1");
+        RobotRandom robot2 = new RobotRandom("Robot2");
+        RobotRandom robot3 = new RobotRandom("Robot3");
+        List<Robot> initialBots = List.of(robot1, robot2, robot3);
+        Round round = new Round(initialBots);
+
+        List<Robot> retrievedBots = round.getBots();
+
+
+        assertEquals(initialBots, retrievedBots);
+    }
+
+
+
+    @Test
     void testSortRobots() {
-        GameEngine gameEngine = new GameEngine();
-        Round round = new Round(gameEngine.getBots());
-        gameEngine.initializeBots();
-        gameEngine.robotsPickCharacters();
-        List<Robot> originalOrder = new ArrayList<>(gameEngine.getBots());
-        List<Robot> sortedRobots = round.sortRobots();
-        assertEquals(originalOrder, gameEngine.getBots());
-        for (int i = 1; i < sortedRobots.size(); i++) {
-            assertTrue(sortedRobots.get(i - 1).getCharacter().getNumber() <= sortedRobots.get(i).getCharacter().getNumber());
-        }
+        // Arrange
+        RobotRandom nobleRobot1 = new RobotRandom("Franz Kafka");
+        nobleRobot1.setCharacter(CharactersType.ROI);
+        nobleRobot1.setHasCrown(true);
+
+        RobotRandom nobleRobot2 = new RobotRandom("Leo Tolstoy");
+        nobleRobot2.setCharacter(CharactersType.ROI);
+        nobleRobot2.setHasCrown(false);
+
+        RobotRandom openRobot = new RobotRandom("Simone De Beauvoir");
+        openRobot.setCharacter(CharactersType.ASSASSIN);
+
+        Round round = new Round(List.of(nobleRobot1, nobleRobot2, openRobot));
+
+        round.sortRobots();
+
+        assertEquals(nobleRobot1, round.getBots().get(0));
+        assertEquals(nobleRobot2, round.getBots().get(1));
+        assertEquals(openRobot, round.getBots().get(2));
 
     }
+
 
 
     @Test
@@ -54,6 +82,19 @@ class RoundTest {
         //assertEquals(7, thief.getGolds(), "Le voleur devrait avoir 7 pièces d'or après le vol");
         //assertEquals(0, target.getGolds(), "La cible devrait avoir 0 pièce d'or après le vol");
     }
+
+    @Test
+    void testAssignCrownForKing_OneNobleCharacter() {
+
+        RobotRandom nobleRobot = new RobotRandom("Franz Kafka");
+        nobleRobot.setCharacter(CharactersType.ROI);
+        nobleRobot.setHasCrown(false);
+        Round round = new Round(List.of(nobleRobot));
+        round.assignCrownForKing();
+        assertTrue(nobleRobot.getHasCrown());
+    }
+
+
 
 
 }

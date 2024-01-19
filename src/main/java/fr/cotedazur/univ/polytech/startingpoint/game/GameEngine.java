@@ -18,6 +18,9 @@ public class GameEngine {
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
     private Round round;
+
+    private  int list[] = {4, 2, 2, 2};
+
     private boolean systemPrint = false;
 
     //private Power power = new Power("a power") ;
@@ -88,7 +91,7 @@ public class GameEngine {
             if (bot.getHasCrown()) {
                 bot.setCharacter(listCharacters.get(0));
                 if (systemPrint)
-                    System.out.println(bot.getName() + " With crown Picked " + listCharacters.get(0).getColor() + listCharacters.get(0).getRole() + bot.getRESET());
+                    System.out.println(bot.getName() + " With crown Picked " + listCharacters.get(0).getColor().getColorDisplay() + listCharacters.get(0).getRole() + bot.getRESET());
                 listCharacters.remove(listCharacters.get(0));
             }
         }
@@ -96,7 +99,7 @@ public class GameEngine {
             if (!bot.getHasCrown()) {
                 bot.setCharacter(listCharacters.get(i));
                 if (systemPrint)
-                    System.out.println(bot.getName() + " Picked " + listCharacters.get(i).getColor() + listCharacters.get(i).getRole() + bot.getRESET());
+                    System.out.println(bot.getName() + " Picked " + listCharacters.get(i).getColor().getColorDisplay() + listCharacters.get(i).getRole() + bot.getRESET());
                 i++;
             }
         }
@@ -147,6 +150,8 @@ public class GameEngine {
         assignCrown();
 
         while (!isBuiltEigthDistrict()) {
+
+
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
                     if (systemPrint)
@@ -161,10 +166,28 @@ public class GameEngine {
             if (systemPrint) System.out.println(turnStarting + comptTurn + " is over" + turnEnding);
             comptTurn++;
             round = new Round(bots, systemPrint, deckDistricts);
+
         }
+
+        {
+        int i = 0;
+        for (Robot bot : bots) {
+            if (bot.hasEightDistrict()) {
+                bot.setScore(bot.getScore() + list[i]);
+                if(i!=0){
+                    System.out.println(bot.getName() + " gets 2 extra points for having 8 districts");
+                } else {
+                    System.out.println(bot.getName() + " ended the game and earns 4 extra points");
+                }
+                i++;
+                }
+            }
+        }
+        Winner winner = new Winner(bots);
+        winner.miracleDistrictEffect();
+
+
     }
-
-
     /**
      * cette méthode permet de vider la liste des robots
      */
@@ -192,11 +215,16 @@ public class GameEngine {
         for (int i = 0; i < 3; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
-                if (systemPrint)
-                    System.out.println("Destroyed character: " + destroyedCharacter.getColor() + destroyedCharacter.getRole() + bots.get(0).getRESET());
+
+                if (systemPrint) System.out.println("Destroyed character: " + destroyedCharacter.getColor().getColorDisplay() + destroyedCharacter.getRole() + bots.get(0).getRESET());
+
             }
         }
         charactersInHand.add(CharactersType.ROI);
     }
+
+
+
+
 
 }

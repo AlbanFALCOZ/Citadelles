@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.characters;
 
+import java.awt.*;
+
 /**
  * Cet enum englobe toutes les cartes personnages dont on aura besoin
  * le long de la partie
@@ -8,20 +10,26 @@ package fr.cotedazur.univ.polytech.startingpoint.characters;
  * Version 0.1 du jeu Citadelle.
  */
 public enum CharactersType {
-    ASSASSIN(1, "Assassin", "\u001B[37;1m", "assassin"),
-    VOLEUR(2, "Voleur", "\u001B[37;1m", "voleur"),
-    MAGICIEN(3, "Magicien", "\u001B[37;1m", "magicien"),
-    ROI(4, "Roi", "\u001B[33m", "noble"),
-    EVEQUE(5, "Évêque", "\u001B[34m", "religieux"),
-    MARCHAND(6, "Marchand", "\u001B[32m", "marchand"),
-    ARCHITECTE(7, "Architecte", "\u001B[37;1m", "architecte"),
-    CONDOTTIERE(8, "Condottière", "\u001B[31m", "militaire");
 
-    int number;
+    ASSASSIN(1, "Assassin", Colors.GRAY, "assassin"),
+    VOLEUR(2, "Voleur", Colors.GRAY, "voleur"),
+    MAGICIEN(3, "Magicien", Colors.GRAY, "magicien"),
+    ROI(4, "Roi", Colors.YELLOW, "noble"),
+    EVEQUE(5, "Évêque", Colors.BLUE, "religieux"),
+    MARCHAND(6, "Marchand", Colors.GREEN, "marchand"),
+    ARCHITECTE(7, "Architecte", Colors.GRAY, "architecte"),
+    CONDOTTIERE(8, "Condottière", Colors.RED, "militaire");
+
+
+
+
+    int number ;
+
+    Colors color;
     String role;
 
     String type;
-    String color;
+
 
     /**
      * @param number numéro du personnage
@@ -29,8 +37,9 @@ public enum CharactersType {
      * @param color  couleur du personnage
      * @param type   type du personnage
      */
-    CharactersType(int number, String role, String color, String type) {
-        this.number = number;
+
+    CharactersType(int number , String role, Colors color, String type){
+        this.number = number ;
         this.role = role;
         this.color = color;
         this.type = type;
@@ -60,7 +69,7 @@ public enum CharactersType {
     /**
      * @return la couleur du personnage
      */
-    public String getColor() {
+    public Colors getColor() {
         return color;
     }
 

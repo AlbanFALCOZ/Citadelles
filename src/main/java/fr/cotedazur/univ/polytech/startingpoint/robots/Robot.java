@@ -84,9 +84,12 @@ public interface Robot {
 
     void emptyListOfCardsInHand();
 
+
     boolean getIsAssassinated();
 
     void setIsAssassinated(boolean IsAssassinated);
+
+    boolean hasEightDistrict();
 
 
     //Power getPower();

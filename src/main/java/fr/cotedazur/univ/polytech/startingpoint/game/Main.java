@@ -9,14 +9,15 @@ public class Main {
 
     public static void main(String[] args) {
         //testBots();
-        showGame();
+       showGame();
     }
+
 
     public static void showGame() {
         GameEngine Game = new GameEngine();
         Game.gameTurns();
         Winner winner = new Winner(Game.getBots());
-        System.out.println(winner.calculateScores());
+        System.out.println(winner.printScore());
         System.out.println(winner.showWinners());
     }
 
