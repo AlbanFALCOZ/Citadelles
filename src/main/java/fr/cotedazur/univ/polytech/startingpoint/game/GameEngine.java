@@ -43,7 +43,7 @@ public class GameEngine {
         round = new Round(bots);
         initializeBots();
         System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
-        //if (!systemPrint) logger.setLevel(Level.OFF);
+        if (!systemPrint) logger.setLevel(Level.OFF);
     }
 
     public GameEngine() {
@@ -188,7 +188,7 @@ public class GameEngine {
             }
         }
         Winner winner = new Winner(bots);
-        winner.miracleDistrictEffect();
+        //winner.miracleDistrictEffect();
 
 
     }

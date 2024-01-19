@@ -66,7 +66,7 @@ public enum DistrictsType {
     String name ;
     Colors color ;
 
-    String colorReset = "\u001B[0m";
+    String colorReset = "\u001B[37m";
     int score;
     String type;
 

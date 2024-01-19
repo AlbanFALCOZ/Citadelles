@@ -89,7 +89,7 @@ public class Round {
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(this.bots);
 
-        ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
+        ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
             case ASSASSIN:
@@ -157,7 +157,7 @@ public class Round {
         numberOfCharacterToStealFrom = 0;
         for (Robot bot : bots) {
             if (!bot.getIsAssassinated()) {
-                ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
+                ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
                 actionOfBotDuringARound.startTurnOfBot();
                 if (bot.getCharacter().getNumber() == numberOfCharacterToStealFrom) {
                     this.victimOfVoleur = bot;
@@ -175,7 +175,7 @@ public class Round {
                         break;
                     case 1:
                         bot.addGold(2);
-                        actionOfBotDuringARound = new ActionOfBotDuringARound(bot);
+                        actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
                         actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
                         break;
 

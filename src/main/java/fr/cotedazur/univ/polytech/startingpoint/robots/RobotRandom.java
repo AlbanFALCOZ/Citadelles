@@ -19,7 +19,7 @@ import java.util.List;
 
 public class RobotRandom implements Robot {
 
-    public static final String RESET = "\u001B[0m";
+    public static final String RESET = "\u001B[37m";
     private final String name;
     public int choice;
     private int score;
@@ -179,7 +179,7 @@ public class RobotRandom implements Robot {
             colorCharacter = character.getColor().getColorDisplay();
             endColor = Colors.RESET.getColorDisplay();
         }
-        String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + endColor + "), " + this.golds + " golds, hand {";
+        String status = "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + RESET + "), " + this.golds + " golds, hand {";
         status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
         return status;
     }

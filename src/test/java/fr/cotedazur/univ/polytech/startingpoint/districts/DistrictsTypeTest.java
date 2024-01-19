@@ -39,8 +39,8 @@ class DistrictsTypeTest {
 
     @Test
     void getColorReset() {
-        assertEquals("\u001B[0m", DistrictsType.MANOIR.getColorReset());
-        assertEquals("\u001B[0m", DistrictsType.CHATEAU.getColorReset());
+        assertEquals("\u001B[37m", DistrictsType.MANOIR.getColorReset());
+        assertEquals("\u001B[37m", DistrictsType.CHATEAU.getColorReset());
 
     }
 

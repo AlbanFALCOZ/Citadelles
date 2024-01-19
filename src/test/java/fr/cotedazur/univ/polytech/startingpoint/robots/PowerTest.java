@@ -19,7 +19,7 @@ class PowerTest {
     void canDestroyDistrict() {
         RobotRandom destructor = new RobotRandom("destructor");
         RobotRandom victim = new RobotRandom("victim");
-        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor,true));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MAGICIEN);
         victim.addDistrict(DistrictsType.TAVERNE);
@@ -46,7 +46,7 @@ class PowerTest {
     void condottiere() {
         RobotRandom destructor = new RobotRandom("destructor");
         RobotRandom victim = new RobotRandom("victim");
-        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor,true));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MARCHAND);
         victim.setGolds(30);
@@ -107,7 +107,7 @@ class PowerTest {
     @Test
     public void marchand() {
         RobotRandom marchand = new RobotRandom("marchand");
-        Power power = new Power(marchand,new ActionOfBotDuringARound(marchand));
+        Power power = new Power(marchand,new ActionOfBotDuringARound(marchand,true));
         marchand.setCharacter(CharactersType.MARCHAND);
         assertEquals(2,marchand.getGolds());
         power.marchand();
@@ -128,7 +128,7 @@ class PowerTest {
     void testAssassin() {
         RobotRandom assassin = new RobotRandom("Assassin");
         RobotRandom victim = new RobotRandom("Victim");
-        Power power = new Power(assassin,new ActionOfBotDuringARound(assassin));
+        Power power = new Power(assassin,new ActionOfBotDuringARound(assassin,true));
         assassin.setCharacter(CharactersType.ASSASSIN);
         victim.setCharacter(CharactersType.MARCHAND);
         assertFalse(victim.getIsAssassinated());

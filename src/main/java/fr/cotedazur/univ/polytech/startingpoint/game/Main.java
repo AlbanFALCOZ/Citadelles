@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         //testBots();
-       showGame();
+        showGame();
     }
 
 
@@ -25,7 +25,8 @@ public class Main {
         long start = System.currentTimeMillis();
         int[] listWinners = new int[4];
         int numberOfGames = 10000;
-        for (int i = 0; i < numberOfGames; i++) {
+        int i;
+        for (i = 0; i < numberOfGames; i++) {
 
             GameEngine Game = new GameEngine(false);
             Game.gameTurns();
@@ -47,12 +48,13 @@ public class Main {
             //System.out.println(winner.calculateScores());
             //System.out.println(winner.showWinners());
         }
-
-        for (int i = 0; i < listWinners.length; i++) {
+        System.out.println("Nombre de parties : " + i);
+        for (i = 0; i < listWinners.length; i++) {
             System.out.println("Winrate N°" + i + " : " + (float) listWinners[i] / numberOfGames * 100 + "%");
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
+
         System.out.println(timeElapsed / 1000 + "sec");
     }
 

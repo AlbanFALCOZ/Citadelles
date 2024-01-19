@@ -18,15 +18,23 @@ public class ActionOfBotDuringARound {
     private static final Logger logger = Logger.getLogger(ActionOfBotDuringARound.class.getName());
 
 
-    public ActionOfBotDuringARound(Robot bot) {
+    public ActionOfBotDuringARound(Robot bot, boolean systemPrint) {
         this.bot = bot;
         System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
-        //logger.setLevel(Level.OFF);
+        if (!systemPrint) logger.setLevel(Level.OFF);
     }
 
     public void startTurnOfBot() {
         logger.info("------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n");
+        showStatusOfBot();
+    }
+
+    public void showStatusOfBot() {
         logger.info(bot.statusOfPlayer());
+    }
+
+    public void showCityOfBot(Robot bot) {
+        logger.info("City of " + bot.getName() + " : " + getStringOfListOfDistrict(bot.getCity()));
     }
 
     public void addListOfDistrict(List<DistrictsType> listDistrictDrawn, List<DistrictsType> listDistrictPicked) {
