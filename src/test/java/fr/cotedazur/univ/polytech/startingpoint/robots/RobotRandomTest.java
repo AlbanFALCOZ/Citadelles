@@ -34,7 +34,7 @@ class RobotRandomTest {
 
     @Test
     void getRESET() {
-        assertEquals("\u001B[0m", robotRandom.getRESET());
+        assertEquals("\u001B[37m", robotRandom.getRESET());
     }
 
     @Test
@@ -163,14 +163,14 @@ class RobotRandomTest {
         robotRandom.setCharacter(CharactersType.ASSASSIN);
         robotRandom.addGold(6);
         System.out.println(robotRandom.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]", robotRandom.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), 8 golds, hand {}, city {}]", robotRandom.statusOfPlayer(false));
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
         robotRandom.addDistrict(district);
         System.out.println(robotRandom.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]", robotRandom.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), 8 golds, hand {(Bibliothèque,6)}, city {}]", robotRandom.statusOfPlayer(false));
         robotRandom.tryBuild();
         System.out.println(robotRandom.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]", robotRandom.statusOfPlayer(false));
+        assertEquals("[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), 2 golds, hand {}, city {(Bibliothèque,6)}]", robotRandom.statusOfPlayer(false));
     }
 
     @Test
