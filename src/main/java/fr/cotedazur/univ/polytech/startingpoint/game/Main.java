@@ -1,10 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 
+import java.util.logging.Logger;
+
 /**
  * cette classe permet de jouer une partie de Citadelle et de déterminer le gagnant
  */
 public class Main {
+    
+    public static final Logger logger = Logger.getLogger(Main.class.getName());
 
 
     public static void main(String[] args) {
@@ -16,9 +20,11 @@ public class Main {
     public static void showGame() {
         GameEngine Game = new GameEngine();
         Game.gameTurns();
+        logger.info("\n");
+        logger.info("End of the game !!!");
         Winner winner = new Winner(Game.getBots());
-        System.out.println(winner.printScore());
-        System.out.println(winner.showWinners());
+        winner.printScore();
+        logger.info(winner.showWinners());
     }
 
     public static void testBots() {
@@ -45,17 +51,17 @@ public class Main {
                     listWinners[3]++;
                 }
             }
-            //System.out.println(winner.calculateScores());
-            //System.out.println(winner.showWinners());
+            //logger.info(winner.calculateScores());
+            //logger.info(winner.showWinners());
         }
-        System.out.println("Nombre de parties : " + i);
+        logger.info("Nombre de parties : " + i);
         for (i = 0; i < listWinners.length; i++) {
-            System.out.println("Winrate N°" + i + " : " + (float) listWinners[i] / numberOfGames * 100 + "%");
+            logger.info("Winrate N°" + i + " : " + (float) listWinners[i] / numberOfGames * 100 + "%");
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
 
-        System.out.println(timeElapsed / 1000 + "sec");
+        logger.info(timeElapsed / 1000 + "sec");
     }
 
 

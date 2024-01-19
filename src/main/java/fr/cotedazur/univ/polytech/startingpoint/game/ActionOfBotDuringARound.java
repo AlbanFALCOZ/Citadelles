@@ -89,7 +89,7 @@ public class ActionOfBotDuringARound {
         if (goldsWon > 0)
             logger.info(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
         logger.info(bot.statusOfPlayer());
-        logger.info("\n-------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
+        logger.info("\n  ------------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
     }
 
 
