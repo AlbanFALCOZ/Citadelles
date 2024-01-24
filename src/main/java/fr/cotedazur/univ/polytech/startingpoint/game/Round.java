@@ -87,7 +87,7 @@ public class Round {
     }
 
     public void choosePowerOfBot(Robot bot) {
-        List<Robot> robots = new ArrayList<>(this.bots);
+        List<Robot> robots = new ArrayList<>(bots);
 
         ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);

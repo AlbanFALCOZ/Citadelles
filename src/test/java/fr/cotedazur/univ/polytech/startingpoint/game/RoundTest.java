@@ -5,7 +5,6 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,9 +16,9 @@ class RoundTest {
     @Test
     void testGetBots() {
 
-        RobotRandom robot1 = new RobotRandom("Robot1");
-        RobotRandom robot2 = new RobotRandom("Robot2");
-        RobotRandom robot3 = new RobotRandom("Robot3");
+        Robot robot1 = new RobotRandom("Robot1");
+        Robot robot2 = new RobotRandom("Robot2");
+        Robot robot3 = new RobotRandom("Robot3");
         List<Robot> initialBots = List.of(robot1, robot2, robot3);
         Round round = new Round(initialBots);
 
@@ -34,15 +33,15 @@ class RoundTest {
     @Test
     void testSortRobots() {
         // Arrange
-        RobotRandom nobleRobot1 = new RobotRandom("Franz Kafka");
+        Robot nobleRobot1 = new RobotRandom("Franz Kafka");
         nobleRobot1.setCharacter(CharactersType.ROI);
         nobleRobot1.setHasCrown(true);
 
-        RobotRandom nobleRobot2 = new RobotRandom("Leo Tolstoy");
+        Robot nobleRobot2 = new RobotRandom("Leo Tolstoy");
         nobleRobot2.setCharacter(CharactersType.ROI);
         nobleRobot2.setHasCrown(false);
 
-        RobotRandom openRobot = new RobotRandom("Simone De Beauvoir");
+        Robot openRobot = new RobotRandom("Simone De Beauvoir");
         openRobot.setCharacter(CharactersType.ASSASSIN);
 
         Round round = new Round(List.of(nobleRobot1, nobleRobot2, openRobot));
@@ -86,7 +85,7 @@ class RoundTest {
     @Test
     void testAssignCrownForKing_OneNobleCharacter() {
 
-        RobotRandom nobleRobot = new RobotRandom("Franz Kafka");
+        Robot nobleRobot = new RobotRandom("Franz Kafka");
         nobleRobot.setCharacter(CharactersType.ROI);
         nobleRobot.setHasCrown(false);
         Round round = new Round(List.of(nobleRobot));

@@ -13,23 +13,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RobotRandomTest {
-    private RobotRandom robotRandom;
+    private RobotRandom RobotNora;
     private DeckDistrict deck;
 
     @BeforeEach
     void setUp() {
-        robotRandom = new RobotRandom("testRobot");
+        RobotNora = new RobotRandom("testRobot");
         deck = new DeckDistrict();
     }
 
     @Test
     void getDistrictInHand() {
-        assertTrue(robotRandom.getDistrictInHand().isEmpty());
+        assertTrue(RobotNora.getDistrictInHand().isEmpty());
     }
 
     @Test
     void getScore() {
-        assertEquals(0, robotRandom.getScore());
+        assertEquals(0, RobotNora.getScore());
     }
 
     @Test
@@ -39,75 +39,75 @@ class RobotRandomTest {
 
     @Test
     void getName() {
-        assertEquals("testRobot", robotRandom.getName());
+        assertEquals("testRobot", RobotNora.getName());
     }
 
 
     @Test
     void getNumberOfCardsDrawn() {
-        assertEquals(2, robotRandom.getNumberOfCardsDrawn());
+        assertEquals(2, RobotNora.getNumberOfCardsDrawn());
     }
 
     @Test
     void setNumberOfCardsDrawn() {
-        robotRandom.setNumberOfCardsDrawn(3);
-        assertEquals(3, robotRandom.getNumberOfCardsDrawn());
+        RobotNora.setNumberOfCardsDrawn(3);
+        assertEquals(3, RobotNora.getNumberOfCardsDrawn());
     }
 
     @Test
     void getNumberOfCardsChosen() {
-        assertEquals(1, robotRandom.getNumberOfCardsChosen());
+        assertEquals(1, RobotNora.getNumberOfCardsChosen());
     }
 
     @Test
     void setNumberOfCardsChosen() {
-        robotRandom.setNumberOfCardsChosen(2);
-        assertEquals(2, robotRandom.getNumberOfCardsChosen());
+        RobotNora.setNumberOfCardsChosen(2);
+        assertEquals(2, RobotNora.getNumberOfCardsChosen());
     }
 
     @Test
     void setScore() {
-        robotRandom.setScore(10);
-        assertEquals(10, robotRandom.getScore());
+        RobotNora.setScore(10);
+        assertEquals(10, RobotNora.getScore());
     }
 
     @Test
     void addGold() {
-        robotRandom.addGold(3);
-        assertEquals(5, robotRandom.getGolds());
+        RobotNora.addGold(3);
+        assertEquals(5, RobotNora.getGolds());
     }
 
     @Test
     void setCharacter() {
-        robotRandom.setCharacter(CharactersType.ROI);
-        assertEquals(CharactersType.ROI, robotRandom.getCharacter());
+        RobotNora.setCharacter(CharactersType.ROI);
+        assertEquals(CharactersType.ROI, RobotNora.getCharacter());
     }
 
     @Test
     void getCharacter() {
-        robotRandom.setCharacter(CharactersType.ROI);
-        assertEquals(CharactersType.ROI, robotRandom.getCharacter());
+        RobotNora.setCharacter(CharactersType.ROI);
+        assertEquals(CharactersType.ROI, RobotNora.getCharacter());
     }
 
     @Test
     void addDistrict() {
-        robotRandom.addDistrict(DistrictsType.CHATEAU);
-        assertEquals(1, robotRandom.getNumberOfDistrictInHand());
+        RobotNora.addDistrict(DistrictsType.CHATEAU);
+        assertEquals(1, RobotNora.getNumberOfDistrictInHand());
     }
 
     @Test
     void getNumberOfDistrictInHand() {
-        robotRandom.addDistrict(DistrictsType.CHATEAU);
-        robotRandom.addDistrict(DistrictsType.BIBLIOTHEQUE);
-        assertEquals(2, robotRandom.getNumberOfDistrictInHand());
+        RobotNora.addDistrict(DistrictsType.CHATEAU);
+        RobotNora.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        assertEquals(2, RobotNora.getNumberOfDistrictInHand());
     }
 
     @Test
     void getNumberOfDistrictInCity() {
-        robotRandom.addDistrict(DistrictsType.MANOIR);
-        robotRandom.addGold(4);
-        robotRandom.tryBuild();
-        assertEquals(1, robotRandom.getNumberOfDistrictInCity());
+        RobotNora.addDistrict(DistrictsType.MANOIR);
+        RobotNora.addGold(4);
+        RobotNora.tryBuild();
+        assertEquals(1, RobotNora.getNumberOfDistrictInCity());
     }
 
     @Test
@@ -115,50 +115,51 @@ class RobotRandomTest {
         List<DistrictsType> listDistrict = new ArrayList<>();
         listDistrict.add(DistrictsType.CHATEAU);
         listDistrict.add(DistrictsType.MANOIR);
-        List<DistrictsType> pickedDistricts = robotRandom.pickDistrictCard(listDistrict, deck);
+        List<DistrictsType> pickedDistricts = RobotNora.pickDistrictCard(listDistrict, deck);
         assertEquals(1, pickedDistricts.size());
         assertTrue(pickedDistricts.contains(DistrictsType.CHATEAU) || pickedDistricts.contains(DistrictsType.MANOIR));
     }
 
     @Test
     void pickListOfDistrict() {
-        List<DistrictsType> pickedDistricts = robotRandom.pickListOfDistrict(deck);
+        List<DistrictsType> pickedDistricts = RobotNora.pickListOfDistrict(deck);
         assertEquals(2, pickedDistricts.size());
     }
 
     @Test
     void getHasCrown() {
-        robotRandom.setHasCrown(true);
-        assertTrue(robotRandom.getHasCrown());
+        RobotNora.setHasCrown(true);
+        assertTrue(RobotNora.getHasCrown());
     }
 
     @Test
     void countBuildingsByType() {
-        robotRandom.setCharacter(CharactersType.MARCHAND);
-        robotRandom.getCity().add(DistrictsType.MANOIR); // marchand
-        robotRandom.getCity().add(DistrictsType.TAVERNE); // marchand
-        robotRandom.getCity().add(DistrictsType.CASERNE); // militaire
-        assertEquals(1, robotRandom.countBuildingsByType());
+        RobotNora.setCharacter(CharactersType.MARCHAND);
+        RobotNora.getCity().add(DistrictsType.MANOIR); // marchand
+        RobotNora.getCity().add(DistrictsType.TAVERNE); // marchand
+        RobotNora.getCity().add(DistrictsType.CASERNE); // militaire
+        assertEquals(1, RobotNora.countBuildingsByType());
     }
 
     @Test
     void winGoldsByTypeOfBuildings() {
-        robotRandom.setCharacter(CharactersType.MARCHAND);
-        robotRandom.getCity().add(DistrictsType.MARCHE); // marchand
-        robotRandom.getCity().add(DistrictsType.TAVERNE); // marchand
-        robotRandom.getCity().add(DistrictsType.CASERNE); // militaire
-        robotRandom.winGoldsByTypeOfBuildings();
-        assertEquals(4, robotRandom.getGolds());
+        RobotNora.setCharacter(CharactersType.MARCHAND);
+        RobotNora.getCity().add(DistrictsType.MARCHE); // marchand
+        RobotNora.getCity().add(DistrictsType.TAVERNE); // marchand
+        RobotNora.getCity().add(DistrictsType.CASERNE); // militaire
+        RobotNora.winGoldsByTypeOfBuildings();
+        assertEquals(4, RobotNora.getGolds());
     }
 
     @Test
     void getChoice() {
-        int choice = robotRandom.getChoice();
+        int choice = RobotNora.getChoice();
         assertTrue(choice == 0 || choice == 1);
     }
 
     @Test
     void showStatus() {
+
         RobotRandom robotRandom = new RobotRandom("Bot avec 8 golds");
         robotRandom.setCharacter(CharactersType.ASSASSIN);
         robotRandom.addGold(6);
@@ -175,17 +176,17 @@ class RobotRandomTest {
 
     @Test
     void testTryBuild() {
-        RobotRandom robotRandom = new RobotRandom("TestrobotRandom");
+        Robot RobotNora = new RobotRandom("TestRobotNora");
 
         // Assuming you have some districts in the deck for testing
         DistrictsType districtWithCost2 = DistrictsType.EGLISE;
         DistrictsType districtWithCost3 = DistrictsType.MANOIR;
         DistrictsType districtWithCost5 = DistrictsType.PALAIS;
-        robotRandom.addDistrict(districtWithCost2);
-        robotRandom.addDistrict(districtWithCost5);
-        robotRandom.addDistrict(districtWithCost3);
-        assertEquals(2, robotRandom.getGolds());
-        String builtDistrictName1 = robotRandom.tryBuild();
+        RobotNora.addDistrict(districtWithCost2);
+        RobotNora.addDistrict(districtWithCost5);
+        RobotNora.addDistrict(districtWithCost3);
+        assertEquals(2, RobotNora.getGolds());
+        String builtDistrictName1 = RobotNora.tryBuild();
         assertEquals("a new " + districtWithCost2.getName(), builtDistrictName1);
 
 
@@ -194,165 +195,165 @@ class RobotRandomTest {
 
     @Test
     void calculateScore() {
-        robotRandom.setCharacter(CharactersType.ASSASSIN);
+        RobotNora.setCharacter(CharactersType.ASSASSIN);
         DistrictsType districtWithCost2 = DistrictsType.EGLISE;
         DistrictsType districtWithCost3 = DistrictsType.MANOIR;
         DistrictsType districtWithCost5 = DistrictsType.PALAIS;
-        robotRandom.addDistrict(districtWithCost2);
-        robotRandom.addDistrict(districtWithCost5);
-        robotRandom.addDistrict(districtWithCost3);
-        robotRandom.tryBuild();
-        robotRandom.tryBuild();
-        robotRandom.tryBuild();
-        assertEquals(2, robotRandom.calculateScore());
-        robotRandom.setGolds(2);
-        robotRandom.tryBuild();
-        System.out.println(robotRandom.statusOfPlayer());
-        assertEquals(2, robotRandom.calculateScore());
+        RobotNora.addDistrict(districtWithCost2);
+        RobotNora.addDistrict(districtWithCost5);
+        RobotNora.addDistrict(districtWithCost3);
+        RobotNora.tryBuild();
+        RobotNora.tryBuild();
+        RobotNora.tryBuild();
+        assertEquals(2, RobotNora.calculateScore());
+        RobotNora.setGolds(2);
+        RobotNora.tryBuild();
+        System.out.println(RobotNora.statusOfPlayer());
+        assertEquals(2, RobotNora.calculateScore());
     }
 
 
     @Test
     void testGetGolds() {
-        robotRandom.setGolds(5);
-        assertEquals(5, robotRandom.getGolds());
+        RobotNora.setGolds(5);
+        assertEquals(5, RobotNora.getGolds());
     }
 
     @Test
     void testGetName() {
-        assertEquals("testRobot", robotRandom.getName());
+        assertEquals("testRobot", RobotNora.getName());
     }
 
     @Test
     void testGetCharacter() {
-        robotRandom.setCharacter(CharactersType.ASSASSIN);
-        assertEquals(CharactersType.ASSASSIN, robotRandom.getCharacter());
+        RobotNora.setCharacter(CharactersType.ASSASSIN);
+        assertEquals(CharactersType.ASSASSIN, RobotNora.getCharacter());
     }
 
     @Test
     void testGetCity() {
-        robotRandom.addDistrict(DistrictsType.TAVERNE);
-        robotRandom.tryBuild();
-        assertEquals(1, robotRandom.getCity().size());
+        RobotNora.addDistrict(DistrictsType.TAVERNE);
+        RobotNora.tryBuild();
+        assertEquals(1, RobotNora.getCity().size());
     }
 
     @Test
     void testSetHasCrown() {
-        robotRandom.setHasCrown(true);
-        assertTrue(robotRandom.getHasCrown());
+        RobotNora.setHasCrown(true);
+        assertTrue(RobotNora.getHasCrown());
     }
 
     @Test
     void testAddGold() {
-        robotRandom.addGold(5);
-        assertEquals(7, robotRandom.getGolds());
+        RobotNora.addGold(5);
+        assertEquals(7, RobotNora.getGolds());
     }
 
 
     @Test
     void testAddDistrict() {
-        robotRandom.addDistrict(DistrictsType.BIBLIOTHEQUE);
-        assertEquals(1, robotRandom.getNumberOfDistrictInHand());
+        RobotNora.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        assertEquals(1, RobotNora.getNumberOfDistrictInHand());
     }
 
     @Test
     void testSetGolds() {
-        robotRandom.setGolds(5);
-        assertEquals(5, robotRandom.getGolds());
+        RobotNora.setGolds(5);
+        assertEquals(5, RobotNora.getGolds());
     }
 
 
     @Test
     public void testCountBuildingsByType() {
-        RobotRandom robotRandom = new RobotRandom("TestrobotRandom");
-        robotRandom.setCharacter(CharactersType.MARCHAND);
+        Robot RobotNora = new RobotRandom("TestRobotNora");
+        RobotNora.setCharacter(CharactersType.MARCHAND);
 
-        robotRandom.getCity().add(DistrictsType.CHATEAU); // noble
-        robotRandom.getCity().add(DistrictsType.CHATEAU); // noble
-        robotRandom.getCity().add(DistrictsType.CASERNE); // militaire
-        robotRandom.getCity().add(DistrictsType.TAVERNE); // marchand
+        RobotNora.getCity().add(DistrictsType.CHATEAU); // noble
+        RobotNora.getCity().add(DistrictsType.CHATEAU); // noble
+        RobotNora.getCity().add(DistrictsType.CASERNE); // militaire
+        RobotNora.getCity().add(DistrictsType.TAVERNE); // marchand
 
         // ordre des compteurs : noble, religieux, marchand, militaire, default
-        assertEquals(1, robotRandom.countBuildingsByType());
+        assertEquals(1, RobotNora.countBuildingsByType());
     }
 
 
     @Test
     public void testCountBuildingsWithMagicSchool() {
-        RobotRandom robotRandom = new RobotRandom("TestrobotRandom");
+        Robot RobotNora = new RobotRandom("TestRobotNora");
 
-        robotRandom.setCharacter(CharactersType.ROI);
+        RobotNora.setCharacter(CharactersType.ROI);
 
-        robotRandom.getCity().add(DistrictsType.CHATEAU); // noble
-        robotRandom.getCity().add(DistrictsType.CASERNE); // militaire
-        robotRandom.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "noble" (pcq ROI)
+        RobotNora.getCity().add(DistrictsType.CHATEAU); // noble
+        RobotNora.getCity().add(DistrictsType.CASERNE); // militaire
+        RobotNora.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "noble" (pcq ROI)
 
         ;
 
         // ordre des compteurs : noble, religieux, marchand, militaire, default
-        assertEquals(2, robotRandom.countBuildingsByType());
+        assertEquals(2, RobotNora.countBuildingsByType());
     }
 
     @Test
     public void testWinGoldsByTypeOfBuildings() {
-        robotRandom.setCharacter(CharactersType.ROI);
+        RobotNora.setCharacter(CharactersType.ROI);
 
-        robotRandom.getCity().add(DistrictsType.CHATEAU); // noble
-        robotRandom.getCity().add(DistrictsType.CASERNE); // militaire
-        robotRandom.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "noble" (pcq ROI)
+        RobotNora.getCity().add(DistrictsType.CHATEAU); // noble
+        RobotNora.getCity().add(DistrictsType.CASERNE); // militaire
+        RobotNora.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "noble" (pcq ROI)
 
-        robotRandom.winGoldsByTypeOfBuildings();
+        RobotNora.winGoldsByTypeOfBuildings();
 
-        assertEquals(4, robotRandom.getGolds());
+        assertEquals(4, RobotNora.getGolds());
 
-        RobotRandom robotRandomEveque = new RobotRandom("TestrobotRandom2");
-        robotRandomEveque.setCharacter(CharactersType.EVEQUE);
-        robotRandomEveque.getCity().add(DistrictsType.EGLISE); // religieux
-        robotRandomEveque.getCity().add(DistrictsType.CASERNE); // militaire
-        robotRandomEveque.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "religieux" (pcq EVEQUE)
-        robotRandomEveque.getCity().add(DistrictsType.TAVERNE); // marchand
-        robotRandomEveque.getCity().add(DistrictsType.TEMPLE);// religieux
-        robotRandomEveque.getCity().add(DistrictsType.CATHEDRALE);// religieux
+        Robot RobotNoraEveque = new RobotRandom("TestRobotNora2");
+        RobotNoraEveque.setCharacter(CharactersType.EVEQUE);
+        RobotNoraEveque.getCity().add(DistrictsType.EGLISE); // religieux
+        RobotNoraEveque.getCity().add(DistrictsType.CASERNE); // militaire
+        RobotNoraEveque.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "religieux" (pcq EVEQUE)
+        RobotNoraEveque.getCity().add(DistrictsType.TAVERNE); // marchand
+        RobotNoraEveque.getCity().add(DistrictsType.TEMPLE);// religieux
+        RobotNoraEveque.getCity().add(DistrictsType.CATHEDRALE);// religieux
 
-        robotRandomEveque.winGoldsByTypeOfBuildings();
+        RobotNoraEveque.winGoldsByTypeOfBuildings();
 
-        assertEquals(6, robotRandomEveque.getGolds());
+        assertEquals(6, RobotNoraEveque.getGolds());
 
     }
 
     @Test
     void testScoreAvecUniversiteEtDracoport() {
-        robotRandom.setGolds(100);
-        robotRandom.setCharacter(CharactersType.ASSASSIN);
-        robotRandom.addDistrict(DistrictsType.DRACOPORT);
-        robotRandom.addDistrict(DistrictsType.UNIVERSITE);
-        robotRandom.tryBuild();
-        robotRandom.tryBuild();
-        assertEquals(16, robotRandom.calculateScore());
+        RobotNora.setGolds(100);
+        RobotNora.setCharacter(CharactersType.ASSASSIN);
+        RobotNora.addDistrict(DistrictsType.DRACOPORT);
+        RobotNora.addDistrict(DistrictsType.UNIVERSITE);
+        RobotNora.tryBuild();
+        RobotNora.tryBuild();
+        assertEquals(16, RobotNora.calculateScore());
     }
 
     @Test
     void testNumberOfCardsDrawnWithObservatoire() {
-        robotRandom.setCharacter(CharactersType.ASSASSIN);
-        robotRandom.setGolds(1000);
-        robotRandom.addDistrict(DistrictsType.OBSERVATOIRE);
-        assertEquals(2, robotRandom.getNumberOfCardsDrawn());
-        robotRandom.tryBuild();
-        assertEquals(3, robotRandom.getNumberOfCardsDrawn());
+        RobotNora.setCharacter(CharactersType.ASSASSIN);
+        RobotNora.setGolds(1000);
+        RobotNora.addDistrict(DistrictsType.OBSERVATOIRE);
+        assertEquals(2, RobotNora.getNumberOfCardsDrawn());
+        RobotNora.tryBuild();
+        assertEquals(3, RobotNora.getNumberOfCardsDrawn());
     }
 
     @Test
     void districtAlreadyInCity() {
-        robotRandom.setCharacter(CharactersType.ASSASSIN);
-        robotRandom.setGolds(1000);
-        robotRandom.addDistrict(DistrictsType.OBSERVATOIRE);
-        robotRandom.addDistrict(DistrictsType.OBSERVATOIRE);
-        robotRandom.tryBuild();
-        robotRandom.tryBuild();
-        assertEquals(1, robotRandom.getCity().size());
-        robotRandom.addDistrict(DistrictsType.TAVERNE);
-        robotRandom.tryBuild();
-        assertEquals(2, robotRandom.getCity().size());
+        RobotNora.setCharacter(CharactersType.ASSASSIN);
+        RobotNora.setGolds(1000);
+        RobotNora.addDistrict(DistrictsType.OBSERVATOIRE);
+        RobotNora.addDistrict(DistrictsType.OBSERVATOIRE);
+        RobotNora.tryBuild();
+        RobotNora.tryBuild();
+        assertEquals(1, RobotNora.getCity().size());
+        RobotNora.addDistrict(DistrictsType.TAVERNE);
+        RobotNora.tryBuild();
+        assertEquals(2, RobotNora.getCity().size());
     }
 
     @Test
@@ -365,74 +366,74 @@ class RobotRandomTest {
     @Test
 
     void pickThreeDistrictWithObservatoire() {
-        robotRandom.addGold(1000);
-        List<DistrictsType> listOfDistrictPicked = robotRandom.pickListOfDistrict(deck);
+        RobotNora.addGold(1000);
+        List<DistrictsType> listOfDistrictPicked = RobotNora.pickListOfDistrict(deck);
         assertEquals(2,listOfDistrictPicked.size());
-        robotRandom.addDistrict(DistrictsType.OBSERVATOIRE);
-        robotRandom.tryBuild();
-        listOfDistrictPicked = robotRandom.pickListOfDistrict(deck);
+        RobotNora.addDistrict(DistrictsType.OBSERVATOIRE);
+        RobotNora.tryBuild();
+        listOfDistrictPicked = RobotNora.pickListOfDistrict(deck);
         assertEquals(3,listOfDistrictPicked.size());
     }
 
     @Test
     void chooseTwoDistrictWithBibliothèque() {
-        robotRandom.addGold(1000);
-        List<DistrictsType> listDistrictChosen = robotRandom.pickDistrictCard(robotRandom.pickListOfDistrict(deck),deck);
+        RobotNora.addGold(1000);
+        List<DistrictsType> listDistrictChosen = RobotNora.pickDistrictCard(RobotNora.pickListOfDistrict(deck),deck);
         assertEquals(1,listDistrictChosen.size());
-        robotRandom.addDistrict(DistrictsType.BIBLIOTHEQUE);
-        robotRandom.tryBuild();
-        listDistrictChosen = robotRandom.pickDistrictCard(robotRandom.pickListOfDistrict(deck),deck);
+        RobotNora.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        RobotNora.tryBuild();
+        listDistrictChosen = RobotNora.pickDistrictCard(RobotNora.pickListOfDistrict(deck),deck);
         assertEquals(2,listDistrictChosen.size());
     }
 
     @Test
     void testWithObservatoireAndBibliothèque() {
-        robotRandom.setGolds(1000);
-        robotRandom.tryBuild();
-        List<DistrictsType> listOfDistrictPicked = robotRandom.pickListOfDistrict(deck);
+        RobotNora.setGolds(1000);
+        RobotNora.tryBuild();
+        List<DistrictsType> listOfDistrictPicked = RobotNora.pickListOfDistrict(deck);
         assertEquals(2,listOfDistrictPicked.size());
-        List<DistrictsType> listDistrictChosen = robotRandom.pickDistrictCard(listOfDistrictPicked,deck);
+        List<DistrictsType> listDistrictChosen = RobotNora.pickDistrictCard(listOfDistrictPicked,deck);
         assertEquals(1,listDistrictChosen.size());
-        robotRandom.addDistrict(DistrictsType.BIBLIOTHEQUE);
-        robotRandom.addDistrict(DistrictsType.OBSERVATOIRE);
-        robotRandom.tryBuild();
-        robotRandom.tryBuild();
-        listOfDistrictPicked = robotRandom.pickListOfDistrict(deck);
+        RobotNora.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        RobotNora.addDistrict(DistrictsType.OBSERVATOIRE);
+        RobotNora.tryBuild();
+        RobotNora.tryBuild();
+        listOfDistrictPicked = RobotNora.pickListOfDistrict(deck);
         assertEquals(3,listOfDistrictPicked.size());
-        listDistrictChosen = robotRandom.pickDistrictCard(listOfDistrictPicked,deck);
+        listDistrictChosen = RobotNora.pickDistrictCard(listOfDistrictPicked,deck);
         assertEquals(2,listDistrictChosen.size());
     }
 
     @Test
     void testManufacture() {
-        robotRandom.setGolds(10);
-        robotRandom.getCity().add(DistrictsType.MANUFACTURE);
+        RobotNora.setGolds(10);
+        RobotNora.getCity().add(DistrictsType.MANUFACTURE);
         DeckDistrict deck = new DeckDistrict();
 
-        robotRandom.manufacture(deck);
+        RobotNora.manufacture(deck);
 
-        assertEquals(7, robotRandom.getGolds(), "Le robot devrait avoir 7 pièces d'or après l'utilisation de MANUFACTURE");
-        assertEquals(3, robotRandom.getDistrictInHand().size(), "Le robot devrait avoir pioché 3 cartes de district");
+        assertEquals(7, RobotNora.getGolds(), "Le robot devrait avoir 7 pièces d'or après l'utilisation de MANUFACTURE");
+        assertEquals(3, RobotNora.getDistrictInHand().size(), "Le robot devrait avoir pioché 3 cartes de district");
     }
 
     @Test
     void testLaboratoireWithoutBuildingInHand() {
-        int goldsBeforeCallOfLaboratoire = robotRandom.getGolds();
-        robotRandom.laboratoire(new DeckDistrict());
-        assertEquals(goldsBeforeCallOfLaboratoire,robotRandom.getGolds());
+        int goldsBeforeCallOfLaboratoire = RobotNora.getGolds();
+        RobotNora.laboratoire(new DeckDistrict());
+        assertEquals(goldsBeforeCallOfLaboratoire,RobotNora.getGolds());
     }
 
     @Test
     void testLaboratoire(){
-        int goldsBeforeCallOfLaboratoire = robotRandom.getGolds();
-        robotRandom.addDistrict(DistrictsType.LABORATOIRE);
-        robotRandom.addGold(5);
-        robotRandom.tryBuild();
-        robotRandom.addDistrict(DistrictsType.TAVERNE);
-        assertEquals(1,robotRandom.getNumberOfDistrictInHand());
-        robotRandom.laboratoire(new DeckDistrict());
-        assertEquals(0,robotRandom.getNumberOfDistrictInHand());
-        assertEquals(robotRandom.getGolds(),goldsBeforeCallOfLaboratoire+1);
+        int goldsBeforeCallOfLaboratoire = RobotNora.getGolds();
+        RobotNora.addDistrict(DistrictsType.LABORATOIRE);
+        RobotNora.addGold(5);
+        RobotNora.tryBuild();
+        RobotNora.addDistrict(DistrictsType.TAVERNE);
+        assertEquals(1,RobotNora.getNumberOfDistrictInHand());
+        RobotNora.laboratoire(new DeckDistrict());
+        assertEquals(0,RobotNora.getNumberOfDistrictInHand());
+        assertEquals(RobotNora.getGolds(),goldsBeforeCallOfLaboratoire+1);
     }
 
 }

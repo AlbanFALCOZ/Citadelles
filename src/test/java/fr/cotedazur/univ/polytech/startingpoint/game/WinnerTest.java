@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 
 
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
@@ -91,9 +90,9 @@ class WinnerTest {
     void testSetScoresIncludeBonus() {
 
         List<Robot> robots = new ArrayList<>();
-        RobotRandom robot1 = new RobotRandom("Robot1");
-        RobotRandom robot2 = new RobotRandom("Robot2");
-        RobotRandom robot3 = new RobotRandom("Robot3");
+        Robot robot1 = new RobotRandom("Robot1");
+        Robot robot2 = new RobotRandom("Robot2");
+        Robot robot3 = new RobotRandom("Robot3");
         robots.addAll(Arrays.asList(robot1, robot2, robot3));
 
 
@@ -126,9 +125,9 @@ class WinnerTest {
     @Test
     void testMiracleDistrictEffect() {
 
-        RobotRandom robot1 = new RobotRandom("Robot1");
-        RobotRandom robot2 = new RobotRandom("Robot2");
-        RobotRandom robot3 = new RobotRandom("Robot3");
+        Robot robot1 = new RobotRandom("Robot1");
+        Robot robot2 = new RobotRandom("Robot2");
+        Robot robot3 = new RobotRandom("Robot3");
 
 
         robot1.getCity().add(DistrictsType.MARCHE);

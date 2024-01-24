@@ -1,102 +1,275 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public interface Robot {
+public abstract class Robot{
 
-    int getScore();
+    public static final String RESET = "\u001B[0m";
+    protected String name;
+    protected int choice;
+    protected int score;
+    protected int golds;
+    protected int numberOfCardsDrawn = 2;
+    protected int numberOfCardsChosen = 1;
+    protected List<DistrictsType> districtInHand;
+    protected CharactersType character;
 
-    void setScore(int score);
+    protected ArrayList<DistrictsType> city;
 
-    String getRESET();
+    protected boolean hasCrown;
 
-    String getName();
+    public Robot(String name) {
+        this.name = name;
+        score = 0;
+        districtInHand = new ArrayList<>();
+        golds = 2;
+        character = null;
+        city = new ArrayList<>();
+        hasCrown = false;
+        IsAssassinated = false;
+        //this.strategy = strategy;
 
-    int getGolds();
-
-    void setGolds(int golds);
-
-    int getNumberOfCardsDrawn();
-
-    void setNumberOfCardsDrawn(int numberOfCardsDrawn);
-
-    int getNumberOfCardsChosen();
-
-    void setNumberOfCardsChosen(int numberOfCardsChosen);
-
-    void addGold(int golds);
-
-    CharactersType getCharacter();
-
-    void setCharacter(CharactersType character);
-
-    List<DistrictsType> getCity();
-
-    String tryBuild();
-
-    void addDistrict(DistrictsType district);
-
-    void addDistrict(List<DistrictsType> listDistrict);
-
-    int getNumberOfDistrictInHand();
-
-    int getNumberOfDistrictInCity();
-
-    String statusOfPlayer(boolean showColor);
-
-    String statusOfPlayer();
-
-    List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
-
-    List<DistrictsType> pickListOfDistrict(DeckDistrict deck);
-
-    int calculateScore();
-
-    boolean getHasCrown();
-
-    void setHasCrown(boolean hasCrown);
-
-    int countBuildingsByType();
-
-    int winGoldsByTypeOfBuildings();
-
-    boolean isCharacter(String type);
+    }
 
 
-    //void setPower(Power aPower);
+    protected boolean IsAssassinated;
+    public List<DistrictsType> getDistrictInHand() {
+        return districtInHand;
+    }
 
-    int getChoice();
+    public void setDistrictInHand(List<DistrictsType> listDistrict) {
+        this.districtInHand = listDistrict;
 
-    void setChoice(int choice);
+    }
 
-    boolean canBuildADistrictInHand();
+    public boolean getIsAssassinated() {
+        return IsAssassinated;
+    }
 
-    int generateChoice();
-
-    List<DistrictsType> getDistrictInHand();
-
-    void setDistrictInHand(List<DistrictsType> districtInHand);
-
-    void emptyListOfCardsInHand();
-
-
-    boolean getIsAssassinated();
-
-    void setIsAssassinated(boolean IsAssassinated);
-
-    boolean hasEightDistrict();
+    public void setIsAssassinated(boolean IsAssassinated) {
+        this.IsAssassinated = IsAssassinated;
+    }
 
 
-    //Power getPower();
-    List<DistrictsType> manufacture(DeckDistrict deck);
+    public int getScore() {
+        return this.score;
+    }
 
-    List<DistrictsType> laboratoire(DeckDistrict deck);
+    public void setScore(int score) {
+        this.score = score;
+    }
 
-    void specialCards(DeckDistrict deck, ActionOfBotDuringARound action);
+    public String getRESET() {
+        return RESET;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getGolds() {
+        return golds;
+    }
+
+    public void setGolds(int golds) {
+        this.golds = golds;
+    }
+
+    public int getNumberOfCardsDrawn() {
+        return numberOfCardsDrawn;
+    }
+
+    public void setNumberOfCardsDrawn(int numberOfCardsDrawn) {
+        this.numberOfCardsDrawn = numberOfCardsDrawn;
+    }
+
+    public int getNumberOfCardsChosen() {
+        return numberOfCardsChosen;
+    }
+
+    public void setNumberOfCardsChosen(int numberOfCardsChosen) {
+        this.numberOfCardsChosen = numberOfCardsChosen;
+    }
+
+
+    public void addGold(int golds) {
+        this.golds += golds;
+    }
+
+    public CharactersType getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(CharactersType character) {
+        this.character = character;
+    }
+
+    public ArrayList<DistrictsType> getCity() {
+        return city;
+    }
+
+
+    public int getNumberOfDistrictInHand() {
+        return districtInHand.size();
+    }
+
+    public int getNumberOfDistrictInCity() {
+        return city.size();
+    }
+
+
+    public boolean getHasCrown() {
+        return hasCrown;
+    }
+
+    public void setHasCrown(boolean hasCrown) {
+        this.hasCrown = hasCrown;
+
+    }
+
+    public int getChoice() {
+        return choice;
+    }
+
+    public void setChoice(int choice) {
+        this.choice = choice;
+    }
+
+    public boolean hasEightDistrict() {
+        if (this.getNumberOfDistrictInCity()==8){
+            return true ;
+        }
+        return false ;
+    }
+
+    public void addDistrict(DistrictsType district) {
+        this.districtInHand.add(district);
+    }
+
+    public void addDistrict(List<DistrictsType> listDistrict) {
+        this.districtInHand.addAll(listDistrict);
+    }
+
+    public String statusOfPlayer(boolean showColor) {
+        String endColor = "";
+        String colorCharacter = "";
+        if (showColor) {
+            colorCharacter = character.getColor().getColorDisplay();
+            endColor = Colors.RESET.getColorDisplay();
+        }
+        String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + endColor + "), " + this.golds + " golds, hand {";
+        status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
+        return status;
+    }
+
+    public String statusOfPlayer() {
+        return statusOfPlayer(true);
+    }
+
+    private String getString(boolean showColor, List<DistrictsType> listDistrict) {
+        String returedString = "";
+        String color;
+        String endColor;
+        for (DistrictsType districtsType : listDistrict) {
+            if (showColor) {
+                color = districtsType.getColor().getColorDisplay();
+                endColor = RESET;
+            } else {
+                color = endColor = "";
+            }
+            returedString += "(" + color + districtsType.getName() + "," + districtsType.getCost() + endColor + ")";
+        }
+        return returedString;
+    }
+
+    public Comparator<DistrictsType> compareByCost() {
+        return Comparator.comparingInt(DistrictsType::getCost);
+    }
+
+
+    public int calculateScore() {
+        int score = 0;
+        for (DistrictsType district : city) {
+            score += district.getScore();
+        }
+        return score;
+    }
+
+    public int countBuildingsByType() {
+        int count = 0;
+
+        for (DistrictsType building : city) {
+
+            if (building.getType().equals(this.character.getType()) || building.getType().equals("ecole")) {
+                count++;
+            }
+
+        }
+        return count;
+    }
+
+    public int winGoldsByTypeOfBuildings() {
+        int oldGolds = this.getGolds();
+        addGold(countBuildingsByType());
+        return this.getGolds() - oldGolds;
+    }
+
+    public boolean isCharacter(String type) {
+        return this.getCharacter().getType().equals(type);
+    }
+
+    public boolean canBuildADistrictInHand() {
+        for (DistrictsType district : districtInHand) {
+            if (golds >= district.getCost()) return true;
+        }
+        return false;
+    }
+
+    public void emptyListOfCardsInHand() {
+        districtInHand.clear();
+    }
+
+    public List<DistrictsType> pickListOfDistrict(DeckDistrict deck) {
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        for (int i = 0; i < numberOfCardsDrawn; i++) {
+            DistrictsType card = deck.getDistrictsInDeck();
+            listDistrict.add(card);
+        }
+        return listDistrict;
+    }
+
+
+    public void specialCards(DeckDistrict deck, ActionOfBotDuringARound action) {
+        if (getCity().contains(DistrictsType.MANUFACTURE)) {
+            List<DistrictsType> listOfDistrictPicked = manufacture(deck);
+            if (!listOfDistrictPicked.isEmpty()) action.printManufactureAction(listOfDistrictPicked);
+        }
+        if (getCity().contains(DistrictsType.LABORATOIRE)) {
+            List<DistrictsType> listOfDistrictRemoved = laboratoire(deck);
+            if (!listOfDistrictRemoved.isEmpty()) action.printLaboratoryAction(listOfDistrictRemoved);
+        }
+    }
+
+
+    public abstract String tryBuild();
+
+    public abstract List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
+
+    public abstract int generateChoice();
+
+    public abstract List<DistrictsType> laboratoire(DeckDistrict deck);
+
+    public abstract List<DistrictsType> manufacture(DeckDistrict deck);
+
+
+
 
 }

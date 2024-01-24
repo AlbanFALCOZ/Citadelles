@@ -2,10 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.districts;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-
-import java.awt.*;
-import java.util.List;
-import java.util.Random;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
 
 
 /**

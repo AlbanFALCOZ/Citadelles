@@ -69,7 +69,7 @@ class GameEngineTest {
 
 
     @Test
-    void testRobotsPickCharacters() {
+    void testRobotPickCharacters() {
         gameEngine.robotsPickCharacters();
         gameEngine.assignCrown();
 
