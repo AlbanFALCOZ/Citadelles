@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 
 /**
@@ -18,6 +19,7 @@ public class Winner {
 
     private boolean hasFiveColors = false ;
 
+    public static final Logger logger = Logger.getLogger(Winner.class.getName());
 
     /**
      * @param bots la liste des robots
@@ -57,7 +59,7 @@ public class Winner {
         String scores = "" ;
         setScores();
         for (Robot bot : bots){
-            scores += bot.getName() + " has a score of " + bot.getScore() + "\n";
+            logger.info(bot.getName() + " has a score of " + bot.getScore());
         }
         return scores;
     }
@@ -99,11 +101,11 @@ public class Winner {
         List<String> winners = getWinners();
 
         if (winners.isEmpty()) {
-            return "No winners.";
+            return "No winners D:";
         } else if (winners.size() == 1) {
-            return "The winner is: " + winners.get(0);
+            return "The winner is: " + winners.get(0) + " ! :D";
         } else {
-            return "There is an equality! The winners are: " + String.join(", ", winners);
+            return "There is an equality o:! The winners are: " + String.join(", ", winners);
 
         }
     }
@@ -117,7 +119,7 @@ public class Winner {
                if( index != bot.getCity().size()-1 ) {
                    Colors randomColor =Colors.getRandomColorCode() ;
                    bot.getCity().get(index).setColor(randomColor);
-                   System.out.println(bot.getName() + " choosed to change the color of their miracle card to " + randomColor);
+                   logger.info(bot.getName() + " choosed to change the color of their miracle card to " + randomColor);
 
                }
             }
@@ -133,11 +135,11 @@ public class Winner {
                 uniqueColorsInCity.add(district.getColor().getColorDisplay());
             }
             if (uniqueColorsInCity.size() >= 5) {
-                System.out.println(bot.getName() + " has " + bot.getScore() + " points ");
-                System.out.println(bot.getName() + " has 5 districts in their city they earn 3 extra points ");
+                logger.info(bot.getName() + " has " + bot.getScore() + " points ");
+                logger.info(bot.getName() + " has 5 districts in their city they earn 3 extra points ");
                 bot.setScore(originalScore + 3);
-                System.out.println(bot.getName() + " has now " + bot.getScore());
-                System.out.println("--------------------------------------------------");
+                logger.info(bot.getName() + " has now " + bot.getScore());
+                logger.info("--------------------------------------------------");
 
             }
         }
