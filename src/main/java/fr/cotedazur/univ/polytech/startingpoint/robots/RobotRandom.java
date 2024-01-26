@@ -22,7 +22,7 @@ public class RobotRandom extends Robot {
         for (int i = 0; i < getDistrictInHand().size(); i++) {
             DistrictsType district = getDistrictInHand().get(i);
             if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this,1);
+                district.powerOfDistrict(this);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(i);
@@ -31,7 +31,6 @@ public class RobotRandom extends Robot {
         }
         return "nothing";
     }
-
 
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
@@ -73,7 +72,10 @@ public class RobotRandom extends Robot {
         setCharacter(availableCharacters.get(0));
         availableCharacters.remove(availableCharacters.get(0));
 
+
     }
+
+
 
 
 }

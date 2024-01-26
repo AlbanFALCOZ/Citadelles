@@ -103,7 +103,7 @@ public class Winner {
         if (winners.isEmpty()) {
             return "No winners D:";
         } else if (winners.size() == 1) {
-            return "The winner is: " + winners.get(0) + " ! :D";
+            return "The winner is: " + winners.get(0) + " ! 🥳🥳";
         } else {
             return "There is an equality o:! The winners are: " + String.join(", ", winners);
 

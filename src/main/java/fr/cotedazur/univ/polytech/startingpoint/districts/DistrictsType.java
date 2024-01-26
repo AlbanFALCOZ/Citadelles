@@ -127,12 +127,12 @@ public enum DistrictsType {
      * @param player le joueur qui possède le quartier
      *               on vérifie si le quartier est un quartier spécial c'est à dire un quartier qui a un pouvoir
      */
-    public void powerOfDistrict(Robot player, int val) {
+    public void powerOfDistrict(Robot player) {
         if (name.equals("Observatoire")) {
-            player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn() + val);
+            player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn() + 1);
         }
         if (name.equals("Bibliothèque")) {
-            if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen() + val);
+            if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen() + 1);
         }
 
     }

@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -34,7 +35,6 @@ public class Power {
 
 
     public void architecte(Robot bot, DeckDistrict deck) {
-        //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
         if (i == 0) {
             bot.setChoice(7);
@@ -60,11 +60,17 @@ public class Power {
     }
 
 
+
+
+
+
     public boolean canDestroyDistrict(Robot victim, DistrictsType district) {
         int destructorGolds = bot.getGolds();
         boolean districtInCity = victim.getCity().contains(district);
         return destructorGolds >= district.getCost() && districtInCity;
     }
+
+
 
     public void condottiere(Robot victim) {
         int destructorGolds = bot.getGolds();
@@ -105,25 +111,51 @@ public class Power {
         victim.setDistrictInHand(botDistrictInHand);
     }
 
+    public boolean doublon(Robot victim){
+        for (DistrictsType district : bot.getCity()){
+            for (DistrictsType victimDistrict : victim.getDistrictInHand()){
+                if (district == victimDistrict){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-    public void magicien(Robot victim, DeckDistrict deck) {
-        int i = bot.generateChoice();
-        if (i == 0) {
+    public boolean doublonInHand(){
+        List<DistrictsType> hand = bot.getDistrictInHand();
+        List<DistrictsType> handCopy = bot.getDistrictInHand();
+        Collections.reverse(hand);
+        for (int i = 0; i < hand.size(); i++) {
+            for (int j = 0; j < handCopy.size(); j++) {
+                if (hand.get(i) == handCopy.get(j) && i!= j){
+                    return true;
+                }
+
+            }
+
+        }
+        return false;
+    }
+
+
+    public void magicien(List<Robot> bots, DeckDistrict deck) {
+        Robot victim = bot.chooseVictimForMagicien(bots);
+        boolean doublon= doublon(victim);
+        //int i = bot.generateChoice();
+        if (bot.calculateScoreInHand() < victim.calculateScoreInHand() && !doublon) {
             swapCards(victim);
             action.printMagicianSwap(victim);
             action.showStatusOfBot();
         }
-        if (i == 1) {
-            int numberOfDistrictInHand = bot.getNumberOfDistrictInHand();
-            List<DistrictsType> listDistrictHandMagician = new ArrayList<>(bot.getDistrictInHand());
-            bot.emptyListOfCardsInHand();
-            for (; numberOfDistrictInHand > 0; numberOfDistrictInHand--) bot.addDistrict(deck.getDistrictsInDeck());
-            while (!listDistrictHandMagician.isEmpty()) deck.addDistrictToDeck(listDistrictHandMagician.remove(0));
-            action.printMagicianSwapWithDeck();
-            action.showStatusOfBot();
+        else if(doublon(bot) || doublonInHand()){
+                int numberOfDistrictInHand = bot.getNumberOfDistrictInHand();
+                List<DistrictsType> listDistrictHandMagician = new ArrayList<>(bot.getDistrictInHand());
+                bot.emptyListOfCardsInHand();
+                for (; numberOfDistrictInHand > 0; numberOfDistrictInHand--) bot.addDistrict(deck.getDistrictsInDeck());
+                while (!listDistrictHandMagician.isEmpty()) deck.addDistrictToDeck(listDistrictHandMagician.remove(0));
         }
-
-    }
+}
 
     public void assassin(Robot victim) {
         if (bot.getCharacter().getType().equals(ASSASSIN)) {

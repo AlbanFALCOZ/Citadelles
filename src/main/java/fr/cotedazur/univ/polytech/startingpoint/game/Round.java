@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,6 +87,7 @@ public class Round {
         return sortedBots;
     }
 
+
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(bots);
 
@@ -93,11 +95,9 @@ public class Round {
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
             case ASSASSIN:
-                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.ASSASSIN));
-                Collections.shuffle(robots);
-                if (!robots.isEmpty()) {
-                    powerOfBot.assassin(robots.get(0));
-                }
+                Robot victim = bot.chooseVictimForAssassin(bots);
+                powerOfBot.assassin(victim);
+
                 break;
             case MARCHAND:
                 powerOfBot.marchand();
@@ -106,11 +106,8 @@ public class Round {
                 powerOfBot.architecte(bot, deck);
                 break;
             case CONDOTTIERE:
-                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.CONDOTTIERE));
-                Collections.shuffle(robots);
-                if (!robots.isEmpty()) {
-                    powerOfBot.condottiere(robots.get(0));
-                }
+                powerOfBot.condottiere(bot.chooseVictimForCondottiere(bots));
+
                 break;
             case VOLEUR:
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
@@ -123,11 +120,7 @@ public class Round {
                 }
                 break;
             case MAGICIEN:
-                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.MAGICIEN));
-                Collections.shuffle(robots);
-                if (!robots.isEmpty()) {
-                    powerOfBot.magicien(robots.get(0), deck);
-                }
+                powerOfBot.magicien(bots, deck);
                 break;
             default:
                 break;

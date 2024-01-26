@@ -59,7 +59,7 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        String[] name = {"Alban", "Stacy", "Nora"};
+        String[] name = {"Alban", "Stacy", "Nora", "Sara"};
         RobotSarsor sarsor = new RobotSarsor("Sara" , true) ;
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
