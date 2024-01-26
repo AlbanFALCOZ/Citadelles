@@ -20,6 +20,7 @@ public abstract class Robot{
     protected int golds;
     protected int numberOfCardsDrawn = 2;
     protected int numberOfCardsChosen = 1;
+    private String typeOfRobot = "Robot";
     protected List<DistrictsType> districtInHand;
     protected CharactersType character;
 
@@ -126,6 +127,13 @@ public abstract class Robot{
         return city.size();
     }
 
+    public String getTypeOfRobot() {
+        return typeOfRobot;
+    }
+
+    public void setTypeOfRobot(String typeOfRobot) {
+        this.typeOfRobot = typeOfRobot;
+    }
 
     public boolean getHasCrown() {
         return hasCrown;
@@ -292,8 +300,6 @@ public abstract class Robot{
         }
         return listOfDistrictRemoved;
     }
-
-
 
 
 
