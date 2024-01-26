@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public abstract class Robot{
 
-    public static final String RESET = "\u001B[0m";
+    public static final String RESET = "\u001B[37m";
     protected String name;
     protected int choice;
     protected int score;
@@ -167,13 +168,11 @@ public abstract class Robot{
     }
 
     public String statusOfPlayer(boolean showColor) {
-        String endColor = "";
         String colorCharacter = "";
         if (showColor) {
             colorCharacter = character.getColor().getColorDisplay();
-            endColor = Colors.RESET.getColorDisplay();
         }
-        String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + endColor + "), " + this.golds + " golds, hand {";
+        String status = RESET + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + RESET + "), \u001B[33m" + this.golds + " golds" + RESET + ", hand {";
         status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
         return status;
     }
@@ -285,10 +284,40 @@ public abstract class Robot{
 
     public abstract int generateChoice();
 
-    public abstract List<DistrictsType> laboratoire(DeckDistrict deck);
 
-    public abstract List<DistrictsType> manufacture(DeckDistrict deck);
+    public List<DistrictsType> manufacture(DeckDistrict deck) {
+        List<DistrictsType> listOfDistrictPicked = new ArrayList<>();
+        if (getGolds() >= 3) {
+            setGolds(getGolds() - 3);
+            for (int i = 0; i < 3; i++) {
+                DistrictsType card = deck.getDistrictsInDeck();
+                listOfDistrictPicked.add(card);
+                addDistrict(card);
+            }
+        }
+        return listOfDistrictPicked;
+    }
 
+
+
+
+    public List<DistrictsType> laboratoire(DeckDistrict deck){
+        List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
+        if (getNumberOfDistrictInHand() >= 1) {
+            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
+            DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
+            listOfDistrictRemoved.add(card);
+            deck.addDistrictToDeck(card);
+            setGolds(getGolds()+1);
+        }
+        return listOfDistrictRemoved;
+    }
+
+
+
+
+
+    public abstract void pickCharacter(List<CharactersType> availableCharacters);
 
 
 

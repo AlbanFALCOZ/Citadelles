@@ -150,7 +150,6 @@ public class Power {
     public boolean doublonInHand(){
         List<DistrictsType> hand = bot.getDistrictInHand();
         List<DistrictsType> handCopy = bot.getDistrictInHand();
-
         Collections.reverse(hand);
         for (int i = 0; i < hand.size(); i++) {
             for (int j = 0; j < handCopy.size(); j++) {
@@ -171,6 +170,7 @@ public class Power {
 
         //int i = bot.generateChoice();
         if (bot.calculateScoreInHand() < victim.calculateScoreInHand() && !doublon) {
+
             swapCards(victim);
             action.printMagicianSwap(victim);
             action.showStatusOfBot();
@@ -185,12 +185,14 @@ public class Power {
                 bot.addDistrict(listDistrictDrawn.get(j));
             }
             action.printMagicianSwapWithDeck();
+
             action.showStatusOfBot();
+
 
         }
 
         bot.setNumberOfCardsDrawn(2);
-    }
+}
 
     public void assassin(Robot victim) {
         if (bot.getCharacter().getType().equals(ASSASSIN)) {

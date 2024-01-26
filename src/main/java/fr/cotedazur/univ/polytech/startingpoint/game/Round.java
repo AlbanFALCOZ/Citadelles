@@ -94,7 +94,7 @@ public class Round {
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
             case ASSASSIN:
-                powerOfBot.assassin(powerOfBot.chooseVictimForCondottiere(bots));
+                powerOfBot.assassin(powerOfBot.chooseVictimForAssassin(bots));
                 break;
             case MARCHAND:
                 powerOfBot.marchand();
@@ -108,7 +108,7 @@ public class Round {
             case VOLEUR:
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
                 if (numberOfCharacterToStealFrom == 0) {
-                    numberOfCharacterToStealFrom = (int) (Math.random() * 6 + 2);
+                    numberOfCharacterToStealFrom = (int) (Math.random() * 6 + 3);
                     this.voleur = bot;
                     actionOfBotDuringARound.printChoiceOfThief(voleur, numberOfCharacterToStealFrom);
                 } else {
