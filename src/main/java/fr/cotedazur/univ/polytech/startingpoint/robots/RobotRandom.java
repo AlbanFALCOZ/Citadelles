@@ -47,8 +47,10 @@ public class RobotRandom extends Robot {
             }
             i++;
         }
-        while (listDistrictToBuild.size() < getNumberOfCardsChosen())
+        while (listDistrictToBuild.size() < getNumberOfCardsChosen()) {
             listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
+        }
+
 
 
         for (DistrictsType districtNonChosen : listDistrict) {

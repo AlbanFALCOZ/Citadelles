@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -38,8 +39,7 @@ public class Power {
         if (i == 0) {
             bot.setChoice(7);
             List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
-            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(0));
-            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(1));
+            listDistrictDrawn.addAll(bot.pickListOfDistrict(deck));
             List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn, deck);
             action.addListOfDistrict(listDistrictDrawn, listDistrictPicked);
             bot.addDistrict(listDistrictPicked);
@@ -107,8 +107,6 @@ public class Power {
 
 
     public void magicien(Robot victim, DeckDistrict deck) {
-
-        int temp = bot.numberOfCardsDrawn ;
         int i = bot.generateChoice();
         if (i == 0) {
             swapCards(victim);
@@ -116,19 +114,13 @@ public class Power {
             action.showStatusOfBot();
         }
         if (i == 1) {
-
-            int a = bot.getNumberOfDistrictInHand();
+            int numberOfDistrictInHand = bot.getNumberOfDistrictInHand();
+            List<DistrictsType> listDistrictHandMagician = new ArrayList<>(bot.getDistrictInHand());
             bot.emptyListOfCardsInHand();
-            bot.setNumberOfCardsDrawn(a);
-            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
-            for (int j = 0; j < a; j++) {
-                bot.addDistrict(listDistrictDrawn.get(j));
-            }
+            for (; numberOfDistrictInHand > 0; numberOfDistrictInHand--) bot.addDistrict(deck.getDistrictsInDeck());
+            while (!listDistrictHandMagician.isEmpty()) deck.addDistrictToDeck(listDistrictHandMagician.remove(0));
             action.printMagicianSwapWithDeck();
-
             action.showStatusOfBot();
-
-
         }
 
     }
