@@ -322,7 +322,7 @@ public abstract class Robot{
     }
 
 
-    public abstract void pickCharacter(List<CharactersType> availableCharacters);
+    public abstract void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots);
 
     public Robot chooseVictimForCondottiere(List<Robot> bots){
         Robot victim = bots.get(0);

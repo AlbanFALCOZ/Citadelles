@@ -43,13 +43,13 @@ public class Main {
                 if (winners.equals("Alban")) {
                     listWinners[0]++;
                 }
-                if (winners.equals("Sara")) {
+                if (winners.equals("Stacy")) {
                     listWinners[1]++;
                 }
-                if (winners.equals("Stacy")) {
+                if (winners.equals("Nora")) {
                     listWinners[2]++;
                 }
-                if (winners.equals("Nora")) {
+                if (winners.equals("Sara")) {
                     listWinners[3]++;
                 }
             }

@@ -69,7 +69,7 @@ public class RobotWithChoice extends Robot {
     }
 
     @Override
-    public void pickCharacter(List<CharactersType> availableCharacters) {
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         setCharacter(availableCharacters.get(0));
         availableCharacters.remove(availableCharacters.get(0));
 

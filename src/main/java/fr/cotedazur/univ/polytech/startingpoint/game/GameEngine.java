@@ -3,10 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
-import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
+import fr.cotedazur.univ.polytech.startingpoint.robots.*;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -59,8 +56,8 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        String[] name = {"Alban", "Stacy", "Nora", "Sara"};
-        RobotSarsor sarsor = new RobotSarsor("Sara" , true) ;
+        String[] name = {"Alban", "Stacy", "Nora"};
+        RobotMuyInteligente sarsor = new RobotMuyInteligente("Sara") ;
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
         }
@@ -100,14 +97,18 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
-               bot.pickCharacter(listCharacters);
+                List<Robot> listOfThreeBots = new ArrayList<>(bots);
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
                 logger.info(bot.getName() + " With crown Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
 
             }
         }
         for (Robot bot : bots) {
             if (!bot.getHasCrown()) {
-                bot.pickCharacter(listCharacters);
+                List<Robot> listOfThreeBots = new ArrayList<>(bots);
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
                 i++;
             }
