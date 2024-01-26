@@ -116,6 +116,8 @@ public class RobotSarsor extends Robot{
         }
     }
 
+
+
     @Override
     public List<DistrictsType> manufacture(DeckDistrict deck) {
         List<DistrictsType> listOfDistrictPicked = new ArrayList<>();

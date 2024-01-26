@@ -60,41 +60,17 @@ public class Power {
     }
 
 
+
+
+
+
     public boolean canDestroyDistrict(Robot victim, DistrictsType district) {
         int destructorGolds = bot.getGolds();
         boolean districtInCity = victim.getCity().contains(district);
         return destructorGolds >= district.getCost() && districtInCity;
     }
 
-    public Robot chooseVictimForCondottiere(List<Robot> bots){
-        Robot victim = bots.get(0);
-        int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
-        for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.CONDOTTIERE) victim = bot;
-        }
-        return victim;
 
-    }
-
-    public Robot chooseVictimForAssassin(List<Robot> bots){
-        Robot victim = bots.get(0);
-        int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
-        for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.ASSASSIN) victim = bot;
-        }
-        return victim;
-
-    }
-
-    public Robot chooseVictimForMagicien(List<Robot> bots){
-        Robot victim = bots.get(0);
-        int numberOfDistrictsInCity = victim.calculateScoreInHand();
-        for (Robot bot : bots) {
-            if (bot.calculateScoreInHand() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
-        }
-        return victim;
-
-    }
 
     public void condottiere(Robot victim) {
         int destructorGolds = bot.getGolds();
@@ -164,8 +140,9 @@ public class Power {
 
 
     public void magicien(List<Robot> bots, DeckDistrict deck) {
-        Robot victim = chooseVictimForMagicien(bots);
+        Robot victim = bot.chooseVictimForMagicien(bots);
         boolean doublon= doublon(victim);
+        int temp = bot.numberOfCardsDrawn ;
 
         //int i = bot.generateChoice();
         if (bot.calculateScoreInHand() < victim.calculateScoreInHand() && !doublon) {

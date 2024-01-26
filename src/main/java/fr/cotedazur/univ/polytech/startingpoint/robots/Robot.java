@@ -314,10 +314,40 @@ public abstract class Robot{
     }
 
 
-
-
-
     public abstract void pickCharacter(List<CharactersType> availableCharacters);
+
+    public Robot chooseVictimForCondottiere(List<Robot> bots){
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+        for (Robot bot : bots) {
+            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.CONDOTTIERE) victim = bot;
+        }
+        return victim;
+
+    }
+
+    public Robot chooseVictimForAssassin(List<Robot> bots){
+
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+        for (Robot bot : bots) {
+            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.ASSASSIN) victim = bot;
+        }
+        return victim;
+
+    }
+
+    public Robot chooseVictimForMagicien(List<Robot> bots){
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInCity = victim.calculateScoreInHand();
+        for (Robot bot : bots) {
+            if (bot.calculateScoreInHand() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
+        }
+        return victim;
+
+    }
+
+
 
 
 

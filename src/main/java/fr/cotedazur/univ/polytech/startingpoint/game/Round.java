@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,7 +95,9 @@ public class Round {
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
             case ASSASSIN:
-                powerOfBot.assassin(powerOfBot.chooseVictimForAssassin(bots));
+                Robot victim = bot.chooseVictimForAssassin(bots);
+                powerOfBot.assassin(victim);
+
                 break;
             case MARCHAND:
                 powerOfBot.marchand();
@@ -103,7 +106,8 @@ public class Round {
                 powerOfBot.architecte(bot, deck);
                 break;
             case CONDOTTIERE:
-                powerOfBot.condottiere(powerOfBot.chooseVictimForCondottiere(bots));
+                powerOfBot.condottiere(bot.chooseVictimForCondottiere(bots));
+
                 break;
             case VOLEUR:
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
