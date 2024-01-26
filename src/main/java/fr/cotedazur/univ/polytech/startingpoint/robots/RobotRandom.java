@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import java.util.List;
@@ -73,6 +74,11 @@ public class RobotRandom extends Robot {
             }
         }
         return listOfDistrictPicked;
+    }
+
+    @Override
+    public void pickCharacter(List<CharactersType> availableCharacters) {
+
     }
 
     @Override

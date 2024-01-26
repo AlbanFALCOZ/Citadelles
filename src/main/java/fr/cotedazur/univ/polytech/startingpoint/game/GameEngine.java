@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
 
 import java.util.*;
 
@@ -53,16 +54,22 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        String[] name = {"Alban", "Sara", "Stacy", "Nora"};
-        for (int i = 0; i < 4; i++) {
+        String[] name = {"Alban", "Stacy", "Nora"};
+        RobotSarsor sarsor = new RobotSarsor("Sara" , true) ;
+        for(int k = 0 ; k < 4 ; k++){
+            sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
+        }
+        for (int i = 0; i < 3; i++) {
             Robot bot;
             if (i == 0) bot = new RobotRandom(name[i]);
             else bot = new RobotRandom(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
+
             }
             bots.add(bot);
         }
+        bots.add(sarsor) ;
 
     }
 
@@ -164,6 +171,7 @@ public class GameEngine {
             round.playTurns();
             if (systemPrint) System.out.println(turnStarting + comptTurn + " is over" + turnEnding);
             comptTurn++;
+
             round = new Round(bots, systemPrint, deckDistricts);
 
         }

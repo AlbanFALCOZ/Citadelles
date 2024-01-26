@@ -1,16 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public abstract class RobotWithChoice extends Robot {
-    public RobotWithChoice(String name) {
+public class RobotSarsor extends Robot{
+
+    private boolean aggressive;
+
+    public RobotSarsor(String name, boolean aggressive) {
         super(name);
+        this.aggressive = aggressive;
     }
 
     @Override
@@ -29,7 +32,6 @@ public abstract class RobotWithChoice extends Robot {
         }
         return "nothing";
     }
-
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
@@ -60,7 +62,46 @@ public abstract class RobotWithChoice extends Robot {
 
     @Override
     public int generateChoice() {
-        return (int) (Math.random() * 2);
+        if(this.getGolds()<4) {
+            return 1 ;
+        }
+        else {
+            return 0 ;
+        }
+    }
+
+    @Override
+    public List<DistrictsType> laboratoire(DeckDistrict deck){
+        List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
+        if (getNumberOfDistrictInHand() >= 1) {
+            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
+            DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
+            listOfDistrictRemoved.add(card);
+            deck.addDistrictToDeck(card);
+            setGolds(getGolds()+1);
+        }
+        return listOfDistrictRemoved;
+    }
+
+    @Override
+    public void pickCharacter(List<CharactersType> availableCharacters) {
+        if (getHasCrown()) {
+            setCharacter(availableCharacters.get(0));
+            availableCharacters.remove(0);
+        } else {
+            if (aggressive) {
+                CharactersType aggressiveCharacter = availableCharacters.stream()
+                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN) || character.getType().equals(CharactersType.VOLEUR))
+                        .findFirst()
+                        .orElse(availableCharacters.get(0));
+
+                setCharacter(aggressiveCharacter);
+                availableCharacters.remove(aggressiveCharacter);
+            } else {
+                setCharacter(availableCharacters.get(0));
+                availableCharacters.remove(0);
+            }
+        }
     }
 
     @Override
@@ -77,17 +118,5 @@ public abstract class RobotWithChoice extends Robot {
         return listOfDistrictPicked;
     }
 
-    @Override
-    public List<DistrictsType> laboratoire(DeckDistrict deck){
-        List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
-        if (getNumberOfDistrictInHand() >= 1) {
-            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
-            DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
-            listOfDistrictRemoved.add(card);
-            deck.addDistrictToDeck(card);
-            setGolds(getGolds()+1);
-        }
-        return listOfDistrictRemoved;
-    }
-}
 
+}

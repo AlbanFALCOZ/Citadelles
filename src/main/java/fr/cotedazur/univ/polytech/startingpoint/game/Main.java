@@ -8,7 +8,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        //testBots();
+       // testBots();
        showGame();
     }
 
@@ -49,7 +49,7 @@ public class Main {
         }
 
         for (int i = 0; i < listWinners.length; i++) {
-            System.out.println("Winrate N°" + i + " : " + (float) listWinners[i] / numberOfGames * 100 + "%");
+            System.out.println("Winrate N°" + i +   " : " + (float) listWinners[i] / numberOfGames * 100 + "%");
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;

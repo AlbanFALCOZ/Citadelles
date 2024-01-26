@@ -82,7 +82,6 @@ public enum DistrictsType {
         this.cost = cost ;
         this.name = name ;
         this.color = color ;
-
         this.score = score;
         this.type = type;
     }

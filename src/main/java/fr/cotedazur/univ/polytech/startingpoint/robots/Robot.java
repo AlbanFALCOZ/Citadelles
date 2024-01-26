@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -270,6 +271,5 @@ public abstract class Robot{
     public abstract List<DistrictsType> manufacture(DeckDistrict deck);
 
 
-
-
+    public abstract void pickCharacter(List<CharactersType> availableCharacters);
 }
