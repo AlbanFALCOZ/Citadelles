@@ -33,7 +33,6 @@ public class Power {
 
 
     public void architecte(Robot bot, DeckDistrict deck) {
-        //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
         if (i == 0) {
             bot.setChoice(7);
@@ -124,8 +123,8 @@ public class Power {
             for (int j = 0; j < a; j++) {
                 bot.addDistrict(listDistrictDrawn.get(j));
             }
+            bot.setNumberOfCardsDrawn(temp);
             action.printMagicianSwapWithDeck();
-
             action.showStatusOfBot();
 
 

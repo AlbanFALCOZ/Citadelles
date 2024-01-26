@@ -68,6 +68,7 @@ public class RobotRandom extends Robot {
         setCharacter(availableCharacters.get(0));
         availableCharacters.remove(availableCharacters.get(0));
 
+
     }
 
 
