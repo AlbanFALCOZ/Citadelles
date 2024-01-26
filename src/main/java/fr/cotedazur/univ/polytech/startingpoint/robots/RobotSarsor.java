@@ -22,7 +22,7 @@ public class RobotSarsor extends Robot{
         List<String> listDistrictName = new ArrayList<>();
         for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
 
-        // Reorder districts in hand to prioritize red districts
+
         List<DistrictsType> orderedDistricts = new ArrayList<>();
         for (DistrictsType district : getDistrictInHand()) {
             if (district.getColor().equals("red")) {
