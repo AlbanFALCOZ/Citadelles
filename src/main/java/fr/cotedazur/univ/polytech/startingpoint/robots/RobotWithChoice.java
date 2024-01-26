@@ -60,6 +60,8 @@ public class RobotWithChoice extends Robot {
 
     @Override
     public int generateChoice() {
+        if (getDistrictInHand().isEmpty()) return 0;
+        if (!canBuildADistrictInHand()) return 1;
         return (int) (Math.random() * 2);
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class Robot{
 
-    public static final String RESET = "\u001B[0m";
+    public static final String RESET = "\u001B[37m";
     protected String name;
     protected int choice;
     protected int score;
@@ -159,13 +159,11 @@ public abstract class Robot{
     }
 
     public String statusOfPlayer(boolean showColor) {
-        String endColor = "";
         String colorCharacter = "";
         if (showColor) {
             colorCharacter = character.getColor().getColorDisplay();
-            endColor = Colors.RESET.getColorDisplay();
         }
-        String status = endColor + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + endColor + "), " + this.golds + " golds, hand {";
+        String status = RESET + "[Status of " + this.name + " : role (" + colorCharacter + this.character.getRole() + RESET + "), \u001B[33m" + this.golds + " golds" + RESET + ", hand {";
         status += getString(showColor, districtInHand) + "}, city {" + getString(showColor, city) + "}]";
         return status;
     }
