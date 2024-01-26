@@ -20,18 +20,30 @@ public class RobotSarsor extends Robot{
     public String tryBuild() {
         List<String> listDistrictName = new ArrayList<>();
         for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
-        for (int i = 0; i < getDistrictInHand().size(); i++) {
-            DistrictsType district = getDistrictInHand().get(i);
+
+        // Reorder districts in hand to prioritize red districts
+        List<DistrictsType> orderedDistricts = new ArrayList<>();
+        for (DistrictsType district : getDistrictInHand()) {
+            if (district.getColor().equals("red")) {
+                orderedDistricts.add(0, district);
+            } else {
+                orderedDistricts.add(district);
+            }
+        }
+
+        for (int i = 0; i < orderedDistricts.size(); i++) {
+            DistrictsType district = orderedDistricts.get(i);
             if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
                 district.powerOfDistrict(this);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
-                getDistrictInHand().remove(i);
+                getDistrictInHand().remove(district);
                 return "a new " + district.getName();
             }
         }
         return "nothing";
     }
+
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
@@ -91,7 +103,7 @@ public class RobotSarsor extends Robot{
         } else {
             if (aggressive) {
                 CharactersType aggressiveCharacter = availableCharacters.stream()
-                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN) || character.getType().equals(CharactersType.VOLEUR))
+                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN) || character.getType().equals(CharactersType.VOLEUR) || character.getType().equals(CharactersType.CONDOTTIERE) )
                         .findFirst()
                         .orElse(availableCharacters.get(0));
 

@@ -106,6 +106,7 @@ public class Power {
 
     public void magicien(Robot victim, DeckDistrict deck) {
 
+        int temp = bot.numberOfCardsDrawn ;
         int i = bot.generateChoice();
         if (i == 0) {
             swapCards(victim);
@@ -122,10 +123,11 @@ public class Power {
                 bot.addDistrict(listDistrictDrawn.get(j));
             }
             action.printMagicianSwapWithDeck();
+            bot.setNumberOfCardsDrawn(temp);
             System.out.println(bot.statusOfPlayer());
 
         }
-        bot.setNumberOfCardsDrawn(2);
+
     }
 
     public void assassin(Robot victim) {
