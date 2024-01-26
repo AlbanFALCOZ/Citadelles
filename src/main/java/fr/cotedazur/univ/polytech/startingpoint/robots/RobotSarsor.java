@@ -103,7 +103,7 @@ public class RobotSarsor extends Robot{
         } else {
             if (aggressive) {
                 CharactersType aggressiveCharacter = availableCharacters.stream()
-                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN) || character.getType().equals(CharactersType.VOLEUR) || character.getType().equals(CharactersType.CONDOTTIERE) )
+                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN.getType()) || character.getType().equals(CharactersType.VOLEUR.getType()) || character.getType().equals(CharactersType.CONDOTTIERE.getType()) )
                         .findFirst()
                         .orElse(availableCharacters.get(0));
 
