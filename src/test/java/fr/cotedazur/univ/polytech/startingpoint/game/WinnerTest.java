@@ -81,7 +81,7 @@ class WinnerTest {
         robot1.setScore(10);
         robot2.setScore(10);
         Winner winner = new Winner(List.of(robot1, robot2));
-        assertEquals("There is an equality! The winners are: Robot1, Robot2", winner.showWinners());
+        assertEquals("There is an equality o:! The winners are: Robot1, Robot2", winner.showWinners());
 
     }
 

@@ -8,6 +8,8 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * cette classe représente le moteur du jeu
@@ -23,7 +25,7 @@ public class GameEngine {
 
     private boolean systemPrint = false;
 
-    //private Power power = new Power("a power") ;
+    private static final Logger logger = Logger.getLogger(GameEngine.class.getName());
 
     /**
      * Constructeur de la classe GameEngine
@@ -40,6 +42,8 @@ public class GameEngine {
         this.bots = new ArrayList<>();
         round = new Round(bots);
         initializeBots();
+        System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
+        if (!systemPrint) logger.setLevel(Level.OFF);
     }
 
     public GameEngine() {
@@ -95,17 +99,15 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
-                bot.setCharacter(listCharacters.get(0));
-                if (systemPrint)
-                    System.out.println(bot.getName() + " With crown Picked " + listCharacters.get(0).getColor().getColorDisplay() + listCharacters.get(0).getRole() + bot.getRESET());
-                listCharacters.remove(listCharacters.get(0));
+               bot.pickCharacter(listCharacters);
+                logger.info(bot.getName() + " With crown Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
+
             }
         }
         for (Robot bot : bots) {
             if (!bot.getHasCrown()) {
-                bot.setCharacter(listCharacters.get(i));
-                if (systemPrint)
-                    System.out.println(bot.getName() + " Picked " + listCharacters.get(i).getColor().getColorDisplay() + listCharacters.get(i).getRole() + bot.getRESET());
+                bot.pickCharacter(listCharacters);
+                logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
                 i++;
             }
         }
@@ -148,10 +150,9 @@ public class GameEngine {
      */
     public void gameTurns() {
         round = new Round(bots, systemPrint, deckDistricts);
-        String turnStarting = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn ";
-        String turnEnding = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-        if (systemPrint)
-            System.out.println("=============================================================================GAME IS STARTING====================================================================\n");
+        String turnStarting = "\u001B[32m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn ";
+        String turnEnding = "\u001B[32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+        logger.info("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
         assignCrown();
 
@@ -160,16 +161,15 @@ public class GameEngine {
 
             for (Robot bot : bots) {
                 if (bot.getHasCrown()) {
-                    if (systemPrint)
-                        System.out.println(bot.getName() + " has crown and start the call of the characters");
+                    logger.info(bot.getName() + " has crown and start the call of the characters");
                 }
             }
             robotsPickCharacters();
-            if (systemPrint) System.out.println(turnStarting + comptTurn + " is starting" + turnEnding);
+            logger.info(turnStarting + comptTurn + " is starting" + turnEnding);
             bots.sort(Comparator.comparingInt(bot -> bot.getCharacter().getNumber()));
 
             round.playTurns();
-            if (systemPrint) System.out.println(turnStarting + comptTurn + " is over" + turnEnding);
+            logger.info(turnStarting + comptTurn + " is over" + turnEnding);
             comptTurn++;
 
             round = new Round(bots, systemPrint, deckDistricts);
@@ -182,16 +182,16 @@ public class GameEngine {
             if (bot.hasEightDistrict()) {
                 bot.setScore(bot.getScore() + list[i]);
                 if(i!=0){
-                    System.out.println(bot.getName() + " gets 2 extra points for having 8 districts");
+                    logger.info(bot.getName() + " gets 2 extra points for having 8 districts");
                 } else {
-                    System.out.println(bot.getName() + " ended the game and earns 4 extra points");
+                    logger.info(bot.getName() + " ended the game and earns 4 extra points");
                 }
                 i++;
                 }
             }
         }
         Winner winner = new Winner(bots);
-        winner.miracleDistrictEffect();
+        //winner.miracleDistrictEffect();
 
 
     }
@@ -223,7 +223,7 @@ public class GameEngine {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
 
-                if (systemPrint) System.out.println("Destroyed character: " + destroyedCharacter.getColor().getColorDisplay() + destroyedCharacter.getRole() + bots.get(0).getRESET());
+                logger.info("Destroyed character: " + destroyedCharacter.getColor().getColorDisplay() + destroyedCharacter.getRole() + bots.get(0).getRESET());
 
             }
         }

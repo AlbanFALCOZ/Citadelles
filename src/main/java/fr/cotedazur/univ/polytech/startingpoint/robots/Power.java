@@ -7,6 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Power {
     public static final String MILITATE = "militaire";
@@ -15,10 +16,11 @@ public class Power {
     private ActionOfBotDuringARound action;
     private Robot bot;
 
+    private static final Logger logger = Logger.getLogger(Power.class.getName());
+
     public Power(Robot bot, ActionOfBotDuringARound action) {
         this.bot = bot;
         this.action = action;
-
     }
 
 
@@ -47,7 +49,7 @@ public class Power {
         if (i == 1) {
             bot.setChoice(0);
             bot.addGold(2);
-            action = new ActionOfBotDuringARound(bot);
+            action = new ActionOfBotDuringARound(bot,true);
             action.printActionOfBotWhoGainedGold(2);
 
         }
@@ -69,7 +71,7 @@ public class Power {
         List<DistrictsType> victimDistricts = victim.getCity();
 
         victimDistricts.sort(Comparator.comparingInt(DistrictsType::getCost).reversed());
-        System.out.println("City of " + victim.getName() + " : " + victimDistricts);
+        action.showCityOfBot(victim);
         for (DistrictsType district : victimDistricts) {
             boolean verify = canDestroyDistrict(victim, district);
             if (!district.getName().equals("Donjon") && (verify)) {
@@ -111,7 +113,7 @@ public class Power {
         if (i == 0) {
             swapCards(victim);
             action.printMagicianSwap(victim);
-            System.out.println(bot.statusOfPlayer());
+            action.showStatusOfBot();
         }
         if (i == 1) {
 
@@ -123,8 +125,9 @@ public class Power {
                 bot.addDistrict(listDistrictDrawn.get(j));
             }
             action.printMagicianSwapWithDeck();
-            bot.setNumberOfCardsDrawn(temp);
-            System.out.println(bot.statusOfPlayer());
+
+            action.showStatusOfBot();
+
 
         }
 

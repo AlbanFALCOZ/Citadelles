@@ -34,7 +34,7 @@ class RobotRandomTest {
 
     @Test
     void getRESET() {
-        assertEquals("\u001B[0m", RobotNora.getRESET());
+        assertEquals("\u001B[37m", RobotNora.getRESET());
     }
 
     @Test
@@ -159,18 +159,19 @@ class RobotRandomTest {
 
     @Test
     void showStatus() {
-        Robot RobotNora = new RobotRandom("Bot avec 8 golds");
-        RobotNora.setCharacter(CharactersType.ASSASSIN);
-        RobotNora.addGold(6);
-        System.out.println(RobotNora.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {}, city {}]", RobotNora.statusOfPlayer(false));
+
+        RobotRandom robotRandom = new RobotRandom("Bot avec 8 golds");
+        robotRandom.setCharacter(CharactersType.ASSASSIN);
+        robotRandom.addGold(6);
+        System.out.println(robotRandom.statusOfPlayer());
+        assertEquals("\u001B[37m[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), \u001B[33m8 golds\u001B[37m, hand {}, city {}]", robotRandom.statusOfPlayer(false));
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
-        RobotNora.addDistrict(district);
-        System.out.println(RobotNora.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 8 golds, hand {(Bibliothèque,6)}, city {}]", RobotNora.statusOfPlayer(false));
-        RobotNora.tryBuild();
-        System.out.println(RobotNora.statusOfPlayer());
-        assertEquals("[Status of Bot avec 8 golds : role (Assassin), 2 golds, hand {}, city {(Bibliothèque,6)}]", RobotNora.statusOfPlayer(false));
+        robotRandom.addDistrict(district);
+        System.out.println(robotRandom.statusOfPlayer());
+        assertEquals("\u001B[37m[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), \u001B[33m8 golds\u001B[37m, hand {(Bibliothèque,6)}, city {}]", robotRandom.statusOfPlayer(false));
+        robotRandom.tryBuild();
+        System.out.println(robotRandom.statusOfPlayer());
+        assertEquals("\u001B[37m[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), \u001B[33m2 golds\u001B[37m, hand {}, city {(Bibliothèque,6)}]", robotRandom.statusOfPlayer(false));
     }
 
     @Test
