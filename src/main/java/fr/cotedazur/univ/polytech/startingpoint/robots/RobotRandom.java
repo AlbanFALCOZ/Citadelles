@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import java.util.List;
@@ -61,31 +62,12 @@ public class RobotRandom extends Robot {
         return (int) (Math.random() * 2);
     }
 
-    @Override
-    public List<DistrictsType> manufacture(DeckDistrict deck) {
-        List<DistrictsType> listOfDistrictPicked = new ArrayList<>();
-        if (getGolds() >= 3) {
-            setGolds(getGolds() - 3); // dépense 3 or
-            for (int i = 0; i < 3; i++) {
-                DistrictsType card = deck.getDistrictsInDeck();
-                listOfDistrictPicked.add(card);
-                addDistrict(card);
-            }
-        }
-        return listOfDistrictPicked;
-    }
 
     @Override
-    public List<DistrictsType> laboratoire(DeckDistrict deck){
-        List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
-        if (getNumberOfDistrictInHand() >= 1) {
-            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
-            DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
-            listOfDistrictRemoved.add(card);
-            deck.addDistrictToDeck(card);
-            setGolds(getGolds()+1);
-        }
-        return listOfDistrictRemoved;
+    public void pickCharacter(List<CharactersType> availableCharacters) {
+        setCharacter(availableCharacters.get(0));
+        availableCharacters.remove(availableCharacters.get(0));
+
     }
 
 
