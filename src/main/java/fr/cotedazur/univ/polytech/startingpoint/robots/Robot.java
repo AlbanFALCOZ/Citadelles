@@ -257,6 +257,8 @@ public abstract class Robot{
     }
 
 
+    public abstract void chooseCharacter(List<CharactersType> availableCharacters);
+
     public abstract String tryBuild();
 
     public abstract List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
