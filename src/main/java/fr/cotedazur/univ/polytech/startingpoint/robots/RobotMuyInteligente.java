@@ -3,17 +3,14 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class RobotWithChoice extends Robot {
+public class RobotMuyInteligente extends Robot {
 
-    public RobotWithChoice(String name) {
+    public RobotMuyInteligente(String name) {
         super(name);
-        super.setTypeOfRobot("RobotWithChoice");
     }
 
     @Override
@@ -51,10 +48,9 @@ public class RobotWithChoice extends Robot {
             }
             i++;
         }
-        while (listDistrictToBuild.size() < getNumberOfCardsChosen())
+        while (listDistrictToBuild.size() < getNumberOfCardsChosen()) {
             listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
-
-
+        }
         for (DistrictsType districtNonChosen : listDistrict) {
             deck.addDistrictToDeck(districtNonChosen);
         }
@@ -71,9 +67,6 @@ public class RobotWithChoice extends Robot {
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters) {
         setCharacter(availableCharacters.get(0));
-        availableCharacters.remove(availableCharacters.get(0));
-
+        availableCharacters.remove(0);
     }
-
 }
-

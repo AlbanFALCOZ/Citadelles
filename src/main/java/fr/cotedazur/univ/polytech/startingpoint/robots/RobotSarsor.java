@@ -14,6 +14,7 @@ public class RobotSarsor extends Robot{
     public RobotSarsor(String name, boolean aggressive) {
         super(name);
         this.aggressive = aggressive;
+        super.setTypeOfRobot("RobotSarsor");
     }
 
     @Override
@@ -62,8 +63,11 @@ public class RobotSarsor extends Robot{
             }
             i++;
         }
-        while (listDistrictToBuild.size() < getNumberOfCardsChosen())
+
+        while (listDistrictToBuild.size() < getNumberOfCardsChosen()) {
             listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
+        }
+
 
 
         for (DistrictsType districtNonChosen : listDistrict) {

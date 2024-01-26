@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -38,8 +39,7 @@ public class Power {
         if (i == 0) {
             bot.setChoice(7);
             List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
-            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(0));
-            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(1));
+            listDistrictDrawn.addAll(bot.pickListOfDistrict(deck));
             List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn, deck);
             action.addListOfDistrict(listDistrictDrawn, listDistrictPicked);
             bot.addDistrict(listDistrictPicked);
@@ -142,32 +142,19 @@ public class Power {
     public void magicien(List<Robot> bots, DeckDistrict deck) {
         Robot victim = bot.chooseVictimForMagicien(bots);
         boolean doublon= doublon(victim);
-        int temp = bot.numberOfCardsDrawn ;
-
         //int i = bot.generateChoice();
         if (bot.calculateScoreInHand() < victim.calculateScoreInHand() && !doublon) {
-
             swapCards(victim);
             action.printMagicianSwap(victim);
             action.showStatusOfBot();
         }
         else if(doublon(bot) || doublonInHand()){
-
-            int a = bot.getNumberOfDistrictInHand();
-            bot.emptyListOfCardsInHand();
-            bot.setNumberOfCardsDrawn(a);
-            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
-            for (int j = 0; j < a; j++) {
-                bot.addDistrict(listDistrictDrawn.get(j));
-            }
-            bot.setNumberOfCardsDrawn(temp);
-            action.printMagicianSwapWithDeck();
-            action.showStatusOfBot();
-
-
+                int numberOfDistrictInHand = bot.getNumberOfDistrictInHand();
+                List<DistrictsType> listDistrictHandMagician = new ArrayList<>(bot.getDistrictInHand());
+                bot.emptyListOfCardsInHand();
+                for (; numberOfDistrictInHand > 0; numberOfDistrictInHand--) bot.addDistrict(deck.getDistrictsInDeck());
+                while (!listDistrictHandMagician.isEmpty()) deck.addDistrictToDeck(listDistrictHandMagician.remove(0));
         }
-
-        bot.setNumberOfCardsDrawn(2);
 }
 
     public void assassin(Robot victim) {
