@@ -12,8 +12,10 @@ public class Main {
 
 
     public static void main(String[] args) {
+
         //testBots();
         showGame();
+
     }
 
 
@@ -54,9 +56,11 @@ public class Main {
             //logger.info(winner.calculateScores());
             //logger.info(winner.showWinners());
         }
+
         logger.info("Nombre de parties : " + i);
         for (i = 0; i < listWinners.length; i++) {
             logger.info("Winrate N°" + i + " : " + (float) listWinners[i] / numberOfGames * 100 + "%");
+
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
