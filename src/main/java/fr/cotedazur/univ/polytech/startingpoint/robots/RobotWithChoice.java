@@ -14,23 +14,6 @@ public class RobotWithChoice extends Robot {
     }
 
     @Override
-    public String tryBuild() {
-        List<String> listDistrictName = new ArrayList<>();
-        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
-        for (int i = 0; i < getDistrictInHand().size(); i++) {
-            DistrictsType district = getDistrictInHand().get(i);
-            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this);
-                getCity().add(district);
-                setGolds(getGolds() - district.getCost());
-                getDistrictInHand().remove(i);
-                return "a new " + district.getName();
-            }
-        }
-        return "nothing";
-    }
-
-    @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();

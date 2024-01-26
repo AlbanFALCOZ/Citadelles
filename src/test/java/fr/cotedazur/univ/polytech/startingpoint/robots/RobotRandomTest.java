@@ -34,7 +34,7 @@ class RobotRandomTest {
 
     @Test
     void getRESET() {
-        assertEquals("\u001B[37m", robotRandom.getRESET());
+        assertEquals("\u001B[37m", RobotNora.getRESET());
     }
 
     @Test
