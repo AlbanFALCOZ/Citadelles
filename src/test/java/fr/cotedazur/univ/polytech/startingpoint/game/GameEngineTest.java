@@ -48,7 +48,7 @@ class GameEngineTest {
         Robot bot = gameEngine.getBots().get(0);
 
         bot.setCharacter(CharactersType.MARCHAND);
-        bot.setGolds(30);
+        bot.setGolds(40);
         bot.addDistrict(DistrictsType.PRISON);
         bot.addDistrict(DistrictsType.PALAIS);
         bot.addDistrict(DistrictsType.BIBLIOTHEQUE);
