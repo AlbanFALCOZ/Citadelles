@@ -25,7 +25,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void startTurnOfBot() {
-        logger.info("------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n");
+        logger.info("\u001B[32m------------------------------------------------------------The turn of " + bot.getName() + " is starting -----------------------------------------------------\n");
         showStatusOfBot();
     }
 
@@ -76,7 +76,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfBotWhoGainedGold(int goldGained) {
-        logger.info(bot.getName() + " earned " + goldGained + " golds. Total golds now: " + bot.getGolds());
+        logger.info(bot.getName() + " earned \u001B[33m"  + goldGained + " golds \u001B[37m. Total golds now: " + bot.getGolds());
     }
 
     public void printActionOfSellerBotWhoGainedGold() {
@@ -89,7 +89,7 @@ public class ActionOfBotDuringARound {
         if (goldsWon > 0)
             logger.info(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
         logger.info(bot.statusOfPlayer());
-        logger.info("\n  ------------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
+        logger.info("\n\u001B[32m  ------------------------------------------------------------The turn of " + bot.getName() + " is over ------------------------------------------------------------------");
     }
 
 

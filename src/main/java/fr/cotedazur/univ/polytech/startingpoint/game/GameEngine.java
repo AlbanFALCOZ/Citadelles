@@ -143,8 +143,8 @@ public class GameEngine {
      */
     public void gameTurns() {
         round = new Round(bots, systemPrint, deckDistricts);
-        String turnStarting = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn ";
-        String turnEnding = "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+        String turnStarting = "\u001B[32m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Turn ";
+        String turnEnding = "\u001B[32m+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
         logger.info("=============================================================================GAME IS STARTING====================================================================\n");
         int comptTurn = 1;
         assignCrown();
