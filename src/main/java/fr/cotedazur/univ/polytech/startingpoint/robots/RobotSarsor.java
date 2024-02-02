@@ -35,7 +35,7 @@ public class RobotSarsor extends Robot{
         for (int i = 0; i < orderedDistricts.size(); i++) {
             DistrictsType district = orderedDistricts.get(i);
             if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this);
+                district.powerOfDistrict(this,1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(district);

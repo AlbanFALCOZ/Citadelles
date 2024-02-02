@@ -67,7 +67,7 @@ public class Power {
     public boolean canDestroyDistrict(Robot victim, DistrictsType district) {
         int destructorGolds = bot.getGolds();
         boolean districtInCity = victim.getCity().contains(district);
-        return destructorGolds >= district.getCost() && districtInCity;
+        return destructorGolds >= district.getCost() && districtInCity && !victim.hasEightDistrict();
     }
 
 

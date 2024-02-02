@@ -57,7 +57,7 @@ public class GameEngine {
      */
     public void initializeBots() {
         String[] name = {"Alban", "Stacy", "Nora"};
-        RobotMuyInteligente sarsor = new RobotMuyInteligente("Sara") ;
+        RobotChoiceOfCharacter sarsor = new RobotChoiceOfCharacter("Sara") ;
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
         }
@@ -90,7 +90,6 @@ public class GameEngine {
      * on affiche le personnage de chaque robot
      */
     public void robotsPickCharacters() {
-        int i = 1;
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
         destroyCharacters(listCharacters);
         Collections.shuffle(listCharacters);
@@ -110,7 +109,6 @@ public class GameEngine {
                 listOfThreeBots.remove(bot);
                 bot.pickCharacter(listCharacters, listOfThreeBots);
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
-                i++;
             }
         }
     }
