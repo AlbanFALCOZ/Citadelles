@@ -132,7 +132,7 @@ public enum DistrictsType {
             player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn() + val);
         }
         if (name.equals("Bibliothèque")) {
-            if (player.getNumberOfCardsChosen() < 2) player.setNumberOfCardsChosen(player.getNumberOfCardsChosen() + val);
+            player.setNumberOfCardsChosen(player.getNumberOfCardsChosen() + val);
         }
 
     }

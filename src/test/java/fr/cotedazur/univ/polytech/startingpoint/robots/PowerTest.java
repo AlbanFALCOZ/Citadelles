@@ -190,4 +190,40 @@ class PowerTest {
         //Le condottière ne peut pas attaquer un joueur qui a déjà fini de construire ses 8 batiments
     }
 
+    @Test
+    void testCondottiereDetruitObservatoire() {
+        RobotRandom robotDestructeur = new RobotRandom("Condottiere");
+        robotDestructeur.setCharacter(CharactersType.CONDOTTIERE);
+        RobotRandom robotVictim = new RobotRandom("Victim");
+        robotVictim.setCharacter(CharactersType.MAGICIEN);
+        robotVictim.setGolds(100);
+        robotDestructeur.setGolds(100);
+        robotVictim.addDistrict(DistrictsType.OBSERVATOIRE);
+        assertEquals(2,robotVictim.numberOfCardsDrawn);
+        robotVictim.tryBuild();
+        assertEquals(3,robotVictim.numberOfCardsDrawn);
+        Power power = new Power(robotDestructeur,new ActionOfBotDuringARound(robotDestructeur,true));
+        power.condottiere(robotVictim);
+        assertEquals(0,robotVictim.getNumberOfDistrictInCity());
+        assertEquals(2,robotVictim.numberOfCardsDrawn);
+    }
+
+    @Test
+    void testCondottiereDetruitBibliotheque() {
+        RobotRandom robotDestructeur = new RobotRandom("Condottiere");
+        robotDestructeur.setCharacter(CharactersType.CONDOTTIERE);
+        RobotRandom robotVictim = new RobotRandom("Victim");
+        robotVictim.setCharacter(CharactersType.MAGICIEN);
+        robotVictim.setGolds(100);
+        robotDestructeur.setGolds(100);
+        robotVictim.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        assertEquals(1,robotVictim.numberOfCardsChosen);
+        robotVictim.tryBuild();
+        assertEquals(2,robotVictim.numberOfCardsChosen);
+        Power power = new Power(robotDestructeur,new ActionOfBotDuringARound(robotDestructeur,true));
+        power.condottiere(robotVictim);
+        assertEquals(0,robotVictim.getNumberOfDistrictInCity());
+        assertEquals(1,robotVictim.numberOfCardsChosen);
+    }
+
 }

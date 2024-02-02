@@ -83,6 +83,7 @@ public class Power {
             if (!district.getName().equals("Donjon") && (verify)) {
                 if (bot.getCharacter().getType().equals(MILITATE) &&
                         !victim.getCharacter().getType().equals(RELIGIOUS)) {
+                    district.powerOfDistrict(victim,-1);
                     victim.getCity().remove(district);
                     int goldsAfterDestruction = destructorGolds - district.getCost();
                     bot.setGolds(goldsAfterDestruction + 1);
