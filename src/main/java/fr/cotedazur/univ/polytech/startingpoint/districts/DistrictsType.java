@@ -15,8 +15,6 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
  */
 public enum DistrictsType {
 
-
-
     MANOIR("Manoir", 3, Colors.YELLOW, 3, "noble"),
     CHATEAU("Château", 4, Colors.YELLOW, 4, "noble"),
     PALAIS("Palais", 5, Colors.YELLOW, 5, "noble"),
@@ -53,9 +51,6 @@ public enum DistrictsType {
     CIMETIERE("Cimetière", 5, Colors.PURPLE, 5, "default"),
     UNIVERSITE("Université", 6, Colors.PURPLE, 8, "default"),
     DRACOPORT("Dracoport", 6, Colors.PURPLE, 8, "default")   ;
-
-
-
 
 
 

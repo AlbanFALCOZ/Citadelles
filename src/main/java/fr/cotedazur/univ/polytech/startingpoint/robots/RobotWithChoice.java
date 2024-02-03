@@ -9,9 +9,26 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class RobotWithChoice extends Robot {
+public class RobotWithChoice extends Robot {
     public RobotWithChoice(String name) {
         super(name);
+    }
+
+    @Override
+    public String tryBuild() {
+        List<String> listDistrictName = new ArrayList<>();
+        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
+        for (int i = 0; i < getDistrictInHand().size(); i++) {
+            DistrictsType district = getDistrictInHand().get(i);
+            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+                district.powerOfDistrict(this);
+                getCity().add(district);
+                setGolds(getGolds() - district.getCost());
+                getDistrictInHand().remove(i);
+                return "a new " + district.getName();
+            }
+        }
+        return "nothing";
     }
 
     @Override

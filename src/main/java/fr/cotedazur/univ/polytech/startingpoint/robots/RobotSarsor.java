@@ -83,19 +83,6 @@ public class RobotSarsor extends Robot{
     }
 
     @Override
-    public List<DistrictsType> laboratoire(DeckDistrict deck){
-        List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
-        if (getNumberOfDistrictInHand() >= 1) {
-            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
-            DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
-            listOfDistrictRemoved.add(card);
-            deck.addDistrictToDeck(card);
-            setGolds(getGolds()+1);
-        }
-        return listOfDistrictRemoved;
-    }
-
-    @Override
     public void pickCharacter(List<CharactersType> availableCharacters) {
         if (getHasCrown()) {
             setCharacter(availableCharacters.get(0));
@@ -103,7 +90,7 @@ public class RobotSarsor extends Robot{
         } else {
             if (aggressive) {
                 CharactersType aggressiveCharacter = availableCharacters.stream()
-                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN) || character.getType().equals(CharactersType.VOLEUR) || character.getType().equals(CharactersType.CONDOTTIERE) )
+                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN.getType()) || character.getType().equals(CharactersType.VOLEUR.getType()) || character.getType().equals(CharactersType.CONDOTTIERE.getType()) )
                         .findFirst()
                         .orElse(availableCharacters.get(0));
 
@@ -114,20 +101,6 @@ public class RobotSarsor extends Robot{
                 availableCharacters.remove(0);
             }
         }
-    }
-
-    @Override
-    public List<DistrictsType> manufacture(DeckDistrict deck) {
-        List<DistrictsType> listOfDistrictPicked = new ArrayList<>();
-        if (getGolds() >= 3) {
-            setGolds(getGolds() - 3); // dépense 3 or
-            for (int i = 0; i < 3; i++) {
-                DistrictsType card = deck.getDistrictsInDeck();
-                listOfDistrictPicked.add(card);
-                addDistrict(card);
-            }
-        }
-        return listOfDistrictPicked;
     }
 
 

@@ -3,12 +3,17 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import java.util.List;
-import java.util.ArrayList;
 
-public class RobotRandom extends Robot {
+import java.util.*;
 
-    public RobotRandom(String name) {
+public class RobotDiscrete extends Robot{
+
+    private static final String NOBLE = "noble";
+    private static final String RELIGIOUS = "religieux";
+    private static final String MILITARY = "militaire";
+    private static final String COMMERCIAL = "marchand";
+
+    public RobotDiscrete(String name) {
         super(name);
     }
 
@@ -29,6 +34,49 @@ public class RobotRandom extends Robot {
         return "nothing";
     }
 
+
+    @Override
+    public int generateChoice() {
+        if (getDistrictInHand().isEmpty()) return 0;
+        if (!canBuildADistrictInHand()) return 1;
+        return (int) (Math.random() * 2);
+    }
+
+    public int countDistrictsByType(String type) {
+        return (int) getCity().stream()
+                .filter(district -> district.getType().equals(type))
+                .count();
+    }
+
+    public int countDistrictsInHandByType(String type) {
+        return (int) getDistrictInHand().stream()
+                .filter(district -> district.getType().equals(type))
+                .count();
+    }
+
+    @Override
+    public void pickCharacter(List<CharactersType> availableCharacters) {
+        Map<CharactersType, Integer> characterCounts = new HashMap<>();
+        characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));
+        characterCounts.put(CharactersType.EVEQUE, countDistrictsByType(RELIGIOUS) + countDistrictsInHandByType(RELIGIOUS));
+        characterCounts.put(CharactersType.CONDOTTIERE, countDistrictsByType(MILITARY) + countDistrictsInHandByType(MILITARY));
+        characterCounts.put(CharactersType.MARCHAND, countDistrictsByType(COMMERCIAL) + countDistrictsInHandByType(COMMERCIAL));
+
+        List<CharactersType> priorityOrder = characterCounts.entrySet().stream()
+                .sorted(Map.Entry.<CharactersType, Integer>comparingByValue().reversed())
+                .map(Map.Entry::getKey)
+                .toList();
+
+        for (CharactersType character : priorityOrder) {
+            if (availableCharacters.contains(character)) {
+                setCharacter(character);
+                availableCharacters.remove(character);
+                break;
+            }
+        }
+    }
+
+    @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
@@ -55,25 +103,4 @@ public class RobotRandom extends Robot {
         }
         return listDistrictToBuild;
     }
-
-    @Override
-    public int generateChoice() {
-        return (int) (Math.random() * 2);
-    }
-
-
-    @Override
-    public void pickCharacter(List<CharactersType> availableCharacters) {
-        setCharacter(availableCharacters.get(0));
-        availableCharacters.remove(availableCharacters.get(0));
-
-    }
-
-
 }
-
-
-
-
-
-

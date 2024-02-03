@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
 
@@ -58,15 +59,18 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        String[] name = {"Alban", "Stacy", "Nora"};
+        String[] name = {"Alban", "Nora"};
         RobotSarsor sarsor = new RobotSarsor("Sara" , true) ;
+        RobotDiscrete gentil = new RobotDiscrete("Stacy") ;
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
         }
-        for (int i = 0; i < 3; i++) {
+        for(int k = 0 ; k < 4 ; k++){
+            gentil.addDistrict(deckDistricts.getDistrictsInDeck());
+        }
+        for (int i = 0; i < 2; i++) {
             Robot bot;
-            if (i == 0) bot = new RobotRandom(name[i]);
-            else bot = new RobotRandom(name[i]);
+            bot = new RobotRandom(name[i]);
             for (int j = 0; j < 4; j++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
 
@@ -74,6 +78,7 @@ public class GameEngine {
             bots.add(bot);
         }
         bots.add(sarsor) ;
+        bots.add(gentil) ;
 
     }
 
@@ -100,7 +105,7 @@ public class GameEngine {
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
                bot.pickCharacter(listCharacters);
-                logger.info(bot.getName() + " With crown Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
+               logger.info(bot.getName() + " With crown Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
 
             }
         }
