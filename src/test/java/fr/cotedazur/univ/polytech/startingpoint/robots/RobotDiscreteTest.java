@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,4 +91,63 @@ class RobotDiscreteTest {
         assertFalse(robot.getDistrictInHand().isEmpty());
     }
 
+
+    @Test
+    void generateChoice() {
+        assertEquals(0, robot.generateChoice());
+    }
+
+    @Test
+    void compareByType() {
+    }
+
+    @Test
+    void pickDistrictCard() {
+        Robot robot = new RobotDiscrete("TestRobot");
+        DeckDistrict deck = new DeckDistrict();
+        robot.setCharacter(CharactersType.EVEQUE);
+
+        List<DistrictsType> listDistrict = new ArrayList<>();
+
+        // le personnage est de type religieux et l'un des quartiers choisis est religieux
+        listDistrict.add(DistrictsType.CASERNE);
+        listDistrict.add(DistrictsType.MONASTERE);
+
+        robot.getCity().add(DistrictsType.CHATEAU);
+        robot.getDistrictInHand().add(DistrictsType.CASERNE);
+        List<DistrictsType> listDistrictPicked = robot.pickDistrictCard(listDistrict, deck);
+
+        assertTrue(listDistrictPicked.contains(DistrictsType.MONASTERE));
+        assertEquals(1, listDistrictPicked.size());
+        assertEquals(1, listDistrict.size());
+
+    }
+
+    @Test
+    void pickDistrictCard_shouldNotPickDistrictsIfNotEnoughGold() {
+        Robot robot = new RobotDiscrete("TestRobot");
+        DeckDistrict deck = new DeckDistrict();
+        robot.setCharacter(CharactersType.EVEQUE);
+
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        listDistrict.add(DistrictsType.CASERNE);
+        listDistrict.add(DistrictsType.TEMPLE);
+
+        robot.getCity().add(DistrictsType.CHATEAU);
+        robot.getDistrictInHand().add(DistrictsType.PALAIS);
+        List<DistrictsType> listDistrictPicked = robot.pickDistrictCard(listDistrict, deck);
+
+        assertTrue(listDistrictPicked.contains(DistrictsType.CASERNE));
+        assertEquals(1, listDistrict.size());
+
+        /*// le personnage est de type noble et l'un des quartiers choisis est noble
+        listDistrict.add(DistrictsType.MANOIR);
+        robot.setCharacter(CharactersType.ROI);
+        robot.getDistrictInHand().add(DistrictsType.MANOIR);
+        List<DistrictsType> listDistrictPickedWithType = robot.pickDistrictCard(listDistrict, deck);
+        assertEquals(DistrictsType.CASERNE, listDistrictPickedWithType);
+        assertEquals(1, listDistrictPickedWithType.size());
+        assertEquals(1, listDistrict.size());
+    }*/
+    }
 }

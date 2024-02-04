@@ -113,7 +113,7 @@ public abstract class Robot{
         this.character = character;
     }
 
-    public ArrayList<DistrictsType> getCity() {
+    public List<DistrictsType> getCity() {
         return city;
     }
 

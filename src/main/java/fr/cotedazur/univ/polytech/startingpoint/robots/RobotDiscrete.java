@@ -38,8 +38,8 @@ public class RobotDiscrete extends Robot{
     @Override
     public int generateChoice() {
         if (getDistrictInHand().isEmpty()) return 0;
-        if (!canBuildADistrictInHand()) return 1;
-        return (int) (Math.random() * 2);
+        else if (getGolds() == 0) return 1;
+        else return (int) (Math.random()*2);
     }
 
     public int countDistrictsByType(String type) {
@@ -76,31 +76,43 @@ public class RobotDiscrete extends Robot{
         }
     }
 
+
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int costOfDistrictToBeBuilt = 0;
         int indice = 0;
-        int i = 0;
-        while (i < listDistrict.size()) {
-            if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= getGolds()) {
-                costOfDistrictToBeBuilt += listDistrict.get(i).getCost();
-                listDistrictToBuild.add(listDistrict.remove(i));
-                i--;
-                indice++;
-                if (indice == getNumberOfCardsChosen()) break;
+        boolean sameTypeFound = false;
+        for (DistrictsType currentDistrict : listDistrict) {
+            if (!this.getCity().contains(currentDistrict) && !this.getDistrictInHand().contains(currentDistrict)){
+                if (currentDistrict.getType().equals(this.getCharacter().getType())) {
+                    listDistrictToBuild.add(currentDistrict);
+                    listDistrict.remove(currentDistrict);
+                    indice++;
+                    sameTypeFound = true;
+                } else if (!sameTypeFound && currentDistrict.getCost() - costOfDistrictToBeBuilt <= getGolds()) {
+                    costOfDistrictToBeBuilt += currentDistrict.getCost();
+                    listDistrictToBuild.add(currentDistrict);
+                    listDistrict.remove(currentDistrict);
+                    indice++;
 
+                }
+                else{
+                    listDistrictToBuild.add(currentDistrict);
+                    listDistrict.remove(currentDistrict);
+                    indice++;
+                }
             }
-            i++;
-        }
-        while (listDistrictToBuild.size() < getNumberOfCardsChosen())
-            listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
+            if (indice == getNumberOfCardsChosen()) break;
 
+        }
 
         for (DistrictsType districtNonChosen : listDistrict) {
             deck.addDistrictToDeck(districtNonChosen);
         }
         return listDistrictToBuild;
     }
+
+
 }
