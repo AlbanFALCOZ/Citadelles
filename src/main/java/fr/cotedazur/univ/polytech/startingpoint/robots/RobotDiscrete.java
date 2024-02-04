@@ -39,10 +39,9 @@ public class RobotDiscrete extends Robot {
 
     @Override
     public int generateChoice() {
-        return 0;
-        /*if (getDistrictInHand().isEmpty()) return 0;
+        if (getDistrictInHand().isEmpty()) return 0;
         else if (getGolds() == 0) return 1;
-        else return (int) (Math.random() * 2);*/
+        else return (int) (Math.random() * 2);
     }
 
     public int countDistrictsByType(String type) {
@@ -70,14 +69,24 @@ public class RobotDiscrete extends Robot {
                 .map(Map.Entry::getKey)
                 .toList();
 
+        CharactersType chosenCharacter = null;
+
         for (CharactersType character : priorityOrder) {
             if (availableCharacters.contains(character)) {
-                setCharacter(character);
+                chosenCharacter = character;
                 availableCharacters.remove(character);
                 break;
             }
         }
+
+        if (chosenCharacter == null && !availableCharacters.isEmpty()) {
+            chosenCharacter = availableCharacters.get(0);
+            availableCharacters.remove(0);
+        }
+
+        setCharacter(chosenCharacter);
     }
+
 
 
     @Override
