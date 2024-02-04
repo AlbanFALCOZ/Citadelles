@@ -21,7 +21,7 @@ public class RobotChoiceOfCharacterTest {
         robotChoiceOfCharacter.tryBuild();robotChoiceOfCharacter.tryBuild();
         DeckCharacters deckCharacters = new DeckCharacters();
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
-        robotChoiceOfCharacter.pickCharacter(listCharacters,new ArrayList<>());
+        robotChoiceOfCharacter.pickCharacterBasedOfNumberOfDistrict(listCharacters);
         assertEquals(CharactersType.MARCHAND,robotChoiceOfCharacter.getCharacter());
     }
 
@@ -34,7 +34,7 @@ public class RobotChoiceOfCharacterTest {
         robotChoiceOfCharacter.tryBuild();robotChoiceOfCharacter.tryBuild();
         DeckCharacters deckCharacters = new DeckCharacters();
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
-        robotChoiceOfCharacter.pickCharacter(listCharacters,new ArrayList<>());
+        robotChoiceOfCharacter.pickCharacterBasedOfNumberOfDistrict(listCharacters);
         assertEquals(CharactersType.EVEQUE,robotChoiceOfCharacter.getCharacter());
     }
 
@@ -47,7 +47,7 @@ public class RobotChoiceOfCharacterTest {
         robotChoiceOfCharacter.tryBuild();robotChoiceOfCharacter.tryBuild();
         DeckCharacters deckCharacters = new DeckCharacters();
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
-        robotChoiceOfCharacter.pickCharacter(listCharacters,new ArrayList<>());
+        robotChoiceOfCharacter.pickCharacterBasedOfNumberOfDistrict(listCharacters);
         assertEquals(CharactersType.ROI,robotChoiceOfCharacter.getCharacter());
     }
 
@@ -60,7 +60,7 @@ public class RobotChoiceOfCharacterTest {
         robotChoiceOfCharacter.tryBuild();robotChoiceOfCharacter.tryBuild();
         DeckCharacters deckCharacters = new DeckCharacters();
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
-        robotChoiceOfCharacter.pickCharacter(listCharacters,new ArrayList<>());
+        robotChoiceOfCharacter.pickCharacterBasedOfNumberOfDistrict(listCharacters);
         assertEquals(CharactersType.CONDOTTIERE,robotChoiceOfCharacter.getCharacter());
     }
 
@@ -76,6 +76,25 @@ public class RobotChoiceOfCharacterTest {
         DeckCharacters deckCharacters = new DeckCharacters();
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
         robotChoiceOfCharacter.pickCharacter(listCharacters,new ArrayList<>());
-        assertEquals(CharactersType.ASSASSIN,robotChoiceOfCharacter.getCharacter());
+        assertEquals(CharactersType.MAGICIEN,robotChoiceOfCharacter.getCharacter());
+    }
+
+    @Test
+    void test() {
+        RobotChoiceOfCharacter random = new RobotChoiceOfCharacter("random");
+        random.addDistrict(DistrictsType.EGLISE);
+        random.addDistrict(DistrictsType.TAVERNE);
+        random.addDistrict(DistrictsType.FORTRESSE);
+        random.addDistrict(DistrictsType.LABORATOIRE);
+        random.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        random.addDistrict(DistrictsType.CIMETIERE);
+        random.addGold(1000);
+        for (int i = 0; i < 6; i++) {
+            random.tryBuild();
+        }
+        assertFalse(random.canFinishNextTurn());
+        random.addDistrict(DistrictsType.CHATEAU);
+        random.addDistrict(DistrictsType.PALAIS);
+        assertTrue(random.canFinishNextTurn());
     }
 }

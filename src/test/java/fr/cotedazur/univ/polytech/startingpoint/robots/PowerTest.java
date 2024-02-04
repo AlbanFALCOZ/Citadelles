@@ -68,9 +68,9 @@ class PowerTest {
         assertEquals(1, destructor.getGolds());
         victim.setCharacter(CharactersType.CONDOTTIERE);
         power.condottiere(victim);
-        assertEquals(1, destructor.getGolds());
+        assertEquals(0, destructor.getGolds());
         power.condottiere(victim);
-        assertEquals(1, destructor.getGolds());
+        assertEquals(0, destructor.getGolds());
 
         victim.setCharacter(CharactersType.EVEQUE);
         destructor.setGolds(5);

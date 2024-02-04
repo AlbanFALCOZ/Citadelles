@@ -111,6 +111,8 @@ public class GameEngine {
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
             }
         }
+
+        logger.info("Destroyed character: " + listCharacters.get(0).getColor().getColorDisplay() + listCharacters.get(0).getRole() + bots.get(0).getRESET());
     }
 
 
@@ -190,9 +192,6 @@ public class GameEngine {
                 }
             }
         }
-        Winner winner = new Winner(bots);
-        //winner.miracleDistrictEffect();
-
 
     }
     /**
@@ -219,7 +218,7 @@ public class GameEngine {
     public void destroyCharacters(List<CharactersType> charactersInHand) {
         charactersInHand.remove(CharactersType.ROI);
         Collections.shuffle(charactersInHand, new Random());
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
 
