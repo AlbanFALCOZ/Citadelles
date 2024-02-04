@@ -6,7 +6,9 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 
 import java.util.*;
 
-public class RobotDiscrete extends Robot{
+import static fr.cotedazur.univ.polytech.startingpoint.game.Main.logger;
+
+public class RobotDiscrete extends Robot {
 
     private static final String NOBLE = "noble";
     private static final String RELIGIOUS = "religieux";
@@ -37,9 +39,10 @@ public class RobotDiscrete extends Robot{
 
     @Override
     public int generateChoice() {
-        if (getDistrictInHand().isEmpty()) return 0;
+        return 0;
+        /*if (getDistrictInHand().isEmpty()) return 0;
         else if (getGolds() == 0) return 1;
-        else return (int) (Math.random()*2);
+        else return (int) (Math.random() * 2);*/
     }
 
     public int countDistrictsByType(String type) {
@@ -81,30 +84,16 @@ public class RobotDiscrete extends Robot{
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
-        int costOfDistrictToBeBuilt = 0;
         int indice = 0;
-        boolean sameTypeFound = false;
-        for (DistrictsType currentDistrict : listDistrict) {
-            if (!this.getCity().contains(currentDistrict) && !this.getDistrictInHand().contains(currentDistrict)){
-                if (currentDistrict.getType().equals(this.getCharacter().getType())) {
-                    listDistrictToBuild.add(currentDistrict);
-                    listDistrict.remove(currentDistrict);
-                    indice++;
-                    sameTypeFound = true;
-                } else if (!sameTypeFound && currentDistrict.getCost() - costOfDistrictToBeBuilt <= getGolds()) {
-                    costOfDistrictToBeBuilt += currentDistrict.getCost();
-                    listDistrictToBuild.add(currentDistrict);
-                    listDistrict.remove(currentDistrict);
-                    indice++;
 
-                }
-                else{
-                    listDistrictToBuild.add(currentDistrict);
-                    listDistrict.remove(currentDistrict);
-                    indice++;
-                }
-            }
-            if (indice == getNumberOfCardsChosen()) break;
+        indice = chooseDistrictByType(listDistrict, indice, listDistrictToBuild);
+
+        indice = chooseSpecialDistrict(listDistrict, indice, listDistrictToBuild);
+
+        indice = chooseAnyDistrict(listDistrict, indice, listDistrictToBuild);
+
+        if (indice < getNumberOfCardsChosen()){
+            logger.info(this.getName() + " can't choose any district because they are already in his hand or city ");
 
         }
 
@@ -113,6 +102,61 @@ public class RobotDiscrete extends Robot{
         }
         return listDistrictToBuild;
     }
+
+    private int chooseAnyDistrict(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
+        if (indice < getNumberOfCardsChosen()){
+            for (DistrictsType currentDistrict : listDistrict) {
+                if (!isDistrictInCityOrHand(currentDistrict) ) {
+                    indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
+                    logger.info(this.getName() + " chose " + currentDistrict.getName() + " because it is not in his hand or city.");
+                }
+                if (indice == getNumberOfCardsChosen()) break;
+            }
+        }
+        return indice;
+    }
+
+    private int chooseSpecialDistrict(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
+        if (indice < getNumberOfCardsChosen()){
+            for (DistrictsType currentDistrict : listDistrict) {
+                if (!isDistrictInCityOrHand(currentDistrict) && isSpecialDistrictType(currentDistrict.getType())) {
+                    indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
+                    logger.info(this.getName() + " chose " + currentDistrict.getName() + " because it is a special district and the most expensive and is not in his hand or city.");
+                }
+                if (indice == getNumberOfCardsChosen()) break;
+            }
+        }
+        return indice;
+    }
+
+    private int chooseDistrictByType(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
+        for (DistrictsType currentDistrict : listDistrict) {
+            if (!isDistrictInCityOrHand(currentDistrict) && (currentDistrict.getType().equals(this.getCharacter().getType()))) {
+                indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
+                logger.info(this.getName() + " chose " + currentDistrict.getName() + " because it is the same type as his character.");
+
+            }
+            if (indice == getNumberOfCardsChosen()) break;
+        }
+        return indice;
+    }
+
+    private boolean isDistrictInCityOrHand(DistrictsType district) {
+        return this.getCity().contains(district) || this.getDistrictInHand().contains(district);
+    }
+
+    private boolean isSpecialDistrictType(String type) {
+        return type.equals(NOBLE) || type.equals(RELIGIOUS) || type.equals(COMMERCIAL) || type.equals(MILITARY);
+    }
+
+    private int chooseDistrict(List<DistrictsType> listDistrict, DistrictsType currentDistrict, List<DistrictsType> listDistrictToBuild, int indice) {
+        listDistrictToBuild.add(currentDistrict);
+        listDistrict.remove(currentDistrict);
+        indice++;
+        return indice;
+    }
+
+
 
 
 }

@@ -82,7 +82,7 @@ public class Round {
                 .thenComparingInt(bot -> bot.getCharacter().getNumber());
 
 
-        Collections.sort(sortedBots, crownComparator);
+        sortedBots.sort(crownComparator);
         return sortedBots;
     }
 

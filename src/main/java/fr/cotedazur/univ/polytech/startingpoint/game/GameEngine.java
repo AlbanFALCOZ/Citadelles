@@ -97,7 +97,6 @@ public class GameEngine {
      * on affiche le personnage de chaque robot
      */
     public void robotsPickCharacters() {
-        int i = 1;
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
         destroyCharacters(listCharacters);
         Collections.shuffle(listCharacters);
@@ -113,7 +112,6 @@ public class GameEngine {
             if (!bot.getHasCrown()) {
                 bot.pickCharacter(listCharacters);
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
-                i++;
             }
         }
     }
