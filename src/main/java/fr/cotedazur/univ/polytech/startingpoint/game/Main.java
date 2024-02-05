@@ -76,9 +76,9 @@ public class Main {
             int numberOfGamesLost = numberOfGames - numberOfGamesWon - numberOfGamesWonButTied;
             float loseRate =(float) numberOfGamesLost / numberOfGames * 100;
             logger.info(listName[i] + " : " + "nombres de parties jouées : " + numberOfGames);
-            logger.info("-nombres de parties gagnées : " + numberOfGamesWon + "/" + numberOfGames + "soit " + winRate + "%");
-            logger.info("-nombres d'égalitées : " + numberOfGamesWonButTied + "/" + numberOfGames + "soit " + tieRate + "%");
-            logger.info("-nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + "soit " + loseRate + "%");
+            logger.info("-nombres de parties gagnées : " + numberOfGamesWon + "/" + numberOfGames + " soit " + winRate + "%");
+            logger.info("-nombres d'égalitées        : " + numberOfGamesWonButTied + "/" + numberOfGames + " soit " + tieRate + "%");
+            logger.info("-nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + " soit " + loseRate + "%");
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;

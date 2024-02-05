@@ -53,17 +53,6 @@ public class ActionOfBotDuringARound {
         String cardPicked = "";
 
 
-        for (int i = 0; i < listDistrictDrawn.size(); i++) {
-            DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
-            cardDrawn += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listDistrictDrawn.size() - 1) cardDrawn += ",";
-        }
-
-
-
-        logger.info("\u001B[37m" + bot.getName() + " drew the following cards : {" + cardDrawn + "}\u001B[0m");
-
-
         cardDrawn = getStringFromListOfDistrict(cardDrawn, listDistrictDrawn);
         logger.info(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
         cardPicked = getStringFromListOfDistrict(cardPicked, listDistrictPicked);
@@ -79,11 +68,6 @@ public class ActionOfBotDuringARound {
             cardPicked += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listDistrictPicked.size() - 1) cardPicked += ",";
         }
-
-
-        logger.info("\u001B[37m" + bot.getName() + " choose to pick : {" + cardPicked + "}\u001B[0m");
-        logger.info("\u001B[37m" + bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts\u001B[0m");
-
         return cardPicked;
 
     }

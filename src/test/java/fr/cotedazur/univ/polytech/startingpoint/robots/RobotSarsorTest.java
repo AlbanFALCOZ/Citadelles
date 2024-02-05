@@ -29,7 +29,7 @@ class RobotSarsorTest {
             assertTrue(robotSarsor.getCity().contains(DistrictsType.TOUR_DE_GUET));
             assertEquals(9, robotSarsor.getGolds());
         }
-        
+
 
     @Test
     void pickDistrictCardTest() {
