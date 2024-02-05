@@ -63,8 +63,41 @@ public class RobotAnalyzer extends Robot {
 
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
-        // ...
-        return listDistrict;
+        //obtient types uniques de districts dans la ville
+        Set<String> uniqueDistrictTypesInCity = getCity().stream().map(DistrictsType::getType).collect(Collectors.toSet());
+
+        //trie les districts tirés par leur score (décroissant) puis par coût (croissant)
+        listDistrict.sort(Comparator.comparingInt(DistrictsType::getScore).reversed().thenComparingInt(DistrictsType::getCost));
+
+        List<DistrictsType> chosenDistricts = new ArrayList<>();
+        int totalCost = 0;
+
+        for (DistrictsType district : listDistrict) {
+            if (totalCost + district.getCost() <= getGolds() && chosenDistricts.size() < getNumberOfCardsChosen()) {
+                //priorité aux districts dont le type n'est pas encore présent dans la ville
+                if (!uniqueDistrictTypesInCity.contains(district.getType())) {
+                    chosenDistricts.add(district);
+                    totalCost += district.getCost();
+                }
+            }
+        }
+
+        //si pas assez de districts uniques choisis: choisir les meilleurs parmi les restants
+        for (DistrictsType district : listDistrict) {
+            if (!chosenDistricts.contains(district) && totalCost + district.getCost() <= getGolds() && chosenDistricts.size() < getNumberOfCardsChosen()) {
+                chosenDistricts.add(district);
+                totalCost += district.getCost();
+            }
+        }
+
+        //remettre non choisis dans le deck
+        for (DistrictsType district : listDistrict) {
+            if (!chosenDistricts.contains(district)) {
+                deck.addDistrictToDeck(district);
+            }
+        }
+
+        return chosenDistricts;
     }
 
     @Override
