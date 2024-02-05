@@ -98,11 +98,37 @@ public class RobotAnalyzer extends Robot {
 
         return chosenDistricts;
     }
-
+    
     @Override
     public int generateChoice() {
-        // ...
-        return 0;
+        // Strat : si le robot peut construire un district rentable, il le fait
+        // Sinon: il prend des ressources
+
+        //obtenir les district dans la main qui peuvent être construits avec l'or actuel
+        List<DistrictsType> buildableDistricts = getDistrictInHand().stream()
+                .filter(district -> district.getCost() <= getGolds())
+                .collect(Collectors.toList());
+
+        //prendre des ressources.
+        if (buildableDistricts.isEmpty()) {
+            return 1;
+        }
+
+        //si peut construire un district, décider lequel construire:
+        //prend district avec le score le plus élevé par coût
+        Optional<DistrictsType> optionalDistrict = buildableDistricts.stream()
+                .max(Comparator.comparingDouble(district -> ((double) district.getScore()) / district.getCost()));
+
+        if (optionalDistrict.isPresent()) {
+            DistrictsType districtToBuild = optionalDistrict.get();
+            // district choisi a un bon avantage, le construire
+            if (districtToBuild.getScore() > 2) { // Le seuil de 2 est arbitraire
+                return 0; // 0 pour construire un district
+            }
+        }
+
+        //Si aucun district n'offre un avantage significatif, prendre des ressources
+        return 1; // 1 pour prendre des ressources
     }
 
     @Override
