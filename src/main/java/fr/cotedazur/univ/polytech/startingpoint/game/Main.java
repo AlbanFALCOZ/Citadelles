@@ -3,6 +3,8 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.startingpoint.arguments.CitadelleArguments;
+import fr.cotedazur.univ.polytech.startingpoint.gamestats.ParseFullGameStats;
+import fr.cotedazur.univ.polytech.startingpoint.gamestats.WriteStatsByLine;
 
 import java.util.logging.Logger;
 
@@ -14,7 +16,7 @@ public class Main {
     public static final Logger logger = Logger.getLogger(Main.class.getName());
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         CitadelleArguments citadelleArguments = new CitadelleArguments();
         JCommander commander = JCommander.newBuilder()
@@ -23,6 +25,11 @@ public class Main {
         commander.parse(args);
         if (citadelleArguments._2ThousandsGame()) testBots();
         if (citadelleArguments.isDemoMode()) showGame();
+        if (citadelleArguments.getCsvFilePath()){
+            testBots();
+            ParseFullGameStats.parseFullStats();
+        }
+
 
     }
 
@@ -68,7 +75,9 @@ public class Main {
                 }
             }
         }
+        WriteStatsByLine.writeDataLineByLine("===============================================Enregistrement des statistiques===============================================");
         logger.info("Nombre de parties : " + i);
+        WriteStatsByLine.writeDataLineByLine("Nombre de parties : " + i);
         for (i = 0; i < listWinners.length; i++) {
             int numberOfGamesWon = listWinners[i];
             float winRate =(float) numberOfGamesWon / numberOfGames * 100;
@@ -77,9 +86,13 @@ public class Main {
             int numberOfGamesLost = numberOfGames - numberOfGamesWon - numberOfGamesWonButTied;
             float loseRate =(float) numberOfGamesLost / numberOfGames * 100;
             logger.info(listName[i] + " : " + "nombres de parties jouées : " + numberOfGames);
+            WriteStatsByLine.writeDataLineByLine(listName[i] + " : " + "nombres de parties jouées : " + numberOfGames);
             logger.info("-nombres de parties gagnées : " + numberOfGamesWon + "/" + numberOfGames + "soit " + winRate + "%");
+            WriteStatsByLine.writeDataLineByLine("-nombres de parties gagnées : " + numberOfGamesWon + "/" + numberOfGames + "soit " + winRate + "%");
             logger.info("-nombres d'égalitées : " + numberOfGamesWonButTied + "/" + numberOfGames + "soit " + tieRate + "%");
+            WriteStatsByLine.writeDataLineByLine("-nombres d'égalitées : " + numberOfGamesWonButTied + "/" + numberOfGames + "soit " + tieRate + "%");
             logger.info("-nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + "soit " + loseRate + "%");
+            WriteStatsByLine.writeDataLineByLine("-nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + "soit " + loseRate + "%");
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
