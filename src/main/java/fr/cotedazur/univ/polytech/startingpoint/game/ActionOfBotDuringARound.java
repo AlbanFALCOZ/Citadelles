@@ -44,25 +44,27 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfBotWhoHasBuilt() {
-
         String cardDrawn = "";
         String cardPicked = "";
+
         for (int i = 0; i < listDistrictDrawn.size(); i++) {
             DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
             cardDrawn += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listDistrictDrawn.size()-1) cardDrawn += ",";
+            if (i < listDistrictDrawn.size() - 1) cardDrawn += ",";
         }
-        logger.info(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
+
+        logger.info("\u001B[37m" + bot.getName() + " drew the following cards : {" + cardDrawn + "}\u001B[0m");
+
         for (int i = 0; i < listDistrictPicked.size(); i++) {
             DistrictsType districtInListDistrict = listDistrictPicked.get(i);
             cardPicked += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listDistrictPicked.size()-1) cardPicked += ",";
-            //bot.addDistrict(districtInListDistrict);
+            if (i < listDistrictPicked.size() - 1) cardPicked += ",";
         }
 
-        logger.info(bot.getName() + " choose to pick : {" + cardPicked + "}");
-        logger.info(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+        logger.info("\u001B[37m" + bot.getName() + " choose to pick : {" + cardPicked + "}\u001B[0m");
+        logger.info("\u001B[37m" + bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts\u001B[0m");
     }
+
 
     private String getStringOfListOfDistrict(List<DistrictsType> listOfDistrict) {
         String stringOfDistricts = "";
@@ -153,6 +155,15 @@ public class ActionOfBotDuringARound {
     public void printManufactureAction(List<DistrictsType> listOfDistrictPicked) {
         logger.info("Thanks to the manufacture, " + bot.getName() + " lost 3 golds but added {" + getStringOfListOfDistrict(listOfDistrictPicked) + "} to his hand");
     }
+
+
+
+    public void printVictimAssassinedStrategy(Robot victim) {
+        logger.info(bot.getName() + " murdered " + victim.getCharacter().getRole() + "because he has" + victim.getGolds() + bot.getName() + "wants to slow the game");
+
+    }
+
+
 }
 
 

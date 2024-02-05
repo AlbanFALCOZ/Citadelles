@@ -9,8 +9,11 @@ import java.util.List;
 
 public class RobotMuyInteligente extends Robot {
 
+
+
     public RobotMuyInteligente(String name) {
         super(name);
+
     }
 
     @Override
@@ -65,8 +68,15 @@ public class RobotMuyInteligente extends Robot {
     }
 
     @Override
-    public void pickCharacter(List<CharactersType> availableCharacters) {
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
+        for (CharactersType charactersType : availableCharacters) {
+            setCharacter(charactersType);//On assigne le personnage au joueur temporairement pour calculer le nombre de district dans la cité du joueur de même couleur que celle du personnage
+            if (countBuildingsByType() >= 2) return;
+        }
         setCharacter(availableCharacters.get(0));
         availableCharacters.remove(0);
     }
+
+
+
 }

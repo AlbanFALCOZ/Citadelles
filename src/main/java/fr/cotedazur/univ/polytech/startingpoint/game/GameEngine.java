@@ -3,10 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
-import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
+import fr.cotedazur.univ.polytech.startingpoint.robots.*;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -16,6 +13,8 @@ import java.util.logging.Logger;
  * cette classe représente le moteur du jeu
  */
 public class GameEngine {
+
+
 
     private ArrayList<Robot> bots;
     private DeckDistrict deckDistricts;
@@ -59,12 +58,17 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        String[] name = {"Alban", "Stacy", "Nora"};
-        RobotSarsor sarsor = new RobotSarsor("Sara" , true) ;
+        String[] name = {"Stacy", "Nora"};
+
+        RobotSarsor sarsor = new RobotSarsor("Sara" ) ;
+
+        RobotMuyInteligente alabana = new RobotMuyInteligente("Alban"  ) ;
+
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
+            alabana.addDistrict(deckDistricts.getDistrictsInDeck());
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             Robot bot;
             if (i == 0) bot = new RobotWithChoice(name[i]);
             else bot = new RobotRandom(name[i]);
@@ -75,6 +79,7 @@ public class GameEngine {
             bots.add(bot);
         }
         bots.add(sarsor) ;
+        bots.add(alabana);
 
     }
 
@@ -100,14 +105,18 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
-               bot.pickCharacter(listCharacters);
+                List<Robot> listOfThreeBots = new ArrayList<>(bots);
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
                 logger.info(bot.getName() + " With crown Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
 
             }
         }
         for (Robot bot : bots) {
             if (!bot.getHasCrown()) {
-                bot.pickCharacter(listCharacters);
+                List<Robot> listOfThreeBots = new ArrayList<>(bots);
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
                 i++;
             }
