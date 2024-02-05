@@ -63,7 +63,7 @@ public class RobotDiscrete extends Robot {
         listDistrict.sort(Comparator.comparingInt(DistrictsType::getCost).reversed());
         for (DistrictsType district : listDistrict) {
             if (!listDistrictName.contains(district.getName()) && district.getCost() <= getGolds()){
-                district.powerOfDistrict(this);
+                district.powerOfDistrict(this, 1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(district);
