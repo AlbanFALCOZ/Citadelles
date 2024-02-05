@@ -78,12 +78,10 @@ public class Round {
     public List<Robot> sortRobots() {
         ArrayList<Robot> sortedBots = new ArrayList<>(bots);
 
-
         Comparator<Robot> crownComparator = Comparator.comparing((Robot bot) -> !bot.getHasCrown())
                 .thenComparingInt(bot -> bot.getCharacter().getNumber());
 
-
-        Collections.sort(sortedBots, crownComparator);
+        sortedBots.sort(crownComparator);
         return sortedBots;
     }
 

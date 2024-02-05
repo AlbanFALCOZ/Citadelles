@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static fr.cotedazur.univ.polytech.startingpoint.game.Main.logger;
+
 
 public class ActionOfBotDuringARound {
 
@@ -83,8 +85,11 @@ public class ActionOfBotDuringARound {
     }
 
     public void printBuildingAndPowerOfBot(String hasBuilt, int goldsWon) {
-        if (!hasBuilt.equals("nothing"))
-            logger.info(bot.getName() + " built " + hasBuilt + " and now has " + (bot.getGolds()-goldsWon) + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+        if (!hasBuilt.equals("nothing")) {
+            int golds = bot.getGolds() - goldsWon;
+            logger.info(bot.getName() + " built " + hasBuilt + " and now has " + golds + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+        }
+
         if (goldsWon > 0)
             logger.info(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
         logger.info(bot.statusOfPlayer());
@@ -151,6 +156,41 @@ public class ActionOfBotDuringARound {
 
     public void printManufactureAction(List<DistrictsType> listOfDistrictPicked) {
         logger.info("Thanks to the manufacture, " + bot.getName() + " lost 3 golds but added {" + getStringOfListOfDistrict(listOfDistrictPicked) + "} to his hand");
+    }
+
+    public void printPickAnyDistrict(DistrictsType currentDistrict) {
+        logger.info(bot.getName() + " chose " + currentDistrict.getName() + " because it is not in his hand or city.");
+    }
+
+    public void printPickSpecialDistrict(DistrictsType currentDistrict) {
+        logger.info(bot.getName() + " chose " + currentDistrict.getName() + " because it is a special district and the most expensive and is not in his hand or city.");
+    }
+
+    public void printPickDistrictByType(DistrictsType currentDistrict) {
+        logger.info(bot.getName() + " chose " + currentDistrict.getName() + " because it is the same type as his character.");
+    }
+
+    public void printCantPickDistrict() {
+        logger.info(bot.getName() + " can't choose any district because they are already in his hand or city ");
+    }
+
+    public void printBuildDistrictWithSameType(String district) {
+        logger.info(bot.getName() + " build " + district + " because it is the same type as his character.");
+
+    }
+
+    public void printBuildFrequentTypeDistrict(String district) {
+        logger.info(bot.getName() + " build " + district + " because it is the most frequent type.");
+
+    }
+
+    public void printPickCharacterWithPriority(CharactersType character) {
+        logger.info(bot.getName() + " chose " + character + " because he has the most districts of this type and it is available.");
+    }
+
+    public void printPickdefaultCharacter() {
+        logger.info(bot.getName() + " chose the first character in the list because he has no districts of any type.");
+
     }
 
     public void printCanFinishThisTurn() {
