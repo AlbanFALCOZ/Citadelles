@@ -69,16 +69,19 @@ public class GameEngine {
 
 
 
+
         Robot random = new RobotRandom("Nora") ;
         Robot sarsor = new RobotSarsor("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
 
 
+
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
 
         }
+
 
         for(int k = 0 ; k < 4 ; k++){
             gentil.addDistrict(deckDistricts.getDistrictsInDeck());
@@ -92,11 +95,11 @@ public class GameEngine {
              random.addDistrict(deckDistricts.getDistrictsInDeck());
 
         }
+
         bots.add(random);
         bots.add(choice);
         bots.add(sarsor) ;
         bots.add(gentil) ;
-
 
     }
 

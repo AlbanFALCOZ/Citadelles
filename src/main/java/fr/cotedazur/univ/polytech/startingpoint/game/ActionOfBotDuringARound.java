@@ -179,7 +179,6 @@ public class ActionOfBotDuringARound {
 
 
 
-
     public void printVictimAssassinedStrategy(Robot victim) {
         logger.info(bot.getName() + " murdered " + victim.getCharacter().getRole() + "because he has" + victim.getGolds() + bot.getName() + "wants to slow the game");
 

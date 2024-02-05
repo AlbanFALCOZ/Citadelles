@@ -196,7 +196,6 @@ public class RobotSarsor extends Robot{
     }
 
 
-
     private boolean isPreferredCharacter(CharactersType character) {
         if (character.getType().equals(CharactersType.CONDOTTIERE.getType()) && getGolds() > 5) {
             return true;
@@ -205,27 +204,6 @@ public class RobotSarsor extends Robot{
         }
         return character.getType().equals(CharactersType.VOLEUR.getType());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
