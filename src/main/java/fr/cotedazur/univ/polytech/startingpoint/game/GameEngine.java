@@ -56,12 +56,16 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        String[] name = {"Alban", "Stacy", "Nora"};
+        String[] name = {"Alban", "Stacy"};
         RobotChoiceOfCharacter sarsor = new RobotChoiceOfCharacter("Sara") ;
+        Robot rush = new RobotRush("Nora");
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
         }
-        for (int i = 0; i < 3; i++) {
+        for(int k = 0 ; k < 4 ; k++){
+            rush.addDistrict(deckDistricts.getDistrictsInDeck());
+        }
+        for (int i = 0; i < 2; i++) {
             Robot bot;
             if (i == 0) bot = new RobotWithChoice(name[i]);
             else bot = new RobotRandom(name[i]);
@@ -71,6 +75,7 @@ public class GameEngine {
             }
             bots.add(bot);
         }
+        bots.add(rush);
         bots.add(sarsor) ;
 
     }
