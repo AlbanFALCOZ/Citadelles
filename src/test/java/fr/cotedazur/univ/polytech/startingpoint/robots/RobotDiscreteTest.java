@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RobotDiscreteTest {
 
     private RobotDiscrete robot;
+    private List<Robot> bots = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
@@ -40,7 +41,7 @@ class RobotDiscreteTest {
         List<CharactersType> availableCharacters = new ArrayList<>(Arrays.asList(CharactersType.ROI, CharactersType.EVEQUE, CharactersType.CONDOTTIERE, CharactersType.MARCHAND));
         robot.getCity().addAll(Arrays.asList(DistrictsType.MANOIR, DistrictsType.CHATEAU, DistrictsType.PALAIS, DistrictsType.PORT, DistrictsType.MONASTERE));
         List<CharactersType> availableCharactersCopy = new ArrayList<>(availableCharacters);
-        robot.pickCharacter(availableCharactersCopy);
+        robot.pickCharacter(availableCharactersCopy, bots);
         assertEquals(CharactersType.ROI, robot.getCharacter());
     }
     @Test

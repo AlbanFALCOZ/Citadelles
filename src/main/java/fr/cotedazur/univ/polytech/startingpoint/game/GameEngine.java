@@ -103,14 +103,14 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
-               bot.pickCharacter(listCharacters);
+               bot.pickCharacter(listCharacters, bots);
                logger.info(bot.getName() + " With crown Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
 
             }
         }
         for (Robot bot : bots) {
             if (!bot.getHasCrown()) {
-                bot.pickCharacter(listCharacters);
+                bot.pickCharacter(listCharacters, bots);
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
             }
         }

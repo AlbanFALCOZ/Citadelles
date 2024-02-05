@@ -100,7 +100,7 @@ public class RobotDiscrete extends Robot {
     }
 
     @Override
-    public void pickCharacter(List<CharactersType> availableCharacters) {
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
         characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));

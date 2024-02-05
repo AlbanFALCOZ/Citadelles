@@ -83,7 +83,7 @@ public class RobotSarsor extends Robot{
     }
 
     @Override
-    public void pickCharacter(List<CharactersType> availableCharacters) {
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         if (getHasCrown()) {
             setCharacter(availableCharacters.get(0));
             availableCharacters.remove(0);

@@ -303,7 +303,7 @@ public abstract class Robot{
 
 
 
-    public abstract void pickCharacter(List<CharactersType> availableCharacters);
+    public abstract void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots);
 
 
 
