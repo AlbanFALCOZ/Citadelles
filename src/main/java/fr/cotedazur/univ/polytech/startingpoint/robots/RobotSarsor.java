@@ -1,49 +1,90 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RobotSarsor extends Robot{
 
-    private boolean aggressive;
+    ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
 
-    public RobotSarsor(String name, boolean aggressive) {
+
+    public RobotSarsor(String name){
         super(name);
-        this.aggressive = aggressive;
         super.setTypeOfRobot("RobotSarsor");
     }
 
     @Override
     public String tryBuild() {
-        List<String> listDistrictName = new ArrayList<>();
-        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
+        List<DistrictsType> listToBuildFrom = new ArrayList<>(this.districtInHand); // Make a copy to avoid concurrent modification
 
-        // Reorder districts in hand to prioritize red districts
-        List<DistrictsType> orderedDistricts = new ArrayList<>();
-        for (DistrictsType district : getDistrictInHand()) {
-            if (district.getColor().equals("red")) {
-                orderedDistricts.add(0, district);
-            } else {
-                orderedDistricts.add(district);
+        long redCount = this.city.stream()
+                .filter(district -> district.getColor() == Colors.RED)
+                .count();
+
+        if (redCount < 3) {
+
+            for (DistrictsType district : listToBuildFrom) {
+                if (district.getColor() == Colors.RED && district.getCost() <= this.getGolds()) {
+                    district.powerOfDistrict(this, 1);
+                    this.city.add(district);
+                    this.setGolds(this.getGolds() - district.getCost());
+                    this.districtInHand.remove(district);
+                    action.printPrioritizesRed();
+                    return "a new " + district.getName();
+                }
             }
         }
 
-        for (int i = 0; i < orderedDistricts.size(); i++) {
-            DistrictsType district = orderedDistricts.get(i);
-            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this,1);
-                getCity().add(district);
-                setGolds(getGolds() - district.getCost());
-                getDistrictInHand().remove(district);
+        List<Colors> listOfColors = Colors.getListOfColors();
+        for (DistrictsType district : this.getCity()) {
+            listOfColors.remove(district.getColor());
+        }
+
+
+
+
+        for (DistrictsType district : listToBuildFrom) {
+            if (listOfColors.contains(district.getColor()) && district.getCost() <= this.getGolds()) {
+                district.powerOfDistrict(this, 1);
+                this.city.add(district);
+                this.setGolds(this.getGolds() - district.getCost());
+                this.districtInHand.remove(district);
+                action.printBotBonus();
                 return "a new " + district.getName();
             }
         }
+        List<String> listDistrictName = this.city.stream()
+                .map(DistrictsType::getName)
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < listToBuildFrom.size(); i++) {
+            DistrictsType district = listToBuildFrom.get(i);
+            if (district.getCost() <= this.getGolds() && !listDistrictName.contains(district.getName())) {
+                district.powerOfDistrict(this, 1);
+                this.city.add(district);
+                this.setGolds(this.getGolds() - district.getCost());
+                this.districtInHand.remove(i);
+                return "a new " + district.getName();
+            }
+        }
+
         return "nothing";
+
     }
+
+
+
+
 
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
@@ -51,34 +92,86 @@ public class RobotSarsor extends Robot{
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int costOfDistrictToBeBuilt = 0;
         int indice = 0;
-        int i = 0;
-        while (i < listDistrict.size()) {
-            if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= getGolds()) {
-                costOfDistrictToBeBuilt += listDistrict.get(i).getCost();
+        boolean hasRedCards = listDistrict.stream().anyMatch(district -> district.getColor().equals(Colors.RED));
+        for (int i = 0; i < listDistrict.size(); i++) {
+            DistrictsType currentDistrict = listDistrict.get(i);
+            if (hasRedCards && currentDistrict.getColor().equals(Colors.RED) && currentDistrict.getCost() - costOfDistrictToBeBuilt <= getGolds()) {
+                costOfDistrictToBeBuilt += currentDistrict.getCost();
                 listDistrictToBuild.add(listDistrict.remove(i));
                 i--;
                 indice++;
                 if (indice == getNumberOfCardsChosen()) break;
-
             }
-            i++;
+        }
+        if (listDistrictToBuild.isEmpty()) {
+            Set<Colors> colorsInCity = getColorsInCity();
+
+            for (int i = 0; i < listDistrict.size(); i++) {
+                DistrictsType currentDistrict = listDistrict.get(i);
+                if (!colorsInCity.contains(currentDistrict.getColor()) && currentDistrict.getCost() - costOfDistrictToBeBuilt <= getGolds()) {
+                    costOfDistrictToBeBuilt += currentDistrict.getCost();
+                    listDistrictToBuild.add(listDistrict.remove(i));
+                    i--;
+                    indice++;
+                    if (indice == getNumberOfCardsChosen()) break;
+                }
+            }
         }
 
         while (listDistrictToBuild.size() < getNumberOfCardsChosen()) {
             listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
         }
-
-
-
         for (DistrictsType districtNonChosen : listDistrict) {
             deck.addDistrictToDeck(districtNonChosen);
         }
         return listDistrictToBuild;
     }
 
+
+    private Set<Colors> getColorsInCity() {
+        return getCity().stream().map(DistrictsType::getColor).collect(Collectors.toSet());
+    }
+
+
+    @Override
+    public Robot chooseVictimForCondottiere(List<Robot> bots) {
+        Robot victim = bots.get(0);
+        int maxDistricts = victim.getNumberOfDistrictInCity();
+        for (Robot bot : bots) {
+            int currentDistricts = bot.getNumberOfDistrictInCity();
+            if (currentDistricts > maxDistricts && bot.getCharacter() != CharactersType.CONDOTTIERE) {
+                victim = bot;
+                maxDistricts = currentDistricts;
+            }
+        }
+        return victim;
+    }
+
+
+
+    @Override
+    public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill) {
+        Robot victim = null;
+        int maxGold = Integer.MIN_VALUE;
+        for (Robot bot : bots) {
+            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill && bot.getGolds() > maxGold) {
+                victim = bot;
+                maxGold = bot.getGolds();
+            }
+        }
+        return victim;
+    }
+
+
+
+
+
+
+
+
     @Override
     public int generateChoice() {
-        if(this.getGolds()<4) {
+        if(this.getGolds()<3) {
             return 1 ;
         }
         else {
@@ -86,55 +179,33 @@ public class RobotSarsor extends Robot{
         }
     }
 
-    @Override
-    public List<DistrictsType> laboratoire(DeckDistrict deck){
-        List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
-        if (getNumberOfDistrictInHand() >= 1) {
-            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
-            DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
-            listOfDistrictRemoved.add(card);
-            deck.addDistrictToDeck(card);
-            setGolds(getGolds()+1);
-        }
-        return listOfDistrictRemoved;
-    }
 
-    @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         if (getHasCrown()) {
             setCharacter(availableCharacters.get(0));
             availableCharacters.remove(0);
         } else {
-            if (aggressive) {
-                CharactersType aggressiveCharacter = availableCharacters.stream()
-                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN.getType()) || character.getType().equals(CharactersType.VOLEUR.getType()) || character.getType().equals(CharactersType.CONDOTTIERE.getType()) )
-                        .findFirst()
-                        .orElse(availableCharacters.get(0));
+            CharactersType preferredCharacter = availableCharacters.stream()
+                    .filter(character -> isPreferredCharacter(character))
+                    .findFirst()
+                    .orElse(availableCharacters.get(0));
 
-                setCharacter(aggressiveCharacter);
-                availableCharacters.remove(aggressiveCharacter);
-            } else {
-                setCharacter(availableCharacters.get(0));
-                availableCharacters.remove(0);
-            }
+            setCharacter(preferredCharacter);
+            availableCharacters.remove(preferredCharacter);
         }
     }
 
 
-
-    @Override
-    public List<DistrictsType> manufacture(DeckDistrict deck) {
-        List<DistrictsType> listOfDistrictPicked = new ArrayList<>();
-        if (getGolds() >= 3) {
-            setGolds(getGolds() - 3); // dépense 3 or
-            for (int i = 0; i < 3; i++) {
-                DistrictsType card = deck.getDistrictsInDeck();
-                listOfDistrictPicked.add(card);
-                addDistrict(card);
-            }
+    private boolean isPreferredCharacter(CharactersType character) {
+        if (character.getType().equals(CharactersType.CONDOTTIERE.getType()) && getGolds() > 5) {
+            return true;
+        } else if (character.getType().equals(CharactersType.ASSASSIN.getType()) && getGolds() > 7) {
+            return true;
         }
-        return listOfDistrictPicked;
+        return character.getType().equals(CharactersType.VOLEUR.getType());
     }
+
+
 
 
 }

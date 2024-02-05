@@ -78,12 +78,10 @@ public class Round {
     public List<Robot> sortRobots() {
         ArrayList<Robot> sortedBots = new ArrayList<>(bots);
 
-
         Comparator<Robot> crownComparator = Comparator.comparing((Robot bot) -> !bot.getHasCrown())
                 .thenComparingInt(bot -> bot.getCharacter().getNumber());
 
-
-        Collections.sort(sortedBots, crownComparator);
+        sortedBots.sort(crownComparator);
         return sortedBots;
     }
 
@@ -113,6 +111,7 @@ public class Round {
 
                 break;
             case VOLEUR:
+
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
                 if (numberOfCharacterToStealFrom == 0) {
                     numberOfCharacterToStealFrom = (int) (Math.random() * 6 + 3);
@@ -122,6 +121,7 @@ public class Round {
                 } else {
                     powerOfBot.voleur(victimOfVoleur);
                 }
+
                 break;
             case MAGICIEN:
                 powerOfBot.magicien(bots, deck);
