@@ -16,21 +16,21 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
 public enum DistrictsType {
 
     MANOIR("Manoir", 3, Colors.YELLOW, 3, "noble"),
-    CHATEAU("Château", 4, Colors.YELLOW, 4, "noble"),
+    CHATEAU("Chateau", 4, Colors.YELLOW, 4, "noble"),
     PALAIS("Palais", 5, Colors.YELLOW, 5, "noble"),
 
     // RELIGION
     TEMPLE("Temple", 1, Colors.BLUE, 1, "religieux"),
-    EGLISE("Église", 2, Colors.BLUE, 2,"religieux"),
-    MONASTERE("Monastère", 3,Colors.BLUE, 3,"religieux"),
-    CATHEDRALE("Cathédrale", 5,Colors.BLUE, 5,"religieux"),
+    EGLISE("Eglise", 2, Colors.BLUE, 2,"religieux"),
+    MONASTERE("Monastere", 3,Colors.BLUE, 3,"religieux"),
+    CATHEDRALE("Cathedrale", 5,Colors.BLUE, 5,"religieux"),
     // TRADE DISTRICTS
     TAVERNE("Taverne", 1, Colors.GREEN, 1, "marchand"),
-    ECHOPPE("Échoppe", 2,Colors.GREEN, 2, "marchand"),
-    MARCHE("Marché", 2, Colors.GREEN, 2, "marchand"),
+    ECHOPPE("Echoppe", 2,Colors.GREEN, 2, "marchand"),
+    MARCHE("Marche", 2, Colors.GREEN, 2, "marchand"),
     COMPTOIR("Comptoir", 3, Colors.GREEN, 3, "marchand"),
     PORT("Port", 4, Colors.GREEN, 4, "marchand"),
-    HOTEL_DE_VILLE("Hôtel de ville", 5, Colors.GREEN, 5, "marchand"),
+    HOTEL_DE_VILLE("Hotel de ville", 5, Colors.GREEN, 5, "marchand"),
 
 
     // GUERRE
@@ -43,13 +43,13 @@ public enum DistrictsType {
     // SPECIAL
     COURT_DES_MIRACLES("Cour des miracles", 2, Colors.PURPLE, 2, "default"),
     DONJON("Donjon", 3, Colors.PURPLE, 3, "default"),
-    BIBLIOTHEQUE("Bibliothèque", 6, Colors.PURPLE, 6, "default"),
-    ECOLE_DE_MAGIE("École de magie", 6, Colors.PURPLE, 6, "ecole"),
+    BIBLIOTHEQUE("Bibliotheque", 6, Colors.PURPLE, 6, "default"),
+    ECOLE_DE_MAGIE("Ecole de magie", 6, Colors.PURPLE, 6, "ecole"),
     LABORATOIRE("Laboratoire", 5, Colors.PURPLE, 5, "default"),
     MANUFACTURE("Manufacture", 5, Colors.PURPLE, 5, "default"),
     OBSERVATOIRE("Observatoire", 5, Colors.PURPLE, 5, "default"),
-    CIMETIERE("Cimetière", 5, Colors.PURPLE, 5, "default"),
-    UNIVERSITE("Université", 6, Colors.PURPLE, 8, "default"),
+    CIMETIERE("Cimetiere", 5, Colors.PURPLE, 5, "default"),
+    UNIVERSITE("Universite", 6, Colors.PURPLE, 8, "default"),
     DRACOPORT("Dracoport", 6, Colors.PURPLE, 8, "default")   ;
 
 
@@ -126,7 +126,7 @@ public enum DistrictsType {
         if (name.equals("Observatoire")) {
             player.setNumberOfCardsDrawn(player.getNumberOfCardsDrawn() + val);
         }
-        if (name.equals("Bibliothèque")) {
+        if (name.equals("Bibliotheque")) {
             player.setNumberOfCardsChosen(player.getNumberOfCardsChosen() + val);
         }
 

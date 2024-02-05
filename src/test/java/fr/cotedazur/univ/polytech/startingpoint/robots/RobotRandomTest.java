@@ -168,10 +168,10 @@ class RobotRandomTest {
         DistrictsType district = DistrictsType.BIBLIOTHEQUE;
         robotRandom.addDistrict(district);
         System.out.println(robotRandom.statusOfPlayer());
-        assertEquals("\u001B[37m[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), \u001B[33m8 golds\u001B[37m, hand {(Bibliothèque,6)}, city {}]", robotRandom.statusOfPlayer(false));
+        assertEquals("\u001B[37m[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), \u001B[33m8 golds\u001B[37m, hand {(Bibliotheque,6)}, city {}]", robotRandom.statusOfPlayer(false));
         robotRandom.tryBuild();
         System.out.println(robotRandom.statusOfPlayer());
-        assertEquals("\u001B[37m[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), \u001B[33m2 golds\u001B[37m, hand {}, city {(Bibliothèque,6)}]", robotRandom.statusOfPlayer(false));
+        assertEquals("\u001B[37m[Status of Bot avec 8 golds : role (Assassin" + robotRandom.getRESET() + "), \u001B[33m2 golds\u001B[37m, hand {}, city {(Bibliotheque,6)}]", robotRandom.statusOfPlayer(false));
     }
 
     @Test

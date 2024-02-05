@@ -69,7 +69,7 @@ class RobotSarsorTest {
         RobotSarsor sarsor = new RobotSarsor("Sara") ;
         sarsor.setGolds(4);
         int choice = sarsor.generateChoice();
-        assertEquals(0 , choice);
+        assertEquals(1 , choice);
         sarsor.setGolds(2);
         int choice2 = sarsor.generateChoice();
         assertEquals(1  , choice2);

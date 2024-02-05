@@ -52,9 +52,6 @@ public class ActionOfBotDuringARound {
         String cardDrawn = "";
         String cardPicked = "";
 
-
-
-
         cardDrawn = getStringFromListOfDistrict(cardDrawn, listDistrictDrawn);
         logger.info(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
         cardPicked = getStringFromListOfDistrict(cardPicked, listDistrictPicked);
@@ -147,7 +144,7 @@ public class ActionOfBotDuringARound {
     }
 
     public String getNameOfCharacterFromNumber(int number) {
-        String[] listName = {"Assassin", "Voleur", "Magicien", "Roi", "Évêque", "Marchand", "Architecte", "Condottière"};
+        String[] listName = {"Assassin", "Voleur", "Magicien", "Roi", "Eveque", "Marchand", "Architecte", "Condottiere"};
         return listName[number - 1];
     }
 
@@ -156,7 +153,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printDistrictRecovered(Robot victim, DistrictsType district) {
-        logger.info(victim.getName() + " got district " + district.getName() + " back into his hand by paying 1 gold thanks to district Cimetière.");
+        logger.info(victim.getName() + " got district " + district.getName() + " back into his hand by paying 1 gold thanks to district Cimetiere.");
     }
 
     public void printLaboratoryAction(List<DistrictsType> listOfDistrictRemoved) {
@@ -175,7 +172,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printPrioritizesRed(){
-        logger.info(bot.getName() + " prioritizes RED district") ;
+        logger.info(bot.getName() + " prioritizes War district") ;
     }
 
     public void printBotBonus(){

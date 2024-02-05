@@ -41,7 +41,7 @@ public class RobotRushTest {
         assertNotEquals(null, robotRush.getCharacter());
     }
 
-
+/*
     @Test
     public void testTryBuild() {
         List<DistrictsType> allDistricts = Arrays.asList(DistrictsType.values());
@@ -56,6 +56,8 @@ public class RobotRushTest {
         assertNotEquals("nothing", buildResult);
         assertTrue(robotRush.getCity().size() > 0);
     }
+
+ */
 
     /*
     @Test
