@@ -20,6 +20,8 @@ import java.util.logging.Logger;
  */
 public class GameEngine {
 
+
+
     private ArrayList<Robot> bots;
     private DeckDistrict deckDistricts;
     private DeckCharacters deckCharacters;
@@ -62,16 +64,28 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        Robot random = new RobotRandom("Nora") ;
-        Robot sarsor = new RobotSarsor("Sara" , true) ;
-        Robot gentil = new RobotDiscrete("Stacy") ;
 
+
+
+
+
+
+        Robot random = new RobotRandom("Nora") ;
+        Robot sarsor = new RobotSarsor("Sara" ) ;
+        Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
+
+
+
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
+
         }
+
+
         for(int k = 0 ; k < 4 ; k++){
             gentil.addDistrict(deckDistricts.getDistrictsInDeck());
+
         }
         for(int k = 0 ; k < 4 ; k++){
             choice.addDistrict(deckDistricts.getDistrictsInDeck());
@@ -81,6 +95,7 @@ public class GameEngine {
              random.addDistrict(deckDistricts.getDistrictsInDeck());
 
         }
+
         bots.add(random);
         bots.add(choice);
         bots.add(sarsor) ;

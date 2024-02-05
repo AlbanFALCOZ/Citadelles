@@ -35,7 +35,7 @@ public abstract class Robot{
         city = new ArrayList<>();
         hasCrown = false;
         IsAssassinated = false;
-        //this.strategy = strategy;
+
 
     }
 
@@ -335,6 +335,7 @@ public abstract class Robot{
         }
         return victim;
     }
+
 
 
 

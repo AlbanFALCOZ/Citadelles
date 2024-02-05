@@ -49,9 +49,21 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfBotWhoHasBuilt() {
-
         String cardDrawn = "";
         String cardPicked = "";
+
+
+        for (int i = 0; i < listDistrictDrawn.size(); i++) {
+            DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
+            cardDrawn += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
+            if (i < listDistrictDrawn.size() - 1) cardDrawn += ",";
+        }
+
+
+
+        logger.info("\u001B[37m" + bot.getName() + " drew the following cards : {" + cardDrawn + "}\u001B[0m");
+
+
         cardDrawn = getStringFromListOfDistrict(cardDrawn, listDistrictDrawn);
         logger.info(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
         cardPicked = getStringFromListOfDistrict(cardPicked, listDistrictPicked);
@@ -61,14 +73,21 @@ public class ActionOfBotDuringARound {
     }
 
     private String getStringFromListOfDistrict(String cardPicked, List<DistrictsType> listDistrictPicked) {
+
         for (int i = 0; i < listDistrictPicked.size(); i++) {
             DistrictsType districtInListDistrict = listDistrictPicked.get(i);
             cardPicked += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listDistrictPicked.size()-1) cardPicked += ",";
-            //bot.addDistrict(districtInListDistrict);
+            if (i < listDistrictPicked.size() - 1) cardPicked += ",";
         }
+
+
+        logger.info("\u001B[37m" + bot.getName() + " choose to pick : {" + cardPicked + "}\u001B[0m");
+        logger.info("\u001B[37m" + bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts\u001B[0m");
+
         return cardPicked;
+
     }
+
 
     private String getStringOfListOfDistrict(List<DistrictsType> listOfDistrict) {
         String stringOfDistricts = "";
@@ -158,6 +177,23 @@ public class ActionOfBotDuringARound {
         logger.info("Thanks to the manufacture, " + bot.getName() + " lost 3 golds but added {" + getStringOfListOfDistrict(listOfDistrictPicked) + "} to his hand");
     }
 
+
+
+    public void printVictimAssassinedStrategy(Robot victim) {
+        logger.info(bot.getName() + " murdered " + victim.getCharacter().getRole() + "because he has" + victim.getGolds() + bot.getName() + "wants to slow the game");
+
+    }
+
+    public void printPrioritizesRed(){
+        logger.info(bot.getName() + " prioritizes RED district") ;
+    }
+
+    public void printBotBonus(){
+        logger.info(bot.getName() + " is aiming for 5 colors bonus ") ;
+    }
+
+
+
     public void printPickAnyDistrict(DistrictsType currentDistrict) {
         logger.info(bot.getName() + " chose " + currentDistrict.getName() + " because it is not in his hand or city.");
     }
@@ -193,6 +229,7 @@ public class ActionOfBotDuringARound {
 
     }
 
+
     public void printCanFinishThisTurn() {
         logger.info(bot.getName() + " can finish this turn so " + bot.getName() + " picked " + bot.getCharacter().getRole());
     }
@@ -212,6 +249,7 @@ public class ActionOfBotDuringARound {
     public void printPickCharacterBasedOnNumberOfBuildings() {
         logger.info(bot.getName() + " has picked " + bot.getCharacter().getRole() + " because " + bot.getName() + " has 2 or more " + bot.getCharacter().getType() + " districts in his city");
     }
+
 }
 
 

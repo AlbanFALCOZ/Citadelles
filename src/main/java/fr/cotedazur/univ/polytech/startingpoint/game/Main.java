@@ -40,16 +40,16 @@ public class Main {
             Game.gameTurns();
             Winner winner = new Winner(Game.getBots());
             for (String winners : winner.getWinners()) {
-                if (winners.equals("Alban")) {
+                if (winners.equals("Stacy")) {
                     listWinners[0]++;
                 }
-                if (winners.equals("Stacy")) {
+                if (winners.equals("Nora")) {
                     listWinners[1]++;
                 }
-                if (winners.equals("Nora")) {
+                if (winners.equals("Sara")) {
                     listWinners[2]++;
                 }
-                if (winners.equals("Sara")) {
+                if (winners.equals("Alban")) {
                     listWinners[3]++;
                 }
             }
