@@ -7,9 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public abstract class Robot{
 
@@ -20,6 +18,7 @@ public abstract class Robot{
     protected int golds;
     protected int numberOfCardsDrawn = 2;
     protected int numberOfCardsChosen = 1;
+    private String typeOfRobot = "Robot";
     protected List<DistrictsType> districtInHand;
     protected CharactersType character;
 
@@ -126,6 +125,13 @@ public abstract class Robot{
         return city.size();
     }
 
+    public String getTypeOfRobot() {
+        return typeOfRobot;
+    }
+
+    public void setTypeOfRobot(String typeOfRobot) {
+        this.typeOfRobot = typeOfRobot;
+    }
 
     public boolean getHasCrown() {
         return hasCrown;
@@ -134,6 +140,14 @@ public abstract class Robot{
     public void setHasCrown(boolean hasCrown) {
         this.hasCrown = hasCrown;
 
+    }
+
+    public int calculateScoreInHand(){
+        int score = 0;
+        for (DistrictsType district : districtInHand) {
+            score += district.getScore();
+        }
+        return score;
     }
 
     public int getChoice() {
@@ -145,10 +159,7 @@ public abstract class Robot{
     }
 
     public boolean hasEightDistrict() {
-        if (this.getNumberOfDistrictInCity()==8){
-            return true ;
-        }
-        return false ;
+        return (this.getNumberOfDistrictInCity()==8);
     }
 
     public void addDistrict(DistrictsType district) {
@@ -257,9 +268,21 @@ public abstract class Robot{
         }
     }
 
-
-    public abstract String tryBuild();
-
+    public String tryBuild() {
+        List<String> listDistrictName = new ArrayList<>();
+        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
+        for (int i = 0; i < getDistrictInHand().size(); i++) {
+            DistrictsType district = getDistrictInHand().get(i);
+            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+                district.powerOfDistrict(this,1);
+                getCity().add(district);
+                setGolds(getGolds() - district.getCost());
+                getDistrictInHand().remove(i);
+                return "a new " + district.getName();
+            }
+        }
+        return "nothing";
+    }
     public abstract List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
 
     public abstract int generateChoice();
@@ -294,10 +317,40 @@ public abstract class Robot{
     }
 
 
+    public abstract void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots);
+
+    public Robot chooseVictimForCondottiere(List<Robot> bots){
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+        for (Robot bot : bots) {
+            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.CONDOTTIERE && !victim.hasEightDistrict()) {
+                victim = bot;
+                numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+            }
+        }
+        return victim;
+
+    }
+
+    public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
+        for (Robot bot : bots) {
+            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) return bot;
+        }
+        return null;
+
+    }
+
+    public Robot chooseVictimForMagicien(List<Robot> bots){
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
+        for (Robot bot : bots) {
+            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
+        }
+        return victim;
+    }
 
 
 
-    public abstract void pickCharacter(List<CharactersType> availableCharacters);
 
 
 

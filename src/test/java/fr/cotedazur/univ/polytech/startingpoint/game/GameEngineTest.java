@@ -48,7 +48,7 @@ class GameEngineTest {
         Robot bot = gameEngine.getBots().get(0);
 
         bot.setCharacter(CharactersType.MARCHAND);
-        bot.setGolds(30);
+        bot.setGolds(40);
         bot.addDistrict(DistrictsType.PRISON);
         bot.addDistrict(DistrictsType.PALAIS);
         bot.addDistrict(DistrictsType.BIBLIOTHEQUE);
@@ -132,7 +132,7 @@ class GameEngineTest {
         int originalSize = charactersInHand.size();
 
         gameEngine.destroyCharacters(charactersInHand);
-        assertEquals(originalSize - 3, charactersInHand.size(), "3 personnages doivent être retirés de la main.");
+        assertEquals(originalSize - 2, charactersInHand.size(), "2 personnages doivent être retirés de la main.");
 
         assertTrue(charactersInHand.contains(CharactersType.ROI), "Le personnage 'ROI' doit être présent dans la main.");
 

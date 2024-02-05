@@ -14,6 +14,7 @@ public class RobotSarsor extends Robot{
     public RobotSarsor(String name, boolean aggressive) {
         super(name);
         this.aggressive = aggressive;
+        super.setTypeOfRobot("RobotSarsor");
     }
 
     @Override
@@ -34,7 +35,7 @@ public class RobotSarsor extends Robot{
         for (int i = 0; i < orderedDistricts.size(); i++) {
             DistrictsType district = orderedDistricts.get(i);
             if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this);
+                district.powerOfDistrict(this,1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(district);
@@ -62,8 +63,11 @@ public class RobotSarsor extends Robot{
             }
             i++;
         }
-        while (listDistrictToBuild.size() < getNumberOfCardsChosen())
+
+        while (listDistrictToBuild.size() < getNumberOfCardsChosen()) {
             listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
+        }
+
 
 
         for (DistrictsType districtNonChosen : listDistrict) {
@@ -96,14 +100,14 @@ public class RobotSarsor extends Robot{
     }
 
     @Override
-    public void pickCharacter(List<CharactersType> availableCharacters) {
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         if (getHasCrown()) {
             setCharacter(availableCharacters.get(0));
             availableCharacters.remove(0);
         } else {
             if (aggressive) {
                 CharactersType aggressiveCharacter = availableCharacters.stream()
-                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN) || character.getType().equals(CharactersType.VOLEUR) || character.getType().equals(CharactersType.CONDOTTIERE) )
+                        .filter(character -> character.getType().equals(CharactersType.ASSASSIN.getType()) || character.getType().equals(CharactersType.VOLEUR.getType()) || character.getType().equals(CharactersType.CONDOTTIERE.getType()) )
                         .findFirst()
                         .orElse(availableCharacters.get(0));
 
@@ -115,6 +119,8 @@ public class RobotSarsor extends Robot{
             }
         }
     }
+
+
 
     @Override
     public List<DistrictsType> manufacture(DeckDistrict deck) {

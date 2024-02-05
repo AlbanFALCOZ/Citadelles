@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class RobotWithChoice extends Robot {
+public class RobotWithChoice extends Robot {
+
     public RobotWithChoice(String name) {
         super(name);
+        super.setTypeOfRobot("RobotWithChoice");
     }
 
     @Override
@@ -21,7 +23,7 @@ public abstract class RobotWithChoice extends Robot {
         for (int i = 0; i < getDistrictInHand().size(); i++) {
             DistrictsType district = getDistrictInHand().get(i);
             if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this);
+                district.powerOfDistrict(this,1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(i);
@@ -67,7 +69,7 @@ public abstract class RobotWithChoice extends Robot {
     }
 
     @Override
-    public void pickCharacter(List<CharactersType> availableCharacters) {
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         setCharacter(availableCharacters.get(0));
         availableCharacters.remove(availableCharacters.get(0));
 

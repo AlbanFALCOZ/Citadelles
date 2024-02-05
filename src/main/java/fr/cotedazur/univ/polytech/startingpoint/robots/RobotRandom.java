@@ -8,8 +8,11 @@ import java.util.ArrayList;
 
 public class RobotRandom extends Robot {
 
+
+
     public RobotRandom(String name) {
         super(name);
+        super.setTypeOfRobot("RobotRandom");
     }
 
     @Override
@@ -19,7 +22,7 @@ public class RobotRandom extends Robot {
         for (int i = 0; i < getDistrictInHand().size(); i++) {
             DistrictsType district = getDistrictInHand().get(i);
             if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this);
+                district.powerOfDistrict(this,1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(i);
@@ -28,7 +31,6 @@ public class RobotRandom extends Robot {
         }
         return "nothing";
     }
-
 
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
@@ -47,8 +49,10 @@ public class RobotRandom extends Robot {
             }
             i++;
         }
-        while (listDistrictToBuild.size() < getNumberOfCardsChosen())
+        while (listDistrictToBuild.size() < getNumberOfCardsChosen()) {
             listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
+        }
+
 
 
         for (DistrictsType districtNonChosen : listDistrict) {
@@ -64,11 +68,14 @@ public class RobotRandom extends Robot {
 
 
     @Override
-    public void pickCharacter(List<CharactersType> availableCharacters) {
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         setCharacter(availableCharacters.get(0));
         availableCharacters.remove(availableCharacters.get(0));
 
+
     }
+
+
 
 
 }
