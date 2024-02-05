@@ -177,6 +177,14 @@ public class ActionOfBotDuringARound {
 
     }
 
+    public void printPrioritizesRed(){
+        logger.info(bot.getName() + " prioritizes RED district") ;
+    }
+
+    public void printBotBonus(){
+        logger.info(bot.getName() + " is aiming for 5 colors bonus ") ;
+    }
+
 
 
     public void printCanFinishThisTurn() {

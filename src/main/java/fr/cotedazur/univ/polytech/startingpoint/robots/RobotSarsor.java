@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
 
 public class RobotSarsor extends Robot{
 
+    ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
+
 
     public RobotSarsor(String name){
         super(name);
@@ -22,42 +25,67 @@ public class RobotSarsor extends Robot{
 
     @Override
     public String tryBuild() {
-        List<String> listDistrictName = getCity().stream().map(DistrictsType::getName).collect(Collectors.toList());
+        List<DistrictsType> listToBuildFrom = new ArrayList<>(this.districtInHand); // Make a copy to avoid concurrent modification
+
+        long redCount = this.city.stream()
+                .filter(district -> district.getColor() == Colors.RED)
+                .count();
+
+        if (redCount < 3) {
+
+            for (DistrictsType district : listToBuildFrom) {
+                if (district.getColor() == Colors.RED && district.getCost() <= this.getGolds()) {
+                    district.powerOfDistrict(this, 1);
+                    this.city.add(district);
+                    this.setGolds(this.getGolds() - district.getCost());
+                    this.districtInHand.remove(district);
+                    action.printPrioritizesRed();
+                    return "a new " + district.getName();
+                }
+            }
+        }
+
+        List<Colors> listOfColors = Colors.getListOfColors();
+        for (DistrictsType district : this.getCity()) {
+            listOfColors.remove(district.getColor());
+        }
 
 
-        List<DistrictsType> orderedDistricts = getDistrictInHand().stream()
-                .sorted((d1, d2) -> compareDistrictsForBuilding(d1, d2))
-                .collect(Collectors.toList());
 
-        for (DistrictsType district : orderedDistricts) {
-            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this,1);
-                getCity().add(district);
-                setGolds(getGolds() - district.getCost());
-                getDistrictInHand().remove(district);
+
+        for (DistrictsType district : listToBuildFrom) {
+            if (listOfColors.contains(district.getColor()) && district.getCost() <= this.getGolds()) {
+                district.powerOfDistrict(this, 1);
+                this.city.add(district);
+                this.setGolds(this.getGolds() - district.getCost());
+                this.districtInHand.remove(district);
+                action.printBotBonus();
                 return "a new " + district.getName();
             }
         }
-        return "nothing";
-    }
+        List<String> listDistrictName = this.city.stream()
+                .map(DistrictsType::getName)
+                .collect(Collectors.toList());
 
-
-    private int compareDistrictsForBuilding(DistrictsType d1, DistrictsType d2) {
-        Set<Colors> colorsInCity = getColorsInCity();
-        int scoreD1 = calculateDistrictScore(d1, colorsInCity);
-        int scoreD2 = calculateDistrictScore(d2, colorsInCity);
-        return Integer.compare(scoreD2, scoreD1);
-    }
-
-
-    private int calculateDistrictScore(DistrictsType district, Set<Colors> colorsInCity) {
-        int score = 0;
-        if (colorsInCity.contains(district.getColor())) {
-            score += 2;
+        for (int i = 0; i < listToBuildFrom.size(); i++) {
+            DistrictsType district = listToBuildFrom.get(i);
+            if (district.getCost() <= this.getGolds() && !listDistrictName.contains(district.getName())) {
+                district.powerOfDistrict(this, 1);
+                this.city.add(district);
+                this.setGolds(this.getGolds() - district.getCost());
+                this.districtInHand.remove(i);
+                return "a new " + district.getName();
+            }
         }
 
-        return score;
+        return "nothing";
+
     }
+
+
+
+
+
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
@@ -118,6 +146,24 @@ public class RobotSarsor extends Robot{
         }
         return victim;
     }
+
+
+
+    @Override
+    public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill) {
+        Robot victim = null;
+        int maxGold = Integer.MIN_VALUE;
+        for (Robot bot : bots) {
+            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill && bot.getGolds() > maxGold) {
+                victim = bot;
+                maxGold = bot.getGolds();
+            }
+        }
+        return victim;
+    }
+
+
+
 
 
 
