@@ -3,7 +3,13 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
+
 import fr.cotedazur.univ.polytech.startingpoint.robots.*;
+
 
 import java.util.*;
 import java.util.logging.Level;
@@ -59,29 +65,38 @@ public class GameEngine {
      */
     public void initializeBots() {
 
-        String[] name = {"Stacy", "Nora"};
 
-        RobotSarsor sarsor = new RobotSarsor("Sara" ) ;
 
-        RobotChoiceOfCharacter alabana = new RobotChoiceOfCharacter("Alban"  ) ;
+
+
+        Robot random = new RobotRandom("Nora") ;
+        Robot sarsor = new RobotSarsor("Sara" ) ;
+        Robot gentil = new RobotDiscrete("Stacy") ;
+        Robot choice = new RobotChoiceOfCharacter("Alban") ;
 
 
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
-            alabana.addDistrict(deckDistricts.getDistrictsInDeck());
-        }
-        for (int i = 0; i < 2; i++) {
-            Robot bot;
-            if (i == 0) bot = new RobotWithChoice(name[i]);
-            else bot = new RobotRandom(name[i]);
-            for (int j = 0; j < 4; j++) {
-                bot.addDistrict(deckDistricts.getDistrictsInDeck());
 
-            }
-            bots.add(bot);
         }
+
+        for(int k = 0 ; k < 4 ; k++){
+            gentil.addDistrict(deckDistricts.getDistrictsInDeck());
+
+        }
+        for(int k = 0 ; k < 4 ; k++){
+            choice.addDistrict(deckDistricts.getDistrictsInDeck());
+        }
+
+        for (int j = 0; j < 4; j++) {
+             random.addDistrict(deckDistricts.getDistrictsInDeck());
+
+        }
+        bots.add(random);
+        bots.add(choice);
         bots.add(sarsor) ;
-        bots.add(alabana);
+        bots.add(gentil) ;
+
 
     }
 
@@ -106,6 +121,7 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
+
                 List<Robot> listOfThreeBots = new ArrayList<>(bots);
                 listOfThreeBots.remove(bot);
                 bot.pickCharacter(listCharacters, listOfThreeBots);
@@ -115,6 +131,7 @@ public class GameEngine {
         }
         for (Robot bot : bots) {
             if (!bot.getHasCrown()) {
+
                 List<Robot> listOfThreeBots = new ArrayList<>(bots);
                 listOfThreeBots.remove(bot);
                 bot.pickCharacter(listCharacters, listOfThreeBots);

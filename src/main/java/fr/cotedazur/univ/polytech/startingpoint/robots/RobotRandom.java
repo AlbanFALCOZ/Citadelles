@@ -32,6 +32,7 @@ public class RobotRandom extends Robot {
         return "nothing";
     }
 
+
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
