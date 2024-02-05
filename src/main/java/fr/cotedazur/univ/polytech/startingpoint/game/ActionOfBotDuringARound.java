@@ -202,6 +202,16 @@ public class ActionOfBotDuringARound {
             logger.info(bot.getName() + " successfully built " + hasBuilt + ".");
         }
     }
+
+    public void printCharacterPowerUsage(CharactersType character) {
+        switch (character) {
+            case ARCHITECTE:
+                logger.info(bot.getName() + " used the Architect's power to draw additional districts.");
+                break;
+            default:
+                logger.info(bot.getName() + " used the power of " + character.getRole() + ".");
+        }
+    }
 }
 
 
