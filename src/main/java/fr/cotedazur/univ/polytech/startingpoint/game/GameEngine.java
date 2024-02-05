@@ -93,7 +93,6 @@ public class GameEngine {
 
         for (int j = 0; j < 4; j++) {
              random.addDistrict(deckDistricts.getDistrictsInDeck());
-
         }
 
         bots.add(random);
