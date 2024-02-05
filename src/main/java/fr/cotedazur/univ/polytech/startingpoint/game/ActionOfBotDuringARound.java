@@ -187,6 +187,21 @@ public class ActionOfBotDuringARound {
             logger.info(bot.getName() + " picked " + character.getRole() + " based on the highest priority available.");
         }
     }
+
+    public void printDistrictChoice() {
+        List<DistrictsType> drawnDistricts = listDistrictDrawn; // districts tirés
+        List<DistrictsType> pickedDistricts = listDistrictPicked; // districts choisis
+
+        logger.info(bot.getName() + " drew the following districts: " + getStringOfListOfDistrict(drawnDistricts));
+        logger.info(bot.getName() + " chose to pick the following districts: " + getStringOfListOfDistrict(pickedDistricts));
+    }
+
+    public void printBuildAction() {
+        String hasBuilt = bot.tryBuild();
+        if (!hasBuilt.equals("nothing")) {
+            logger.info(bot.getName() + " successfully built " + hasBuilt + ".");
+        }
+    }
 }
 
 
