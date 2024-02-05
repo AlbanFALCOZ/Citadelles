@@ -58,11 +58,13 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
+
         String[] name = {"Stacy", "Nora"};
 
         RobotSarsor sarsor = new RobotSarsor("Sara" ) ;
 
-        RobotMuyInteligente alabana = new RobotMuyInteligente("Alban"  ) ;
+        RobotChoiceOfCharacter alabana = new RobotChoiceOfCharacter("Alban"  ) ;
+
 
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
@@ -98,7 +100,6 @@ public class GameEngine {
      * on affiche le personnage de chaque robot
      */
     public void robotsPickCharacters() {
-        int i = 1;
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
         destroyCharacters(listCharacters);
         Collections.shuffle(listCharacters);
@@ -118,9 +119,10 @@ public class GameEngine {
                 listOfThreeBots.remove(bot);
                 bot.pickCharacter(listCharacters, listOfThreeBots);
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
-                i++;
             }
         }
+
+        logger.info("Destroyed character: " + listCharacters.get(0).getColor().getColorDisplay() + listCharacters.get(0).getRole() + bots.get(0).getRESET());
     }
 
 
@@ -200,9 +202,6 @@ public class GameEngine {
                 }
             }
         }
-        Winner winner = new Winner(bots);
-        //winner.miracleDistrictEffect();
-
 
     }
     /**
@@ -229,7 +228,7 @@ public class GameEngine {
     public void destroyCharacters(List<CharactersType> charactersInHand) {
         charactersInHand.remove(CharactersType.ROI);
         Collections.shuffle(charactersInHand, new Random());
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
 

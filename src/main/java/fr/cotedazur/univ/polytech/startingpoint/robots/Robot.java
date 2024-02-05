@@ -7,9 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public abstract class Robot{
 
@@ -161,10 +159,7 @@ public abstract class Robot{
     }
 
     public boolean hasEightDistrict() {
-        if (this.getNumberOfDistrictInCity()==8){
-            return true ;
-        }
-        return false ;
+        return (this.getNumberOfDistrictInCity()==8);
     }
 
     public void addDistrict(DistrictsType district) {
@@ -279,7 +274,7 @@ public abstract class Robot{
         for (int i = 0; i < getDistrictInHand().size(); i++) {
             DistrictsType district = getDistrictInHand().get(i);
             if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this);
+                district.powerOfDistrict(this,1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(i);
@@ -328,37 +323,31 @@ public abstract class Robot{
         Robot victim = bots.get(0);
         int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
         for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.CONDOTTIERE) victim = bot;
+            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.CONDOTTIERE && !victim.hasEightDistrict()) {
+                victim = bot;
+                numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+            }
         }
         return victim;
 
     }
 
-    public Robot chooseVictimForAssassin(List<Robot> bots){
-
-        Robot victim = bots.get(0);
-        int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+    public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
         for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.ASSASSIN) victim = bot;
+            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) return bot;
         }
-        return victim;
+        return null;
 
     }
 
     public Robot chooseVictimForMagicien(List<Robot> bots){
         Robot victim = bots.get(0);
-        int numberOfDistrictsInCity = victim.calculateScoreInHand();
+        int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
         for (Robot bot : bots) {
-            if (bot.calculateScoreInHand() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
+            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
         }
         return victim;
-
     }
-
-
-
-
-
 
 
 

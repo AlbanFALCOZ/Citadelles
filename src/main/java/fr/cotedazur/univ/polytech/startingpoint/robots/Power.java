@@ -67,7 +67,7 @@ public class Power {
     public boolean canDestroyDistrict(Robot victim, DistrictsType district) {
         int destructorGolds = bot.getGolds();
         boolean districtInCity = victim.getCity().contains(district);
-        return destructorGolds >= district.getCost() && districtInCity;
+        return destructorGolds >= (district.getCost()-1) && districtInCity && !victim.hasEightDistrict();
     }
 
 
@@ -83,6 +83,7 @@ public class Power {
             if (!district.getName().equals("Donjon") && (verify)) {
                 if (bot.getCharacter().getType().equals(MILITATE) &&
                         !victim.getCharacter().getType().equals(RELIGIOUS)) {
+                    district.powerOfDistrict(victim,-1);
                     victim.getCity().remove(district);
                     int goldsAfterDestruction = destructorGolds - district.getCost();
                     bot.setGolds(goldsAfterDestruction + 1);
@@ -131,9 +132,7 @@ public class Power {
                 if (hand.get(i) == handCopy.get(j) && i!= j){
                     return true;
                 }
-
             }
-
         }
         return false;
     }
@@ -141,12 +140,12 @@ public class Power {
 
     public void magicien(List<Robot> bots, DeckDistrict deck) {
         Robot victim = bot.chooseVictimForMagicien(bots);
-        boolean doublon= doublon(victim);
         //int i = bot.generateChoice();
-        if (bot.calculateScoreInHand() < victim.calculateScoreInHand() && !doublon) {
+        if (bot.getNumberOfDistrictInHand() < victim.getNumberOfDistrictInHand()) {
             swapCards(victim);
             action.printMagicianSwap(victim);
             action.showStatusOfBot();
+            action.showStatusOfBot(victim);
         }
         else if(doublon(bot) || doublonInHand()){
                 int numberOfDistrictInHand = bot.getNumberOfDistrictInHand();
@@ -160,19 +159,17 @@ public class Power {
     public void assassin(Robot victim) {
         if (bot.getCharacter().getType().equals(ASSASSIN)) {
             victim.setIsAssassinated(true);
-            action.printVictimAssassined(victim);
         }
     }
 
     public void voleur(Robot victim) {
-
         if (!victim.getIsAssassinated()) {
             int stolenGold = victim.getGolds();
             bot.addGold(stolenGold);
             action.printThiefStill(victim);
             victim.setGolds(0);
         }
-        action.printCantAffectVictim(victim);
+        else action.printCantAffectVictim(victim);
     }
 
 }
