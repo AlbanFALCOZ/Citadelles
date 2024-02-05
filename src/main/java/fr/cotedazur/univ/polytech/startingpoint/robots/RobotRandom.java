@@ -32,22 +32,6 @@ public class RobotRandom extends Robot {
         return "nothing";
     }
 
-    @Override
-    public String tryBuild() {
-        List<String> listDistrictName = new ArrayList<>();
-        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
-        for (int i = 0; i < getDistrictInHand().size(); i++) {
-            DistrictsType district = getDistrictInHand().get(i);
-            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this);
-                getCity().add(district);
-                setGolds(getGolds() - district.getCost());
-                getDistrictInHand().remove(i);
-                return "a new " + district.getName();
-            }
-        }
-        return "nothing";
-    }
 
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         listDistrict.sort(compareByCost().reversed());
