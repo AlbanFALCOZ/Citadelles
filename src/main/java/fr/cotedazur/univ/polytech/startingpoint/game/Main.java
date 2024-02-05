@@ -1,6 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 
+import com.beust.jcommander.JCommander;
+import fr.cotedazur.univ.polytech.startingpoint.arguments.CitadelleArguments;
+
 import java.util.logging.Logger;
 
 /**
@@ -12,9 +15,13 @@ public class Main {
 
 
     public static void main(String[] args) {
-
-        //testBots();
-        showGame();
+        CitadelleArguments citadelleArguments = new CitadelleArguments();
+        JCommander commander = JCommander.newBuilder()
+                .addObject(citadelleArguments)
+                .build();
+        commander.parse(args);
+        if (citadelleArguments._2ThousandsGame()) testBots();
+        if (citadelleArguments.isDemoMode()) showGame();
 
     }
 
