@@ -14,7 +14,9 @@ public class RobotRush extends Robot {
         super(name);
     }
 
-    public void chooseCharacter (List<CharactersType> availableCharacters) {
+
+    @Override
+    public void pickCharacter (List<CharactersType> availableCharacters, List<Robot> bots) {
         //prioriser l'architecte pour construire rapidement
         if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
             setCharacter(CharactersType.ARCHITECTE);
@@ -60,7 +62,7 @@ public class RobotRush extends Robot {
         String built = "nothing";
         for (DistrictsType district : getDistrictInHand()) {
             if (district.getCost() <= getGolds()) {
-                district.powerOfDistrict(this);
+                district.powerOfDistrict(this,1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(district);
