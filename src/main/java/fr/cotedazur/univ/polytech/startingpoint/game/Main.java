@@ -15,6 +15,7 @@ public class Main {
 
 
     public static void main(String[] args) {
+
         CitadelleArguments citadelleArguments = new CitadelleArguments();
         JCommander commander = JCommander.newBuilder()
                 .addObject(citadelleArguments)

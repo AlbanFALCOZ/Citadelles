@@ -250,8 +250,51 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + " has picked " + bot.getCharacter().getRole() + " because " + bot.getName() + " has 2 or more " + bot.getCharacter().getType() + " districts in his city");
     }
 
+
+    public void printCharacterChoice() {
+        CharactersType character = bot.getCharacter();
+        if(character == CharactersType.ARCHITECTE) {
+            logger.info(bot.getName() + " has picked the Architect to build more buildings quickly.");
+        } else if(character == CharactersType.ROI || character == CharactersType.EVEQUE) {
+            logger.info(bot.getName() + " is close to having 8 districts and picked " + character.getRole() + " for protection.");
+        } else if(character == CharactersType.MARCHAND) {
+            logger.info(bot.getName() + " picked the Merchant to increase gold.");
+        } else {
+            logger.info(bot.getName() + " picked " + character.getRole() + " based on the highest priority available.");
+        }
+    }
+
+    public void printDistrictChoice(List<DistrictsType> listDistrictDrawn, List<DistrictsType> listDistrictPicked) {
+        List<DistrictsType> drawnDistricts = listDistrictDrawn; // districts tirés
+        List<DistrictsType> pickedDistricts = listDistrictPicked; // districts choisis
+
+        logger.info(bot.getName() + " drew the following districts: " + getStringOfListOfDistrict(drawnDistricts));
+        if (!pickedDistricts.isEmpty()) {
+            logger.info(bot.getName() + " chose to pick the following district: " + getStringOfListOfDistrict(pickedDistricts));
+            for (DistrictsType pickedDistrict : pickedDistricts) {
+                String reason = getReasonForPickingDistrict(pickedDistrict);
+                logger.info("Reason for choosing " + pickedDistrict.getName() + ": " + reason);
+            }
+        } else {
+            logger.info(bot.getName() + " did not pick any district.");
+        }
+    }
+
+    private String getReasonForPickingDistrict(DistrictsType district) {
+        // Vous pouvez ajuster cette méthode pour refléter la logique de votre RobotRush
+        if (district.getCost() <= bot.getGolds()) {
+            return "It was affordable and fits the strategy to build quickly.";
+        } else {
+            return "It was the best option available considering the current strategy and resources.";
+        }
+    }
+
+
+    public void printActionChoice(int choice) {
+        if (choice == 0) {
+            logger.info(bot.getName() + " chose to try to build a district.");
+        } else if (choice == 1) {
+            logger.info(bot.getName() + " chose to take resources as building a district was not possible.");
+        }
+    }
 }
-
-
-
-

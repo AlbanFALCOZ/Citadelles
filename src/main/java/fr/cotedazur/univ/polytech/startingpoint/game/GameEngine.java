@@ -65,12 +65,7 @@ public class GameEngine {
      */
     public void initializeBots() {
 
-
-
-
-
-
-        Robot random = new RobotRandom("Nora") ;
+        Robot rush = new RobotRush("Nora");
         Robot sarsor = new RobotSarsor("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
@@ -81,8 +76,10 @@ public class GameEngine {
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
 
         }
-
-
+        for(int k = 0 ; k < 4 ; k++){
+            rush.addDistrict(deckDistricts.getDistrictsInDeck());
+        }
+        
         for(int k = 0 ; k < 4 ; k++){
             gentil.addDistrict(deckDistricts.getDistrictsInDeck());
 
@@ -91,11 +88,8 @@ public class GameEngine {
             choice.addDistrict(deckDistricts.getDistrictsInDeck());
         }
 
-        for (int j = 0; j < 4; j++) {
-             random.addDistrict(deckDistricts.getDistrictsInDeck());
-        }
 
-        bots.add(random);
+        bots.add(rush);
         bots.add(choice);
         bots.add(sarsor) ;
         bots.add(gentil) ;
