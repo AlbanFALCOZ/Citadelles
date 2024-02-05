@@ -13,7 +13,7 @@ public class RobotRush extends Robot {
     public RobotRush(String name) {
         super(name);
     }
-    
+
     public void chooseCharacter (List<CharactersType> availableCharacters) {
         //prioriser l'architecte pour construire rapidement
         if (availableCharacters.contains(CharactersType.ARCHITECTE)) {

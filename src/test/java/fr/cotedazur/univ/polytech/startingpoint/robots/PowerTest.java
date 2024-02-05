@@ -13,9 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,9 +68,9 @@ class PowerTest {
         assertEquals(1, destructor.getGolds());
         victim.setCharacter(CharactersType.CONDOTTIERE);
         power.condottiere(victim);
-        assertEquals(1, destructor.getGolds());
+        assertEquals(0, destructor.getGolds());
         power.condottiere(victim);
-        assertEquals(1, destructor.getGolds());
+        assertEquals(0, destructor.getGolds());
 
         victim.setCharacter(CharactersType.EVEQUE);
         destructor.setGolds(5);
@@ -83,12 +80,11 @@ class PowerTest {
 
 
 
-    /*
     @Test
     public void tryDestroyDonjon() {
         RobotRandom destructor = new RobotRandom("destructor");
         RobotRandom victim = new RobotRandom("victim");
-        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor));
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor,true));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MARCHAND);
         victim.setGolds(30);
@@ -107,9 +103,6 @@ class PowerTest {
         assertEquals(2, destructor.getGolds());
         assertEquals(2, victim.getNumberOfDistrictInCity());
     }
-<<<<<<< HEAD
-*/
-
 
     @Test
     public void marchand() {
@@ -143,18 +136,6 @@ class PowerTest {
         assertTrue(victim.getIsAssassinated());
     }
 
-    @Test
-    void testMagicien() {
-        RobotRandom magicien = new RobotRandom("Magicien");
-        magicien.setCharacter(CharactersType.MAGICIEN);
-        DeckDistrict deck = new DeckDistrict();
-        for (int i = 0; i < 5; i++) magicien.addDistrict(deck.getDistrictsInDeck());
-        int numberOfCardInHand = magicien.getNumberOfDistrictInHand();
-        assertEquals(5,numberOfCardInHand);
-        //Power power = mock(Power.class);
-        //power.magicien();
-    }
-
     @Mock
     private Robot mockedBot;
     @Mock
@@ -176,83 +157,73 @@ class PowerTest {
         verify(mockedBot).addGold(1);
         verify(mockedAction).printActionOfSellerBotWhoGainedGold();
     }
-    
-
-    @Mock
-    private DeckDistrict mockedDeck;
 
 
-
-/*
     @Test
-    void testArchitecteOptionOne() {
-        // Set up the mocked behavior for the first option (i == 0)
-        when(mockedBot.getChoice()).thenReturn(0);
-        when(mockedBot.pickListOfDistrict(mockedDeck)).thenReturn(Arrays.asList(
-                DistrictsType.TAVERNE, DistrictsType.MARCHE));
-        when(mockedBot.pickDistrictCard(anyList(), eq(mockedDeck))).thenReturn(Arrays.asList(
-                DistrictsType.MANOIR, DistrictsType.PALAIS));
-        doNothing().when(mockedAction).addListOfDistrict(anyList(), anyList());
-        doNothing().when(mockedAction).printActionOfBotWhoHasBuilt();
+    void testCondottiereWithVictim8District() {
+        RobotRandom robotDestructeur = new RobotRandom("Condottiere");
+        robotDestructeur.setCharacter(CharactersType.CONDOTTIERE);
+        RobotRandom robotVictim = new RobotRandom("Victim");
+        robotVictim.setCharacter(CharactersType.MAGICIEN);
+        robotVictim.setGolds(100);
+        robotDestructeur.setGolds(100);
+        DeckDistrict deckDistrict = new DeckDistrict();
+        while (robotVictim.getNumberOfDistrictInCity() < 7) {
+            robotVictim.addDistrict(deckDistrict.getDistrictsInDeck());
+            robotVictim.tryBuild();
+        }
+        assertEquals(7,robotVictim.getNumberOfDistrictInCity());
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robotDestructeur,true);
+        Power destruction = new Power(robotDestructeur,action);
+        destruction.condottiere(robotVictim);
+        assertEquals(6,robotVictim.getNumberOfDistrictInCity());
+        //La victime a vu un de ses batiments se faire détruire
 
-        power.architecte(mockedBot, mockedDeck);
+        while (robotVictim.getNumberOfDistrictInCity() < 8) {
+            robotVictim.addDistrict(deckDistrict.getDistrictsInDeck());
+            robotVictim.tryBuild();
+        }
 
-
-        verify(mockedBot).setChoice(7);
-        verify(mockedBot, times(3)).pickListOfDistrict(mockedDeck);
-        verify(mockedBot, times(2)).pickDistrictCard(anyList(), eq(mockedDeck));
-        verify(mockedAction).addListOfDistrict(anyList(), anyList());
-        verify(mockedAction).printActionOfBotWhoHasBuilt();
+        assertEquals(8,robotVictim.getNumberOfDistrictInCity());
+        destruction.condottiere(robotVictim);
+        assertEquals(8,robotVictim.getNumberOfDistrictInCity());
+        //Le condottière ne peut pas attaquer un joueur qui a déjà fini de construire ses 8 batiments
     }
 
-
- */
-
-    /*
-@Test
-void testVoleur() {
-    // Set up the mocked behavior
-    when(mockedBot.getIsAssassinated()).thenReturn(false);
-    when(mockedBot.getGolds()).thenReturn(3);
-    doNothing().when(mockedBot).addGold(3); // mock adding gold
-    doNothing().when(mockedAction).printThiefStill(mockedBot);
-    doNothing().when(mockedAction).printCantAffectVictim(any(Robot.class));
-
-    // Call the method under test
-    power.voleur(mockedBot);
-
-    // Verify that the expected interactions occurred
-    verify(mockedBot).getIsAssassinated();
-    verify(mockedBot).getGolds();
-    verify(mockedBot).addGold(3);
-    verify(mockedAction).printThiefStill(mockedBot);
-    verify(mockedAction, never()).printCantAffectVictim(any(Robot.class));
-
-    // Resetting the mocks for the next verification
-    reset(mockedBot, mockedAction);
-
-    // Test the scenario where the victim is assassinated
-    when(mockedBot.getIsAssassinated()).thenReturn(true);
-    power.voleur(mockedBot);
-
-    // Verify that the expected interactions occurred
-    verify(mockedBot).getIsAssassinated();
-    verify(mockedBot, never()).getGolds();
-    verify(mockedBot, never()).addGold(anyInt());
-    verify(mockedAction, never()).printThiefStill(mockedBot);
-    verify(mockedAction).printCantAffectVictim(mockedBot);
-}
-
+    @Test
+    void testCondottiereDetruitObservatoire() {
+        RobotRandom robotDestructeur = new RobotRandom("Condottiere");
+        robotDestructeur.setCharacter(CharactersType.CONDOTTIERE);
+        RobotRandom robotVictim = new RobotRandom("Victim");
+        robotVictim.setCharacter(CharactersType.MAGICIEN);
+        robotVictim.setGolds(100);
+        robotDestructeur.setGolds(100);
+        robotVictim.addDistrict(DistrictsType.OBSERVATOIRE);
+        assertEquals(2,robotVictim.numberOfCardsDrawn);
+        robotVictim.tryBuild();
+        assertEquals(3,robotVictim.numberOfCardsDrawn);
+        Power power = new Power(robotDestructeur,new ActionOfBotDuringARound(robotDestructeur,true));
+        power.condottiere(robotVictim);
+        assertEquals(0,robotVictim.getNumberOfDistrictInCity());
+        assertEquals(2,robotVictim.numberOfCardsDrawn);
+    }
 
     @Test
-    void voleur(){
-
-}
-*
-     */
-
-
-
-
+    void testCondottiereDetruitBibliotheque() {
+        RobotRandom robotDestructeur = new RobotRandom("Condottiere");
+        robotDestructeur.setCharacter(CharactersType.CONDOTTIERE);
+        RobotRandom robotVictim = new RobotRandom("Victim");
+        robotVictim.setCharacter(CharactersType.MAGICIEN);
+        robotVictim.setGolds(100);
+        robotDestructeur.setGolds(100);
+        robotVictim.addDistrict(DistrictsType.BIBLIOTHEQUE);
+        assertEquals(1,robotVictim.numberOfCardsChosen);
+        robotVictim.tryBuild();
+        assertEquals(2,robotVictim.numberOfCardsChosen);
+        Power power = new Power(robotDestructeur,new ActionOfBotDuringARound(robotDestructeur,true));
+        power.condottiere(robotVictim);
+        assertEquals(0,robotVictim.getNumberOfDistrictInCity());
+        assertEquals(1,robotVictim.numberOfCardsChosen);
+    }
 
 }

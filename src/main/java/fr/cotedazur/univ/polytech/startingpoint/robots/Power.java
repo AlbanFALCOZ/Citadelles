@@ -5,6 +5,8 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -33,13 +35,11 @@ public class Power {
 
 
     public void architecte(Robot bot, DeckDistrict deck) {
-        //ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot);
         int i = bot.getChoice();
         if (i == 0) {
             bot.setChoice(7);
             List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
-            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(0));
-            listDistrictDrawn.add(bot.pickListOfDistrict(deck).get(1));
+            listDistrictDrawn.addAll(bot.pickListOfDistrict(deck));
             List<DistrictsType> listDistrictPicked = bot.pickDistrictCard(listDistrictDrawn, deck);
             action.addListOfDistrict(listDistrictDrawn, listDistrictPicked);
             bot.addDistrict(listDistrictPicked);
@@ -60,11 +60,17 @@ public class Power {
     }
 
 
+
+
+
+
     public boolean canDestroyDistrict(Robot victim, DistrictsType district) {
         int destructorGolds = bot.getGolds();
         boolean districtInCity = victim.getCity().contains(district);
-        return destructorGolds >= district.getCost() && districtInCity;
+        return destructorGolds >= (district.getCost()-1) && districtInCity && !victim.hasEightDistrict();
     }
+
+
 
     public void condottiere(Robot victim) {
         int destructorGolds = bot.getGolds();
@@ -77,6 +83,7 @@ public class Power {
             if (!district.getName().equals("Donjon") && (verify)) {
                 if (bot.getCharacter().getType().equals(MILITATE) &&
                         !victim.getCharacter().getType().equals(RELIGIOUS)) {
+                    district.powerOfDistrict(victim,-1);
                     victim.getCity().remove(district);
                     int goldsAfterDestruction = destructorGolds - district.getCost();
                     bot.setGolds(goldsAfterDestruction + 1);
@@ -105,47 +112,64 @@ public class Power {
         victim.setDistrictInHand(botDistrictInHand);
     }
 
+    public boolean doublon(Robot victim){
+        for (DistrictsType district : bot.getCity()){
+            for (DistrictsType victimDistrict : victim.getDistrictInHand()){
+                if (district == victimDistrict){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-    public void magicien(Robot victim, DeckDistrict deck) {
+    public boolean doublonInHand(){
+        List<DistrictsType> hand = bot.getDistrictInHand();
+        List<DistrictsType> handCopy = bot.getDistrictInHand();
+        Collections.reverse(hand);
+        for (int i = 0; i < hand.size(); i++) {
+            for (int j = 0; j < handCopy.size(); j++) {
+                if (hand.get(i) == handCopy.get(j) && i!= j){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-        int i = bot.generateChoice();
-        if (i == 0) {
+
+    public void magicien(List<Robot> bots, DeckDistrict deck) {
+        Robot victim = bot.chooseVictimForMagicien(bots);
+        //int i = bot.generateChoice();
+        if (bot.getNumberOfDistrictInHand() < victim.getNumberOfDistrictInHand()) {
             swapCards(victim);
             action.printMagicianSwap(victim);
             action.showStatusOfBot();
+            action.showStatusOfBot(victim);
         }
-        if (i == 1) {
-
-            int a = bot.getNumberOfDistrictInHand();
-            bot.emptyListOfCardsInHand();
-            bot.setNumberOfCardsDrawn(a);
-            List<DistrictsType> listDistrictDrawn = bot.pickListOfDistrict(deck);
-            for (int j = 0; j < a; j++) {
-                bot.addDistrict(listDistrictDrawn.get(j));
-            }
-            action.printMagicianSwapWithDeck();
-            action.showStatusOfBot();
-
+        else if(doublon(bot) || doublonInHand()){
+                int numberOfDistrictInHand = bot.getNumberOfDistrictInHand();
+                List<DistrictsType> listDistrictHandMagician = new ArrayList<>(bot.getDistrictInHand());
+                bot.emptyListOfCardsInHand();
+                for (; numberOfDistrictInHand > 0; numberOfDistrictInHand--) bot.addDistrict(deck.getDistrictsInDeck());
+                while (!listDistrictHandMagician.isEmpty()) deck.addDistrictToDeck(listDistrictHandMagician.remove(0));
         }
-        bot.setNumberOfCardsDrawn(2);
-    }
+}
 
     public void assassin(Robot victim) {
         if (bot.getCharacter().getType().equals(ASSASSIN)) {
             victim.setIsAssassinated(true);
-            action.printVictimAssassined(victim);
         }
     }
 
     public void voleur(Robot victim) {
-
         if (!victim.getIsAssassinated()) {
             int stolenGold = victim.getGolds();
             bot.addGold(stolenGold);
             action.printThiefStill(victim);
             victim.setGolds(0);
         }
-        action.printCantAffectVictim(victim);
+        else action.printCantAffectVictim(victim);
     }
 
 }

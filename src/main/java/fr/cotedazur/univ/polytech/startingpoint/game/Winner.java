@@ -103,7 +103,7 @@ public class Winner {
         if (winners.isEmpty()) {
             return "No winners D:";
         } else if (winners.size() == 1) {
-            return "The winner is: " + winners.get(0) + " ! :D";
+            return "The winner is: " + winners.get(0) + " ! 🥳🥳";
         } else {
             return "There is an equality o:! The winners are: " + String.join(", ", winners);
 
@@ -136,7 +136,7 @@ public class Winner {
             }
             if (uniqueColorsInCity.size() >= 5) {
                 logger.info(bot.getName() + " has " + bot.getScore() + " points ");
-                logger.info(bot.getName() + " has 5 districts in their city they earn 3 extra points ");
+                logger.info(bot.getName() + " has all 5 colors in their city, they earn 3 extra points ");
                 bot.setScore(originalScore + 3);
                 logger.info(bot.getName() + " has now " + bot.getScore());
                 logger.info("--------------------------------------------------");

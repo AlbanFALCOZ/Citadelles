@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
@@ -33,6 +34,8 @@ public class ActionOfBotDuringARound {
         logger.info(bot.statusOfPlayer());
     }
 
+    public void showStatusOfBot(Robot bot) { logger.info(bot.statusOfPlayer()); }
+
     public void showCityOfBot(Robot bot) {
         logger.info("City of " + bot.getName() + " : " + getStringOfListOfDistrict(bot.getCity()));
     }
@@ -47,31 +50,27 @@ public class ActionOfBotDuringARound {
 
         String cardDrawn = "";
         String cardPicked = "";
-        for (int i = 0; i < listDistrictDrawn.size(); i++) {
-            DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
-            cardDrawn += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listDistrictDrawn.size()-1) cardDrawn += ",";
-        }
+        cardDrawn = getStringFromListOfDistrict(cardDrawn, listDistrictDrawn);
         logger.info(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
+        cardPicked = getStringFromListOfDistrict(cardPicked, listDistrictPicked);
+
+        logger.info(bot.getName() + " choose to pick : {" + cardPicked + "}");
+        logger.info(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+    }
+
+    private String getStringFromListOfDistrict(String cardPicked, List<DistrictsType> listDistrictPicked) {
         for (int i = 0; i < listDistrictPicked.size(); i++) {
             DistrictsType districtInListDistrict = listDistrictPicked.get(i);
             cardPicked += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listDistrictPicked.size()-1) cardPicked += ",";
             //bot.addDistrict(districtInListDistrict);
         }
-
-        logger.info(bot.getName() + " choose to pick : {" + cardPicked + "}");
-        logger.info(bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+        return cardPicked;
     }
 
     private String getStringOfListOfDistrict(List<DistrictsType> listOfDistrict) {
         String stringOfDistricts = "";
-        for (int i = 0; i < listOfDistrict.size(); i++) {
-            DistrictsType districtInListDistrict = listOfDistrict.get(i);
-            stringOfDistricts += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listOfDistrict.size() - 1) stringOfDistricts += ",";
-            //bot.addDistrict(districtInListDistrict);
-        }
+        stringOfDistricts = getStringFromListOfDistrict(stringOfDistricts, listOfDistrict);
         return stringOfDistricts;
     }
 
@@ -85,7 +84,7 @@ public class ActionOfBotDuringARound {
 
     public void printBuildingAndPowerOfBot(String hasBuilt, int goldsWon) {
         if (!hasBuilt.equals("nothing"))
-            logger.info(bot.getName() + " built " + hasBuilt + " and now has " + bot.getGolds() + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
+            logger.info(bot.getName() + " built " + hasBuilt + " and now has " + (bot.getGolds()-goldsWon) + " golds and has in hand: " + bot.getNumberOfDistrictInHand() + " districts");
         if (goldsWon > 0)
             logger.info(bot.getName() + " has won " + goldsWon + " golds by " + bot.getCharacter().getType() + " buildings and has now " + bot.getGolds() + " golds");
         logger.info(bot.statusOfPlayer());
@@ -105,15 +104,15 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfNoneDistrictDestroyed(Robot victim, int destructorGolds) {
-        logger.info(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds or the district is a Donjon");
+        logger.info(bot.getName() + " can't destroy the districts" + " of " + victim.getName() + " because he has only " + destructorGolds + " golds or the district is a Donjon or because " + victim.getName() + " has already 8 districts");
     }
 
     public void printEvequeImmune(Robot victim, DistrictsType district) {
         logger.info(bot.getName() + " can't destroy " + district + " of " + victim.getName() + " because he is " + victim.getCharacter().getRole());
     }
 
-    public void printVictimAssassined(Robot victim) {
-        logger.info(bot.getName() + " murdered " + victim.getCharacter().getRole());
+    public void printVictimAssassined(CharactersType character) {
+        logger.info(bot.getName() + " murdered " + character.getRole());
 
     }
 
@@ -152,6 +151,26 @@ public class ActionOfBotDuringARound {
 
     public void printManufactureAction(List<DistrictsType> listOfDistrictPicked) {
         logger.info("Thanks to the manufacture, " + bot.getName() + " lost 3 golds but added {" + getStringOfListOfDistrict(listOfDistrictPicked) + "} to his hand");
+    }
+
+    public void printCanFinishThisTurn() {
+        logger.info(bot.getName() + " can finish this turn so " + bot.getName() + " picked " + bot.getCharacter().getRole());
+    }
+
+    public void printCanFinishNextTurn() {
+        logger.info(bot.getName() + " can finish next turn so " + bot.getName() + " picked " + bot.getCharacter().getRole());
+    }
+
+    public void printTurnHasBeenSkipped() {
+        logger.info(bot.getName() + " has been killed so " + bot.getName() + "'s turn is skipped");
+    }
+
+    public void printPickCondottiere(Robot victim) {
+        logger.info(bot.getName() + " has picked the condottiere because " + victim.getName() + " is soon going to have 8 districts.");
+    }
+
+    public void printPickCharacterBasedOnNumberOfBuildings() {
+        logger.info(bot.getName() + " has picked " + bot.getCharacter().getRole() + " because " + bot.getName() + " has 2 or more " + bot.getCharacter().getType() + " districts in his city");
     }
 }
 

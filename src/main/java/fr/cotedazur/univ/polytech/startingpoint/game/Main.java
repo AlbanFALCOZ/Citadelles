@@ -12,8 +12,10 @@ public class Main {
 
 
     public static void main(String[] args) {
+
         //testBots();
         showGame();
+
     }
 
 
@@ -41,22 +43,24 @@ public class Main {
                 if (winners.equals("Alban")) {
                     listWinners[0]++;
                 }
-                if (winners.equals("Sara")) {
+                if (winners.equals("Stacy")) {
                     listWinners[1]++;
                 }
-                if (winners.equals("Stacy")) {
+                if (winners.equals("Nora")) {
                     listWinners[2]++;
                 }
-                if (winners.equals("Nora")) {
+                if (winners.equals("Sara")) {
                     listWinners[3]++;
                 }
             }
             //logger.info(winner.calculateScores());
             //logger.info(winner.showWinners());
         }
+
         logger.info("Nombre de parties : " + i);
         for (i = 0; i < listWinners.length; i++) {
             logger.info("Winrate N°" + i + " : " + (float) listWinners[i] / numberOfGames * 100 + "%");
+
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
