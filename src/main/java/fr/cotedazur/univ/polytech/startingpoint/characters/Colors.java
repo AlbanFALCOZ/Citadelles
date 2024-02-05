@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.characters;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public enum Colors {
@@ -20,6 +22,8 @@ public enum Colors {
     }
 
     String colorDisplay ;
+
+    static List<Colors> listOfColors = new ArrayList<>() ;
     Colors(String colorDisplay){
         this.colorDisplay = colorDisplay ;
     }
@@ -34,6 +38,17 @@ public enum Colors {
         };
         int randomIndex = random.nextInt(allowedColors.length);
         return allowedColors[randomIndex];
+    }
+
+    public static List<Colors> getListOfColors() {
+        listOfColors.add(Colors.GREEN) ;
+        listOfColors.add(Colors.RED) ;
+        listOfColors.add(Colors.BLUE) ;
+        listOfColors.add(Colors.PURPLE);
+        listOfColors.add(Colors.YELLOW) ;
+        return listOfColors ;
+
+
     }
 
 

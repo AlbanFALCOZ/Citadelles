@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -17,17 +18,16 @@ public class Winner {
 
     private List<Robot> winnerBots ;
 
-    private boolean hasFiveColors = false ;
-
     public static final Logger logger = Logger.getLogger(Winner.class.getName());
 
     /**
      * @param bots la liste des robots
      *             Constructeur de la classe Winner
      */
-    public Winner(List<Robot> bots) {
+    public Winner(List<Robot> bots,boolean systemPrint) {
         this.bots = new ArrayList<>(bots);
-
+        System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
+        if (!systemPrint) logger.setLevel(Level.OFF);
     }
 
 
@@ -41,7 +41,7 @@ public class Winner {
 
     public void setScores(){
         for(Robot bot : bots) {
-            bot.setScore(bot.getScore() + bot.calculateScore());
+            bot.setScore(bot.calculateScore());
         }
 
         awardDistrictColorBonus();
@@ -120,7 +120,6 @@ public class Winner {
                    Colors randomColor =Colors.getRandomColorCode() ;
                    bot.getCity().get(index).setColor(randomColor);
                    logger.info(bot.getName() + " choosed to change the color of their miracle card to " + randomColor);
-
                }
             }
         }

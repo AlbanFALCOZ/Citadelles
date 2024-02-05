@@ -24,7 +24,7 @@ class WinnerTest {
     @BeforeEach
     void setUp() {
         gameEngine = new GameEngine();
-        winner = new Winner(gameEngine.getBots());
+        winner = new Winner(gameEngine.getBots(),true);
     }
 
     @Test
@@ -80,7 +80,7 @@ class WinnerTest {
         Robot robot2 = new RobotRandom("Robot2");
         robot1.setScore(10);
         robot2.setScore(10);
-        Winner winner = new Winner(List.of(robot1, robot2));
+        Winner winner = new Winner(List.of(robot1, robot2),true);
         assertEquals("There is an equality o:! The winners are: Robot1, Robot2", winner.showWinners());
 
     }
@@ -96,7 +96,7 @@ class WinnerTest {
         robots.addAll(Arrays.asList(robot1, robot2, robot3));
 
 
-        Winner winner = new Winner(robots);
+        Winner winner = new Winner(robots,true);
 
 
         robot1.getCity().add(DistrictsType.MANOIR);
@@ -143,7 +143,7 @@ class WinnerTest {
         robot3.getCity().add(DistrictsType.TAVERNE);
 
 
-        Winner winner = new Winner(List.of(robot1, robot2, robot3));
+        Winner winner = new Winner(List.of(robot1, robot2, robot3),true);
 
 
         winner.miracleDistrictEffect();

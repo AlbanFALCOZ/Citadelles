@@ -35,7 +35,7 @@ public abstract class Robot{
         city = new ArrayList<>();
         hasCrown = false;
         IsAssassinated = false;
-        //this.strategy = strategy;
+
 
     }
 
@@ -268,6 +268,7 @@ public abstract class Robot{
         }
     }
 
+
     public abstract String tryBuild();
 
     public abstract List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
@@ -335,6 +336,7 @@ public abstract class Robot{
         }
         return victim;
     }
+
 
 
 
