@@ -13,9 +13,8 @@ public class RobotRush extends Robot {
     public RobotRush(String name) {
         super(name);
     }
-
-    @Override
-    public void chooseCharacter(List<CharactersType> availableCharacters) {
+    
+    public void chooseCharacter (List<CharactersType> availableCharacters) {
         //prioriser l'architecte pour construire rapidement
         if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
             setCharacter(CharactersType.ARCHITECTE);

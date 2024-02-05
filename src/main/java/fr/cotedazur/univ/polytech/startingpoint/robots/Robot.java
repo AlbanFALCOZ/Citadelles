@@ -257,7 +257,7 @@ public abstract class Robot{
     }
 
 
-    public abstract void chooseCharacter(List<CharactersType> availableCharacters);
+    //public abstract void chooseCharacter(List<CharactersType> availableCharacters);
 
     public abstract String tryBuild();
 
