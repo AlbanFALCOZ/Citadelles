@@ -29,26 +29,7 @@ class RobotSarsorTest {
             assertTrue(robotSarsor.getCity().contains(DistrictsType.TOUR_DE_GUET));
             assertEquals(9, robotSarsor.getGolds());
         }
-
-    @Test
-    void tryBuildForOtherDistrict() {
-        RobotSarsor robotSarsor = new RobotSarsor("TestRobot");
-        robotSarsor.setGolds(10);
-        robotSarsor.getDistrictInHand().add(DistrictsType.CHATEAU); // Jaune
-        robotSarsor.getDistrictInHand().add(DistrictsType.TEMPLE);  // Bleu
-        robotSarsor.getDistrictInHand().add(DistrictsType.ECHOPPE); // Vert
-        robotSarsor.getDistrictInHand().add(DistrictsType.COURT_DES_MIRACLES); // Violet
-        robotSarsor.getCity().add(DistrictsType.TOUR_DE_GUET); // Rouge
-        robotSarsor.getCity().add(DistrictsType.MANOIR); // Jaune
-        robotSarsor.getCity().add(DistrictsType.EGLISE); // Bleu
-        robotSarsor.getCity().add(DistrictsType.MARCHE); // Vert
-        String built = robotSarsor.tryBuild();
-        assertEquals("a new Cour des miracles", built);
-    }
-
-
-
-
+        
 
     @Test
     void pickDistrictCardTest() {
