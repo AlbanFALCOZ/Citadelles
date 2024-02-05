@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,9 +10,12 @@ import java.util.Comparator;
 import java.util.List;
 
 public class RobotRush extends Robot {
+    private ActionOfBotDuringARound action;
+
 
     public RobotRush(String name) {
         super(name);
+        this.action = new ActionOfBotDuringARound(this, true);
     }
 
 
@@ -20,18 +24,24 @@ public class RobotRush extends Robot {
         //prioriser l'architecte pour construire rapidement
         if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
             setCharacter(CharactersType.ARCHITECTE);
+            availableCharacters.remove(CharactersType.ARCHITECTE);
+        }
+        //si les ressources sont suffisantes, choisir le marchand pour augmenter l'or
+        else if (getGolds() <= 3 && availableCharacters.contains(CharactersType.MARCHAND)) {
+            setCharacter(CharactersType.MARCHAND);
+            availableCharacters.remove(CharactersType.MARCHAND);
+
         }
         //si le nb de districts est proche de 8: prioriser le roi ou l'évêque pour la protection
         else if (getNumberOfDistrictInCity() >= 6) {
             if (availableCharacters.contains(CharactersType.ROI)) {
                 setCharacter(CharactersType.ROI);
+                availableCharacters.remove(CharactersType.ROI);
             } else if (availableCharacters.contains(CharactersType.EVEQUE)) {
                 setCharacter(CharactersType.EVEQUE);
+                availableCharacters.remove(CharactersType.EVEQUE);
+
             }
-        }
-        //si les ressources sont suffisantes, choisir le marchand pour augmenter l'or
-        else if (getGolds() >= 3 && availableCharacters.contains(CharactersType.MARCHAND)) {
-            setCharacter(CharactersType.MARCHAND);
         }
         else {
             CharactersType chosenCharacter = availableCharacters.get(0);
@@ -41,7 +51,9 @@ public class RobotRush extends Robot {
                 }
             }
             setCharacter(chosenCharacter);
+            availableCharacters.remove(chosenCharacter);
         }
+        action.printCharacterChoice() ;
     }
 
     private int getPriority(CharactersType character) {
@@ -75,14 +87,18 @@ public class RobotRush extends Robot {
 
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
-        //choisit la carte la - chère ou celle qui lui donne le plus d'avantages
         listDistrict.sort(Comparator.comparingInt(DistrictsType::getCost));
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int costOfDistrictToBeBuilt = 0;
         int i = 0;
+
+        List<DistrictsType> listDistrictDrawn = new ArrayList<>(listDistrict);
+        List<DistrictsType> listDistrictPicked = new ArrayList<>();
+
         while (i < listDistrict.size() && listDistrictToBuild.size() < getNumberOfCardsChosen()) {
             if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= getGolds()) {
                 costOfDistrictToBeBuilt += listDistrict.get(i).getCost();
+                listDistrictPicked.add(listDistrict.get(i));  // add to picked list
                 listDistrictToBuild.add(listDistrict.remove(i));
             } else {
                 i++;
@@ -92,17 +108,24 @@ public class RobotRush extends Robot {
         for (DistrictsType districtNonChosen : listDistrict) {
             deck.addDistrictToDeck(districtNonChosen);
         }
+
+        action.printDistrictChoice(listDistrictDrawn, listDistrictPicked);
         return listDistrictToBuild;
     }
 
-
     @Override
     public int generateChoice() {
-        if (!getDistrictInHand().isEmpty() && canBuildADistrictInHand()) {
-            return 0;  //construire
-        }
-        return 1;  //prendr ressources si construction pas possible
+        int choice = (!getDistrictInHand().isEmpty() && canBuildADistrictInHand()) ? 0 : 1;  // 0 : construire, 1 : prendre des ressources
+        action.printActionChoice(choice);
+        return choice;
     }
+
+
+    public void setAction(ActionOfBotDuringARound action) {
+        this.action = action;
+    }
+
+
 
     @Override
     public List<DistrictsType> laboratoire(DeckDistrict deck) {
