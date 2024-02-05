@@ -10,8 +10,27 @@ import java.util.Comparator;
 import java.util.List;
 
 public class RobotWithChoice extends Robot {
+
     public RobotWithChoice(String name) {
         super(name);
+        super.setTypeOfRobot("RobotWithChoice");
+    }
+
+    @Override
+    public String tryBuild() {
+        List<String> listDistrictName = new ArrayList<>();
+        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
+        for (int i = 0; i < getDistrictInHand().size(); i++) {
+            DistrictsType district = getDistrictInHand().get(i);
+            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+                district.powerOfDistrict(this,1);
+                getCity().add(district);
+                setGolds(getGolds() - district.getCost());
+                getDistrictInHand().remove(i);
+                return "a new " + district.getName();
+            }
+        }
+        return "nothing";
     }
 
     @Override

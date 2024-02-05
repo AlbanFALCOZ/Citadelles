@@ -8,8 +8,28 @@ import java.util.ArrayList;
 
 public class RobotRandom extends Robot {
 
+
+
     public RobotRandom(String name) {
         super(name);
+        super.setTypeOfRobot("RobotRandom");
+    }
+
+    @Override
+    public String tryBuild() {
+        List<String> listDistrictName = new ArrayList<>();
+        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
+        for (int i = 0; i < getDistrictInHand().size(); i++) {
+            DistrictsType district = getDistrictInHand().get(i);
+            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+                district.powerOfDistrict(this,1);
+                getCity().add(district);
+                setGolds(getGolds() - district.getCost());
+                getDistrictInHand().remove(i);
+                return "a new " + district.getName();
+            }
+        }
+        return "nothing";
     }
 
     @Override
@@ -46,8 +66,10 @@ public class RobotRandom extends Robot {
             }
             i++;
         }
-        while (listDistrictToBuild.size() < getNumberOfCardsChosen())
+        while (listDistrictToBuild.size() < getNumberOfCardsChosen()) {
             listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
+        }
+
 
 
         for (DistrictsType districtNonChosen : listDistrict) {
@@ -67,7 +89,10 @@ public class RobotRandom extends Robot {
         setCharacter(availableCharacters.get(0));
         availableCharacters.remove(availableCharacters.get(0));
 
+
     }
+
+
 
 
 }

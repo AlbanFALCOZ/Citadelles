@@ -136,7 +136,7 @@ public class Winner {
             }
             if (uniqueColorsInCity.size() >= 5) {
                 logger.info(bot.getName() + " has " + bot.getScore() + " points ");
-                logger.info(bot.getName() + " has 5 districts in their city they earn 3 extra points ");
+                logger.info(bot.getName() + " has all 5 colors in their city, they earn 3 extra points ");
                 bot.setScore(originalScore + 3);
                 logger.info(bot.getName() + " has now " + bot.getScore());
                 logger.info("--------------------------------------------------");

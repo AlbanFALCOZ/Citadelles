@@ -8,6 +8,9 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
 
+import fr.cotedazur.univ.polytech.startingpoint.robots.*;
+
+
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,24 +62,27 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        String[] name = {"Alban", "Nora"};
-        RobotSarsor sarsor = new RobotSarsor("Sara" , true) ;
-        RobotDiscrete gentil = new RobotDiscrete("Stacy") ;
+        Robot random = new RobotRandom("Nora") ;
+        Robot sarsor = new RobotSarsor("Sara" , true) ;
+        Robot gentil = new RobotDiscrete("Stacy") ;
+
+        Robot choice = new RobotChoiceOfCharacter("Alban") ;
         for(int k = 0 ; k < 4 ; k++){
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
         }
         for(int k = 0 ; k < 4 ; k++){
             gentil.addDistrict(deckDistricts.getDistrictsInDeck());
         }
-        for (int i = 0; i < 2; i++) {
-            Robot bot;
-            bot = new RobotRandom(name[i]);
-            for (int j = 0; j < 4; j++) {
-                bot.addDistrict(deckDistricts.getDistrictsInDeck());
-
-            }
-            bots.add(bot);
+        for(int k = 0 ; k < 4 ; k++){
+            choice.addDistrict(deckDistricts.getDistrictsInDeck());
         }
+
+        for (int j = 0; j < 4; j++) {
+             rush.addDistrict(deckDistricts.getDistrictsInDeck());
+
+        }
+        bots.add(random);
+        bots.add(choice);
         bots.add(sarsor) ;
         bots.add(gentil) ;
 
@@ -103,17 +109,25 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
-               bot.pickCharacter(listCharacters, bots);
-               logger.info(bot.getName() + " With crown Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
+
+                List<Robot> listOfThreeBots = new ArrayList<>(bots);
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
+                logger.info(bot.getName() + " With crown Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
 
             }
         }
         for (Robot bot : bots) {
             if (!bot.getHasCrown()) {
-                bot.pickCharacter(listCharacters, bots);
+
+                List<Robot> listOfThreeBots = new ArrayList<>(bots);
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
             }
         }
+
+        logger.info("Destroyed character: " + listCharacters.get(0).getColor().getColorDisplay() + listCharacters.get(0).getRole() + bots.get(0).getRESET());
     }
 
 
@@ -193,9 +207,6 @@ public class GameEngine {
                 }
             }
         }
-        Winner winner = new Winner(bots);
-        //winner.miracleDistrictEffect();
-
 
     }
     /**
@@ -222,7 +233,7 @@ public class GameEngine {
     public void destroyCharacters(List<CharactersType> charactersInHand) {
         charactersInHand.remove(CharactersType.ROI);
         Collections.shuffle(charactersInHand, new Random());
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
 
