@@ -43,13 +43,14 @@ public class GameEngine {
      */
     public GameEngine(boolean systemPrint) {
         this.systemPrint = systemPrint;
+        System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
+        if (!systemPrint) logger.setLevel(Level.OFF);
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
         this.bots = new ArrayList<>();
         round = new Round(bots);
         initializeBots();
-        System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
-        if (!systemPrint) logger.setLevel(Level.OFF);
+
     }
 
     public GameEngine() {
@@ -65,12 +66,7 @@ public class GameEngine {
      */
     public void initializeBots() {
 
-
-
-
-
-
-        Robot random = new RobotRandom("Nora") ;
+        Robot rush = new RobotRush("Nora");
         Robot sarsor = new RobotSarsor("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
@@ -81,8 +77,10 @@ public class GameEngine {
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
 
         }
-
-
+        for(int k = 0 ; k < 4 ; k++){
+            rush.addDistrict(deckDistricts.getDistrictsInDeck());
+        }
+        
         for(int k = 0 ; k < 4 ; k++){
             gentil.addDistrict(deckDistricts.getDistrictsInDeck());
 
@@ -91,11 +89,8 @@ public class GameEngine {
             choice.addDistrict(deckDistricts.getDistrictsInDeck());
         }
 
-        for (int j = 0; j < 4; j++) {
-             random.addDistrict(deckDistricts.getDistrictsInDeck());
-        }
 
-        bots.add(random);
+        bots.add(rush);
         bots.add(choice);
         bots.add(sarsor) ;
         bots.add(gentil) ;
