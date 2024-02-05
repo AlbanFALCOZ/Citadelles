@@ -191,6 +191,8 @@ public class ActionOfBotDuringARound {
     public void printPickdefaultCharacter() {
         logger.info(bot.getName() + " chose the first character in the list because he has no districts of any type.");
 
+    }
+
     public void printCanFinishThisTurn() {
         logger.info(bot.getName() + " can finish this turn so " + bot.getName() + " picked " + bot.getCharacter().getRole());
     }
