@@ -30,7 +30,6 @@ public class RobotAnalyzer extends Robot {
             if (district.getCost() <= getGolds()) {
                 // Priorité aux districts dont le type n'est pas encore présent dans la ville
                 if (!uniqueDistrictTypesInCity.contains(district.getType())) {
-                    // Construire
                     buildDistrict(district);
                     builtDistrictName = district.getName();
                     break;
@@ -126,7 +125,32 @@ public class RobotAnalyzer extends Robot {
     }
 
     private void chooseCharacterBasedOnAnalysis(List<CharactersType> availableCharacters, Map<String, Integer> districtTypeCounts) {
-        //choisir un personnage basé sur l'analyse des types de quartier
-        // ...
+        //type de district le plus commun dans la ville du robot
+        String mostCommonDistrictType = Collections.max(districtTypeCounts.entrySet(), Map.Entry.comparingByValue()).getKey();
+        //type de district le moins commun
+        String leastCommonDistrictType = Collections.min(districtTypeCounts.entrySet(), Map.Entry.comparingByValue()).getKey();
+
+        CharactersType chosenCharacter = null;
+
+        //logique de choix perso basé sur les districts les plus/moins communs
+        for (CharactersType character : availableCharacters) {
+            if (character.getType().equals(mostCommonDistrictType) && districtTypeCounts.get(mostCommonDistrictType) > 2) {
+                // priorise perso qui correspondent au type de district le plus commun pour maximiser le gain
+                chosenCharacter = character;
+                break;
+            } else if (character.getType().equals(leastCommonDistrictType) && districtTypeCounts.get(leastCommonDistrictType) < 2) {
+                // Choisir un personnage qui pourrait combler le manque de diversité
+                chosenCharacter = character;
+                break;
+            }
+        }
+
+        // si aucun pers choisi selon la strat, choisir le premier personnage dispo
+        if (chosenCharacter == null && !availableCharacters.isEmpty()) {
+            chosenCharacter = availableCharacters.get(0);
+        }
+
+        setCharacter(chosenCharacter);
     }
+
 }
