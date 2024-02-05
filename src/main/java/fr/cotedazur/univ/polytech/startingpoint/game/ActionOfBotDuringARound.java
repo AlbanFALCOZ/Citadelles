@@ -172,6 +172,21 @@ public class ActionOfBotDuringARound {
     public void printPickCharacterBasedOnNumberOfBuildings() {
         logger.info(bot.getName() + " has picked " + bot.getCharacter().getRole() + " because " + bot.getName() + " has 2 or more " + bot.getCharacter().getType() + " districts in his city");
     }
+
+    public void printCharacterChoice() {
+        CharactersType character = bot.getCharacter();
+        logger.info(bot.getName() + " has picked " + character.getRole() + ".");
+
+        if(character == CharactersType.ARCHITECTE) {
+            logger.info(bot.getName() + " has picked the Architect to build more buildings quickly.");
+        } else if(character == CharactersType.ROI || character == CharactersType.EVEQUE) {
+            logger.info(bot.getName() + " is close to having 8 districts and picked " + character.getRole() + " for protection.");
+        } else if(character == CharactersType.MARCHAND) {
+            logger.info(bot.getName() + " has sufficient resources and picked the Merchant to increase gold.");
+        } else {
+            logger.info(bot.getName() + " picked " + character.getRole() + " based on the highest priority available.");
+        }
+    }
 }
 
 
