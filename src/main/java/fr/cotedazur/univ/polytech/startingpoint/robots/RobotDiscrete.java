@@ -3,8 +3,11 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static fr.cotedazur.univ.polytech.startingpoint.game.Main.logger;
 
@@ -21,26 +24,66 @@ public class RobotDiscrete extends Robot {
 
     @Override
     public String tryBuild() {
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
         List<String> listDistrictName = new ArrayList<>();
-        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
-        for (int i = 0; i < getDistrictInHand().size(); i++) {
-            DistrictsType district = getDistrictInHand().get(i);
-            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+        for (DistrictsType districtsType : getCity()) {
+            listDistrictName.add(districtsType.getName());
+        }
+
+        List<DistrictsType> districtsOfType = getDistrictInHand().stream()
+                .filter(district -> district.getType().equals(getCharacter().getType()))
+                .toList();
+
+        if (!districtsOfType.isEmpty()) {
+
+            String district = buildDistrict(listDistrictName, districtsOfType);
+            if (district != null) {
+                action.printBuildDistrictWithSameType(district);
+                return district;
+            }
+
+        }
+
+        List<DistrictsType> allDistricts = new ArrayList<>(Stream.concat(getCity().stream(), getDistrictInHand().stream())
+                .toList());
+
+        allDistricts.sort(Comparator.comparingInt(district -> Collections.frequency(allDistricts, district.getType())));
+
+        String district = buildDistrict(listDistrictName, allDistricts);
+        if (district != null) {
+            action.printBuildFrequentTypeDistrict(district);
+            return district;
+        }
+
+        return "nothing";
+    }
+
+    private String buildDistrict(List<String> listDistrictName, List<DistrictsType> allDistricts) {
+        List<DistrictsType> listDistrict = new ArrayList<>(allDistricts);
+        listDistrict.sort(Comparator.comparingInt(DistrictsType::getCost).reversed());
+        for (DistrictsType district : listDistrict) {
+            if (!listDistrictName.contains(district.getName()) && district.getCost() <= getGolds()){
                 district.powerOfDistrict(this);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
-                getDistrictInHand().remove(i);
+                getDistrictInHand().remove(district);
                 return "a new " + district.getName();
             }
         }
-        return "nothing";
+        return null;
     }
 
 
     @Override
     public int generateChoice() {
-        if (getDistrictInHand().isEmpty()) return 0;
-        else if (getGolds() == 0) return 1;
+        int minCost = getDistrictInHand().stream()
+                .filter(district -> !getCity().contains(district))
+                .mapToInt(DistrictsType::getCost)
+                .min()
+                .orElse(Integer.MAX_VALUE);
+
+        if (getDistrictInHand().isEmpty() || getDistrictInHand().stream().allMatch(getCity()::contains)) return 0;
+        else if (getGolds() < minCost) return 1;
         else return (int) (Math.random() * 2);
     }
 
@@ -58,6 +101,7 @@ public class RobotDiscrete extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters) {
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
         characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));
         characterCounts.put(CharactersType.EVEQUE, countDistrictsByType(RELIGIOUS) + countDistrictsInHandByType(RELIGIOUS));
@@ -73,6 +117,7 @@ public class RobotDiscrete extends Robot {
 
         for (CharactersType character : priorityOrder) {
             if (availableCharacters.contains(character)) {
+                action.printPickCharacterWithPriority(character);
                 chosenCharacter = character;
                 availableCharacters.remove(character);
                 break;
@@ -80,6 +125,7 @@ public class RobotDiscrete extends Robot {
         }
 
         if (chosenCharacter == null && !availableCharacters.isEmpty()) {
+            action.printPickdefaultCharacter();
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(0);
         }
@@ -91,6 +137,7 @@ public class RobotDiscrete extends Robot {
 
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int indice = 0;
@@ -102,7 +149,7 @@ public class RobotDiscrete extends Robot {
         indice = chooseAnyDistrict(listDistrict, indice, listDistrictToBuild);
 
         if (indice < getNumberOfCardsChosen()){
-            logger.info(this.getName() + " can't choose any district because they are already in his hand or city ");
+            action.printCantPickDistrict();
 
         }
 
@@ -113,11 +160,15 @@ public class RobotDiscrete extends Robot {
     }
 
     private int chooseAnyDistrict(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
         if (indice < getNumberOfCardsChosen()){
-            for (DistrictsType currentDistrict : listDistrict) {
-                if (!isDistrictInCityOrHand(currentDistrict) ) {
+            Iterator<DistrictsType> iterator = listDistrict.iterator();
+            while (iterator.hasNext()) {
+                DistrictsType currentDistrict = iterator.next();
+                if (!isDistrictInCityOrHand(currentDistrict)) {
                     indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
-                    logger.info(this.getName() + " chose " + currentDistrict.getName() + " because it is not in his hand or city.");
+                    iterator.remove();
+                    action.printPickAnyDistrict(currentDistrict);
                 }
                 if (indice == getNumberOfCardsChosen()) break;
             }
@@ -126,11 +177,15 @@ public class RobotDiscrete extends Robot {
     }
 
     private int chooseSpecialDistrict(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
         if (indice < getNumberOfCardsChosen()){
-            for (DistrictsType currentDistrict : listDistrict) {
+            Iterator<DistrictsType> iterator = listDistrict.iterator();
+            while (iterator.hasNext()) {
+                DistrictsType currentDistrict = iterator.next();
                 if (!isDistrictInCityOrHand(currentDistrict) && isSpecialDistrictType(currentDistrict.getType())) {
                     indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
-                    logger.info(this.getName() + " chose " + currentDistrict.getName() + " because it is a special district and the most expensive and is not in his hand or city.");
+                    iterator.remove();
+                    action.printPickSpecialDistrict(currentDistrict);
                 }
                 if (indice == getNumberOfCardsChosen()) break;
             }
@@ -139,16 +194,20 @@ public class RobotDiscrete extends Robot {
     }
 
     private int chooseDistrictByType(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
-        for (DistrictsType currentDistrict : listDistrict) {
-            if (!isDistrictInCityOrHand(currentDistrict) && (currentDistrict.getType().equals(this.getCharacter().getType()))) {
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
+        Iterator<DistrictsType> iterator = listDistrict.iterator();
+        while (iterator.hasNext()) {
+            DistrictsType currentDistrict = iterator.next();
+            if (!isDistrictInCityOrHand(currentDistrict) && currentDistrict.getType().equals(this.getCharacter().getType())) {
                 indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
-                logger.info(this.getName() + " chose " + currentDistrict.getName() + " because it is the same type as his character.");
-
+                iterator.remove();
+                action.printPickDistrictByType(currentDistrict);
             }
             if (indice == getNumberOfCardsChosen()) break;
         }
         return indice;
     }
+
 
     private boolean isDistrictInCityOrHand(DistrictsType district) {
         return this.getCity().contains(district) || this.getDistrictInHand().contains(district);
@@ -160,12 +219,9 @@ public class RobotDiscrete extends Robot {
 
     private int chooseDistrict(List<DistrictsType> listDistrict, DistrictsType currentDistrict, List<DistrictsType> listDistrictToBuild, int indice) {
         listDistrictToBuild.add(currentDistrict);
-        listDistrict.remove(currentDistrict);
         indice++;
         return indice;
     }
-
-
 
 
 }

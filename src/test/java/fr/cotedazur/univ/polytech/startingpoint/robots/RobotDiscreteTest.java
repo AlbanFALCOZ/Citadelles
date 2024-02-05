@@ -47,6 +47,7 @@ class RobotDiscreteTest {
     void tryBuild_shouldBuildDistrictIfAffordableAndNotAlreadyBuilt() {
         RobotDiscrete robot = new RobotDiscrete("TestRobot");
         robot.setGolds(10);
+        robot.setCharacter(CharactersType.ROI);
 
         robot.addDistrict(DistrictsType.PALAIS);
 
@@ -63,6 +64,7 @@ class RobotDiscreteTest {
         // Arrange
         RobotDiscrete robot = new RobotDiscrete("TestRobot");
         robot.setGolds(2);
+        robot.setCharacter(CharactersType.ROI);
         robot.addDistrict(DistrictsType.CASERNE);
 
         String result = robot.tryBuild();
@@ -78,6 +80,7 @@ class RobotDiscreteTest {
         // Arrange
         RobotDiscrete robot = new RobotDiscrete("TestRobot");
         robot.setGolds(10);
+        robot.setCharacter(CharactersType.ROI);
         robot.addDistrict(DistrictsType.CASERNE);
         robot.getCity().add(DistrictsType.CASERNE);
 
@@ -88,6 +91,26 @@ class RobotDiscreteTest {
         assertEquals("nothing", result);
         assertEquals(1, robot.getCity().size());
         assertEquals(10, robot.getGolds());
+        assertFalse(robot.getDistrictInHand().isEmpty());
+    }
+
+    @Test
+    void tryBuild_shouldBuildDistrictIfSameTypeAsCharacter() {
+        // Arrange
+        RobotDiscrete robot = new RobotDiscrete("TestRobot");
+        robot.setGolds(10);
+        robot.setCharacter(CharactersType.ROI);
+        robot.addDistrict(DistrictsType.MANOIR);
+        robot.addDistrict(DistrictsType.CASERNE);
+        robot.addDistrict(DistrictsType.PALAIS);
+
+        // Act
+        String result = robot.tryBuild();
+
+        // Assert
+        assertEquals("a new Palais", result);
+        assertEquals(1, robot.getCity().size());
+        assertEquals(5, robot.getGolds());
         assertFalse(robot.getDistrictInHand().isEmpty());
     }
 
@@ -114,10 +137,10 @@ class RobotDiscreteTest {
         listDistrict.add(DistrictsType.MONASTERE);
 
         robot.getCity().add(DistrictsType.CHATEAU);
-        robot.getDistrictInHand().add(DistrictsType.CASERNE);
+        robot.getDistrictInHand().add(DistrictsType.MONASTERE);
         List<DistrictsType> listDistrictPicked = robot.pickDistrictCard(listDistrict, deck);
 
-        assertTrue(listDistrictPicked.contains(DistrictsType.MONASTERE));
+        assertTrue(listDistrictPicked.contains(DistrictsType.CASERNE));
         assertEquals(1, listDistrictPicked.size());
         assertEquals(1, listDistrict.size());
 
@@ -137,17 +160,17 @@ class RobotDiscreteTest {
         robot.getDistrictInHand().add(DistrictsType.PALAIS);
         List<DistrictsType> listDistrictPicked = robot.pickDistrictCard(listDistrict, deck);
 
-        assertTrue(listDistrictPicked.contains(DistrictsType.CASERNE));
+        assertTrue(listDistrictPicked.contains(DistrictsType.TEMPLE));
         assertEquals(1, listDistrict.size());
 
-        /*// le personnage est de type noble et l'un des quartiers choisis est noble
+        // le personnage est de type noble et l'un des quartiers choisis est noble
         listDistrict.add(DistrictsType.MANOIR);
         robot.setCharacter(CharactersType.ROI);
         robot.getDistrictInHand().add(DistrictsType.MANOIR);
         List<DistrictsType> listDistrictPickedWithType = robot.pickDistrictCard(listDistrict, deck);
-        assertEquals(DistrictsType.CASERNE, listDistrictPickedWithType);
+        assertTrue(listDistrictPickedWithType.contains(DistrictsType.CASERNE));
         assertEquals(1, listDistrictPickedWithType.size());
         assertEquals(1, listDistrict.size());
-    }*/
     }
+
 }
