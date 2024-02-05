@@ -75,13 +75,25 @@ public class RobotAnalyzer extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-
+        //analyser les robots adversaire et choisir un perso
+        Map<String, Integer> districtTypeCounts = countDistrictTypes(bots);
+        chooseCharacterBasedOnAnalysis(availableCharacters, districtTypeCounts);
     }
 
+    private Map<String, Integer> countDistrictTypes(List<Robot> bots) {
+        // count les types de quartier parmi tous les robots
+        Map<String, Integer> districtTypeCounts = new HashMap<>();
+        for (Robot bot : bots) {
+            for (DistrictsType district : bot.getCity()) {
+                String type = district.getType();
+                districtTypeCounts.put(type, districtTypeCounts.getOrDefault(type, 0) + 1);
+            }
+        }
+        return districtTypeCounts;
+    }
 
     private void chooseCharacterBasedOnAnalysis(List<CharactersType> availableCharacters, Map<String, Integer> districtTypeCounts) {
         //choisir un personnage basé sur l'analyse des types de quartier
         // ...
     }
-
 }
