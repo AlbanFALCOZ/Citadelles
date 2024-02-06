@@ -9,36 +9,60 @@ import java.util.List;
 public class RobotRichardo extends Robot{
 
 
+
+
+    boolean agressif = false ;
+    boolean batisseur = false ;
+    boolean gourmand = false ;
+
+
     public RobotRichardo(String name) {
         super(name);
     }
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-        bots.remove(this) ;
-        for(Robot bot : bots){
-            if(bot.getNumberOfDistrictInCity() > 5){
-                pickCondottiere(availableCharacters);
-                    break ;
-                }
-                else if(bot.getGolds() > 5){
-                    pickAssassin(availableCharacters);
-                    break ;
-                }
-            }
-        if (this.getGolds() > 6){
+        pickAgressif( availableCharacters,  bots);
+        if (this.getGolds() > 6 && this.getNumberOfDistrictInHand() > 4){
             pickArchitecte(availableCharacters);
+
         } else if (this.getNumberOfDistrictInHand() == 0){
             pickMagicien(availableCharacters);
+
         }
         else if (this.getGolds() < 2){
             pickMarchand(availableCharacters);
+
         }
         }
 
 
 
+     public boolean agressif(List<Robot> bots){
+        int agressivité = 0 ;
+        bots.remove(this) ;
+        for (Robot bot : bots){
+            
 
+        }
+
+     }
+
+
+    public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots){
+            bots.remove(this) ;
+            for(Robot bot : bots){
+                if(bot.getNumberOfDistrictInCity() > this.getNumberOfDistrictInCity()+2){
+                    pickCondottiere(availableCharacters);
+                    return ;
+                }
+                else if(bot.getGolds() > 6){
+                    pickAssassin(availableCharacters);
+                    return ;
+                }
+            }
+
+        }
 
 
     public void pickCondottiere(List<CharactersType> availableCharacters) {
