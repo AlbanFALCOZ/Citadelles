@@ -4,6 +4,8 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.startingpoint.arguments.CitadelleArguments;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.gamestats.ParseFullGameStats;
+import fr.cotedazur.univ.polytech.startingpoint.gamestats.WriteStatsByLine;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,7 @@ public class Main {
     public static final Logger logger = Logger.getLogger(Main.class.getName());
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         CitadelleArguments citadelleArguments = new CitadelleArguments();
         JCommander commander = JCommander.newBuilder()
@@ -27,6 +29,11 @@ public class Main {
         commander.parse(args);
         if (citadelleArguments._2ThousandsGame()) testBots();
         if (citadelleArguments.isDemoMode()) showGame();
+=======
+        if (citadelleArguments.getCsvFilePath()){
+            testBots();
+            ParseFullGameStats.parseFullStats();
+        }
     }
 
 
