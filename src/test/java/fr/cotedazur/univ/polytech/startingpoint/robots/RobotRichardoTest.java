@@ -60,6 +60,38 @@ class RobotRichardoTest {
         richardo.addDistrict(richardo.pickDistrictCard(listOfNobleCards,deckDistrict));
         assertTrue(richardo.getDistrictInHand().contains(DistrictsType.CHATEAU));
 
+    @Test
+    void testRichardPickKing() {
+        List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
+
+        richardo.pickBatisseur(listCharacters);
+        assertEquals(richardo.character,CharactersType.ROI);
+        assertEquals(listCharacters.size(),7);
+
+        richardo.character = null;
+        richardo.pickBatisseur(listCharacters);
+        assertEquals(richardo.character,CharactersType.MARCHAND);
+
+        richardo.character = null;
+        richardo.setGolds(6);
+        richardo.addDistrict(deckDistrict.getDistrictsInDeck());
+        richardo.addDistrict(deckDistrict.getDistrictsInDeck());
+        richardo.addDistrict(deckDistrict.getDistrictsInDeck());
+        richardo.pickBatisseur(listCharacters);
+        assertEquals(richardo.character,CharactersType.ARCHITECTE);
+    }
+
+
+    @Test
+    void testRaichardoWhenKingPickNobleCard() {
+        richardo.setCharacter(CharactersType.ROI);
+        richardo.isBatisseur();
+        List<DistrictsType> listOfNobleCards = new ArrayList<>();
+        listOfNobleCards.add(DistrictsType.CHATEAU);
+        listOfNobleCards.add(DistrictsType.TAVERNE);
+        richardo.addDistrict(richardo.pickDistrictCard(listOfNobleCards,deckDistrict));
+        assertTrue(richardo.getDistrictInHand().contains(DistrictsType.CHATEAU));
+
         richardo.addDistrict(DistrictsType.TAVERNE);
         richardo.setGolds(100);
         richardo.tryBuild();
