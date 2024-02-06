@@ -7,10 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * cette classe permet de gérer les tours de jeu
@@ -23,6 +20,7 @@ public class Round {
     private int numberOfCharacterToStealFrom = 0;
     private Robot voleur;
     private Robot victimOfVoleur;
+
 
     /**
      * @param bots la liste des robots
@@ -191,8 +189,10 @@ public class Round {
         }
         for (Robot bot : bots) {
             bot.setIsAssassinated(false);
+            bot.updateHistory(bots);
         }
         assignCrownForKing();
 
     }
+
 }

@@ -26,6 +26,10 @@ public abstract class Robot{
 
     protected boolean hasCrown;
 
+    private Map<String, List<CharactersType>> characterHistory;
+    private Map<String, List<DistrictsType>> buildingHistory;
+    private Map<String, Integer> handSizeHistory;
+
     public Robot(String name) {
         this.name = name;
         score = 0;
@@ -35,6 +39,9 @@ public abstract class Robot{
         city = new ArrayList<>();
         hasCrown = false;
         IsAssassinated = false;
+        this.characterHistory = new HashMap<>();
+        this.buildingHistory = new HashMap<>();
+        this.handSizeHistory = new HashMap<>();
 
 
     }
@@ -337,7 +344,22 @@ public abstract class Robot{
         return victim;
     }
 
+    public void updateHistory(List<Robot> bots) {
+        for (Robot bot : bots) {
+            String botName = bot.getName();
+            CharactersType chosenCharacter = bot.getCharacter();
+            List<DistrictsType> builtDistricts = bot.getCity();
+            Integer handSize = bot.getDistrictInHand().size();
 
+            characterHistory.putIfAbsent(botName, new ArrayList<>());
+            characterHistory.get(botName).add(chosenCharacter);
+
+            buildingHistory.putIfAbsent(botName, new ArrayList<>());
+            buildingHistory.get(botName).addAll(builtDistricts);
+
+            handSizeHistory.put(botName, handSize);
+        }
+    }
 
 
 }

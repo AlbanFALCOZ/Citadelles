@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
+import fr.cotedazur.univ.polytech.startingpoint.game.Round;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,16 +13,12 @@ public class RobotAnalyzer extends Robot {
     private ActionOfBotDuringARound action;
     private Map<String, List<CharactersType>> characterHistory;
     private Map<String, List<DistrictsType>> buildingHistory;
-    private Map<String, Integer> goldHistory;
-    private Map<String, Integer> handSizeHistory;
 
     public RobotAnalyzer(String name) {
         super(name);
         this.action = new ActionOfBotDuringARound(this, true);
         this.characterHistory = new HashMap<>();
         this.buildingHistory = new HashMap<>();
-        this.goldHistory = new HashMap<>();
-        this.handSizeHistory = new HashMap<>();
     }
 
     @Override
@@ -169,6 +166,7 @@ public class RobotAnalyzer extends Robot {
                         }
                         break;
                     case "Architecte":
+                        //condotiere
                         if (opponentGolds.values().stream().anyMatch(gold -> gold > 3) && availableCharacters.contains(CharactersType.VOLEUR)) {
                             chosenCharacter = CharactersType.VOLEUR;
                         }
@@ -189,24 +187,7 @@ public class RobotAnalyzer extends Robot {
 
 
 
-    public void updateHistory(List<Robot> bots) {
-        for (Robot bot : bots) {
-            String botName = bot.getName();
-            CharactersType chosenCharacter = bot.getCharacter();
-            List<DistrictsType> builtDistricts = bot.getCity();
-            Integer golds = bot.getGolds(); // Or actuel du bot
-            Integer handSize = bot.getDistrictInHand().size();
 
-            characterHistory.putIfAbsent(botName, new ArrayList<>());
-            characterHistory.get(botName).add(chosenCharacter);
-
-            buildingHistory.putIfAbsent(botName, new ArrayList<>());
-            buildingHistory.get(botName).addAll(builtDistricts);
-
-            goldHistory.put(botName, golds);
-            handSizeHistory.put(botName, handSize);
-        }
-    }
 
     public CharactersType predictOpponentNextCharacter(String botName) {
         List<CharactersType> characterHistory = this.characterHistory.get(botName);
@@ -241,52 +222,5 @@ public class RobotAnalyzer extends Robot {
         // le bat le plus souvent construit
         return Collections.max(buildingFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
-
-
-
-
-
-
-
-        /*private Map<String, Integer> countDistrictTypes(List<Robot> bots) {
-        // count les types de quartier parmi tous les robots
-        Map<String, Integer> districtTypeCounts = new HashMap<>();
-        for (Robot bot : bots) {
-            for (DistrictsType district : bot.getCity()) {
-                String type = district.getType();
-                districtTypeCounts.put(type, districtTypeCounts.getOrDefault(type, 0) + 1);
-            }
-        }
-        return districtTypeCounts;
-    }*/
-
-    /*private void chooseCharacterBasedOnAnalysis(List<CharactersType> availableCharacters, Map<String, Integer> districtTypeCounts) {
-        //type de district le plus commun dans la ville du robot
-        String mostCommonDistrictType = Collections.max(districtTypeCounts.entrySet(), Map.Entry.comparingByValue()).getKey();
-        //type de district le moins commun
-        String leastCommonDistrictType = Collections.min(districtTypeCounts.entrySet(), Map.Entry.comparingByValue()).getKey();
-
-        CharactersType chosenCharacter = null;
-
-        //logique de choix perso basé sur les districts les plus/moins communs
-        for (CharactersType character : availableCharacters) {
-            if (character.getType().equals(mostCommonDistrictType) && districtTypeCounts.get(mostCommonDistrictType) > 2) {
-                // priorise perso qui correspondent au type de district le plus commun pour maximiser le gain
-                chosenCharacter = character;
-                break;
-            } else if (character.getType().equals(leastCommonDistrictType) && districtTypeCounts.get(leastCommonDistrictType) < 2) {
-                // Choisir un personnage qui pourrait combler le manque de diversité
-                chosenCharacter = character;
-                break;
-            }
-        }
-
-        // si aucun pers choisi selon la strat, choisir le premier personnage dispo
-        if (chosenCharacter == null && !availableCharacters.isEmpty()) {
-            chosenCharacter = availableCharacters.get(0);
-        }
-
-        setCharacter(chosenCharacter);
-    }*/
 
 }
