@@ -10,10 +10,18 @@ import java.util.stream.Collectors;
 
 public class RobotAnalyzer extends Robot {
     private ActionOfBotDuringARound action;
+    private Map<String, List<CharactersType>> characterHistory;
+    private Map<String, List<DistrictsType>> buildingHistory;
+    private Map<String, Integer> goldHistory;
+    private Map<String, Integer> handSizeHistory;
 
     public RobotAnalyzer(String name) {
         super(name);
         this.action = new ActionOfBotDuringARound(this, true);
+        this.characterHistory = new HashMap<>();
+        this.buildingHistory = new HashMap<>();
+        this.goldHistory = new HashMap<>();
+        this.handSizeHistory = new HashMap<>();
     }
 
     @Override
@@ -22,13 +30,10 @@ public class RobotAnalyzer extends Robot {
         Set<String> uniqueDistrictTypesInCity = getCity().stream().map(DistrictsType::getType).collect(Collectors.toSet());
         String builtDistrictName = "nothing";
 
-        //trier districts dans la main par score (décroissant) puis par coût (croissant)
         districtsInHand.sort(Comparator.comparingInt(DistrictsType::getScore).reversed().thenComparingInt(DistrictsType::getCost));
 
         for (DistrictsType district : districtsInHand) {
-            //si le robot a assez d'or pour construire le district
             if (district.getCost() <= getGolds()) {
-                // Priorité aux districts dont le type n'est pas encore présent dans la ville
                 if (!uniqueDistrictTypesInCity.contains(district.getType())) {
                     buildDistrict(district);
                     builtDistrictName = district.getName();
@@ -37,7 +42,6 @@ public class RobotAnalyzer extends Robot {
             }
         }
 
-        // si aucun district unique construit et reste de l'or, construire le district le plus rentable
         if (builtDistrictName.equals("nothing")) {
             for (DistrictsType district : districtsInHand) {
                 if (district.getCost() <= getGolds()) {
@@ -62,10 +66,8 @@ public class RobotAnalyzer extends Robot {
 
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
-        //obtient types uniques de districts dans la ville
         Set<String> uniqueDistrictTypesInCity = getCity().stream().map(DistrictsType::getType).collect(Collectors.toSet());
 
-        //trie les districts tirés par leur score (décroissant) puis par coût (croissant)
         listDistrict.sort(Comparator.comparingInt(DistrictsType::getScore).reversed().thenComparingInt(DistrictsType::getCost));
 
         List<DistrictsType> chosenDistricts = new ArrayList<>();
@@ -73,7 +75,6 @@ public class RobotAnalyzer extends Robot {
 
         for (DistrictsType district : listDistrict) {
             if (totalCost + district.getCost() <= getGolds() && chosenDistricts.size() < getNumberOfCardsChosen()) {
-                //priorité aux districts dont le type n'est pas encore présent dans la ville
                 if (!uniqueDistrictTypesInCity.contains(district.getType())) {
                     chosenDistricts.add(district);
                     totalCost += district.getCost();
@@ -81,7 +82,6 @@ public class RobotAnalyzer extends Robot {
             }
         }
 
-        //si pas assez de districts uniques choisis: choisir les meilleurs parmi les restants
         for (DistrictsType district : listDistrict) {
             if (!chosenDistricts.contains(district) && totalCost + district.getCost() <= getGolds() && chosenDistricts.size() < getNumberOfCardsChosen()) {
                 chosenDistricts.add(district);
@@ -89,7 +89,6 @@ public class RobotAnalyzer extends Robot {
             }
         }
 
-        //remettre non choisis dans le deck
         for (DistrictsType district : listDistrict) {
             if (!chosenDistricts.contains(district)) {
                 deck.addDistrictToDeck(district);
@@ -101,44 +100,155 @@ public class RobotAnalyzer extends Robot {
 
     @Override
     public int generateChoice() {
-        // Strat : si le robot peut construire un district rentable, il le fait
-        // Sinon: il prend des ressources
-
-        //obtenir les district dans la main qui peuvent être construits avec l'or actuel
         List<DistrictsType> buildableDistricts = getDistrictInHand().stream()
                 .filter(district -> district.getCost() <= getGolds())
                 .collect(Collectors.toList());
 
-        //prendre des ressources.
         if (buildableDistricts.isEmpty()) {
-            return 1;
+            return 1;//ressources
         }
 
-        //si peut construire un district, décider lequel construire:
-        //prend district avec le score le plus élevé par coût
         Optional<DistrictsType> optionalDistrict = buildableDistricts.stream()
                 .max(Comparator.comparingDouble(district -> ((double) district.getScore()) / district.getCost()));
 
         if (optionalDistrict.isPresent()) {
             DistrictsType districtToBuild = optionalDistrict.get();
-            // district choisi a un bon avantage, le construire
-            if (districtToBuild.getScore() > 2) { // Le seuil de 2 est arbitraire
-                return 0; // 0 pour construire un district
+            if (districtToBuild.getScore() > 2) {
+                return 0;
             }
         }
 
-        //Si aucun district n'offre un avantage significatif, prendre des ressources
-        return 1; // 1 pour prendre des ressources
+        return 1;
     }
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-        //analyser les robots adversaire et choisir un perso
-        Map<String, Integer> districtTypeCounts = countDistrictTypes(bots);
-        chooseCharacterBasedOnAnalysis(availableCharacters, districtTypeCounts);
+        Map<CharactersType, Integer> opponentCharacterPredictions = new HashMap<>();
+        Map<DistrictsType, Integer> opponentBuildingPredictions = new HashMap<>();
+
+        Map<String, Integer> opponentGolds = new HashMap<>();
+        Map<String, Integer> opponentHandSizes = new HashMap<>();
+
+        for (Robot bot : bots) {
+            if (!bot.getName().equals(this.getName())) {//aux adversaires
+                CharactersType predictedCharacter = predictOpponentNextCharacter(bot.getName());
+                DistrictsType predictedBuilding = predictOpponentNextBuilding(bot.getName());
+
+                // compte les prédictions pour voir quels persoo/bat sont les plus probables
+                if (predictedCharacter != null) {
+                    opponentCharacterPredictions.put(predictedCharacter,
+                            opponentCharacterPredictions.getOrDefault(predictedCharacter, 0) + 1);
+                }
+                if (predictedBuilding != null) {
+                    opponentBuildingPredictions.put(predictedBuilding,
+                            opponentBuildingPredictions.getOrDefault(predictedBuilding, 0) + 1);
+                }
+
+                // ressources des adversaires
+                opponentGolds.put(bot.getName(), bot.getGolds());
+                opponentHandSizes.put(bot.getName(), bot.getDistrictInHand().size());
+            }
+        }
+        CharactersType chosenCharacter = null;
+        
+        for (Map.Entry<CharactersType, Integer> entry : opponentCharacterPredictions.entrySet()) {
+            CharactersType predictedCharacter = entry.getKey();
+            Integer predictionCount = entry.getValue();
+
+
+            if (predictionCount > 1) { // si plus d'un adversaire prédit pour choisir ce perso : contrer
+                switch (predictedCharacter.getType()) {
+                    case "Roi":
+                        if (availableCharacters.contains(CharactersType.ASSASSIN)) {
+                            chosenCharacter = CharactersType.ASSASSIN;
+                        }
+                        break;
+                    case "Marchand":
+                        if (availableCharacters.contains(CharactersType.VOLEUR)) {
+                            chosenCharacter = CharactersType.VOLEUR;
+                        }
+                        break;
+                    case "Architecte":
+                        if (opponentGolds.values().stream().anyMatch(gold -> gold > 3) && availableCharacters.contains(CharactersType.VOLEUR)) {
+                            chosenCharacter = CharactersType.VOLEUR;
+                        }
+                        break;
+                }
+            }
+
+            if (chosenCharacter != null) break;
+        }
+
+
+        if (chosenCharacter == null && !availableCharacters.isEmpty()) {
+            chosenCharacter = availableCharacters.get(0);
+        }
+
+        setCharacter(chosenCharacter);
     }
 
-    private Map<String, Integer> countDistrictTypes(List<Robot> bots) {
+
+
+    public void updateHistory(List<Robot> bots) {
+        for (Robot bot : bots) {
+            String botName = bot.getName();
+            CharactersType chosenCharacter = bot.getCharacter();
+            List<DistrictsType> builtDistricts = bot.getCity();
+            Integer golds = bot.getGolds(); // Or actuel du bot
+            Integer handSize = bot.getDistrictInHand().size();
+
+            characterHistory.putIfAbsent(botName, new ArrayList<>());
+            characterHistory.get(botName).add(chosenCharacter);
+
+            buildingHistory.putIfAbsent(botName, new ArrayList<>());
+            buildingHistory.get(botName).addAll(builtDistricts);
+
+            goldHistory.put(botName, golds);
+            handSizeHistory.put(botName, handSize);
+        }
+    }
+
+    public CharactersType predictOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.characterHistory.get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        //count fréquence des choix de perso
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        // le perso le plus souvent choisi
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    public DistrictsType predictOpponentNextBuilding(String botName) {
+        List<DistrictsType> buildingHistory = this.buildingHistory.get(botName);
+
+        if (buildingHistory == null || buildingHistory.isEmpty()) {
+            return null;
+        }
+
+        // count fréquence de constructions
+        Map<DistrictsType, Integer> buildingFrequency = new HashMap<>();
+        for (DistrictsType building : buildingHistory) {
+            buildingFrequency.put(building, buildingFrequency.getOrDefault(building, 0) + 1);
+        }
+
+        // le bat le plus souvent construit
+        return Collections.max(buildingFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+
+
+
+
+
+
+        /*private Map<String, Integer> countDistrictTypes(List<Robot> bots) {
         // count les types de quartier parmi tous les robots
         Map<String, Integer> districtTypeCounts = new HashMap<>();
         for (Robot bot : bots) {
@@ -148,9 +258,9 @@ public class RobotAnalyzer extends Robot {
             }
         }
         return districtTypeCounts;
-    }
+    }*/
 
-    private void chooseCharacterBasedOnAnalysis(List<CharactersType> availableCharacters, Map<String, Integer> districtTypeCounts) {
+    /*private void chooseCharacterBasedOnAnalysis(List<CharactersType> availableCharacters, Map<String, Integer> districtTypeCounts) {
         //type de district le plus commun dans la ville du robot
         String mostCommonDistrictType = Collections.max(districtTypeCounts.entrySet(), Map.Entry.comparingByValue()).getKey();
         //type de district le moins commun
@@ -177,6 +287,6 @@ public class RobotAnalyzer extends Robot {
         }
 
         setCharacter(chosenCharacter);
-    }
+    }*/
 
 }
