@@ -7,12 +7,9 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class RobotRichardo extends RobotDiscrete {
+public class RobotRichardo extends Robot {
     private static final String NOBLE = "noble";
     private static final String RELIGIOUS = "religieux";
     private static final String MILITARY = "militaire";
@@ -37,25 +34,38 @@ public class RobotRichardo extends RobotDiscrete {
 
     @Override
     public String tryBuild() {
-        return null;
+        List<String> listDistrictName = new ArrayList<>();
+        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
+        for (int i = 0; i < getDistrictInHand().size(); i++) {
+            DistrictsType district = getDistrictInHand().get(i);
+            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+                district.powerOfDistrict(this,1);
+                getCity().add(district);
+                setGolds(getGolds() - district.getCost());
+                getDistrictInHand().remove(i);
+                return "a new " + district.getName();
+            }
+        }
+        return "nothing";
     }
 
-    @Override
-    public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
-        return null;
-    }
 
     @Override
     public int generateChoice() {
-        return 0;
+        if (getDistrictInHand().isEmpty()) return 0;
+        if (!canBuildADistrictInHand()) return 1;
+        return (int) (Math.random() * 2);
     }
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         if (batisseur) {
             pickBatisseur(availableCharacters);
+            /*
         } else if (opportuniste) {
             pickOpportuniste();
+
+             */
         } else if (agressif) {
             pickAgressif(availableCharacters, bots);
         } else {
@@ -93,33 +103,39 @@ public class RobotRichardo extends RobotDiscrete {
             arch++;
         }
     }
-
+/*
     public void pickOpportuniste() {
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
         characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));
         characterCounts.put(CharactersType.EVEQUE, countDistrictsByType(RELIGIOUS) + countDistrictsInHandByType(RELIGIOUS));
         characterCounts.put(CharactersType.CONDOTTIERE, countDistrictsByType(MILITARY) + countDistrictsInHandByType(MILITARY));
         characterCounts.put(CharactersType.MARCHAND, countDistrictsByType(COMMERCIAL) + countDistrictsInHandByType(COMMERCIAL));
+
         List<CharactersType> priorityOrder = characterCounts.entrySet().stream()
-                .sorted((Comparator<? super Map.Entry<CharactersType, Integer>>) Map.Entry.comparingByValue().reversed())
+                .sorted(Map.Entry.<CharactersType, Integer>comparingByValue().reversed())
                 .map(Map.Entry::getKey)
                 .toList();
 
         CharactersType chosenCharacter = null;
+
         for (CharactersType character : priorityOrder) {
             if (availableCharacters.contains(character)) {
+
                 chosenCharacter = character;
                 availableCharacters.remove(character);
                 break;
             }
         }
+
         if (chosenCharacter == null && !availableCharacters.isEmpty()) {
+
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(0);
         }
+
         setCharacter(chosenCharacter);
     }
-
+*/
     public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots) {
         isAgressif(bots);
         if (cond > assas) {
@@ -144,6 +160,72 @@ public class RobotRichardo extends RobotDiscrete {
             availableCharacters.remove(character);
         }
     }
+
+    @Override
+    public Robot chooseVictimForCondottiere(List<Robot> bots){
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+        for (Robot bot : bots) {
+            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.CONDOTTIERE && !victim.hasEightDistrict()) {
+                victim = bot;
+                numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+            }
+        }
+        return victim;
+
+    }
+
+    @Override
+    public Robot chooseVictimForMagicien(List<Robot> bots){
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
+        for (Robot bot : bots) {
+            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
+        }
+        return victim;
+    }
+
+    @Override
+    public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill) {
+        Robot victim = null;
+        int maxGold = Integer.MIN_VALUE;
+        for (Robot bot : bots) {
+            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill && bot.getGolds() > maxGold) {
+                victim = bot;
+                maxGold = bot.getGolds();
+            }
+        }
+        return victim;
+    }
+
+    @Override
+    public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
+        listDistrict.sort(compareByCost().reversed());
+        List<DistrictsType> listDistrictToBuild = new ArrayList<>();
+        int costOfDistrictToBeBuilt = 0;
+        int indice = 0;
+        int i = 0;
+        while (i < listDistrict.size()) {
+            if (listDistrict.get(i).getCost() - costOfDistrictToBeBuilt <= getGolds()) {
+                costOfDistrictToBeBuilt += listDistrict.get(i).getCost();
+                listDistrictToBuild.add(listDistrict.remove(i));
+                i--;
+                indice++;
+                if (indice == getNumberOfCardsChosen()) break;
+
+            }
+            i++;
+        }
+        while (listDistrictToBuild.size() < getNumberOfCardsChosen()) {
+            listDistrictToBuild.add(listDistrict.remove(listDistrict.size() - 1));
+        }
+        for (DistrictsType districtNonChosen : listDistrict) {
+            deck.addDistrictToDeck(districtNonChosen);
+        }
+        return listDistrictToBuild;
+    }
+
+
 }
 
 
