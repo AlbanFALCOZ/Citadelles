@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,6 +71,21 @@ public class RobotAnalyzerTest {
     }
 
     @Test
-    void pickCharacter() {
+    public void testPickCharacter() {
+        List<CharactersType> availableCharacters = Arrays.asList(CharactersType.ASSASSIN, CharactersType.VOLEUR);
+
+        Robot mockBot1 = mock(Robot.class);
+        when(mockBot1.getCity()).thenReturn(Arrays.asList(DistrictsType.PALAIS, DistrictsType.EGLISE));
+
+        Robot mockBot2 = mock(Robot.class);
+        when(mockBot2.getCity()).thenReturn(Arrays.asList(DistrictsType.FORTRESSE, DistrictsType.PRISON));
+
+        List<Robot> bots = Arrays.asList(mockBot1, mockBot2);
+
+        robotAnalyzer.pickCharacter(availableCharacters, bots);
+
+        CharactersType chosenCharacter = robotAnalyzer.getCharacter();
+        assertNotNull(chosenCharacter);
+        assertTrue(availableCharacters.contains(chosenCharacter));
     }
 }
