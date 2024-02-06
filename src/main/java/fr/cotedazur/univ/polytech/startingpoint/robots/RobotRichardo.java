@@ -99,7 +99,7 @@ public class RobotRichardo extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-        if (batisseur && (int) (Math.random() * 2)  == 0) {
+        if (batisseur) {
             pickBatisseur(availableCharacters);
             /*
         } else if (opportuniste) {
