@@ -98,7 +98,7 @@ public class RobotAnalyzer extends Robot {
 
         return chosenDistricts;
     }
-    
+
     @Override
     public int generateChoice() {
         // Strat : si le robot peut construire un district rentable, il le fait
