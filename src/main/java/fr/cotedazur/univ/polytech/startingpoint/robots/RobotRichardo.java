@@ -14,6 +14,14 @@ public class RobotRichardo extends Robot {
     private static final String MILITARY = "militaire";
     private static final String COMMERCIAL = "marchand";
 
+    public int getCond() {
+        return cond;
+    }
+
+    public int getAssas() {
+        return assas;
+    }
+
     private int cond = 0;
     private int assas = 0;
     private int march = 0;
@@ -22,6 +30,8 @@ public class RobotRichardo extends Robot {
     private boolean agressif = false;
     private boolean batisseur = false;
     private boolean opportuniste = false;
+
+    private List<CharactersType> listCharacters = new ArrayList<>(Arrays.asList(CharactersType.values())) ;
 
     private DeckCharacters listOfCharacters = new DeckCharacters();
     private List<CharactersType> availableCharacters;
@@ -90,11 +100,15 @@ public class RobotRichardo extends Robot {
              */
         } else if (agressif) {
             pickAgressif(availableCharacters, bots);
+            agressif =false ;
         } else {
             setCharacter(availableCharacters.get(0));
             availableCharacters.remove(0);
         }
     }
+
+
+    //------------------------ Agressif -----------------------------------------------//
 
     public void isAgressif(List<Robot> bots) {
         for (Robot bot : bots) {
@@ -109,10 +123,59 @@ public class RobotRichardo extends Robot {
         agressif = false;
     }
 
+    public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots) {
+        isAgressif(bots);
+        if (cond > assas) {
+            pickCharacterCard(availableCharacters, CharactersType.CONDOTTIERE);
+            cond = 0;
+        } else {
+            pickCharacterCard(availableCharacters, CharactersType.ASSASSIN);
+            assas = 0 ;
+        }
+    }
+
+    @Override
+    public Robot chooseVictimForCondottiere(List<Robot> bots){
+        Robot victim = bots.get(0);
+        if(thereIsA(CharactersType.CONDOTTIERE , availableCharacters )) {
+            int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+            for (Robot bot : bots) {
+                if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter() != CharactersType.CONDOTTIERE && !victim.hasEightDistrict()) {
+                    victim = bot;
+                    numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+                }
+            }
+        }
+        return victim;
+
+    }
+
+    @Override
+    public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill) {
+        Robot victim = null;
+        if (thereIsA((CharactersType.VOLEUR) , availableCharacters)){
+        numberOfTheCharacterToKill = 2  ;
+        }
+        else if (thereIsA((CharactersType.CONDOTTIERE) , availableCharacters)) {
+            {
+                numberOfTheCharacterToKill = 8 ;
+            }
+        }
+        for (Robot bot : bots) {
+            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill ) {
+                victim = bot;
+            }
+        }
+        return victim;
+    }
+
+    //----------------------------Agressif-------------------------------------------------//
+
+
     public boolean thereIsA(CharactersType character, List<CharactersType> availableCharacters) {
         if (this.hasCrown) {
-            listOfCharacters.getCharactersInHand().removeAll(availableCharacters);
-            return listOfCharacters.getCharactersInHand().contains(character);
+           listCharacters.remove(availableCharacters) ;
+            return listCharacters.contains(character);
         }
         return false;
     }
@@ -126,6 +189,32 @@ public class RobotRichardo extends Robot {
         }
     }
 
+
+
+    public void pickCharacterCard(List<CharactersType> availableCharacters, CharactersType character) {
+        if (availableCharacters.contains(character)) {
+            this.setCharacter(character);
+            availableCharacters.remove(character);
+        }
+
+    }
+
+
+
+    @Override
+    public Robot chooseVictimForMagicien(List<Robot> bots){
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
+        for (Robot bot : bots) {
+            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
+        }
+        return victim;
+    }
+
+
+
+
+    
     public void pickOpportuniste() {
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
         characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));
@@ -169,14 +258,6 @@ public class RobotRichardo extends Robot {
                 .filter(district -> district.getType().equals(type))
                 .count();
     }
-    public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots) {
-        isAgressif(bots);
-        if (cond > assas) {
-            pickCharacterCard(availableCharacters, CharactersType.CONDOTTIERE);
-        } else {
-            pickCharacterCard(availableCharacters, CharactersType.ASSASSIN);
-        }
-    }
 
     public void pickBatisseur(List<CharactersType> availableCharacters) {
         isBatisseur();
@@ -194,48 +275,16 @@ public class RobotRichardo extends Robot {
 
     }
 
-    public void pickCharacterCard(List<CharactersType> availableCharacters, CharactersType character) {
-        if (availableCharacters.contains(character)) {
-            this.setCharacter(character);
-            availableCharacters.remove(character);
-        }
-    }
 
-    @Override
-    public Robot chooseVictimForCondottiere(List<Robot> bots){
-        Robot victim = bots.get(0);
-        int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+
+
+    public boolean hasMaxDisctricts(List<Robot> bots) {
         for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.CONDOTTIERE && !victim.hasEightDistrict()) {
-                victim = bot;
-                numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
+            if (bot.getNumberOfDistrictInCity() > this.getNumberOfDistrictInCity()) {
+                return false;
             }
         }
-        return victim;
-
-    }
-
-    @Override
-    public Robot chooseVictimForMagicien(List<Robot> bots){
-        Robot victim = bots.get(0);
-        int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
-        for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
-        }
-        return victim;
-    }
-
-    @Override
-    public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill) {
-        Robot victim = null;
-        int maxGold = Integer.MIN_VALUE;
-        for (Robot bot : bots) {
-            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill && bot.getGolds() > maxGold) {
-                victim = bot;
-                maxGold = bot.getGolds();
-            }
-        }
-        return victim;
+        return true ;
     }
 
     @Override
@@ -278,7 +327,6 @@ public class RobotRichardo extends Robot {
         }
         return listDistrictToBuild;
     }
-
 }
 
 
