@@ -51,6 +51,7 @@
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>5.9</version>
+
         </dependency>
         <dependency>
             <groupId>org.jcommander</groupId>
@@ -91,6 +92,7 @@
                 </executions>
                 <configuration>
                     <mainClass>fr.cotedazur.univ.polytech.startingpoint.game.Main</mainClass> <!-- CHANGE ME -->
+
                     <!--          <arguments>
                                 <argument>argument1</argument>
                               </arguments>

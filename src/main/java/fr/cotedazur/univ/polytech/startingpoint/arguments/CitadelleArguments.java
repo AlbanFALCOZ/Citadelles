@@ -12,8 +12,6 @@ public class CitadelleArguments {
     @Parameter(names = {"--csv"}, description = "Update les statistiques dans le fichier stats/gamestats.csv")
     private boolean csvFilePath;
 
-    // Ajoutez d'autres paramètres selon les besoins de votre application
-
     public boolean _2ThousandsGame() {
         return _2Thousands;
     }
