@@ -52,18 +52,6 @@ public class ActionOfBotDuringARound {
         String cardDrawn = "";
         String cardPicked = "";
 
-
-        for (int i = 0; i < listDistrictDrawn.size(); i++) {
-            DistrictsType districtInListDistrict = listDistrictDrawn.get(i);
-            cardDrawn += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
-            if (i < listDistrictDrawn.size() - 1) cardDrawn += ",";
-        }
-
-
-
-        logger.info("\u001B[37m" + bot.getName() + " drew the following cards : {" + cardDrawn + "}\u001B[0m");
-
-
         cardDrawn = getStringFromListOfDistrict(cardDrawn, listDistrictDrawn);
         logger.info(bot.getName() + " drew the following cards : {" + cardDrawn + "}");
         cardPicked = getStringFromListOfDistrict(cardPicked, listDistrictPicked);
@@ -79,11 +67,6 @@ public class ActionOfBotDuringARound {
             cardPicked += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listDistrictPicked.size() - 1) cardPicked += ",";
         }
-
-
-        logger.info("\u001B[37m" + bot.getName() + " choose to pick : {" + cardPicked + "}\u001B[0m");
-        logger.info("\u001B[37m" + bot.getName() + " has now in hand: " + bot.getNumberOfDistrictInHand() + " districts\u001B[0m");
-
         return cardPicked;
 
     }
@@ -221,12 +204,11 @@ public class ActionOfBotDuringARound {
     }
 
     public void printPickCharacterWithPriority(CharactersType character) {
-        logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
+        //logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
     }
 
     public void printPickdefaultCharacter() {
         logger.info(bot.getName() + " chose the first character in the list because he has no districts of any type.");
-
     }
 
 
@@ -268,9 +250,9 @@ public class ActionOfBotDuringARound {
         List<DistrictsType> drawnDistricts = listDistrictDrawn; // districts tirés
         List<DistrictsType> pickedDistricts = listDistrictPicked; // districts choisis
 
-        logger.info(bot.getName() + " drew the following districts: " + getStringOfListOfDistrict(drawnDistricts));
+       // logger.info(bot.getName() + " drew the following districts: " + getStringOfListOfDistrict(drawnDistricts));
         if (!pickedDistricts.isEmpty()) {
-            logger.info(bot.getName() + " chose to pick the following district: " + getStringOfListOfDistrict(pickedDistricts));
+            //logger.info(bot.getName() + " chose to pick the following district: " + getStringOfListOfDistrict(pickedDistricts));
             for (DistrictsType pickedDistrict : pickedDistricts) {
                 String reason = getReasonForPickingDistrict(pickedDistrict);
                 logger.info("Reason for choosing " + pickedDistrict.getName() + ": " + reason);

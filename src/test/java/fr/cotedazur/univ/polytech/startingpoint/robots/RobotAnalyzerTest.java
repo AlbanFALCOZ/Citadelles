@@ -3,6 +3,8 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.GameEngine;
+import fr.cotedazur.univ.polytech.startingpoint.game.Round;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -73,6 +75,7 @@ public class RobotAnalyzerTest {
     @Test
     public void testPickCharacter() {
         List<CharactersType> availableCharacters = Arrays.asList(CharactersType.ASSASSIN, CharactersType.VOLEUR, CharactersType.ROI);
+        List<CharactersType> copyAvailableCharacters = new ArrayList<>(availableCharacters);
 
         Robot mockBot1 = mock(Robot.class);
         when(mockBot1.getName()).thenReturn("Bot1");
@@ -87,7 +90,7 @@ public class RobotAnalyzerTest {
         List<Robot> bots = Arrays.asList(robotAnalyzer, mockBot1, mockBot2);
 
 
-        robotAnalyzer.pickCharacter(availableCharacters, bots);
+        robotAnalyzer.pickCharacter(copyAvailableCharacters, bots);
 
         CharactersType chosenCharacter = robotAnalyzer.getCharacter();
         assertNotNull(chosenCharacter, "Le personnage choisi ne devrait pas être null");
@@ -95,4 +98,60 @@ public class RobotAnalyzerTest {
 
         assertEquals(CharactersType.ASSASSIN, chosenCharacter, "Le personnage choisi devrait être l'Assassin pour contrer le Roi prédit pour plusieurs adversaires");
     }
+
+    /*@Test
+    public void testUpdateHistory(){
+        Robot robot1 = new RobotAnalyzer("robot1");
+        Robot robot2 = new RobotRandom("robot2");
+        Robot robot3 = new RobotRandom("robot3");
+        Robot robot4 = new RobotRandom("robot4");
+
+        robot1.setCharacter(CharactersType.ROI);
+        robot2.setCharacter(CharactersType.EVEQUE);
+        robot3.setCharacter(CharactersType.MARCHAND);
+        robot4.setCharacter(CharactersType.MAGICIEN);
+
+
+        List<Robot> bots = new ArrayList<>();
+        bots.add(robot1);
+        bots.add(robot2);
+        bots.add(robot3);
+        bots.add(robot4);
+
+        robot1.getCity().add(DistrictsType.PALAIS);
+        robot2.getCity().add(DistrictsType.EGLISE);
+        robot3.getCity().add(DistrictsType.ECHOPPE);
+        robot4.getCity().add(DistrictsType.FORTRESSE);
+
+
+
+        Round round = new Round(bots, true, mockDeckDistrict);
+        round.playTurns();
+
+        robot1.getDistrictInHand().add(DistrictsType.DONJON);
+        robot2.getDistrictInHand().add(DistrictsType.ECOLE_DE_MAGIE);
+        robot3.getDistrictInHand().add(DistrictsType.LABORATOIRE);
+        robot4.getDistrictInHand().add(DistrictsType.TAVERNE);
+
+        robot1.getDistrictInHand().add(DistrictsType.TEMPLE);
+        robot2.getDistrictInHand().add(DistrictsType.TOUR_DE_GUET);
+        robot3.getDistrictInHand().add(DistrictsType.DRACOPORT);
+        robot4.getDistrictInHand().add(DistrictsType.MONASTERE);
+
+        robot1.setGolds(22);
+        robot2.setGolds(22);
+        robot3.setGolds(22);
+        robot4.setGolds(22);
+
+        round.playTurns();
+        round.playTurns();
+
+        for (Robot bot : bots){
+            System.out.println(bot.getHandSizeHistory());
+            System.out.println(bot.getBuildingHistory());
+            System.out.println(bot.getCharacterHistory());
+        }
+
+
+    }*/
 }

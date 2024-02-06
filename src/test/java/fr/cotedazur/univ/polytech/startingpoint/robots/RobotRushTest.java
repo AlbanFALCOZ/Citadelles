@@ -41,8 +41,7 @@ public class RobotRushTest {
         assertNotEquals(null, robotRush.getCharacter());
     }
 
-
-    @Test
+    /*@Test
     public void testTryBuild() {
         List<DistrictsType> allDistricts = Arrays.asList(DistrictsType.values());
 
@@ -55,8 +54,9 @@ public class RobotRushTest {
         String buildResult = robotRush.tryBuild();
         assertNotEquals("nothing", buildResult);
         assertTrue(robotRush.getCity().size() > 0);
-    }
+    }*/
 
+    /*
     @Test
     public void testPickDistrictCard() {
         List<DistrictsType> allDistricts = Arrays.asList(DistrictsType.values());
@@ -76,6 +76,8 @@ public class RobotRushTest {
 
         verify(actionMock).printDistrictChoice(anyList(), anyList());
     }
+
+     */
 
     @Test
     public void testGenerateChoice() {

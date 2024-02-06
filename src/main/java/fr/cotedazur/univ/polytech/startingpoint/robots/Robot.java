@@ -344,22 +344,40 @@ public abstract class Robot{
         return victim;
     }
 
+    public Map<String, List<CharactersType>> getCharacterHistory() {
+        return characterHistory;
+    }
+
+    public Map<String, Integer> getHandSizeHistory() {
+        return handSizeHistory;
+    }
+
+    public Map<String, List<DistrictsType>> getBuildingHistory() {
+        return buildingHistory;
+    }
+
     public void updateHistory(List<Robot> bots) {
         for (Robot bot : bots) {
             String botName = bot.getName();
             CharactersType chosenCharacter = bot.getCharacter();
+
             List<DistrictsType> builtDistricts = bot.getCity();
             Integer handSize = bot.getDistrictInHand().size();
 
             characterHistory.putIfAbsent(botName, new ArrayList<>());
             characterHistory.get(botName).add(chosenCharacter);
 
-            buildingHistory.putIfAbsent(botName, new ArrayList<>());
-            buildingHistory.get(botName).addAll(builtDistricts);
-
+            for(DistrictsType district : builtDistricts){
+                buildingHistory.putIfAbsent(botName, new ArrayList<>());
+                if (!buildingHistory.get(botName).contains(district)) {
+                    buildingHistory.get(botName).add(district);
+                }
+            }
             handSizeHistory.put(botName, handSize);
         }
     }
+
+
 
 
 }
