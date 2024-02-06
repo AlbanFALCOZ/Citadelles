@@ -28,12 +28,33 @@ class RobotRichardoTest {
     @Test
     void testRichardPickKing() {
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
+<<<<<<< HEAD
         StrategyBatisseur batisseur = new StrategyBatisseur();
+=======
+
+        richardo.pickBatisseur(listCharacters);
+        assertEquals(richardo.character,CharactersType.ROI);
+        assertEquals(listCharacters.size(),7);
+
+        richardo.character = null;
+        richardo.pickBatisseur(listCharacters);
+        assertEquals(richardo.character,CharactersType.MARCHAND);
+
+        richardo.character = null;
+        richardo.setGolds(6);
+        richardo.addDistrict(deckDistrict.getDistrictsInDeck());
+        richardo.addDistrict(deckDistrict.getDistrictsInDeck());
+        richardo.addDistrict(deckDistrict.getDistrictsInDeck());
+        richardo.pickBatisseur(listCharacters);
+        assertEquals(richardo.character,CharactersType.ARCHITECTE);
+    }
+>>>>>>> 1fa0bfd12dfc15491faafeff3c464cbab0204010
 
         batisseur.pickBatisseur(listCharacters, richardo);
         assertEquals(richardo.character,CharactersType.ROI);
         assertEquals(listCharacters.size(),7);
 
+<<<<<<< HEAD
         richardo.character = null;
         batisseur.pickBatisseur(listCharacters, richardo);
         assertEquals(richardo.character,CharactersType.MARCHAND);
@@ -49,6 +70,10 @@ class RobotRichardoTest {
 
  /*   @Test
     void testRichardoWhenKingPickNobleCard() {
+=======
+    @Test
+    void testRaichardoWhenKingPickNobleCard() {
+>>>>>>> 1fa0bfd12dfc15491faafeff3c464cbab0204010
         richardo.setCharacter(CharactersType.ROI);
         richardo.isBatisseur();
         List<DistrictsType> listOfNobleCards = new ArrayList<>();
@@ -61,7 +86,11 @@ class RobotRichardoTest {
         richardo.setGolds(100);
         richardo.tryBuild();
         assertTrue(richardo.getCity().contains(DistrictsType.CHATEAU));
+<<<<<<< HEAD
     }*/
+=======
+    }
+>>>>>>> 1fa0bfd12dfc15491faafeff3c464cbab0204010
 
     @Test
     void testRaichardoWhenMarchandPickMarchandDistrict() {
