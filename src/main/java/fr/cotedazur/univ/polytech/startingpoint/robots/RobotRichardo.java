@@ -33,11 +33,30 @@ public class RobotRichardo extends Robot {
 
     @Override
     public String tryBuild() {
-        List<String> listDistrictName = new ArrayList<>();
-        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
+        if (batisseur) return tryBuildBatisseur();
+        return buildDistrictAndRetrieveItsName();
+    }
+
+    //Dans le cas où Richardo est un batisseur, il essaie de construire les quartiers noble/marchands en priorité.
+    public String tryBuildBatisseur() {
         for (int i = 0; i < getDistrictInHand().size(); i++) {
             DistrictsType district = getDistrictInHand().get(i);
-            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+            if (district.getCost() <= getGolds() && !city.contains(district) && character.getType().equals(district.getType())) {
+                district.powerOfDistrict(this,1);
+                getCity().add(district);
+                setGolds(getGolds() - district.getCost());
+                getDistrictInHand().remove(i);
+                return "a new " + district.getName();
+            }
+        }
+        return buildDistrictAndRetrieveItsName();
+    }
+
+    //On construit le premier district possible
+    private String buildDistrictAndRetrieveItsName() {
+        for (int i = 0; i < getDistrictInHand().size(); i++) {
+            DistrictsType district = getDistrictInHand().get(i);
+            if (district.getCost() <= getGolds() && !city.contains(district)) {
                 district.powerOfDistrict(this,1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
@@ -161,11 +180,18 @@ public class RobotRichardo extends Robot {
 
     public void pickBatisseur(List<CharactersType> availableCharacters) {
         isBatisseur();
-        if (march > arch) {
+        pickCharacterCard(availableCharacters,CharactersType.ROI);
+        if (character == CharactersType.ROI) return;
+        else if (march > arch) {
             pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
+            if (character == CharactersType.MARCHAND) return;
         } else {
             pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
+            if (character == CharactersType.ARCHITECTE) return;
         }
+        character = availableCharacters.get(0);
+        availableCharacters.remove(0);
+
     }
 
     public void pickCharacterCard(List<CharactersType> availableCharacters, CharactersType character) {
@@ -214,6 +240,7 @@ public class RobotRichardo extends Robot {
 
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
+        if (batisseur && (character == CharactersType.ROI || character == CharactersType.MARCHAND) ) return pickDistrictCardBatisseur( listDistrict,deck);
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int costOfDistrictToBeBuilt = 0;
@@ -239,6 +266,18 @@ public class RobotRichardo extends Robot {
         return listDistrictToBuild;
     }
 
+    public List<DistrictsType> pickDistrictCardBatisseur(List<DistrictsType> listDistrict, DeckDistrict deck) {
+        List<DistrictsType> listDistrictToBuild = new ArrayList<>();
+        for(DistrictsType district : listDistrict) {
+            if (character.getRole().equals(district.getType())) listDistrictToBuild.add(district);
+            if (listDistrictToBuild.size() == numberOfCardsChosen) return listDistrictToBuild;
+        }
+        while (listDistrictToBuild.size() < numberOfCardsChosen) listDistrictToBuild.add(listDistrict.remove(0));
+        for (DistrictsType districtNonChosen : listDistrict) {
+            deck.addDistrictToDeck(districtNonChosen);
+        }
+        return listDistrictToBuild;
+    }
 
 }
 

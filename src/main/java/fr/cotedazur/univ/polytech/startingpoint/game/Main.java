@@ -23,6 +23,7 @@ public class Main {
         commander.parse(args);
         if (citadelleArguments._2ThousandsGame()) testBots();
         if (citadelleArguments.isDemoMode()) showGame();
+        testBots();
 
     }
 
