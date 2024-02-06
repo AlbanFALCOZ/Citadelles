@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -55,7 +56,17 @@ public class RobotAnalyzerTest {
 
 
     @Test
-    void generateChoice() {
+    public void testGenerateChoice() {
+        RobotAnalyzer robotAnalyzer = mock(RobotAnalyzer.class);
+        when(robotAnalyzer.getGolds()).thenReturn(3);
+
+        List<DistrictsType> mockDistricts = new ArrayList<>();
+        mockDistricts.add(DistrictsType.PALAIS);
+        when(robotAnalyzer.getDistrictInHand()).thenReturn(mockDistricts);
+
+        int choice = robotAnalyzer.generateChoice();
+
+        assertEquals(0, choice);
     }
 
     @Test
