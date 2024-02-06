@@ -65,10 +65,11 @@ public class GameEngine {
      */
     public void initializeBots() {
 
-        Robot rush = new RobotRush("Nora");
+       // Robot rush = new RobotRush("Nora");
         Robot sarsor = new RobotSarsor("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
+        Robot richardo = new RobotRichardo("Richardo") ;
 
 
 
@@ -76,9 +77,12 @@ public class GameEngine {
             sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
 
         }
+        /*
         for(int k = 0 ; k < 4 ; k++){
             rush.addDistrict(deckDistricts.getDistrictsInDeck());
         }
+
+         */
         
         for(int k = 0 ; k < 4 ; k++){
             gentil.addDistrict(deckDistricts.getDistrictsInDeck());
@@ -87,12 +91,16 @@ public class GameEngine {
         for(int k = 0 ; k < 4 ; k++){
             choice.addDistrict(deckDistricts.getDistrictsInDeck());
         }
+        for(int k = 0 ; k < 4 ; k++){
+            richardo.addDistrict(deckDistricts.getDistrictsInDeck());
+        }
 
 
-        bots.add(rush);
+       // bots.add(rush);
         bots.add(choice);
         bots.add(sarsor) ;
         bots.add(gentil) ;
+        bots.add(richardo) ;
 
     }
 
@@ -117,7 +125,6 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
-
                 List<Robot> listOfThreeBots = new ArrayList<>(bots);
                 listOfThreeBots.remove(bot);
                 bot.pickCharacter(listCharacters, listOfThreeBots);

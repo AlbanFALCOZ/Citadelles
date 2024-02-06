@@ -43,7 +43,7 @@ public class Main {
         int[] listWinnersTied = new int[4];
         int numberOfGames = 1000;
         int i;
-        String[] listName = {"Stacy","Nora","Sara","Alban"};
+        String[] listName = {"Stacy","Richardo","Sara","Alban"};
         for (i = 0; i < numberOfGames; i++) {
             GameEngine Game = new GameEngine(false);
             Game.gameTurns();
@@ -54,7 +54,7 @@ public class Main {
                     if (winner.getWinners().size() == 1) listWinners[0]++;
                     else listWinnersTied[0]++;
                 }
-                if (winners.equals("Nora")) {
+                if (winners.equals("Richardo")) {
                     if (winner.getWinners().size() == 1) listWinners[1]++;
                     else listWinnersTied[1]++;
                 }

@@ -1,105 +1,39 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
 
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class RobotRichardo extends Robot{
+public class RobotRichardo extends RobotDiscrete {
+    private static final String NOBLE = "noble";
+    private static final String RELIGIOUS = "religieux";
+    private static final String MILITARY = "militaire";
+    private static final String COMMERCIAL = "marchand";
 
+    private int cond = 0;
+    private int assas = 0;
+    private int march = 0;
+    private int arch = 0;
 
+    private boolean agressif = false;
+    private boolean batisseur = false;
+    private boolean opportuniste = false;
 
-
-    boolean agressif = false ;
-    boolean batisseur = false ;
-    boolean gourmand = false ;
-
+    private DeckCharacters listOfCharacters = new DeckCharacters();
+    private List<CharactersType> availableCharacters;
 
     public RobotRichardo(String name) {
         super(name);
+
     }
-
-    @Override
-    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-        pickAgressif( availableCharacters,  bots);
-        if (this.getGolds() > 6 && this.getNumberOfDistrictInHand() > 4){
-            pickArchitecte(availableCharacters);
-
-        } else if (this.getNumberOfDistrictInHand() == 0){
-            pickMagicien(availableCharacters);
-
-        }
-        else if (this.getGolds() < 2){
-            pickMarchand(availableCharacters);
-
-        }
-        }
-
-
-
-     public boolean agressif(List<Robot> bots){
-        int agressivité = 0 ;
-        bots.remove(this) ;
-        for (Robot bot : bots){
-            
-
-        }
-
-     }
-
-
-    public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots){
-            bots.remove(this) ;
-            for(Robot bot : bots){
-                if(bot.getNumberOfDistrictInCity() > this.getNumberOfDistrictInCity()+2){
-                    pickCondottiere(availableCharacters);
-                    return ;
-                }
-                else if(bot.getGolds() > 6){
-                    pickAssassin(availableCharacters);
-                    return ;
-                }
-            }
-
-        }
-
-
-    public void pickCondottiere(List<CharactersType> availableCharacters) {
-        if (availableCharacters.contains("Condottiere")) {
-            this.setCharacter(CharactersType.CONDOTTIERE);
-            availableCharacters.remove(CharactersType.CONDOTTIERE);
-
-        }
-    }
-
-    public void pickAssassin(List<CharactersType> availableCharacters) {
-        if (availableCharacters.contains("Assassin")) {
-            this.setCharacter(CharactersType.ASSASSIN);
-            availableCharacters.remove(CharactersType.ASSASSIN);
-        }
-    }
-    public void pickArchitecte(List<CharactersType> availableCharacters) {
-        if (availableCharacters.contains("Architecte")) {
-            this.setCharacter(CharactersType.ARCHITECTE);
-            availableCharacters.remove(CharactersType.ARCHITECTE);
-        }
-    }
-    public void pickMagicien(List<CharactersType> availableCharacters) {
-        if (availableCharacters.contains("Magicien")) {
-            this.setCharacter(CharactersType.MAGICIEN);
-            availableCharacters.remove(CharactersType.MAGICIEN) ;
-        }
-    }
-
-    public void pickMarchand(List<CharactersType> availableCharacters){
-        if(availableCharacters.contains("Marchand")){
-            this.setCharacter((CharactersType.MARCHAND));
-            availableCharacters.remove(CharactersType.MARCHAND);
-        }
-    }
-
-
 
     @Override
     public String tryBuild() {
@@ -116,13 +50,110 @@ public class RobotRichardo extends Robot{
         return 0;
     }
 
+    @Override
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
+        if (batisseur) {
+            pickBatisseur(availableCharacters);
+        } else if (opportuniste) {
+            pickOpportuniste();
+        } else if (agressif) {
+            pickAgressif(availableCharacters, bots);
+        } else {
+            setCharacter(availableCharacters.get(0));
+            availableCharacters.remove(0);
+        }
+    }
 
+    public void isAgressif(List<Robot> bots) {
+        for (Robot bot : bots) {
+            if (bot.getNumberOfDistrictInCity() > this.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) {
+                cond++;
+                agressif = true;
+            } else if (thereIsA(CharactersType.VOLEUR, availableCharacters)) {
+                assas++;
+                agressif = true;
+            }
+        }
+        agressif = false;
+    }
 
+    public boolean thereIsA(CharactersType character, List<CharactersType> availableCharacters) {
+        if (this.hasCrown) {
+            listOfCharacters.getCharactersInHand().removeAll(availableCharacters);
+            return listOfCharacters.getCharactersInHand().contains(character);
+        }
+        return false;
+    }
 
+    public void isBatisseur() {
+        if (this.getGolds() < 2) {
+            march++;
+            batisseur = true;
+        } else if (this.getGolds() > 6 && this.getNumberOfDistrictInHand() > 3) {
+            arch++;
+        }
+    }
 
+    public void pickOpportuniste() {
+        Map<CharactersType, Integer> characterCounts = new HashMap<>();
+        characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));
+        characterCounts.put(CharactersType.EVEQUE, countDistrictsByType(RELIGIOUS) + countDistrictsInHandByType(RELIGIOUS));
+        characterCounts.put(CharactersType.CONDOTTIERE, countDistrictsByType(MILITARY) + countDistrictsInHandByType(MILITARY));
+        characterCounts.put(CharactersType.MARCHAND, countDistrictsByType(COMMERCIAL) + countDistrictsInHandByType(COMMERCIAL));
+        List<CharactersType> priorityOrder = characterCounts.entrySet().stream()
+                .sorted((Comparator<? super Map.Entry<CharactersType, Integer>>) Map.Entry.comparingByValue().reversed())
+                .map(Map.Entry::getKey)
+                .toList();
 
+        CharactersType chosenCharacter = null;
+        for (CharactersType character : priorityOrder) {
+            if (availableCharacters.contains(character)) {
+                chosenCharacter = character;
+                availableCharacters.remove(character);
+                break;
+            }
+        }
+        if (chosenCharacter == null && !availableCharacters.isEmpty()) {
+            chosenCharacter = availableCharacters.get(0);
+            availableCharacters.remove(0);
+        }
+        setCharacter(chosenCharacter);
+    }
 
+    public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots) {
+        isAgressif(bots);
+        if (cond > assas) {
+            pickCharacterCard(availableCharacters, CharactersType.CONDOTTIERE);
+        } else {
+            pickCharacterCard(availableCharacters, CharactersType.ASSASSIN);
+        }
+    }
 
+    public void pickBatisseur(List<CharactersType> availableCharacters) {
+        isBatisseur();
+        if (march > arch) {
+            pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
+        } else {
+            pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
+        }
+    }
 
-
+    public void pickCharacterCard(List<CharactersType> availableCharacters, CharactersType character) {
+        if (availableCharacters.contains(character)) {
+            this.setCharacter(character);
+            availableCharacters.remove(character);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
