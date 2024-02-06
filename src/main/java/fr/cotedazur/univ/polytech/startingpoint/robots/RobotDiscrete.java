@@ -6,10 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static fr.cotedazur.univ.polytech.startingpoint.game.Main.logger;
 
 public class RobotDiscrete extends Robot {
 
@@ -166,7 +163,7 @@ public class RobotDiscrete extends Robot {
             while (iterator.hasNext()) {
                 DistrictsType currentDistrict = iterator.next();
                 if (!isDistrictInCityOrHand(currentDistrict)) {
-                    indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
+                    indice = chooseDistrict(currentDistrict, listDistrictToBuild, indice);
                     iterator.remove();
                     action.printPickAnyDistrict(currentDistrict);
                 }
@@ -183,7 +180,7 @@ public class RobotDiscrete extends Robot {
             while (iterator.hasNext()) {
                 DistrictsType currentDistrict = iterator.next();
                 if (!isDistrictInCityOrHand(currentDistrict) && isSpecialDistrictType(currentDistrict.getType())) {
-                    indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
+                    indice = chooseDistrict(currentDistrict, listDistrictToBuild, indice);
                     iterator.remove();
                     action.printPickSpecialDistrict(currentDistrict);
                 }
@@ -199,7 +196,7 @@ public class RobotDiscrete extends Robot {
         while (iterator.hasNext()) {
             DistrictsType currentDistrict = iterator.next();
             if (!isDistrictInCityOrHand(currentDistrict) && currentDistrict.getType().equals(this.getCharacter().getType())) {
-                indice = chooseDistrict(listDistrict, currentDistrict, listDistrictToBuild, indice);
+                indice = chooseDistrict(currentDistrict, listDistrictToBuild, indice);
                 iterator.remove();
                 action.printPickDistrictByType(currentDistrict);
             }
@@ -217,7 +214,7 @@ public class RobotDiscrete extends Robot {
         return type.equals(NOBLE) || type.equals(RELIGIOUS) || type.equals(COMMERCIAL) || type.equals(MILITARY);
     }
 
-    private int chooseDistrict(List<DistrictsType> listDistrict, DistrictsType currentDistrict, List<DistrictsType> listDistrictToBuild, int indice) {
+    private int chooseDistrict(DistrictsType currentDistrict, List<DistrictsType> listDistrictToBuild, int indice) {
         listDistrictToBuild.add(currentDistrict);
         indice++;
         return indice;

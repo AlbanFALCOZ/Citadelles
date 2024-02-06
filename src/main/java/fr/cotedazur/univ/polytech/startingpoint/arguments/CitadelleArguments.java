@@ -10,7 +10,7 @@ public class CitadelleArguments {
     private boolean demoMode;
 
     @Parameter(names = {"--csv"}, description = "Update les statistiques dans le fichier stats/gamestats.csv")
-    private String csvFilePath;
+    private boolean csvFilePath;
 
     // Ajoutez d'autres paramètres selon les besoins de votre application
 
@@ -22,7 +22,7 @@ public class CitadelleArguments {
         return demoMode;
     }
 
-    public String getCsvFilePath() {
+    public boolean getCsvFilePath() {
         return csvFilePath;
     }
 
