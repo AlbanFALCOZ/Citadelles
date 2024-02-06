@@ -72,20 +72,27 @@ public class RobotAnalyzerTest {
 
     @Test
     public void testPickCharacter() {
-        List<CharactersType> availableCharacters = Arrays.asList(CharactersType.ASSASSIN, CharactersType.VOLEUR);
+        List<CharactersType> availableCharacters = Arrays.asList(CharactersType.ASSASSIN, CharactersType.VOLEUR, CharactersType.ROI);
 
         Robot mockBot1 = mock(Robot.class);
-        when(mockBot1.getCity()).thenReturn(Arrays.asList(DistrictsType.PALAIS, DistrictsType.EGLISE));
+        when(mockBot1.getName()).thenReturn("Bot1");
+        when(mockBot1.getGolds()).thenReturn(4);
+        when(mockBot1.getDistrictInHand()).thenReturn(Arrays.asList(DistrictsType.PALAIS, DistrictsType.EGLISE));
 
         Robot mockBot2 = mock(Robot.class);
-        when(mockBot2.getCity()).thenReturn(Arrays.asList(DistrictsType.FORTRESSE, DistrictsType.PRISON));
+        when(mockBot2.getName()).thenReturn("Bot2");
+        when(mockBot2.getGolds()).thenReturn(3);
+        when(mockBot2.getDistrictInHand()).thenReturn(Arrays.asList(DistrictsType.FORTRESSE, DistrictsType.PRISON));
 
-        List<Robot> bots = Arrays.asList(mockBot1, mockBot2);
+        List<Robot> bots = Arrays.asList(robotAnalyzer, mockBot1, mockBot2);
+
 
         robotAnalyzer.pickCharacter(availableCharacters, bots);
 
         CharactersType chosenCharacter = robotAnalyzer.getCharacter();
-        assertNotNull(chosenCharacter);
-        assertTrue(availableCharacters.contains(chosenCharacter));
+        assertNotNull(chosenCharacter, "Le personnage choisi ne devrait pas être null");
+        assertTrue(availableCharacters.contains(chosenCharacter), "Le personnage choisi doit être parmi les personnages dispo");
+
+        assertEquals(CharactersType.ASSASSIN, chosenCharacter, "Le personnage choisi devrait être l'Assassin pour contrer le Roi prédit pour plusieurs adversaires");
     }
 }

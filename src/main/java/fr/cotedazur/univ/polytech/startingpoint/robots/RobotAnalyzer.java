@@ -150,7 +150,7 @@ public class RobotAnalyzer extends Robot {
             }
         }
         CharactersType chosenCharacter = null;
-        
+
         for (Map.Entry<CharactersType, Integer> entry : opponentCharacterPredictions.entrySet()) {
             CharactersType predictedCharacter = entry.getKey();
             Integer predictionCount = entry.getValue();
