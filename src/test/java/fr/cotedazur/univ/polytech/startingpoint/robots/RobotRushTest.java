@@ -56,8 +56,6 @@ public class RobotRushTest {
         assertTrue(robotRush.getCity().size() > 0);
     }*/
 
- */
-
     /*
     @Test
     public void testPickDistrictCard() {
