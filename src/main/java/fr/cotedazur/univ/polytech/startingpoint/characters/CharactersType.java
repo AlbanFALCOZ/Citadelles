@@ -1,7 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.characters;
 
-import java.awt.*;
-
 /**
  * Cet enum englobe toutes les cartes personnages dont on aura besoin
  * le long de la partie

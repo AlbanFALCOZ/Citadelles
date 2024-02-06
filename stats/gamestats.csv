@@ -1,4 +1,4 @@
-Nom,Nombre de parties gagnées,Pourcentage de parties gagnées(%),Nombre d'égalités,Pourcentage d'égalités(%),Nombre de parties perdues,Pourcentage de parties perdues(%),Score moyen
+Nom,Nombre de parties gagnÃ©es,Pourcentage de parties gagnÃ©es(%),Nombre d'Ã©galitÃ©s,Pourcentage d'Ã©galitÃ©s(%),Nombre de parties perdues,Pourcentage de parties perdues(%),Score moyen
 Stacy,589,58.899998,69,6.8999996,342,34.2,21.979
 Nora,76,7.6,28,2.8000002,896,89.600006,15.784
 Sara,138,13.799999,29,2.8999999,833,83.3,16.847
@@ -311,3 +311,4 @@ RobotDiscret1,224,22.400002,42,4.2,734,73.4,22.445
 RobotDiscret2,240,24.0,45,4.5,715,71.5,22.656
 RobotDiscret3,212,21.199999,42,4.2,746,74.6,22.3
 RobotDiscret4,241,24.1,40,4.0,719,71.9,22.537
+

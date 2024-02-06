@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 public class WriteStatsByLine {
+
     public static void writeDataLineByLine(String[][] data) {
         File file = new File("stats/gamestats.csv");
 

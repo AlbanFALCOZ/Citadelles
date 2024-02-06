@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static fr.cotedazur.univ.polytech.startingpoint.game.Main.logger;
-
-
 public class ActionOfBotDuringARound {
 
 
