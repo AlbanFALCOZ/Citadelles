@@ -22,13 +22,21 @@ public class RobotRichardo extends Robot {
         return assas;
     }
 
+    public int getMarch() {
+        return march;
+    }
+
+    public int getArch() {
+        return arch;
+    }
+
     private int cond = 0;
     private int assas = 0;
     private int march = 0;
     private int arch = 0;
 
     private boolean agressif = false;
-    private boolean batisseur = false;
+    private boolean batisseur = true;
     private boolean opportuniste = false;
 
     private List<CharactersType> listCharacters = new ArrayList<>(Arrays.asList(CharactersType.values())) ;
@@ -80,7 +88,7 @@ public class RobotRichardo extends Robot {
 
     @Override
     public int generateChoice() {
-        if(this.getGolds()<5) {
+        if(this.getGolds()<6) {
             return 1 ;
         }
         else {
@@ -91,7 +99,7 @@ public class RobotRichardo extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-        if (batisseur) {
+        if (batisseur && (int) (Math.random() * 2)  == 0) {
             pickBatisseur(availableCharacters);
             /*
         } else if (opportuniste) {
@@ -180,14 +188,7 @@ public class RobotRichardo extends Robot {
         return false;
     }
 
-    public void isBatisseur() {
-        if (this.getGolds() < 2) {
-            march++;
-            batisseur = true;
-        } else if (this.getGolds() > 6 && this.getNumberOfDistrictInHand() > 3) {
-            arch++;
-        }
-    }
+
 
 
 
@@ -259,17 +260,24 @@ public class RobotRichardo extends Robot {
                 .count();
     }
 
+    public void isBatisseur() {
+        if (this.getGolds() < 4) {
+            march++;
+            batisseur = true;
+        } else if (this.getGolds() >= 6 && this.getNumberOfDistrictInHand() >= 3) {
+            arch++;
+        }
+    }
+
     public void pickBatisseur(List<CharactersType> availableCharacters) {
         isBatisseur();
         pickCharacterCard(availableCharacters,CharactersType.ROI);
         if (character == CharactersType.ROI) return;
-        else if (march > arch) {
-            pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
-            if (character == CharactersType.MARCHAND) return;
-        } else {
-            pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
-            if (character == CharactersType.ARCHITECTE) return;
-        }
+        pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
+        if (character == CharactersType.MARCHAND) return;
+        pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
+        if (character == CharactersType.ARCHITECTE) return;
+
         character = availableCharacters.get(0);
         availableCharacters.remove(0);
 
@@ -278,7 +286,7 @@ public class RobotRichardo extends Robot {
 
 
 
-    public boolean hasMaxDisctricts(List<Robot> bots) {
+    public boolean hasMaxDistricts(List<Robot> bots) {
         for (Robot bot : bots) {
             if (bot.getNumberOfDistrictInCity() > this.getNumberOfDistrictInCity()) {
                 return false;
@@ -318,8 +326,16 @@ public class RobotRichardo extends Robot {
     public List<DistrictsType> pickDistrictCardBatisseur(List<DistrictsType> listDistrict, DeckDistrict deck) {
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         for(DistrictsType district : listDistrict) {
-            if (character.getRole().equals(district.getType())) listDistrictToBuild.add(district);
+            if (character.getType().equals(district.getType())) {
+                listDistrictToBuild.add(district);
+            }
             if (listDistrictToBuild.size() == numberOfCardsChosen) return listDistrictToBuild;
+        }
+        if (listDistrictToBuild.isEmpty()) {
+            batisseur = false;
+            listDistrictToBuild = pickDistrictCard(listDistrict,deck);
+            batisseur = true;
+            return listDistrictToBuild;
         }
         while (listDistrictToBuild.size() < numberOfCardsChosen) listDistrictToBuild.add(listDistrict.remove(0));
         for (DistrictsType districtNonChosen : listDistrict) {
