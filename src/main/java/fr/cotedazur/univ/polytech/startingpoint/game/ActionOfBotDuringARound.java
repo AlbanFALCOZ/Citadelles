@@ -64,10 +64,6 @@ public class ActionOfBotDuringARound {
             cardPicked += districtInListDistrict.getColor().getColorDisplay() + districtInListDistrict + districtInListDistrict.getColorReset();
             if (i < listDistrictPicked.size() - 1) cardPicked += ",";
         }
-
-
-
-
         return cardPicked;
 
     }
@@ -205,12 +201,11 @@ public class ActionOfBotDuringARound {
     }
 
     public void printPickCharacterWithPriority(CharactersType character) {
-        logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
+        //logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
     }
 
     public void printPickdefaultCharacter() {
         logger.info(bot.getName() + " chose the first character in the list because he has no districts of any type.");
-
     }
 
 

@@ -18,11 +18,9 @@ public class RobotChoiceOfCharacter extends Robot {
 
     @Override
     public String tryBuild() {
-        List<String> listDistrictName = new ArrayList<>();
-        for (DistrictsType districtsType : getCity()) listDistrictName.add(districtsType.getName());
         for (int i = 0; i < getDistrictInHand().size(); i++) {
             DistrictsType district = getDistrictInHand().get(i);
-            if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
+            if (district.getCost() <= getGolds() && !city.contains(district)) {
                 district.powerOfDistrict(this,1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
