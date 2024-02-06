@@ -4,8 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
+
 
 import java.util.*;
 
@@ -52,10 +51,14 @@ public class RobotRichardo extends Robot {
 
     @Override
     public int generateChoice() {
-        if (getDistrictInHand().isEmpty()) return 0;
-        if (!canBuildADistrictInHand()) return 1;
-        return (int) (Math.random() * 2);
+        if(this.getGolds()<5) {
+            return 1 ;
+        }
+        else {
+            return 0 ;
+        }
     }
+
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
@@ -103,7 +106,7 @@ public class RobotRichardo extends Robot {
             arch++;
         }
     }
-/*
+
     public void pickOpportuniste() {
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
         characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));
@@ -135,7 +138,18 @@ public class RobotRichardo extends Robot {
 
         setCharacter(chosenCharacter);
     }
-*/
+
+    public int countDistrictsByType(String type) {
+        return (int) getCity().stream()
+                .filter(district -> district.getType().equals(type))
+                .count();
+    }
+
+    public int countDistrictsInHandByType(String type) {
+        return (int) getDistrictInHand().stream()
+                .filter(district -> district.getType().equals(type))
+                .count();
+    }
     public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots) {
         isAgressif(bots);
         if (cond > assas) {
