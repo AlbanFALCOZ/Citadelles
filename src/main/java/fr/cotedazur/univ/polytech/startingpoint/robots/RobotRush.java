@@ -53,7 +53,7 @@ public class RobotRush extends Robot {
             setCharacter(chosenCharacter);
             availableCharacters.remove(chosenCharacter);
         }
-        action.printCharacterChoice() ;
+        //action.printCharacterChoice() ;
     }
 
     private int getPriority(CharactersType character) {

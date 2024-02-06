@@ -41,7 +41,7 @@ public class GameEngine {
      * On initialise le round
      * On initialise les robots
      */
-    public GameEngine(boolean systemPrint) {
+    public GameEngine(boolean systemPrint, boolean onlyDiscretBot) {
         this.systemPrint = systemPrint;
         System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
         if (!systemPrint) logger.setLevel(Level.OFF);
@@ -49,12 +49,13 @@ public class GameEngine {
         deckCharacters = new DeckCharacters();
         this.bots = new ArrayList<>();
         round = new Round(bots);
-        initializeBots();
+        if (onlyDiscretBot) initialiazeBotsDiscrets();
+        else initializeBots();
 
     }
 
     public GameEngine() {
-        this(true);
+        this(true,false);
     }
 
 
@@ -65,36 +66,34 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-
         Robot rush = new RobotRush("Nora");
         Robot sarsor = new RobotSarsor("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
 
+        addCardsToBot(rush, sarsor, gentil, choice);
+    }
 
+    private void addCardsToBot(Robot robot1, Robot robot2, Robot robot3, Robot robot4) {
+        bots.add(robot1);
+        bots.add(robot2);
+        bots.add(robot3) ;
+        bots.add(robot4) ;
 
-        for(int k = 0 ; k < 4 ; k++){
-            sarsor.addDistrict(deckDistricts.getDistrictsInDeck());
-
+        for (Robot bot: bots){
+            for(int k = 0 ; k < 4 ; k++){
+                bot.addDistrict(deckDistricts.getDistrictsInDeck());
+            }
         }
-        for(int k = 0 ; k < 4 ; k++){
-            rush.addDistrict(deckDistricts.getDistrictsInDeck());
-        }
-        
-        for(int k = 0 ; k < 4 ; k++){
-            gentil.addDistrict(deckDistricts.getDistrictsInDeck());
+    }
 
-        }
-        for(int k = 0 ; k < 4 ; k++){
-            choice.addDistrict(deckDistricts.getDistrictsInDeck());
-        }
+    public void initialiazeBotsDiscrets() {
+        Robot RobotDiscret1 = new RobotDiscrete("RobotDiscret1");
+        Robot RobotDiscret2 = new RobotDiscrete("RobotDiscret2" ) ;
+        Robot RobotDiscret3 = new RobotDiscrete("RobotDiscret3") ;
+        Robot RobotDiscret4 = new RobotDiscrete("RobotDiscret4") ;
 
-
-        bots.add(rush);
-        bots.add(choice);
-        bots.add(sarsor) ;
-        bots.add(gentil) ;
-
+        addCardsToBot(RobotDiscret1, RobotDiscret3, RobotDiscret4, RobotDiscret2);
     }
 
     /**

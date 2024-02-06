@@ -27,7 +27,6 @@ public class Main {
         commander.parse(args);
         if (citadelleArguments._2ThousandsGame()) testBots();
         if (citadelleArguments.isDemoMode()) showGame();
-
     }
 
 
@@ -42,17 +41,24 @@ public class Main {
     }
 
     public static void testBots() {
-        long start = System.currentTimeMillis();
+        String[] listName = {"Stacy","Nora","Sara","Alban"};
+        play1000Games(false,listName);
+        String[] listNameDiscretBots = {"RobotDiscret1","RobotDiscret2","RobotDiscret3","RobotDiscret4"};
+        play1000Games(true,listNameDiscretBots);
+    }
+
+    public static void play1000Games(boolean onlyDiscretBots, String[] listName) {
         int[] listWinners = new int[4];
         int[] listWinnersTied = new int[4];
-        int[] listScoreBots = new int[4];
         int numberOfGames = 1000;
         int i;
-        String[] listName = {"Stacy","Nora","Sara","Alban"};
+
+
         Map<String,Integer> mapScore = new HashMap<>();
         for (String name : listName) mapScore.put(name,0);
+
         for (i = 0; i < numberOfGames; i++) {
-            GameEngine Game = new GameEngine(false);
+            GameEngine Game = new GameEngine(false,onlyDiscretBots);
             Game.gameTurns();
             Winner winner = new Winner(Game.getBots(),false);
             winner.setScores();
@@ -62,42 +68,31 @@ public class Main {
             }
 
             for (String winners : winner.getWinners()) {
-                if (winners.equals("Stacy")) {
-                    if (winner.getWinners().size() == 1) listWinners[0]++;
-                    else listWinnersTied[0]++;
-                }
-                if (winners.equals("Nora")) {
-                    if (winner.getWinners().size() == 1) listWinners[1]++;
-                    else listWinnersTied[1]++;
-                }
-                if (winners.equals("Sara")) {
-                    if (winner.getWinners().size() == 1) listWinners[2]++;
-                    else listWinnersTied[2]++;
-                }
-                if (winners.equals("Alban")) {
-                    if (winner.getWinners().size() == 1) listWinners[3]++;
-                    else listWinnersTied[3]++;
+                for (int j = 0; j < listName.length; j++) {
+                    if (winners.equals(listName[j])) {
+                        if (winner.getWinners().size() == 1) listWinners[j]++;
+                        else listWinnersTied[j]++;
+                    }
                 }
             }
         }
-        logger.info("Nombre de parties : " + i);
+        logger.info("Debut des statistiques");
         for (i = 0; i < listWinners.length; i++) {
             int numberOfGamesWon = listWinners[i];
-            float winRate =(float) numberOfGamesWon / numberOfGames * 100;
             int numberOfGamesWonButTied = listWinnersTied[i];
-            float tieRate =(float) numberOfGamesWonButTied / numberOfGames * 100;
             int numberOfGamesLost = numberOfGames - numberOfGamesWon - numberOfGamesWonButTied;
-            float loseRate =(float) numberOfGamesLost / numberOfGames * 100;
+
             logger.info(listName[i] + " : " + "nombres de parties jouees : " + numberOfGames);
             logger.info("-Score moyen : " + (float) mapScore.get(listName[i])/numberOfGames);
-            logger.info("-Nombres de parties gagnees : " + numberOfGamesWon + "/" + numberOfGames + " soit " + winRate + "%");
-            logger.info("-Nombres d'egalitees        : " + numberOfGamesWonButTied + "/" + numberOfGames + " soit " + tieRate + "%");
-            logger.info("-Nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + " soit " + loseRate + "%");
+            logger.info("-Nombres de parties gagnees : " + numberOfGamesWon + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesWon,numberOfGames) + "%");
+            logger.info("-Nombres d'egalitees        : " + numberOfGamesWonButTied + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesWonButTied,numberOfGames) + "%");
+            logger.info("-Nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesLost,numberOfGames) + "%");
         }
-        long finish = System.currentTimeMillis();
-        long timeElapsed = finish - start;
+        logger.info("Fin des statistiques\n");
+    }
 
-        logger.info(timeElapsed / 1000 + "sec");
+    public static float getRateFromNumberOfGames(int numberOfGames, int totalNumberOfGames) {
+        return (float) numberOfGames / totalNumberOfGames * 100;
     }
 
 
