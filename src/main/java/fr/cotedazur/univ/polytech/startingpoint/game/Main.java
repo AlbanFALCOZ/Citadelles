@@ -7,9 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.gamestats.ParseFullGameStats;
 import fr.cotedazur.univ.polytech.startingpoint.gamestats.WriteStatsByLine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -85,6 +83,7 @@ public class Main {
         }
         logger.info("Nombre de parties : " + i);
 
+
         logger.info("Debut des statistiques");
         for (i = 0; i < listWinners.length; i++) {
             int numberOfGamesWon = listWinners[i];
@@ -97,8 +96,7 @@ public class Main {
             logger.info("-Nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesLost,numberOfGames) + "%");
             String[][] data = {{listName[i], String.valueOf(numberOfGamesWon), String.valueOf(getRateFromNumberOfGames(numberOfGamesWon,numberOfGames)), String.valueOf(numberOfGamesWonButTied), String.valueOf(getRateFromNumberOfGames(numberOfGamesWonButTied,numberOfGames)), String.valueOf(numberOfGamesLost), String.valueOf(getRateFromNumberOfGames(numberOfGamesLost,numberOfGames)), String.valueOf((float) mapScore.get(listName[i])/numberOfGames)}};
             WriteStatsByLine.writeDataLineByLine(data);
-
-    }
+        }
         logger.info("Fin des statistiques\n");
     }
 
