@@ -6,6 +6,10 @@ import fr.cotedazur.univ.polytech.startingpoint.arguments.CitadelleArguments;
 import fr.cotedazur.univ.polytech.startingpoint.gamestats.ParseFullGameStats;
 import fr.cotedazur.univ.polytech.startingpoint.gamestats.WriteStatsByLine;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -75,9 +79,7 @@ public class Main {
                 }
             }
         }
-        WriteStatsByLine.writeDataLineByLine("===============================================Enregistrement des statistiques===============================================");
         logger.info("Nombre de parties : " + i);
-        WriteStatsByLine.writeDataLineByLine("Nombre de parties : " + i);
         for (i = 0; i < listWinners.length; i++) {
             int numberOfGamesWon = listWinners[i];
             float winRate =(float) numberOfGamesWon / numberOfGames * 100;
@@ -86,13 +88,12 @@ public class Main {
             int numberOfGamesLost = numberOfGames - numberOfGamesWon - numberOfGamesWonButTied;
             float loseRate =(float) numberOfGamesLost / numberOfGames * 100;
             logger.info(listName[i] + " : " + "nombres de parties jouées : " + numberOfGames);
-            WriteStatsByLine.writeDataLineByLine(listName[i] + " : " + "nombres de parties jouées : " + numberOfGames);
             logger.info("-nombres de parties gagnées : " + numberOfGamesWon + "/" + numberOfGames + "soit " + winRate + "%");
-            WriteStatsByLine.writeDataLineByLine("-nombres de parties gagnées : " + numberOfGamesWon + "/" + numberOfGames + "soit " + winRate + "%");
             logger.info("-nombres d'égalitées : " + numberOfGamesWonButTied + "/" + numberOfGames + "soit " + tieRate + "%");
-            WriteStatsByLine.writeDataLineByLine("-nombres d'égalitées : " + numberOfGamesWonButTied + "/" + numberOfGames + "soit " + tieRate + "%");
             logger.info("-nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + "soit " + loseRate + "%");
-            WriteStatsByLine.writeDataLineByLine("-nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + "soit " + loseRate + "%");
+            String[][] data = {{listName[i], String.valueOf(numberOfGamesWon), String.valueOf(winRate), String.valueOf(numberOfGamesWonButTied), String.valueOf(tieRate), String.valueOf(numberOfGamesLost), String.valueOf(loseRate), String.valueOf(0)}};
+            WriteStatsByLine.writeDataLineByLine(data);
+
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
