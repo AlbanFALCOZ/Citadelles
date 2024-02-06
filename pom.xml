@@ -46,6 +46,13 @@
             <artifactId>mockito-core</artifactId>
             <version>4.2.0</version>
             <scope>test</scope>
+
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.9</version>
+
         </dependency>
 
         <dependency>
