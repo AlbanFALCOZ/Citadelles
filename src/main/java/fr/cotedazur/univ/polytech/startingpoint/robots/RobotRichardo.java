@@ -15,6 +15,10 @@ public class RobotRichardo extends Robot {
     public static final String COMMERCIAL = "marchand";
     private StrategyBatisseur strategyBatisseur;
 
+    public StrategyAgressif getStrategyAgressif() {
+        return strategyAgressif;
+    }
+
     private StrategyAgressif strategyAgressif;
 
     private StrategyOpportuniste strategyOpportuniste;
@@ -23,45 +27,10 @@ public class RobotRichardo extends Robot {
 
 
 
-    public int getCond() {
-        return cond;
-    }
-
-    public int getAssas() {
-        return assas;
-    }
-
-    public int getMarch() {
-        return march;
-    }
-
-    public int getArch() {
-        return arch;
-    }
-
-    private int cond = 0;
-    private int assas = 0;
-    private int march = 0;
-    private int arch = 0;
-
     private boolean agressif = false;
     private boolean batisseur = false;
 
-    public void setCond(int cond) {
-        this.cond = cond;
-    }
 
-    public void setAssas(int assas) {
-        this.assas = assas;
-    }
-
-    public void setMarch(int march) {
-        this.march = march;
-    }
-
-    public void setArch(int arch) {
-        this.arch = arch;
-    }
 
     public void setAgressif(boolean agressif) {
         this.agressif = agressif;
@@ -146,6 +115,7 @@ public class RobotRichardo extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
+        this.availableCharacters = new ArrayList<>(availableCharacters) ;
         if (batisseur) {
             strategyBatisseur.pickBatisseur(availableCharacters, this);
             /*
@@ -241,6 +211,17 @@ public class RobotRichardo extends Robot {
         return listDistrictToBuild;
     }
 
+    @Override
+    public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
+       Robot victim =  this.strategyAgressif.chooseVictimForAssassin(bots , 0 , this) ;
+       return victim ;
+    }
+
+    @Override
+    public Robot chooseVictimForCondottiere(List<Robot> bots){
+        Robot victim = this.strategyAgressif.chooseVictimForCondottiere(bots , this);
+        return victim ;
+    }
 
 
 }
