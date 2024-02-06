@@ -3,13 +3,15 @@ import com.opencsv.CSVReader;
 
 import java.io.File;
 import java.io.FileReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
 public class ParseFullGameStats {
     public static void parseFullStats() throws Exception {
-
-        File file = new File("stats/gamestats.csv");
+        Path relative = Paths.get("stats","gamestats.csv");
+        File file = new File(relative.toString());
 
         List<String[]> allRows;
         try (CSVReader reader = new CSVReader(new FileReader(file))) {

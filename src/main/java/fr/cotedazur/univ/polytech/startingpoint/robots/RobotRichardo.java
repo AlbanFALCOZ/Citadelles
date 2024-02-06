@@ -181,11 +181,7 @@ public class RobotRichardo extends Robot {
 
 
     public boolean thereIsA(CharactersType character, List<CharactersType> availableCharacters) {
-        if (this.hasCrown) {
-           listCharacters.remove(availableCharacters) ;
-            return listCharacters.contains(character);
-        }
-        return false;
+        return (this.hasCrown && availableCharacters.contains(character));
     }
 
 

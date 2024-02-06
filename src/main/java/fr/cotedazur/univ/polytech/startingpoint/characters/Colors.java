@@ -23,13 +23,14 @@ public enum Colors {
 
     String colorDisplay ;
 
+    private static Random random = new Random();
+
     static List<Colors> listOfColors = new ArrayList<>() ;
     Colors(String colorDisplay){
         this.colorDisplay = colorDisplay ;
     }
 
     public static Colors getRandomColorCode() {
-        Random random = new Random();
         Colors[] allowedColors = {
                 Colors.BLUE,
                 Colors.GREEN,
