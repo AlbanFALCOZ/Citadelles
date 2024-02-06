@@ -47,7 +47,16 @@
             <version>4.2.0</version>
             <scope>test</scope>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+        </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.9</version>
+
+>>>>>>> 1fa0bfd12dfc15491faafeff3c464cbab0204010
         </dependency>
         <dependency>
             <groupId>com.opencsv</groupId>
