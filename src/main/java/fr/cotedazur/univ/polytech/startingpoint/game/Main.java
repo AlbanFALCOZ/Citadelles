@@ -82,13 +82,13 @@ public class Main {
             }
         }
         logger.info("Nombre de parties : " + i);
-
-
+      
         logger.info("Debut des statistiques");
         for (i = 0; i < listWinners.length; i++) {
             int numberOfGamesWon = listWinners[i];
             int numberOfGamesWonButTied = listWinnersTied[i];
             int numberOfGamesLost = numberOfGames - numberOfGamesWon - numberOfGamesWonButTied;
+
             logger.info(listName[i] + " : " + "nombres de parties jouees : " + numberOfGames);
             logger.info("-Score moyen : " + (float) mapScore.get(listName[i])/numberOfGames);
             logger.info("-Nombres de parties gagnees : " + numberOfGamesWon + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesWon,numberOfGames) + "%");
@@ -96,6 +96,7 @@ public class Main {
             logger.info("-Nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesLost,numberOfGames) + "%");
             String[][] data = {{listName[i], String.valueOf(numberOfGamesWon), String.valueOf(getRateFromNumberOfGames(numberOfGamesWon,numberOfGames)), String.valueOf(numberOfGamesWonButTied), String.valueOf(getRateFromNumberOfGames(numberOfGamesWonButTied,numberOfGames)), String.valueOf(numberOfGamesLost), String.valueOf(getRateFromNumberOfGames(numberOfGamesLost,numberOfGames)), String.valueOf((float) mapScore.get(listName[i])/numberOfGames)}};
             WriteStatsByLine.writeDataLineByLine(data);
+
         }
         logger.info("Fin des statistiques\n");
     }
