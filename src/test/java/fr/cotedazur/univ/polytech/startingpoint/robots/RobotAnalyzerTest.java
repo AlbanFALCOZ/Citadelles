@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class RobotAnalyzerTest {
     private RobotAnalyzer robotAnalyzer;
@@ -28,22 +27,32 @@ public class RobotAnalyzerTest {
 
     @Test
     public void testTryBuild() {
-        // Set up the necessary state for the robot
         robotAnalyzer.setGolds(5);
         robotAnalyzer.getDistrictInHand().add(DistrictsType.PALAIS);
         robotAnalyzer.getCity().add(DistrictsType.EGLISE);
 
-        // Act
         String result = robotAnalyzer.tryBuild();
 
-        // Assert
         assertEquals("a new Palais", result);
     }
 
 
     @Test
-    void pickDistrictCard() {
+    public void testPickDistrictCard() {
+        DeckDistrict deckDistrict = new DeckDistrict();
+        List<DistrictsType> listDistrict = Arrays.asList(DistrictsType.PALAIS, DistrictsType.EGLISE);
+        listDistrict.forEach(deckDistrict::addDistrictToDeck);
+
+        int initialDeckSize = deckDistrict.numberOfRemainingDistrictInDeck();
+
+        List<DistrictsType> chosenDistricts = robotAnalyzer.pickDistrictCard(listDistrict, deckDistrict);
+
+        assertTrue(chosenDistricts.contains(DistrictsType.PALAIS) || chosenDistricts.contains(DistrictsType.EGLISE));
+        int finalDeckSize = deckDistrict.numberOfRemainingDistrictInDeck();
+
+        assertEquals(initialDeckSize - chosenDistricts.size() + listDistrict.size(), finalDeckSize);
     }
+
 
     @Test
     void generateChoice() {
