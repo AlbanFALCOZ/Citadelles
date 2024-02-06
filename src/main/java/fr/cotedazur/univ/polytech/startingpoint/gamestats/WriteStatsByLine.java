@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 public class WriteStatsByLine {
+
     public static void writeDataLineByLine(String[][] data) {
         Path relative = Paths.get("stats","gamestats.csv");
         File file = new File(relative.toString());

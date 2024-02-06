@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint.districts;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotWithChoice;
 
 
 /**
