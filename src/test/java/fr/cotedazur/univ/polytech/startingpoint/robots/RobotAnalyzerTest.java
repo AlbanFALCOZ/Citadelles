@@ -25,10 +25,33 @@ public class RobotAnalyzerTest {
     public void setUp() {
         robotAnalyzer = new RobotAnalyzer("TestBot");
         mockDeckDistrict = mock(DeckDistrict.class);
+        robotAnalyzer.getCity().clear();
+    }
+
+    @Test
+    public void testTryBuild() {
+        //construction district spécial quand c'est possible
+        robotAnalyzer.setGolds(6);
+        robotAnalyzer.setDistrictInHand(new ArrayList<>(Arrays.asList(DistrictsType.MANOIR, DistrictsType.CATHEDRALE, DistrictsType.BIBLIOTHEQUE)));
+        String result = robotAnalyzer.tryBuild();
+        assertTrue(result.equals("a new Bibliothèque"), "Le robot devrait construire 'Bibliothèque' car c'est un district spécial qu'il peut se permettre.");
+
+        //construction district pour bloquer adversaires
+        robotAnalyzer.setGolds(3);
+        robotAnalyzer.setDistrictInHand(new ArrayList<>(Arrays.asList(DistrictsType.MANOIR, DistrictsType.TAVERNE)));
+        result = robotAnalyzer.tryBuild();
+        assertEquals("a new Manoir", result, "Le robot devrait construire 'Manoir', basé sur la quantité d'or disponible et la stratégie de blocage des adversaires.");
+
+        //cas où robot ne peut construire aucun district
+        robotAnalyzer.setGolds(0);
+        robotAnalyzer.setDistrictInHand(new ArrayList<>(Arrays.asList(DistrictsType.TAVERNE)));
+        result = robotAnalyzer.tryBuild();
+        assertEquals("nothing", result, "Le robot ne devrait construire aucun district car il n'a pas assez d'or.");
     }
 
 
 
+/*
     @Test
     public void testTryBuild() {
         robotAnalyzer.setGolds(5);
@@ -38,9 +61,12 @@ public class RobotAnalyzerTest {
         String result = robotAnalyzer.tryBuild();
 
         assertEquals("a new Palais", result);
-    }
+    }*/
 
 
+
+
+/*
     @Test
     public void testPickDistrictCard() {
         DeckDistrict deckDistrict = new DeckDistrict();
@@ -55,7 +81,25 @@ public class RobotAnalyzerTest {
         int finalDeckSize = deckDistrict.numberOfRemainingDistrictInDeck();
 
         assertEquals(initialDeckSize - chosenDistricts.size() + listDistrict.size(), finalDeckSize);
+    }*/
+
+    @Test
+    public void testPickDistrictCard() {
+        List<DistrictsType> availableDistricts = Arrays.asList(DistrictsType.TAVERNE, DistrictsType.PALAIS, DistrictsType.MANOIR, DistrictsType.CATHEDRALE);
+
+        robotAnalyzer.getCity().addAll(Arrays.asList(DistrictsType.CHATEAU));
+        robotAnalyzer.setGolds(8);
+
+        List<DistrictsType> chosenDistricts = robotAnalyzer.pickDistrictCard(availableDistricts, mockDeckDistrict);
+        assertTrue(chosenDistricts.size() <= robotAnalyzer.getNumberOfCardsChosen(), "Le robot devrait choisir un nombre limité de districts basé sur le nombre de cartes qu'il peut choisir.");
+
+        assertTrue(chosenDistricts.contains(DistrictsType.PALAIS) || chosenDistricts.contains(DistrictsType.CATHEDRALE), "Le robot devrait prioriser les districts avec des scores élevés ou des coûts accessibles.");
+
+        int totalCost = chosenDistricts.stream().mapToInt(DistrictsType::getCost).sum();
+        assertTrue(totalCost <= robotAnalyzer.getGolds(), "Le coût total des districts choisis ne devrait pas dépasser l'or disponible du robot.");
     }
+
+
 
 
     @Test

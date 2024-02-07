@@ -66,7 +66,7 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        Robot rush = new RobotAnalyzer("Nora");
+        Robot rush = new RobotRush("Nora");
         Robot sarsor = new RobotSarsor("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
