@@ -32,6 +32,7 @@ public class Main {
             testBots();
             ParseFullGameStats.parseFullStats();
         }
+        showGame();
 
     }
 

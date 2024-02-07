@@ -46,11 +46,11 @@ public class StrategyAgressif {
 
     public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots , RobotRichardo richardo) {
         for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) {
+            if ((bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) && availableCharacters.contains(CharactersType.CONDOTTIERE)) {
                 richardo.pickCharacterCard(availableCharacters, CharactersType.CONDOTTIERE);
                 if(richardo.getCharacter() == CharactersType.CONDOTTIERE) return ;
             }
-            else if (richardo.thereIsA(CharactersType.VOLEUR, availableCharacters) || (bot.getNumberOfDistrictInHand() <= 1 )){
+            else if ((richardo.thereIsA(CharactersType.VOLEUR, availableCharacters) || (bot.getNumberOfDistrictInHand() <= 1 )) && availableCharacters.contains(CharactersType.ASSASSIN)){
                 richardo.pickCharacterCard(availableCharacters , CharactersType.ASSASSIN);
                 if(richardo.getCharacter() == CharactersType.ASSASSIN) return ;
 
@@ -62,25 +62,12 @@ public class StrategyAgressif {
 
 
     public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill , RobotRichardo robot  ) {
-        Robot victim = bots.get(0);
+        Robot victim = null;
         for (Robot bot : bots){
-        if (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters())) {
-            numberOfTheCharacterToKill = 2;
-
-        } else if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters()) || hasMaxDistricts(bots, robot)) {
-            numberOfTheCharacterToKill = 8;
-
-        } else {
-            {
-                if (bot.getNumberOfDistrictInHand() <= 1 || robot.getNumberOfDistrictInHand() == 3) {
-                    numberOfTheCharacterToKill = 3;
+            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) {
+                    victim = bot;
+                    break;
                 }
-            }
-        }
-        if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) {
-                victim = bot;
-                break;
-            }
         }
         return victim ;
 

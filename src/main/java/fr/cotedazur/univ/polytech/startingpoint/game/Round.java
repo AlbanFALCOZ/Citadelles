@@ -91,7 +91,7 @@ public class Round {
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
             case ASSASSIN:
-                int numberOfTheCharacterToKill = (int) (Math.random() * (8-2) + 2);
+                int numberOfTheCharacterToKill = bot.getNumberOfCharacterToKill(bots);
                 for (CharactersType character: CharactersType.values()) {
                     if (character.getNumber() == numberOfTheCharacterToKill) actionOfBotDuringARound.printVictimAssassined(character);
                 }
