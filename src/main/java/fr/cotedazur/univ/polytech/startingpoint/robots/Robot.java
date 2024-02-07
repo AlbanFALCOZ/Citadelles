@@ -346,6 +346,7 @@ public abstract class Robot{
         return (int) (Math.random() * (8-2) + 2);
     }
 
+  
     public Map<String, List<CharactersType>> getCharacterHistory() {
         return characterHistory;
     }
@@ -358,10 +359,12 @@ public abstract class Robot{
         return buildingHistory;
     }
 
+
     public void updateHistory(List<Robot> bots) {
         for (Robot bot : bots) {
             String botName = bot.getName();
             CharactersType chosenCharacter = bot.getCharacter();
+
 
             List<DistrictsType> builtDistricts = bot.getCity();
             Integer handSize = bot.getDistrictInHand().size();
@@ -379,5 +382,20 @@ public abstract class Robot{
         }
     }
 
+            List<DistrictsType> builtDistricts = bot.getCity();
+            Integer handSize = bot.getDistrictInHand().size();
+
+            characterHistory.putIfAbsent(botName, new ArrayList<>());
+            characterHistory.get(botName).add(chosenCharacter);
+
+            for(DistrictsType district : builtDistricts){
+                buildingHistory.putIfAbsent(botName, new ArrayList<>());
+                if (!buildingHistory.get(botName).contains(district)) {
+                    buildingHistory.get(botName).add(district);
+                }
+            }
+            handSizeHistory.put(botName, handSize);
+        }
+    }
 
 }

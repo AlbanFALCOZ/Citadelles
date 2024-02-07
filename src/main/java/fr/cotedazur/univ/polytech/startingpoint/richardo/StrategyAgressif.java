@@ -57,10 +57,12 @@ public class StrategyAgressif {
 
             }
 
+
             else if ((availableCharacters.contains(CharactersType.EVEQUE))){
                 richardo.pickCharacterCard(availableCharacters , CharactersType.EVEQUE);
                 if(richardo.getCharacter() == CharactersType.EVEQUE) return ;
             }
+
 
         }
         richardo.setCharacter(availableCharacters.get(0)) ;
@@ -69,6 +71,7 @@ public class StrategyAgressif {
 
 
     public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill , RobotRichardo robot  ) {
+
 
 
         Robot victim = bots.get(0);
@@ -90,6 +93,7 @@ public class StrategyAgressif {
                 victim = bot;
                 break;
             }
+
 
 
         }
@@ -128,12 +132,4 @@ public class StrategyAgressif {
         return true ;
     }
 
-
-
-
-
-
-
-
 }
-

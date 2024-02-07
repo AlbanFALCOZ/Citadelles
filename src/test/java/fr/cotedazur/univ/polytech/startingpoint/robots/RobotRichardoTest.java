@@ -58,7 +58,12 @@ class RobotRichardoTest {
 
     @Test
 
+<<<<<<< HEAD
     void testRaichardoWhenKingPickNobleCard() {
+=======
+
+    void testRichardoWhenKingPickNobleCard() {
+>>>>>>> 82ca1fe9381532a7c4575d3d796e152f4213e986
 
         richardo.setCharacter(CharactersType.ROI);
         StrategyBatisseur batisseur = new StrategyBatisseur();
@@ -73,7 +78,10 @@ class RobotRichardoTest {
 
     @Test
     public void testChooseVictimForCondottiere_ChoosesCorrectVictim() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 82ca1fe9381532a7c4575d3d796e152f4213e986
 
         List<CharactersType> availableCharacters = new ArrayList<>();
         availableCharacters.add(CharactersType.CONDOTTIERE);
@@ -123,6 +131,7 @@ class RobotRichardoTest {
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -136,6 +145,25 @@ class RobotRichardoTest {
 
 
 
+=======
+    @Test
+
+    void testScenarioArchitecte() {
+        RobotRichardo botNearFinishing = new RobotRichardo("richardo1");
+        RobotRichardo richardo2 = new RobotRichardo("richardo2");
+        RobotRichardo richardo3 = new RobotRichardo("richardo3");
+        RobotRichardo richardo4 = new RobotRichardo("richardo4");
+
+        List<CharactersType> listCharacter = deckCharacters.getCharactersInHand();
+
+
+        List<Robot> listBots = new ArrayList<>();
+        listBots.add(botNearFinishing);
+        listBots.add(richardo2);
+        listBots.add(richardo3);
+        listBots.add(richardo4);
+    }
+>>>>>>> 82ca1fe9381532a7c4575d3d796e152f4213e986
 
     @Test
     void testScenarioArchitecte() {
@@ -151,7 +179,6 @@ class RobotRichardoTest {
         listBots.add(richardo2);
         listBots.add(richardo3);
         listBots.add(richardo4);
-
         botNearFinishing.setGolds(1000);
         while (botNearFinishing.getNumberOfDistrictInCity() < 5 || botNearFinishing.getNumberOfDistrictInHand() < 1) {
             botNearFinishing.addDistrict(deckDistrict.getDistrictsInDeck());
@@ -179,7 +206,10 @@ class RobotRichardoTest {
 }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 82ca1fe9381532a7c4575d3d796e152f4213e986
 
 
 
