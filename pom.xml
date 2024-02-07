@@ -53,10 +53,6 @@
             <version>5.9</version>
 
         </dependency>
-<<<<<<< HEAD
-
-=======
->>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
         <dependency>
             <groupId>org.jcommander</groupId>
             <artifactId>jcommander</artifactId>
