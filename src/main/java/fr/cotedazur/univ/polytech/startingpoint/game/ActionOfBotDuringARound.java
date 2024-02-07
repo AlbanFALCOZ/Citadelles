@@ -128,6 +128,7 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + " stole golds from " + victim + ". Total golds now " + bot.getGolds());
     }
 
+
     public void printMagicianSwapWithDeck() {
         logger.info(bot.getName() + " choosed to swap with deck");
     }
@@ -284,4 +285,5 @@ public class ActionOfBotDuringARound {
     public void printVictimForVoleurNotExist() {
         logger.info(bot.getName() + " can't steal from anyone because there is no one to steal from");
     }
+
 }

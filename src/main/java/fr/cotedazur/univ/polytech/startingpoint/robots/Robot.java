@@ -417,4 +417,5 @@ public abstract class Robot{
         return (int) (Math.random() * (8-2) + 2);
     }
 
+
 }

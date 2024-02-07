@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 
@@ -148,6 +149,12 @@ public class RobotRichardo extends Robot {
                 action.printScenarioArchitecte();
                 return;
             }
+
+        }
+
+        this.strategyBatisseur.isBatisseur(this);
+        if(!this.batisseur){
+          this.strategyAgressif.isAgressif(bots , this);
         }
 
 
@@ -241,10 +248,8 @@ public class RobotRichardo extends Robot {
 
     @Override
     public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
-        Robot victim = null;
-        if (scenarioArchitecte(bots)) victim = this.strategyAgressif.chooseVictimForAssassin(bots,7,this);
-        else victim = this.strategyAgressif.chooseVictimForAssassin(bots , numberOfTheCharacterToKill , this) ;
-        return victim ;
+        if (scenarioArchitecte(bots)) return this.strategyAgressif.chooseVictimForAssassin(bots,7,this);
+        else return this.strategyAgressif.chooseVictimForAssassin(bots , numberOfTheCharacterToKill , this) ;
     }
 
     @Override
@@ -266,7 +271,6 @@ public class RobotRichardo extends Robot {
             }
         }
         return super.getNumberOfCharacterToKill(bots);
-
     }
 
     @Override
@@ -300,7 +304,6 @@ public class RobotRichardo extends Robot {
         }
         return false;
     }
-
 
 
 

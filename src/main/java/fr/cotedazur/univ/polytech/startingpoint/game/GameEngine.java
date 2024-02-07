@@ -74,6 +74,11 @@ public class GameEngine {
         addCardsToBot(richardo, sarsor, gentil, choice);
     }
 
+    /**
+     * cette méthode permet d'ajouter
+     * au début du jeu
+     * les 4 cartes dans la main de chaque robot
+     */
     private void addCardsToBot(Robot robot1, Robot robot2, Robot robot3, Robot robot4) {
         bots.add(robot1);
         bots.add(robot2);
