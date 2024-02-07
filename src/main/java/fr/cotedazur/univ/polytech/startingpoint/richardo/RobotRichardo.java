@@ -1,9 +1,10 @@
-package fr.cotedazur.univ.polytech.startingpoint.robots;
+package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 
 import java.util.*;
@@ -24,7 +25,6 @@ public class RobotRichardo extends Robot {
     private StrategyOpportuniste strategyOpportuniste;
 
     private boolean opportuniste = false;
-
 
 
     private boolean agressif = false;
@@ -56,10 +56,13 @@ public class RobotRichardo extends Robot {
         this.availableCharacters = availableCharacters;
     }
 
-
-    public boolean isAgressif() {
-        return agressif;
+    public boolean getAgressive(){
+        return agressif ;
     }
+
+
+
+
 
     public boolean isBatisseur() {
         return batisseur;
@@ -116,8 +119,18 @@ public class RobotRichardo extends Robot {
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         this.availableCharacters = new ArrayList<>(availableCharacters) ;
+
+       this.strategyBatisseur.isBatisseur(this);
+        if(!this.batisseur){
+          this.strategyAgressif.isAgressif(bots , this);
+
+        }
+
         if (batisseur) {
             strategyBatisseur.pickBatisseur(availableCharacters, this);
+            batisseur = false ;
+
+
             /*
         } else if (opportuniste) {
             strategyOpportuniste.pickOpportuniste(this);
@@ -125,11 +138,13 @@ public class RobotRichardo extends Robot {
              */
         } else if (agressif) {
             strategyAgressif.pickAgressif(availableCharacters, bots, this);
-            agressif =false ;
+            agressif = false ;
+
         } else {
             setCharacter(availableCharacters.get(0));
             availableCharacters.remove(0);
         }
+
     }
 
 
@@ -149,15 +164,7 @@ public class RobotRichardo extends Robot {
     }
 
 
-    @Override
-    public Robot chooseVictimForMagicien(List<Robot> bots){
-        Robot victim = bots.get(0);
-        int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
-        for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
-        }
-        return victim;
-    }
+
 
 
     public int countDistrictsByType(String type) {
@@ -173,15 +180,6 @@ public class RobotRichardo extends Robot {
     }
 
 
-
-    public boolean hasMaxDistricts(List<Robot> bots) {
-        for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() > this.getNumberOfDistrictInCity()) {
-                return false;
-            }
-        }
-        return true ;
-    }
 
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
@@ -213,15 +211,28 @@ public class RobotRichardo extends Robot {
 
     @Override
     public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
-       Robot victim =  this.strategyAgressif.chooseVictimForAssassin(bots , 0 , this) ;
-       return victim ;
+
+        Robot victim = this.strategyAgressif.chooseVictimForAssassin(bots , 0 , this) ;
+        return victim ;
+
     }
 
     @Override
     public Robot chooseVictimForCondottiere(List<Robot> bots){
-        Robot victim = this.strategyAgressif.chooseVictimForCondottiere(bots , this);
+
+        Robot victim = this.strategyAgressif.chooseVictimForCondottiere(bots , this );
         return victim ;
     }
+
+    @Override
+    public Robot chooseVictimForMagicien(List<Robot> bots){
+        Robot victim = this.strategyAgressif.chooseVictimForMagicien(bots , this ) ;
+        return victim ;
+    }
+
+
+
+
 
 
 }

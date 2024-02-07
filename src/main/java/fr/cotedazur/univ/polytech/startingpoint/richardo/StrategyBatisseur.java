@@ -1,8 +1,9 @@
-package fr.cotedazur.univ.polytech.startingpoint.robots;
+package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,17 +48,19 @@ public class StrategyBatisseur {
         if (bot.getGolds() < 4) {
 
             bot.setBatisseur(true);
+
         } else if (bot.getGolds() >= 6 && bot.getNumberOfDistrictInHand() >= 3) {
+
 
         }
     }
 
     public void pickBatisseur(List<CharactersType> availableCharacters, RobotRichardo bot){
         isBatisseur(bot);
-        bot.pickCharacterCard(availableCharacters,CharactersType.ROI);
-        if (bot.getCharacter() == CharactersType.ROI) return;
         bot.pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
         if (bot.getCharacter() == CharactersType.MARCHAND) return;
+        bot.pickCharacterCard(availableCharacters,CharactersType.ROI);
+        if (bot.getCharacter() == CharactersType.ROI) return;
         bot.pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
         if (bot.getCharacter() == CharactersType.ARCHITECTE) return;
 
@@ -72,7 +75,7 @@ public class StrategyBatisseur {
             if (bot.getCharacter().getType().equals(district.getType())) {
                 listDistrictToBuild.add(district);
             }
-            if (listDistrictToBuild.size() == bot.numberOfCardsChosen) return listDistrictToBuild;
+            if (listDistrictToBuild.size() == bot.getNumberOfCardsChosen()) return listDistrictToBuild;
         }
         if (listDistrictToBuild.isEmpty()) {
             bot.setBatisseur(false);
@@ -80,7 +83,7 @@ public class StrategyBatisseur {
             bot.setBatisseur(true);
             return listDistrictToBuild;
         }
-        while (listDistrictToBuild.size() < bot.numberOfCardsChosen) listDistrictToBuild.add(listDistrict.remove(0));
+        while (listDistrictToBuild.size() < bot.getNumberOfCardsChosen()) listDistrictToBuild.add(listDistrict.remove(0));
         for (DistrictsType districtNonChosen : listDistrict) {
             deck.addDistrictToDeck(districtNonChosen);
         }

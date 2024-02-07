@@ -4,15 +4,23 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.GameEngine;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.StrategyBatisseur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class RobotRichardoTest {
+
 
     private RobotRichardo richardo;
     private DeckCharacters deckCharacters;
@@ -32,12 +40,12 @@ class RobotRichardoTest {
         StrategyBatisseur batisseur = new StrategyBatisseur();
 
         batisseur.pickBatisseur(listCharacters, richardo);
-        assertEquals(richardo.character,CharactersType.ROI);
+        assertEquals(richardo.character,CharactersType.MARCHAND);
         assertEquals(listCharacters.size(),7);
 
         richardo.character = null;
         batisseur.pickBatisseur(listCharacters, richardo);
-        assertEquals(richardo.character,CharactersType.MARCHAND);
+        assertEquals(richardo.character,CharactersType.ROI);
 
         richardo.character = null;
         richardo.setGolds(6);
@@ -99,6 +107,8 @@ class RobotRichardoTest {
     }*/
 
 
+
+
     @Test
     void testRaichardoWhenMarchandPickMarchandDistrict() {
         richardo.setCharacter(CharactersType.MARCHAND);
@@ -118,78 +128,93 @@ class RobotRichardoTest {
 
 
     @Test
-    public void testThereIsA_CharacterExists_ReturnsTrue() {
+
+    public void testChooseVictimForCondottiere_ChoosesCorrectVictim() {
 
         List<CharactersType> availableCharacters = new ArrayList<>();
-        availableCharacters.add(CharactersType.VOLEUR);
-        RobotRichardo robot = new RobotRichardo("TestRobot");
-        robot.setHasCrown(true);
-        boolean result = robot.thereIsA(CharactersType.VOLEUR, availableCharacters);
-        assertTrue(result);
+        availableCharacters.add(CharactersType.CONDOTTIERE);
 
-    }
-
-    @Test
-    public void testThereIsA_CharacterDoesNotExist_ReturnsFalse() {
-
-        List<CharactersType> availableCharacters = new ArrayList<>();
-        availableCharacters.add(CharactersType.VOLEUR);
-
-        RobotRichardo robot = new RobotRichardo("TestRobot");
-        robot.setHasCrown(true);
-
-        boolean result = robot.thereIsA(CharactersType.ASSASSIN, availableCharacters);
-
-        assertFalse(result);
-    }
-
-    @Test
-    public void testThereIsA_NoCrown_ReturnsFalse() {
-        // Arrange
-        List<CharactersType> availableCharacters = new ArrayList<>();
-        availableCharacters.add(CharactersType.VOLEUR);
-
-        RobotRichardo robot = new RobotRichardo("TestRobot");
-        robot.setHasCrown(false);
-
-        // Act
-        boolean result = robot.thereIsA(CharactersType.VOLEUR , availableCharacters);
-
-        // Assert
-        assertFalse(result);
-    }
-
-    @Test
-    public void testChooseVictimForAssassin_ThiefExists_ReturnsCorrectVictim() {
-        List<CharactersType> availableCharacters = new ArrayList<>();
-        availableCharacters.add(CharactersType.VOLEUR);
-        RobotRichardo assassin = new RobotRichardo("Assassin");
-        assassin.setHasCrown(true);
-        assassin.setCharacter(CharactersType.ASSASSIN);
         List<Robot> bots = new ArrayList<>();
-        RobotRichardo victim = new RobotRichardo("Victim");
-        victim.setCharacter(CharactersType.VOLEUR);
-        bots.add(victim);
-        assassin.pickCharacter(availableCharacters , bots );
-        Robot chosenVictim = assassin.getStrategyAgressif().chooseVictimForAssassin(bots , 0  , richardo) ;
-
-        assertEquals(victim, chosenVictim);
+        Robot bot1 = Mockito.mock(Robot.class);
+        when(bot1.getNumberOfDistrictInCity()).thenReturn(4);
+        when(bot1.getCharacter()).thenReturn(CharactersType.ROI);
+        bots.add(bot1);
+        Robot bot2 = Mockito.mock(Robot.class);
+        when(bot2.getNumberOfDistrictInCity()).thenReturn(5);
+        when(bot2.getCharacter()).thenReturn(CharactersType.ASSASSIN);
+        bots.add(bot2);
+        RobotRichardo richardo = new RobotRichardo("Richard");
+        richardo.setAvailableCharacters(availableCharacters);
+        richardo.pickCharacter(availableCharacters , bots);
+        Robot chosenVictim = richardo.chooseVictimForCondottiere(bots);
+        assertEquals(bot1, chosenVictim);
     }
+
 
     @Test
-    public void testPickCharacterCard_CharacterExists_CharacterPickedAndRemovedFromList() {
+    void testPickCharacterWithoutVoleurAndNoNeedForCondottiere() {
+        List<Robot> bots = new ArrayList<>();
+        List<CharactersType> charactersToPickFrom = new ArrayList<>() ;
+        charactersToPickFrom.add(CharactersType.ROI) ;
+        charactersToPickFrom.add(CharactersType.EVEQUE) ;
+        charactersToPickFrom.add(CharactersType.CONDOTTIERE) ;
+        charactersToPickFrom.add(CharactersType.ASSASSIN) ;
+        Robot sarsor = new RobotSarsor("Sara");
+        Robot gentil = new RobotDiscrete("Stacy");
+        Robot choice = new RobotChoiceOfCharacter("Alban");
+        RobotRichardo richardo = new RobotRichardo("Richardo");
+        bots.add(sarsor);
+        bots.add(gentil);
+        bots.add(choice);
+        bots.add(richardo);
+        richardo.setAgressif(true);
+        assertTrue( richardo.getAgressive());
+        richardo.setHasCrown(true);
+        richardo.pickCharacter(charactersToPickFrom , bots);
 
-        List<CharactersType> availableCharacters = new ArrayList<>();
-        availableCharacters.add(CharactersType.ROI);
-        availableCharacters.add(CharactersType.MARCHAND);
-        availableCharacters.add(CharactersType.EVEQUE);
-        RobotRichardo robot = new RobotRichardo("Test Robot");
+        assertEquals(CharactersType.ROI , richardo.getCharacter());
 
-        robot.pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
+    }
 
-        assertEquals(CharactersType.MARCHAND, robot.getCharacter());
 
-        assertFalse(availableCharacters.contains(CharactersType.MARCHAND));
+
+/*
+
+    @Test
+    void testPickCharacterForCondottiere(){
+        List<Robot> bots = new ArrayList<>();
+        List<CharactersType> charactersToPickFrom = new ArrayList<>() ;
+        charactersToPickFrom.add(CharactersType.ROI) ;
+        charactersToPickFrom.add(CharactersType.EVEQUE) ;
+        charactersToPickFrom.add(CharactersType.ASSASSIN) ;
+        charactersToPickFrom.add(CharactersType.CONDOTTIERE) ;
+        charactersToPickFrom.add(CharactersType.VOLEUR) ;
+        richardo.setGolds(7);
+        Robot sarsor = new RobotSarsor("Sara");
+        Robot gentil = new RobotDiscrete("Stacy");
+        Robot choice = new RobotChoiceOfCharacter("Alban");
+        Robot richardo = new RobotRichardo("Richardo");
+        bots.add(sarsor);
+        bots.add(gentil);
+        bots.add(choice);
+        bots.add(richardo);
+        richardo.setHasCrown(true);
+        for ( int i = 0  ; i <7 ; i++) {
+            sarsor.getCity().add(DistrictsType.MANOIR);
+        }
+        for (int i = 0 ; i < 3 ; i++){
+            richardo.getCity().add(DistrictsType.MARCHE);
+        }
+        richardo.pickCharacter(charactersToPickFrom , bots);
+        assertEquals(CharactersType.CONDOTTIERE , richardo.getCharacter());
+
+    }
+
+
+
+ */
+
+    
     }
 
 
@@ -197,4 +222,4 @@ class RobotRichardoTest {
 
 
 
-}
+
