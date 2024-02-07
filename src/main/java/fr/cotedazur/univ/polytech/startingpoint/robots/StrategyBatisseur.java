@@ -12,21 +12,6 @@ public class StrategyBatisseur {
 
     public StrategyBatisseur(){}
 
-    //On construit le premier district possible
-    public String buildDistrictAndRetrieveItsName(RobotRichardo bot) {
-        for (int i = 0; i < bot.getDistrictInHand().size(); i++) {
-            DistrictsType district = bot.getDistrictInHand().get(i);
-            if (district.getCost() <= bot.getGolds() && !bot.getCity().contains(district)) {
-                district.powerOfDistrict(bot,1);
-                bot.getCity().add(district);
-                bot.setGolds(bot.getGolds() - district.getCost());
-                bot.getDistrictInHand().remove(i);
-                return "a new " + district.getName();
-            }
-        }
-        return "nothing";
-    }
-
     
     //Dans le cas où Richardo est un batisseur, il essaie de construire les quartiers noble/marchands en priorité.
     public String tryBuildBatisseur(RobotRichardo bot) {
@@ -40,7 +25,7 @@ public class StrategyBatisseur {
                 return "a new " + district.getName();
             }
         }
-        return buildDistrictAndRetrieveItsName(bot);
+        return bot.buildDistrictAndRetrieveItsName();
     }
     
     public void isBatisseur(RobotRichardo bot) {

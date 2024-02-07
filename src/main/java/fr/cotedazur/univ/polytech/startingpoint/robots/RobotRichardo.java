@@ -126,10 +126,27 @@ public class RobotRichardo extends Robot {
 
     }
 
+    //On construit le premier district possible
+    public String buildDistrictAndRetrieveItsName() {
+        for (int i = 0; i < this.getDistrictInHand().size(); i++) {
+            DistrictsType district = this.getDistrictInHand().get(i);
+            if (district.getCost() <= this.getGolds() && !this.getCity().contains(district)) {
+                district.powerOfDistrict(this,1);
+                this.getCity().add(district);
+                this.setGolds(this.getGolds() - district.getCost());
+                this.getDistrictInHand().remove(i);
+                return "a new " + district.getName();
+            }
+        }
+        return "nothing";
+    }
+
+
     @Override
     public String tryBuild() {
         if (batisseur) return strategyBatisseur.tryBuildBatisseur(this);
-        return strategyBatisseur.buildDistrictAndRetrieveItsName(this);
+        if (opportuniste) return strategyOpportuniste.tryBuildOpportuniste(this);
+        return buildDistrictAndRetrieveItsName();
     }
 
 
@@ -148,11 +165,10 @@ public class RobotRichardo extends Robot {
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         if (batisseur) {
             strategyBatisseur.pickBatisseur(availableCharacters, this);
-            /*
+
         } else if (opportuniste) {
             strategyOpportuniste.pickOpportuniste(this);
 
-             */
         } else if (agressif) {
             strategyAgressif.pickAgressif(availableCharacters, bots, this);
             agressif =false ;
@@ -216,6 +232,7 @@ public class RobotRichardo extends Robot {
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         if (batisseur && (character == CharactersType.ROI || character == CharactersType.MARCHAND) ) return strategyBatisseur.pickDistrictCardBatisseur( listDistrict,deck, this);
+        if (opportuniste) return strategyOpportuniste.pickDistrictCardOpportuniste(listDistrict,deck, this);
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int costOfDistrictToBeBuilt = 0;
