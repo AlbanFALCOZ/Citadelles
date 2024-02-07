@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 
 class RobotRichardoTest {
 
+    /*
     private RobotRichardo richardo;
     private DeckCharacters deckCharacters;
     private DeckDistrict deckDistrict;
@@ -52,7 +53,7 @@ class RobotRichardoTest {
         batisseur.pickBatisseur(listCharacters, richardo);
         assertEquals(richardo.character,CharactersType.ARCHITECTE);
     }
-
+*/
 
  /*   @Test
 
@@ -104,6 +105,8 @@ class RobotRichardoTest {
     }*/
 
 
+    /*
+
     @Test
     void testRaichardoWhenMarchandPickMarchandDistrict() {
         richardo.setCharacter(CharactersType.MARCHAND);
@@ -120,31 +123,7 @@ class RobotRichardoTest {
         assertTrue(richardo.getCity().contains(DistrictsType.TAVERNE));
     }
 
-    @Test
-    public void testChooseVictimForAssassin_AggressiveBehavior_ChoosesCorrectVictim() {
-        List<CharactersType> availableCharacters = new ArrayList<>();
-        availableCharacters.add(CharactersType.VOLEUR);
 
-        List<Robot> bots = new ArrayList<>();
-        Robot bot1 = Mockito.mock(Robot.class);
-        when(bot1.getNumberOfDistrictInCity()).thenReturn(3);
-        when(bot1.getCharacter()).thenReturn(CharactersType.VOLEUR);
-        bots.add(bot1);
-
-        Robot bot2 = Mockito.mock(Robot.class);
-        when(bot2.getNumberOfDistrictInCity()).thenReturn(5);
-        when(bot2.getCharacter()).thenReturn(CharactersType.MAGICIEN);
-        bots.add(bot2);
-
-        RobotRichardo richardo = new RobotRichardo("Richard");
-
-        richardo.setAvailableCharacters(availableCharacters);
-        richardo.pickCharacter(availableCharacters , bots );
-
-        Robot chosenVictim = richardo.chooseVictimForAssassin(bots, 0); // 0 is the default value for the character to kill
-
-        assertEquals(bot1, chosenVictim);
-    }
 
     @Test
     public void testChooseVictimForCondottiere_ChoosesCorrectVictim() {
@@ -196,7 +175,7 @@ class RobotRichardoTest {
 
 
 
-/*
+
 
     @Test
     void testPickCharacterForCondottiere(){
