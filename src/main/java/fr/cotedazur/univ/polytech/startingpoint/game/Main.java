@@ -32,7 +32,6 @@ public class Main {
             testBots();
             ParseFullGameStats.parseFullStats();
         }
-
     }
 
 
@@ -58,6 +57,7 @@ public class Main {
         int[] listWinnersTied = new int[4];
         int numberOfGames = 1000;
         int i;
+
         Map<String,Integer> mapScore = new HashMap<>();
         for (String name : listName) mapScore.put(name,0);
         for (i = 0; i < numberOfGames; i++) {
@@ -92,6 +92,7 @@ public class Main {
             logger.info("-Nombres de parties gagnees : " + numberOfGamesWon + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesWon,numberOfGames) + "%");
             logger.info("-Nombres d'egalitees        : " + numberOfGamesWonButTied + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesWonButTied,numberOfGames) + "%");
             logger.info("-Nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesLost,numberOfGames) + "%");
+
             String[][] data = {{listName[i], String.valueOf(numberOfGamesWon), String.valueOf(getRateFromNumberOfGames(numberOfGamesWon,numberOfGames)), String.valueOf(numberOfGamesWonButTied), String.valueOf(getRateFromNumberOfGames(numberOfGamesWonButTied,numberOfGames)), String.valueOf(numberOfGamesLost), String.valueOf(getRateFromNumberOfGames(numberOfGamesLost,numberOfGames)), String.valueOf((float) mapScore.get(listName[i])/numberOfGames)}};
             WriteStatsByLine.writeDataLineByLine(data);
 

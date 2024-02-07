@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,6 +22,7 @@ public class Round {
     private int numberOfCharacterToStealFrom = 0;
     private Robot voleur;
     private Robot victimOfVoleur;
+
 
     /**
      * @param bots la liste des robots
@@ -189,8 +191,10 @@ public class Round {
         }
         for (Robot bot : bots) {
             bot.setIsAssassinated(false);
+            bot.updateHistory(bots);
         }
         assignCrownForKing();
 
     }
+
 }
