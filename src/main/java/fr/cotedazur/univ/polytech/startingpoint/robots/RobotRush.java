@@ -53,7 +53,7 @@ public class RobotRush extends Robot {
             setCharacter(chosenCharacter);
             availableCharacters.remove(chosenCharacter);
         }
-        //action.printCharacterChoice() ;
+        action.printCharacterChoice() ;
     }
 
     private int getPriority(CharactersType character) {
@@ -109,7 +109,7 @@ public class RobotRush extends Robot {
             deck.addDistrictToDeck(districtNonChosen);
         }
 
-        action.printDistrictChoice(listDistrictDrawn, listDistrictPicked);
+        action.printDistrictChoice(listDistrictPicked);
         return listDistrictToBuild;
     }
 
@@ -125,16 +125,5 @@ public class RobotRush extends Robot {
         this.action = action;
     }
 
-
-
-    @Override
-    public List<DistrictsType> laboratoire(DeckDistrict deck) {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<DistrictsType> manufacture(DeckDistrict deck) {
-        return Collections.emptyList();
-    }
 
 }
