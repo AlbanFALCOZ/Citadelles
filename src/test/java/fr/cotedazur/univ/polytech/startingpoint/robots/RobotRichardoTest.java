@@ -5,6 +5,8 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.GameEngine;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.StrategyBatisseur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -19,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 class RobotRichardoTest {
 
-    /*
+
     private RobotRichardo richardo;
     private DeckCharacters deckCharacters;
     private DeckDistrict deckDistrict;
@@ -53,7 +55,7 @@ class RobotRichardoTest {
         batisseur.pickBatisseur(listCharacters, richardo);
         assertEquals(richardo.character,CharactersType.ARCHITECTE);
     }
-*/
+
 
  /*   @Test
 
@@ -105,7 +107,7 @@ class RobotRichardoTest {
     }*/
 
 
-    /*
+
 
     @Test
     void testRaichardoWhenMarchandPickMarchandDistrict() {
@@ -175,7 +177,7 @@ class RobotRichardoTest {
 
 
 
-
+/*
 
     @Test
     void testPickCharacterForCondottiere(){
@@ -207,7 +209,7 @@ class RobotRichardoTest {
 
     }
 
- */
+
 
 
 

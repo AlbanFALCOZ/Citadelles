@@ -1,6 +1,8 @@
-package fr.cotedazur.univ.polytech.startingpoint.robots;
+package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.List;
 
@@ -54,7 +56,6 @@ public class StrategyAgressif {
 
             }
         }
-
         richardo.setCharacter(availableCharacters.get(0)) ;
         availableCharacters.remove(availableCharacters.get(0)) ;
     }
@@ -71,7 +72,7 @@ public class StrategyAgressif {
 
         } else {
             {
-                if (bot.getNumberOfDistrictInHand() <= 1) {
+                if (bot.getNumberOfDistrictInHand() <= 1 || robot.getNumberOfDistrictInHand() == 3) {
                     numberOfTheCharacterToKill = 3;
                 }
             }
