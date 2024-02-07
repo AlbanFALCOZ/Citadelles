@@ -18,7 +18,6 @@ public class RobotAnalyzer extends Robot {
     public RobotAnalyzer(String name, List<Robot> allPlayers) {
         super(name);
         this.action = new ActionOfBotDuringARound(this, true);
-        this.characterHistory = new HashMap<>();
         this.buildingHistory = new HashMap<>();
         this.allPlayers = allPlayers;
 
@@ -31,7 +30,7 @@ public class RobotAnalyzer extends Robot {
         Set<String> uniqueDistrictTypesInCity = getCity().stream().map(DistrictsType::getType).collect(Collectors.toSet());
         String builtDistrictName = "nothing";
 
-        // Priorité aux districts spéciaux
+        //districts spéciaux
         List<DistrictsType> specialDistricts = districtsInHand.stream()
                 .filter(d -> d.getColor() == Colors.PURPLE && d.getCost() <= getGolds())
                 .collect(Collectors.toList());
@@ -39,7 +38,7 @@ public class RobotAnalyzer extends Robot {
             builtDistrictName = buildFirstAvailableDistrict(specialDistricts, uniqueDistrictTypesInCity);
         }
 
-        // Bloquer la stratégie de l'adversaire
+        //bloquer adversaire
         if ("nothing".equals(builtDistrictName)) {
             String mostBuiltTypeByOpponents = predictMostBuiltDistrictTypeByOpponents();
             List<DistrictsType> blockingDistricts = districtsInHand.stream()
@@ -50,13 +49,13 @@ public class RobotAnalyzer extends Robot {
             }
         }
 
-        // Construction du district le plus rentable si aucune des options ci-dessus n'est possible
+        //district plus rentable
         if ("nothing".equals(builtDistrictName)) {
             for (DistrictsType district : districtsInHand) {
                 if (district.getCost() <= getGolds() && !uniqueDistrictTypesInCity.contains(district.getType())) {
                     buildDistrict(district);
                     builtDistrictName = district.getName();
-                    break; // Arrêtez après avoir construit le premier district disponible dans les limites de l'or.
+                    break;
                 }
             }
         }
@@ -97,7 +96,6 @@ public class RobotAnalyzer extends Robot {
                 .map(Map.Entry::getKey)
                 .orElse(null);
     }
-
 
     private void buildDistrict(DistrictsType district) {
         getCity().add(district);
@@ -195,9 +193,12 @@ public class RobotAnalyzer extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-
         CharactersType chosenCharacter = null;
         Map<Integer, CharactersType> characterFrequency = new HashMap<>();
+
+        boolean needMoreGold = this.getGolds() < 5;
+        boolean needMoreCards = this.getDistrictInHand().size() < 3;
+        boolean opponentCloseToWinning = bots.stream().anyMatch(bot -> bot.getCity().size() >= 7);
 
         for (Robot bot : bots) {
             characterFrequency.put(countOpponentNextCharacter(bot.getName()), predictOpponentNextCharacter(bot.getName()));
@@ -205,20 +206,34 @@ public class RobotAnalyzer extends Robot {
 
         CharactersType maxCharacterFrequency = Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByKey()).getValue();
 
-        System.out.println(characterFrequency);
-        System.out.println(maxCharacterFrequency);
 
-        if (maxCharacterFrequency!=null) {
-            switch (maxCharacterFrequency) {
+        if (maxCharacterFrequency != null) {
+            switch (maxCharacterFrequency) {    //contrer
                 case ROI:
-                    if (availableCharacters.contains(CharactersType.ASSASSIN)) {
+                    if (needMoreGold && availableCharacters.contains(CharactersType.MARCHAND)){
+                        chosenCharacter = CharactersType.MARCHAND;
+                        availableCharacters.remove(chosenCharacter);
+                    }
+                    else if (needMoreCards && availableCharacters.contains(CharactersType.ARCHITECTE)) {
+                        chosenCharacter = CharactersType.ARCHITECTE;
+                        availableCharacters.remove(chosenCharacter);
+                    }
+                    else if (availableCharacters.contains(CharactersType.ASSASSIN)) {
                         chosenCharacter = CharactersType.ASSASSIN;
                         availableCharacters.remove(chosenCharacter);
-
                     }
                     break;
                 case MARCHAND:
-                    if (availableCharacters.contains(CharactersType.VOLEUR)) {
+                    if (opponentCloseToWinning) {
+                        if (availableCharacters.contains(CharactersType.ASSASSIN)) {
+                            chosenCharacter = CharactersType.ASSASSIN;
+                            availableCharacters.remove(chosenCharacter);
+                        } else if (availableCharacters.contains(CharactersType.CONDOTTIERE)) {
+                            chosenCharacter = CharactersType.CONDOTTIERE;
+                            availableCharacters.remove(chosenCharacter);
+                        }
+                    }
+                    else if (availableCharacters.contains(CharactersType.VOLEUR)) {
                         chosenCharacter = CharactersType.VOLEUR;
                         availableCharacters.remove(chosenCharacter);
                     }
@@ -227,14 +242,30 @@ public class RobotAnalyzer extends Robot {
                     if (availableCharacters.contains(CharactersType.CONDOTTIERE)) {
                         chosenCharacter = CharactersType.CONDOTTIERE;
                         availableCharacters.remove(chosenCharacter);
-
-                    } else if (availableCharacters.contains(CharactersType.VOLEUR)) {
+                    }
+                    else if (availableCharacters.contains(CharactersType.VOLEUR)) {
                         chosenCharacter = CharactersType.VOLEUR;
                         availableCharacters.remove(chosenCharacter);
-
                     }
                     break;
                 default:
+                    if (needMoreGold && availableCharacters.contains(CharactersType.MARCHAND)){
+                        chosenCharacter = CharactersType.MARCHAND;
+                        availableCharacters.remove(chosenCharacter);
+                    }
+                    else if (needMoreCards && availableCharacters.contains(CharactersType.ARCHITECTE)) {
+                        chosenCharacter = CharactersType.ARCHITECTE;
+                        availableCharacters.remove(chosenCharacter);
+                    }
+                    else if (opponentCloseToWinning) {
+                        if (availableCharacters.contains(CharactersType.ASSASSIN)) {
+                            chosenCharacter = CharactersType.ASSASSIN;
+                            availableCharacters.remove(chosenCharacter);
+                        } else if (availableCharacters.contains(CharactersType.CONDOTTIERE)) {
+                            chosenCharacter = CharactersType.CONDOTTIERE;
+                            availableCharacters.remove(chosenCharacter);
+                        }
+                    }
                     chosenCharacter = availableCharacters.get(0);
                     availableCharacters.remove(chosenCharacter);
                     break;
@@ -246,8 +277,9 @@ public class RobotAnalyzer extends Robot {
             availableCharacters.remove(0);
         }
         setCharacter(chosenCharacter);
-
     }
+
+
 
 
     public CharactersType predictOpponentNextCharacter(String botName) {
@@ -300,5 +332,6 @@ public class RobotAnalyzer extends Robot {
         // le bat le plus souvent construit
         return Collections.max(buildingFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
     }*/
-    
+
+
 }
