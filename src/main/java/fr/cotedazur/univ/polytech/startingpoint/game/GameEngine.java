@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
