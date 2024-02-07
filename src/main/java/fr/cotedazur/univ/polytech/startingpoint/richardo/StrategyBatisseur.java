@@ -13,21 +13,6 @@ public class StrategyBatisseur {
 
     public StrategyBatisseur(){}
 
-    //On construit le premier district possible
-    public String buildDistrictAndRetrieveItsName(RobotRichardo bot) {
-        for (int i = 0; i < bot.getDistrictInHand().size(); i++) {
-            DistrictsType district = bot.getDistrictInHand().get(i);
-            if (district.getCost() <= bot.getGolds() && !bot.getCity().contains(district)) {
-                district.powerOfDistrict(bot,1);
-                bot.getCity().add(district);
-                bot.setGolds(bot.getGolds() - district.getCost());
-                bot.getDistrictInHand().remove(i);
-                return "a new " + district.getName();
-            }
-        }
-        return "nothing";
-    }
-
     
     //Dans le cas où Richardo est un batisseur, il essaie de construire les quartiers noble/marchands en priorité.
     public String tryBuildBatisseur(RobotRichardo bot) {
@@ -41,24 +26,32 @@ public class StrategyBatisseur {
                 return "a new " + district.getName();
             }
         }
-        return buildDistrictAndRetrieveItsName(bot);
+        return bot.buildDistrictAndRetrieveItsName();
     }
     
     public void isBatisseur(RobotRichardo bot) {
         if (bot.getGolds() < 4) {
 
             bot.setBatisseur(true);
+
         }
     }
 
     public void pickBatisseur(List<CharactersType> availableCharacters, RobotRichardo bot){
         isBatisseur(bot);
-        bot.pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
-        if (bot.getCharacter() == CharactersType.MARCHAND) return;
-        bot.pickCharacterCard(availableCharacters,CharactersType.ROI);
-        if (bot.getCharacter() == CharactersType.ROI) return;
-        bot.pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
-        if (bot.getCharacter() == CharactersType.ARCHITECTE) return;
+
+        if (availableCharacters.contains(CharactersType.MARCHAND)) {
+            bot.pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
+            if (bot.getCharacter() == CharactersType.MARCHAND) return;
+        }
+        if (availableCharacters.contains(CharactersType.ROI)) {
+            bot.pickCharacterCard(availableCharacters, CharactersType.ROI);
+            if (bot.getCharacter() == CharactersType.ROI) return;
+        }
+        if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
+            bot.pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
+            if (bot.getCharacter() == CharactersType.ARCHITECTE) return;
+        }
 
         bot.setCharacter(availableCharacters.get(0));
         availableCharacters.remove(0);

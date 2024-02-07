@@ -74,6 +74,11 @@ public class GameEngine {
         addCardsToBot(richardo, sarsor, gentil, choice);
     }
 
+    /**
+     * cette méthode permet d'ajouter
+     * au début du jeu
+     * les 4 cartes dans la main de chaque robot
+     */
     private void addCardsToBot(Robot robot1, Robot robot2, Robot robot3, Robot robot4) {
         bots.add(robot1);
         bots.add(robot2);
@@ -101,6 +106,10 @@ public class GameEngine {
      */
     public List<Robot> getBots() {
         return bots;
+    }
+
+    public DeckCharacters getDeckCharacters() {
+        return deckCharacters;
     }
 
     /**
@@ -133,8 +142,6 @@ public class GameEngine {
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
             }
         }
-
-        logger.info("Destroyed character: " + listCharacters.get(0).getColor().getColorDisplay() + listCharacters.get(0).getRole() + bots.get(0).getRESET());
     }
 
 
@@ -240,7 +247,7 @@ public class GameEngine {
     public void destroyCharacters(List<CharactersType> charactersInHand) {
         charactersInHand.remove(CharactersType.ROI);
         Collections.shuffle(charactersInHand, new Random());
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
 

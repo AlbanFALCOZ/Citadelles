@@ -20,7 +20,6 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-
         CitadelleArguments citadelleArguments = new CitadelleArguments();
         JCommander commander = JCommander.newBuilder()
                 .addObject(citadelleArguments)
@@ -33,9 +32,13 @@ public class Main {
             ParseFullGameStats.parseFullStats();
         }
 
+        showGame();
     }
 
 
+    /**
+     * cette méthode permet de montrer les logs d'une seule game
+     */
     public static void showGame() {
         GameEngine Game = new GameEngine();
         Game.gameTurns();
@@ -46,30 +49,50 @@ public class Main {
         logger.info(winner.showWinners());
     }
 
+    /**
+     * cette méthode permet de jouer 1000 games avec nos 4 bots
+     * puis de jouer 1000 games avec uniquement notre meilleur bot
+     */
     public static void testBots() {
-        String[] listName = {"Stacy","Richardo","Sara","Alban"};
-        play1000Games(false,listName);
-        String[] listNameDiscretBots = {"RobotDiscret1","RobotDiscret2","RobotDiscret3","RobotDiscret4"};
-        play1000Games(true,listNameDiscretBots);
+        play1000Games(false);
+        play1000Games(true);
     }
 
-    public static void play1000Games(boolean onlyDiscretBots, String[] listName) {
+    /**
+     * cette méthode permet de jouer 1000 games
+     * et d'afficher les statistiques des games
+     */
+
+    public static void play1000Games(boolean onlyDiscretBots) {
+        String[] listName = new String[4];
         int[] listWinners = new int[4];
         int[] listWinnersTied = new int[4];
         int numberOfGames = 1000;
         int i;
+        int compt = 0;
+
+        //On stocke les noms des robots dans une liste pour savoir quel robot a gagné
+        GameEngine tempGame = new GameEngine(false,onlyDiscretBots);
+        for(Robot bot: tempGame.getBots()) listName[compt++] = bot.getName();
+
+        //Ce dictionnaire va nous permettre de stocker le score moyen de chaque bot
         Map<String,Integer> mapScore = new HashMap<>();
         for (String name : listName) mapScore.put(name,0);
+
         for (i = 0; i < numberOfGames; i++) {
+            //onlyDiscretBots nous permet de savoir s'il faut jouer avec 4 bots différents ou 4 bots discrets qui est notre meilleur bot
             GameEngine Game = new GameEngine(false,onlyDiscretBots);
             Game.gameTurns();
+
             Winner winner = new Winner(Game.getBots(),false);
             winner.setScores();
 
+            //On update le score de chaque bot dans le dictionnaire
             for(Robot bot : Game.getBots()) {
                 mapScore.put(bot.getName(),mapScore.get(bot.getName())+bot.getScore());
             }
 
+            //On update le nombre de win de +1 pour chaque bot qui a gagné
             for (String winners : winner.getWinners()) {
                 for (int j = 0; j < listName.length; j++) {
                     if (winners.equals(listName[j])) {
@@ -79,8 +102,7 @@ public class Main {
                 }
             }
         }
-        logger.info("Nombre de parties : " + i);
-      
+
         logger.info("Debut des statistiques");
         for (i = 0; i < listWinners.length; i++) {
             int numberOfGamesWon = listWinners[i];
@@ -92,6 +114,7 @@ public class Main {
             logger.info("-Nombres de parties gagnees : " + numberOfGamesWon + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesWon,numberOfGames) + "%");
             logger.info("-Nombres d'egalitees        : " + numberOfGamesWonButTied + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesWonButTied,numberOfGames) + "%");
             logger.info("-Nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesLost,numberOfGames) + "%");
+
             String[][] data = {{listName[i], String.valueOf(numberOfGamesWon), String.valueOf(getRateFromNumberOfGames(numberOfGamesWon,numberOfGames)), String.valueOf(numberOfGamesWonButTied), String.valueOf(getRateFromNumberOfGames(numberOfGamesWonButTied,numberOfGames)), String.valueOf(numberOfGamesLost), String.valueOf(getRateFromNumberOfGames(numberOfGamesLost,numberOfGames)), String.valueOf((float) mapScore.get(listName[i])/numberOfGames)}};
             WriteStatsByLine.writeDataLineByLine(data);
 
@@ -99,6 +122,10 @@ public class Main {
         logger.info("Fin des statistiques\n");
     }
 
+
+    /**
+     * cette méthode permet de récupérer le winrate à partir d'un certain nombre de games
+     */
     public static float getRateFromNumberOfGames(int numberOfGames, int totalNumberOfGames) {
         return (float) numberOfGames / totalNumberOfGames * 100;
     }

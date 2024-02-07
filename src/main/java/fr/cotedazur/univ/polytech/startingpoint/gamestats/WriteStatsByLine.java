@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
 public class WriteStatsByLine {
 
     public static void writeDataLineByLine(String[][] data) {
@@ -30,6 +31,4 @@ public class WriteStatsByLine {
             e.printStackTrace();
         }
     }
-
-
 }

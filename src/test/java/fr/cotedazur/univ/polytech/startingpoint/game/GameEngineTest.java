@@ -8,6 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +46,7 @@ class GameEngineTest {
     @Test
     void testIsBuiltEigthDistrict_OneRobotHasEightDistricts() {
         GameEngine game = new GameEngine();
-        Robot bot = gameEngine.getBots().get(0);
+        Robot bot = gameEngine.getBots().get(1);
 
         bot.setCharacter(CharactersType.MARCHAND);
         bot.setGolds(40);
@@ -132,13 +133,62 @@ class GameEngineTest {
         int originalSize = charactersInHand.size();
 
         gameEngine.destroyCharacters(charactersInHand);
-        assertEquals(originalSize - 2, charactersInHand.size(), "2 personnages doivent être retirés de la main.");
+        assertEquals(originalSize - 3, charactersInHand.size(), "3 personnages doivent être retirés de la main.");
 
         assertTrue(charactersInHand.contains(CharactersType.ROI), "Le personnage 'ROI' doit être présent dans la main.");
 
         int roiCount = Collections.frequency(charactersInHand, CharactersType.ROI);
         assertEquals(1, roiCount, "Il ne doit y avoir qu'un seul 'ROI' dans la main.");
     }
+
+    @Test
+    void testOnlyOneCharacterLeftAfterCharactersPicked() {
+
+        GameEngine gameEngine = new GameEngine();
+        List<CharactersType> listCharacters = gameEngine.getDeckCharacters().getCharactersInHand();
+        gameEngine.destroyCharacters(listCharacters);
+        Collections.shuffle(listCharacters);
+
+        for (Robot bot : gameEngine.getBots()) {
+            if (bot.getHasCrown()) {
+                List<Robot> listOfThreeBots = new ArrayList<>(gameEngine.getBots());
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
+            }
+        }
+        for (Robot bot : gameEngine.getBots()) {
+            if (!bot.getHasCrown()) {
+
+                List<Robot> listOfThreeBots = new ArrayList<>(gameEngine.getBots());
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
+            }
+        }
+        assertEquals(1,listCharacters.size());
+
+
+        gameEngine = new GameEngine(true,true);
+        listCharacters = gameEngine.getDeckCharacters().getCharactersInHand();
+        gameEngine.destroyCharacters(listCharacters);
+        Collections.shuffle(listCharacters);
+
+        for (Robot bot : gameEngine.getBots()) {
+            if (bot.getHasCrown()) {
+                List<Robot> listOfThreeBots = new ArrayList<>(gameEngine.getBots());
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
+            }
+        }
+        for (Robot bot : gameEngine.getBots()) {
+            if (!bot.getHasCrown()) {
+
+                List<Robot> listOfThreeBots = new ArrayList<>(gameEngine.getBots());
+                listOfThreeBots.remove(bot);
+                bot.pickCharacter(listCharacters, listOfThreeBots);
+            }
+        }
+    }
+
 
 
 
