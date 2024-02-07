@@ -13,6 +13,7 @@ public class StrategyAgressif {
 
     public StrategyAgressif(){}
 
+
     public void isAgressif(List<Robot> bots, RobotRichardo robot) {
         for (Robot bot : bots) {
             if ((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 2) && (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()))) {
@@ -34,6 +35,7 @@ public class StrategyAgressif {
 
     public Robot chooseVictimForCondottiere(List<Robot> bots, RobotRichardo robot) {
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
+
 
         Robot victim = bots.get(0);
         if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters())) {
@@ -72,6 +74,7 @@ public class StrategyAgressif {
                     return;
                 }
 
+
             } else if ((availableCharacters.contains(CharactersType.EVEQUE)) && bot.getNumberOfDistrictInCity() > 5) {
 
                 richardo.pickCharacterCard(availableCharacters, CharactersType.EVEQUE);
@@ -107,6 +110,7 @@ public class StrategyAgressif {
                     }
                 }
             }
+
             if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) {
                 victim = bot;
                 break;
@@ -114,13 +118,13 @@ public class StrategyAgressif {
 
         }
         action.printVictimAssassined(victim.getCharacter());
+
         return victim;
 
 
     }
 
     public boolean hasMaxDistricts(List<Robot> bots, RobotRichardo robot) {
-
 
         for (Robot bot : bots) {
             if (bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity()) {
@@ -132,7 +136,9 @@ public class StrategyAgressif {
     }
 
     public Robot chooseVictimForMagicien(List<Robot> bots, RobotRichardo robot) {
+
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
+
         Robot victim = bots.get(0);
         int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
 
@@ -153,16 +159,6 @@ public class StrategyAgressif {
         }
         return true;
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }

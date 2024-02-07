@@ -27,6 +27,7 @@ public abstract class Robot {
     private Map<String, Integer> handSizeHistory;
 
 
+
     public Robot(String name) {
         this.name = name;
         score = 0;
@@ -293,6 +294,7 @@ public abstract class Robot {
 
 
     public List<DistrictsType> laboratoire(DeckDistrict deck) {
+
         List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
         if (getNumberOfDistrictInHand() >= 1) {
             int indexOfDistrictInHandToRemove = (int) (Math.random() * getNumberOfDistrictInHand());
@@ -338,21 +340,21 @@ public abstract class Robot {
         return victim;
     }
 
-    public int getNumberOfCharacterToKill(List<Robot> bots) {
-
-        return (int) (Math.random() * (8 - 2) + 2);
+    public CharactersType chooseVictimForVoleur(List<Robot> bots){
+        List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
+        Collections.shuffle(characters);
+        CharactersType victim = characters.get(0);
+        return victim;
 
     }
-
-    public Map<String, Integer> getHandSizeHistory() {
-        return handSizeHistory;
-    }
-
 
     public Map<String, List<CharactersType>> getCharacterHistory() {
         return characterHistory;
     }
 
+    public Map<String, Integer> getHandSizeHistory() {
+        return handSizeHistory;
+    }
 
     public Map<String, List<DistrictsType>> getBuildingHistory() {
         return buildingHistory;
@@ -369,17 +371,56 @@ public abstract class Robot {
             characterHistory.putIfAbsent(botName, new ArrayList<>());
             characterHistory.get(botName).add(chosenCharacter);
 
-
             for(DistrictsType district : builtDistricts){
-
                 buildingHistory.putIfAbsent(botName, new ArrayList<>());
                 if (!buildingHistory.get(botName).contains(district)) {
                     buildingHistory.get(botName).add(district);
                 }
             }
             handSizeHistory.put(botName, handSize);
-
         }
     }
+
+    public CharactersType predictOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    public Integer countOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
+    }
+
+
+
+    public int getNumberOfCharacterToKill(List<Robot> bots) {
+
+        return (int) (Math.random() * (8 - 2) + 2);
+
+    }
+
+
+
+
 
 }

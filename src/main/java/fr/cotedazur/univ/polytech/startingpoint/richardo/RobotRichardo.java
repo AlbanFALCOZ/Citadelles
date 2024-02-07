@@ -8,6 +8,8 @@ import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 
+
+
 import java.util.*;
 
 public class RobotRichardo extends Robot {
@@ -102,10 +104,27 @@ public class RobotRichardo extends Robot {
 
     }
 
+    //On construit le premier district possible
+    public String buildDistrictAndRetrieveItsName() {
+        for (int i = 0; i < this.getDistrictInHand().size(); i++) {
+            DistrictsType district = this.getDistrictInHand().get(i);
+            if (district.getCost() <= this.getGolds() && !this.getCity().contains(district)) {
+                district.powerOfDistrict(this,1);
+                this.getCity().add(district);
+                this.setGolds(this.getGolds() - district.getCost());
+                this.getDistrictInHand().remove(i);
+                return "a new " + district.getName();
+            }
+        }
+        return "nothing";
+    }
+
+
     @Override
     public String tryBuild() {
         if (batisseur) return strategyBatisseur.tryBuildBatisseur(this);
-        return strategyBatisseur.buildDistrictAndRetrieveItsName(this);
+        if (opportuniste) return strategyOpportuniste.tryBuildOpportuniste(this);
+        return buildDistrictAndRetrieveItsName();
     }
 
 
@@ -164,17 +183,26 @@ public class RobotRichardo extends Robot {
 
         }
 
-        if (batisseur) {
-            strategyBatisseur.pickBatisseur(availableCharacters, this);
-            batisseur = false ;
-
-        } else if (opportuniste) {
-            strategyOpportuniste.pickOpportuniste(this);
 
 
-        } else if (agressif) {
-            strategyAgressif.pickAgressif(availableCharacters, bots, this);
-            agressif = false ;
+        this.strategyBatisseur.isBatisseur(this);
+            if(!this.agressif){
+                this.strategyBatisseur.isBatisseur(this);
+            }
+            if (!this.batisseur) {
+                strategyOpportuniste.isOpportuniste(this);
+
+            }
+            if (agressif) {
+                strategyAgressif.pickAgressif(availableCharacters, bots, this);
+
+            }else if (opportuniste) {
+                strategyOpportuniste.pickOpportuniste(availableCharacters,this);
+
+            } else if (batisseur) {
+                strategyBatisseur.pickBatisseur(availableCharacters, this);
+                batisseur = false ;
+
 
         } else {
             setCharacter(availableCharacters.get(0));
@@ -182,7 +210,6 @@ public class RobotRichardo extends Robot {
         }
 
     }
-
 
 
     public boolean thereIsA(CharactersType character, List<CharactersType> availableCharacters) {
@@ -220,6 +247,7 @@ public class RobotRichardo extends Robot {
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         if (batisseur && (character == CharactersType.ROI || character == CharactersType.MARCHAND) ) return strategyBatisseur.pickDistrictCardBatisseur( listDistrict,deck, this);
+        if (opportuniste) return strategyOpportuniste.pickDistrictCardOpportuniste(listDistrict,deck, this);
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int costOfDistrictToBeBuilt = 0;
@@ -248,11 +276,8 @@ public class RobotRichardo extends Robot {
     @Override
     public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
 
-
         if (scenarioArchitecte(bots)) return this.strategyAgressif.chooseVictimForAssassin(bots,7,this);
         else return this.strategyAgressif.chooseVictimForAssassin(bots , numberOfTheCharacterToKill , this) ;
-
-
     }
 
     @Override
@@ -274,7 +299,6 @@ public class RobotRichardo extends Robot {
             }
         }
         return super.getNumberOfCharacterToKill(bots);
-
     }
 
     @Override
@@ -288,6 +312,16 @@ public class RobotRichardo extends Robot {
     public Robot chooseVictimForMagicien(List<Robot> bots){
         Robot victim = this.strategyAgressif.chooseVictimForMagicien(bots , this ) ;
         return victim ;
+    }
+
+    @Override
+    public CharactersType chooseVictimForVoleur(List<Robot> bots){
+        CharactersType victim = super.chooseVictimForVoleur(bots);
+        if (opportuniste){
+            return strategyOpportuniste.chooseVictimForVoleur(bots,this);
+        }
+
+        return victim;
     }
 
 
@@ -317,7 +351,6 @@ public class RobotRichardo extends Robot {
         }
         return false ;
     }
-
 
 
 }

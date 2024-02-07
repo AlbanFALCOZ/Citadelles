@@ -284,6 +284,7 @@ public class RobotAnalyzer extends Robot {
         return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
     }
 
+
     /*public String predictOpponentNextBuilding(String botName) {
         List<DistrictsType> buildingHistory = this.getBuildingHistory().get(botName);
 

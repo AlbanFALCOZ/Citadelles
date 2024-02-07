@@ -124,12 +124,8 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + " swapped cards with " + victim.getName());
     }
 
-    public void printChoiceOfThief(Robot bot, int numberOfCharacter) {
-        logger.info(bot.getName() + " chose to steal from " + getNameOfCharacterFromNumber(numberOfCharacter));
-    }
-
-    public void printThiefStill(Robot victim) {
-        logger.info(bot.getName() + " stole " + victim.getGolds() + " golds from " + victim.getName() + ". " + bot.getName() + " has now " + bot.getGolds() + " golds and " + victim.getName() + " has 0 golds");
+    public void printThiefStill(CharactersType victim) {
+        logger.info(bot.getName() + " stole golds from " + victim + ". Total golds now " + bot.getGolds());
     }
 
     public void printMagicianSwapWithDeck() {
@@ -292,7 +288,14 @@ public class ActionOfBotDuringARound {
     }
 
     public void printVictimeForMagicien(Robot victim) {
-        logger.info(bot.getName() + " decide to pick Magicien because he has nothing in hand and " + victim.getName() +  "has a lot of disctricts in hand") ;
+        logger.info(bot.getName() + " decide to pick Magicien because he has nothing in hand and " + victim.getName() + "has a lot of disctricts in hand");
+    }
+    public void printPrioritizeTYpe(CharactersType chosenCharacter) {
+        logger.info(bot.getName() + " prioritizes " + chosenCharacter);
+    }
+
+    public void printVictimForVoleurNotExist() {
+        logger.info(bot.getName() + " can't steal from anyone because there is no one to steal from");
     }
 
 }
