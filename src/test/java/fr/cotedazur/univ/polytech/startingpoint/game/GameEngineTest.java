@@ -143,11 +143,7 @@ class GameEngineTest {
 
     @Test
     void testOnlyOneCharacterLeftAfterCharactersPicked() {
-<<<<<<< HEAD
-=======
 
-
->>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
         GameEngine gameEngine = new GameEngine();
         List<CharactersType> listCharacters = gameEngine.getDeckCharacters().getCharactersInHand();
         gameEngine.destroyCharacters(listCharacters);
@@ -170,11 +166,7 @@ class GameEngineTest {
         }
         assertEquals(1,listCharacters.size());
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
         gameEngine = new GameEngine(true,true);
         listCharacters = gameEngine.getDeckCharacters().getCharactersInHand();
         gameEngine.destroyCharacters(listCharacters);

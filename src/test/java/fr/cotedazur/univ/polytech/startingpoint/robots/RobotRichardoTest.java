@@ -57,11 +57,9 @@ class RobotRichardoTest {
     }
 
     @Test
-<<<<<<< HEAD
+
     void testRaichardoWhenKingPickNobleCard() {
-=======
-    void testRichardoWhenKingPickNobleCard() {
->>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
+
         richardo.setCharacter(CharactersType.ROI);
         StrategyBatisseur batisseur = new StrategyBatisseur();
         batisseur.isBatisseur(richardo);
@@ -75,7 +73,7 @@ class RobotRichardoTest {
 
     @Test
     public void testChooseVictimForCondottiere_ChoosesCorrectVictim() {
-<<<<<<< HEAD
+
 
         List<CharactersType> availableCharacters = new ArrayList<>();
         availableCharacters.add(CharactersType.CONDOTTIERE);
@@ -96,28 +94,6 @@ class RobotRichardoTest {
         assertEquals(bot1, chosenVictim);
     }
 
-
-=======
-
-        List<CharactersType> availableCharacters = new ArrayList<>();
-        availableCharacters.add(CharactersType.CONDOTTIERE);
-
-        List<Robot> bots = new ArrayList<>();
-        Robot bot1 = Mockito.mock(Robot.class);
-        when(bot1.getNumberOfDistrictInCity()).thenReturn(4);
-        when(bot1.getCharacter()).thenReturn(CharactersType.ROI);
-        bots.add(bot1);
-        Robot bot2 = Mockito.mock(Robot.class);
-        when(bot2.getNumberOfDistrictInCity()).thenReturn(5);
-        when(bot2.getCharacter()).thenReturn(CharactersType.ASSASSIN);
-        bots.add(bot2);
-        RobotRichardo richardo = new RobotRichardo("Richard");
-        richardo.setAvailableCharacters(availableCharacters);
-        richardo.pickCharacter(availableCharacters , bots);
-        Robot chosenVictim = richardo.chooseVictimForCondottiere(bots);
-        assertEquals(bot1, chosenVictim);
-    }
->>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
 
 
     @Test
@@ -146,7 +122,6 @@ class RobotRichardoTest {
     }
 
 
-<<<<<<< HEAD
 
 
 
@@ -160,8 +135,8 @@ class RobotRichardoTest {
 
 
 
-    }
-=======
+
+
     @Test
     void testScenarioArchitecte() {
         RobotRichardo botNearFinishing = new RobotRichardo("richardo1");
@@ -204,7 +179,7 @@ class RobotRichardoTest {
 }
 
 
->>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
+
 
 
 
