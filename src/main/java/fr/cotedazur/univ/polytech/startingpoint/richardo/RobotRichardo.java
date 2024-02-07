@@ -165,13 +165,13 @@ public class RobotRichardo extends Robot {
                 setOpportuniste(false);
             }
         }
+
         if (batisseur) {
             strategyBatisseur.pickBatisseur(availableCharacters, this);
             batisseur = false ;
-            /*
+
         } else if (opportuniste) {
             strategyOpportuniste.pickOpportuniste(this);
-            */
 
         } else if (agressif) {
             strategyAgressif.pickAgressif(availableCharacters, bots, this);

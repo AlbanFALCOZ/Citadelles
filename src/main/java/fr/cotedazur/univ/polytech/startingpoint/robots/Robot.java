@@ -379,11 +379,7 @@ public abstract class Robot{
                 }
             }
             handSizeHistory.put(botName, handSize);
-        }
-    }
 
-            List<DistrictsType> builtDistricts = bot.getCity();
-            Integer handSize = bot.getDistrictInHand().size();
 
             characterHistory.putIfAbsent(botName, new ArrayList<>());
             characterHistory.get(botName).add(chosenCharacter);

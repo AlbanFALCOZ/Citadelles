@@ -4,16 +4,13 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.game.GameEngine;
 import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
 import fr.cotedazur.univ.polytech.startingpoint.richardo.StrategyBatisseur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,13 +54,8 @@ class RobotRichardoTest {
     }
 
     @Test
-
-<<<<<<< HEAD
-    void testRaichardoWhenKingPickNobleCard() {
-=======
-
     void testRichardoWhenKingPickNobleCard() {
->>>>>>> 82ca1fe9381532a7c4575d3d796e152f4213e986
+
 
         richardo.setCharacter(CharactersType.ROI);
         StrategyBatisseur batisseur = new StrategyBatisseur();
@@ -78,10 +70,7 @@ class RobotRichardoTest {
 
     @Test
     public void testChooseVictimForCondottiere_ChoosesCorrectVictim() {
-<<<<<<< HEAD
 
-=======
->>>>>>> 82ca1fe9381532a7c4575d3d796e152f4213e986
 
         List<CharactersType> availableCharacters = new ArrayList<>();
         availableCharacters.add(CharactersType.CONDOTTIERE);
@@ -112,7 +101,7 @@ class RobotRichardoTest {
         charactersToPickFrom.add(CharactersType.EVEQUE) ;
         charactersToPickFrom.add(CharactersType.CONDOTTIERE) ;
         charactersToPickFrom.add(CharactersType.ASSASSIN) ;
-        Robot sarsor = new RobotSarsor("Sara");
+        Robot sarsor = new RobotAgressif("Sara");
         Robot gentil = new RobotDiscrete("Stacy");
         Robot choice = new RobotChoiceOfCharacter("Alban");
         RobotRichardo richardo = new RobotRichardo("Richardo");
@@ -130,40 +119,6 @@ class RobotRichardoTest {
     }
 
 
-
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-    @Test
-
-    void testScenarioArchitecte() {
-        RobotRichardo botNearFinishing = new RobotRichardo("richardo1");
-        RobotRichardo richardo2 = new RobotRichardo("richardo2");
-        RobotRichardo richardo3 = new RobotRichardo("richardo3");
-        RobotRichardo richardo4 = new RobotRichardo("richardo4");
-
-        List<CharactersType> listCharacter = deckCharacters.getCharactersInHand();
-
-
-        List<Robot> listBots = new ArrayList<>();
-        listBots.add(botNearFinishing);
-        listBots.add(richardo2);
-        listBots.add(richardo3);
-        listBots.add(richardo4);
-    }
->>>>>>> 82ca1fe9381532a7c4575d3d796e152f4213e986
 
     @Test
     void testScenarioArchitecte() {
@@ -205,11 +160,6 @@ class RobotRichardoTest {
     }
 }
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 82ca1fe9381532a7c4575d3d796e152f4213e986
 
 
 
