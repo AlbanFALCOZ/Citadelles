@@ -30,7 +30,6 @@ public class StrategyAgressif {
 
 
     public Robot chooseVictimForCondottiere(List<Robot> bots , RobotRichardo robot) {
-
         Robot victim = bots.get(0);
         if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters())) {
             int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();

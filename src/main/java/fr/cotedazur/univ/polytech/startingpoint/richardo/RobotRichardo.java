@@ -139,6 +139,15 @@ public class RobotRichardo extends Robot {
             }
         }
 
+       else if(scenarioRoi(bots)){
+            if (availableCharacters.contains(CharactersType.ROI) ) {
+                pickCharacterCard(availableCharacters, CharactersType.ROI);
+                System.out.println("Scenario king , fucking pick assassin next game");
+            }
+
+
+        }
+
 
         this.strategyBatisseur.isBatisseur(this);
         if(!this.batisseur){
@@ -280,6 +289,26 @@ public class RobotRichardo extends Robot {
             if (bot.getNumberOfDistrictInHand() >= 1 && bot.getGolds() >= 4 && bot.getNumberOfDistrictInCity() >=5 && !bot.equals(this)) return true;
         }
         return false;
+    }
+
+    public boolean scenarioEndGame(List<Robot> bots ){
+        for (Robot bot : bots){
+            if(bot.getNumberOfDistrictInCity() >= 6 ){
+                return true ;
+            }
+        }
+        return false ;
+
+    }
+
+
+    public boolean scenarioRoi(List<Robot> bots){
+        for (Robot bot : bots){
+            if(bot.getNumberOfDistrictInCity() == 6  ){
+                return true  ;
+            }
+        }
+        return false ;
     }
 
 
