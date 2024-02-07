@@ -295,8 +295,6 @@ public abstract class Robot{
     }
 
 
-
-
     public List<DistrictsType> laboratoire(DeckDistrict deck){
         List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
         if (getNumberOfDistrictInHand() >= 1) {
@@ -342,13 +340,12 @@ public abstract class Robot{
         return victim;
     }
 
-<<<<<<< HEAD
-    public Robot chooseVictimForVoleur(List<Robot> bots){
-        Collections.shuffle(bots);
-        for (Robot bot : bots) {
-            if (bot.getCharacter() != CharactersType.VOLEUR) return bot;
-        }
-        return null;
+    public CharactersType chooseVictimForVoleur(List<Robot> bots){
+        List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
+        Collections.shuffle(characters);
+        CharactersType victim = characters.get(0);
+        return victim;
+
     }
 
     public Map<String, List<CharactersType>> getCharacterHistory() {
@@ -391,13 +388,11 @@ public abstract class Robot{
             return null;
         }
 
-        //count fréquence des choix de perso
         Map<CharactersType, Integer> characterFrequency = new HashMap<>();
         for (CharactersType character : characterHistory) {
             characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
         }
 
-        // le perso le plus souvent choisi
         return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
 
@@ -408,25 +403,18 @@ public abstract class Robot{
             return null;
         }
 
-        //count fréquence des choix de perso
         Map<CharactersType, Integer> characterFrequency = new HashMap<>();
         for (CharactersType character : characterHistory) {
             characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
         }
 
-        // le perso le plus souvent choisi
         return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
     }
 
 
 
-
-
-
-=======
     public int getNumberOfCharacterToKill(List<Robot> bots) {
         return (int) (Math.random() * (8-2) + 2);
     }
->>>>>>> 259ae67f794d991576596c32e1f13eb180c9c7f4
 
 }

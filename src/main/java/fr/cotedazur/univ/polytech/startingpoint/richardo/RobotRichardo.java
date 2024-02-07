@@ -163,7 +163,7 @@ public class RobotRichardo extends Robot {
                 strategyAgressif.pickAgressif(availableCharacters, bots, this);
 
             }else if (opportuniste) {
-                strategyOpportuniste.pickOpportuniste(this);
+                strategyOpportuniste.pickOpportuniste(availableCharacters,this);
 
             } else if (batisseur) {
                 strategyBatisseur.pickBatisseur(availableCharacters, this);
@@ -283,16 +283,12 @@ public class RobotRichardo extends Robot {
     }
 
     @Override
-    public Robot chooseVictimForVoleur(List<Robot> bots){
-        Robot victim = null;
-        for (Robot bot : bots) {
-            if (bot.getCharacter() != CharactersType.VOLEUR && (bot.getCharacter() == strategyOpportuniste.chooseVictimForVoleur(bots, this))) {
-                victim = bot;
-                System.out.println("Le voleur a choisi sa victime" + victim);
-                return victim;
-
-            }
+    public CharactersType chooseVictimForVoleur(List<Robot> bots){
+        CharactersType victim = super.chooseVictimForVoleur(bots);
+        if (opportuniste){
+            return strategyOpportuniste.chooseVictimForVoleur(bots,this);
         }
+
         return victim;
     }
 

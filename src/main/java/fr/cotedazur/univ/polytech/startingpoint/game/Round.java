@@ -87,7 +87,6 @@ public class Round {
 
 
     public void choosePowerOfBot(Robot bot) {
-        List<Robot> robots = new ArrayList<>(bots);
 
         ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
@@ -111,7 +110,8 @@ public class Round {
 
                 break;
             case VOLEUR:
-                powerOfBot.voleur(bot.chooseVictimForVoleur(bots));
+
+                powerOfBot.voleur(bots, bot.chooseVictimForVoleur(bots));
 
                 break;
             case MAGICIEN:
@@ -147,10 +147,6 @@ public class Round {
             if (!bot.getIsAssassinated()) {
                 ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
                 actionOfBotDuringARound.startTurnOfBot();
-                if (bot.getCharacter().getNumber() == numberOfCharacterToStealFrom) {
-                    this.victimOfVoleur = bot;
-                    choosePowerOfBot(voleur);
-                }
                 bot.setChoice(bot.generateChoice());
                 choosePowerOfBot(bot);
                 switch (bot.getChoice()) {

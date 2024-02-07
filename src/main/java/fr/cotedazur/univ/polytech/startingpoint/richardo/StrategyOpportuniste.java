@@ -45,8 +45,9 @@ public class StrategyOpportuniste {
     }
 
 
-    public void pickOpportuniste(RobotRichardo robot) {
+    public void pickOpportuniste(List<CharactersType> availableCharacters,RobotRichardo robot) {
         isOpportuniste(robot);
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot,true);
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
         characterCounts.put(CharactersType.EVEQUE, robot.countDistrictsByType(RELIGIOUS) + robot.countDistrictsInHandByType(RELIGIOUS));
         characterCounts.put(CharactersType.CONDOTTIERE, robot.countDistrictsByType(MILITARY) + robot.countDistrictsInHandByType(MILITARY));
@@ -57,32 +58,30 @@ public class StrategyOpportuniste {
                 .toList();
 
         CharactersType chosenCharacter = null;
-        List<CharactersType> availableCharacters = robot.getAvailableCharacters();
 
         for (CharactersType character : priorityOrder) {
             if (availableCharacters.contains(character)) {
                 chosenCharacter = character;
                 availableCharacters.remove(character);
-                System.out.println("the robot prioritizes " + chosenCharacter);
-
+                action.printPrioritizeTYpe(chosenCharacter);
                 break;
             }
         }
 
-        if (availableCharacters.contains(CharactersType.VOLEUR)) {
+        if (chosenCharacter == null && availableCharacters.contains(CharactersType.VOLEUR)) {
             chosenCharacter = CharactersType.VOLEUR;
             availableCharacters.remove(CharactersType.VOLEUR);
-            System.out.println("the robot prioritizes " + chosenCharacter);
+            robot.setAvailableCharacters(availableCharacters);
+            action.printPrioritizeTYpe(chosenCharacter);
         }
 
 
         if (chosenCharacter == null && !availableCharacters.isEmpty()) {
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(0);
-            System.out.println("default");
+            robot.setAvailableCharacters(availableCharacters);
 
         }
-
         robot.setCharacter(chosenCharacter);
     }
 
@@ -175,6 +174,8 @@ public class StrategyOpportuniste {
     }
 
     public CharactersType chooseVictimForVoleur(List<Robot> bots, RobotRichardo robot){
+        List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
+        Collections.shuffle(characters);
         CharactersType victim;
         Map<Integer, CharactersType> characterFrequency = new HashMap<>();
 
@@ -184,11 +185,27 @@ public class StrategyOpportuniste {
             }
         }
 
-        CharactersType maxCharacterFrequency = Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByKey()).getValue();
-        System.out.println("The character to kill is " + maxCharacterFrequency);
+        CharactersType voleurValue = CharactersType.VOLEUR;
+        Integer voleurKey = null;
 
-        victim = maxCharacterFrequency;
+        for (Map.Entry<Integer, CharactersType> entry : characterFrequency.entrySet()) {
+            if (Objects.equals(voleurValue, entry.getValue())) {
+                voleurKey = entry.getKey();
+                break;
+            }
+        }
+
+        if (voleurKey != null) {
+            characterFrequency.remove(voleurKey);
+        }
+
+        victim = Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByKey()).getValue();
+        if (victim != null) {
+            return victim;
+        }
+        victim = characters.get(0);
         return victim;
+
     }
 
 }

@@ -32,11 +32,8 @@ public class Main {
             testBots();
             ParseFullGameStats.parseFullStats();
         }
-<<<<<<< HEAD
-=======
-        showGame();
 
->>>>>>> 259ae67f794d991576596c32e1f13eb180c9c7f4
+        showGame();
     }
 
 
