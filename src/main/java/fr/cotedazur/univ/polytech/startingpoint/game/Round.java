@@ -83,7 +83,9 @@ public class Round {
         return sortedBots;
     }
 
-
+    /**
+     * cette méthode permet d'appeler le pouvoir du personne du robot
+     */
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(bots);
 
@@ -108,7 +110,8 @@ public class Round {
                 powerOfBot.condottiere(bot.chooseVictimForCondottiere(bots));
 
                 break;
-            case VOLEUR:
+            case VOLEUR: //La première fois que l'on rentre dans ce cas, on choisit un personnage à voler grâce au numberOfCharacterToStealFrom
+                //Puis lors du tour du personnage que l'on doit voler, on rentre dans le pouvoir voleur du bot pour voler les golds
 
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
                 if (numberOfCharacterToStealFrom == 0) {
