@@ -1,12 +1,13 @@
-package fr.cotedazur.univ.polytech.startingpoint.robots;
+package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static fr.cotedazur.univ.polytech.startingpoint.robots.RobotRichardo.*;
+import static fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo.*;
 
 
 public class StrategyOpportuniste {

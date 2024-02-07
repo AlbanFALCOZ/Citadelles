@@ -129,7 +129,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printThiefStill(Robot victim) {
-        logger.info(bot.getName() + " stole " + victim.getGolds() + " golds from " + victim.getName() + ". Total golds now " + bot.getGolds());
+        logger.info(bot.getName() + " stole " + victim.getGolds() + " golds from " + victim.getName() + ". " + bot.getName() + " has now " + bot.getGolds() + " golds and " + victim.getName() + " has 0 golds");
     }
 
     public void printMagicianSwapWithDeck() {
@@ -275,5 +275,9 @@ public class ActionOfBotDuringARound {
         } else if (choice == 1) {
             logger.info(bot.getName() + " chose to take resources as building a district was not possible.");
         }
+    }
+
+    public void printScenarioArchitecte() {
+        logger.info(bot.getName() + "has picked the " + bot.getCharacter().getRole() + " otherwise someone can finish with the Architecte");
     }
 }

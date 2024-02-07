@@ -342,6 +342,10 @@ public abstract class Robot{
         return victim;
     }
 
+    public int getNumberOfCharacterToKill(List<Robot> bots) {
+        return (int) (Math.random() * (8-2) + 2);
+    }
+  
     public Map<String, List<CharactersType>> getCharacterHistory() {
         return characterHistory;
     }
@@ -374,10 +378,5 @@ public abstract class Robot{
             handSizeHistory.put(botName, handSize);
         }
     }
-
-
-
-
-
 
 }
