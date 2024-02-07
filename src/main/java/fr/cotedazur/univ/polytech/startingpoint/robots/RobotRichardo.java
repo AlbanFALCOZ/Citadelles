@@ -15,53 +15,19 @@ public class RobotRichardo extends Robot {
     public static final String COMMERCIAL = "marchand";
     private StrategyBatisseur strategyBatisseur;
 
+    public StrategyAgressif getStrategyAgressif() {
+        return strategyAgressif;
+    }
+
     private StrategyAgressif strategyAgressif;
 
     private StrategyOpportuniste strategyOpportuniste;
 
     private boolean opportuniste = false;
 
-
-
-    public int getCond() {
-        return cond;
-    }
-
-    public int getAssas() {
-        return assas;
-    }
-
-    public int getMarch() {
-        return march;
-    }
-
-    public int getArch() {
-        return arch;
-    }
-
-    private int cond = 0;
-    private int assas = 0;
-    private int march = 0;
-    private int arch = 0;
-
     private boolean agressif = false;
     private boolean batisseur = false;
 
-    public void setCond(int cond) {
-        this.cond = cond;
-    }
-
-    public void setAssas(int assas) {
-        this.assas = assas;
-    }
-
-    public void setMarch(int march) {
-        this.march = march;
-    }
-
-    public void setArch(int arch) {
-        this.arch = arch;
-    }
 
     public void setAgressif(boolean agressif) {
         this.agressif = agressif;
@@ -87,10 +53,13 @@ public class RobotRichardo extends Robot {
         this.availableCharacters = availableCharacters;
     }
 
-
-    public boolean isAgressif() {
-        return agressif;
+    public boolean getAgressive(){
+        return agressif ;
     }
+
+
+
+
 
     public boolean isBatisseur() {
         return batisseur;
@@ -146,8 +115,18 @@ public class RobotRichardo extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
+        this.availableCharacters = new ArrayList<>(availableCharacters) ;
+        this.strategyBatisseur.isBatisseur(this);
+        if(!this.batisseur){
+            this.strategyAgressif.isAgressif(bots , this);
+
+        }
+
         if (batisseur) {
             strategyBatisseur.pickBatisseur(availableCharacters, this);
+            batisseur = false ;
+
+
             /*
         } else if (opportuniste) {
             strategyOpportuniste.pickOpportuniste(this);
@@ -155,11 +134,13 @@ public class RobotRichardo extends Robot {
              */
         } else if (agressif) {
             strategyAgressif.pickAgressif(availableCharacters, bots, this);
-            agressif =false ;
+            agressif = false ;
+
         } else {
             setCharacter(availableCharacters.get(0));
             availableCharacters.remove(0);
         }
+
     }
 
 
@@ -204,14 +185,7 @@ public class RobotRichardo extends Robot {
 
 
 
-    public boolean hasMaxDistricts(List<Robot> bots) {
-        for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() > this.getNumberOfDistrictInCity()) {
-                return false;
-            }
-        }
-        return true ;
-    }
+
 
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
@@ -240,6 +214,20 @@ public class RobotRichardo extends Robot {
         }
         return listDistrictToBuild;
     }
+
+    @Override
+    public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
+        Robot victim = this.strategyAgressif.chooseVictimForAssassin(bots , 0 , this) ;
+        return victim ;
+    }
+
+    @Override
+    public Robot chooseVictimForCondottiere(List<Robot> bots){
+        Robot victim = this.strategyAgressif.chooseVictimForCondottiere(bots , this );
+        return victim ;
+    }
+
+
 
 
 
