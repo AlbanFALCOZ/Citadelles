@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import org.junit.jupiter.api.Test;
@@ -14,43 +13,43 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class RobotSarsorTest {
+class RobotAgressifTest {
 
     @Test
     void tryBuildForRedDistrcit() {
-            RobotSarsor robotSarsor = new RobotSarsor("TestRobot");
-            robotSarsor.setGolds(10); // Set initial golds
-            robotSarsor.getDistrictInHand().add(DistrictsType.CHATEAU);
-            robotSarsor.getDistrictInHand().add(DistrictsType.TEMPLE);
-            robotSarsor.getDistrictInHand().add(DistrictsType.ECHOPPE) ;
-            robotSarsor.getDistrictInHand().add(DistrictsType.TOUR_DE_GUET);
-            String warResult = robotSarsor.tryBuild();
+            RobotAgressif robotAgressif = new RobotAgressif("TestRobot");
+            robotAgressif.setGolds(10); // Set initial golds
+            robotAgressif.getDistrictInHand().add(DistrictsType.CHATEAU);
+            robotAgressif.getDistrictInHand().add(DistrictsType.TEMPLE);
+            robotAgressif.getDistrictInHand().add(DistrictsType.ECHOPPE) ;
+            robotAgressif.getDistrictInHand().add(DistrictsType.TOUR_DE_GUET);
+            String warResult = robotAgressif.tryBuild();
             assertEquals("a new Tour de guet", warResult);
-            assertTrue(robotSarsor.getCity().contains(DistrictsType.TOUR_DE_GUET));
-            assertEquals(9, robotSarsor.getGolds());
+            assertTrue(robotAgressif.getCity().contains(DistrictsType.TOUR_DE_GUET));
+            assertEquals(9, robotAgressif.getGolds());
         }
 
 
     @Test
     void pickDistrictCardTest() {
 
-        RobotSarsor robotSarsor = new RobotSarsor("TestRobot");
+        RobotAgressif robotAgressif = new RobotAgressif("TestRobot");
 
 
-        robotSarsor.setGolds(10);
-        robotSarsor.setNumberOfCardsChosen(2); // Assuming the number of cards chosen is 2
+        robotAgressif.setGolds(10);
+        robotAgressif.setNumberOfCardsChosen(2); // Assuming the number of cards chosen is 2
         List<DistrictsType> listDrawn = new ArrayList<>() ;
         listDrawn.add(DistrictsType.COURT_DES_MIRACLES);
         listDrawn.add(DistrictsType.TOUR_DE_GUET) ;
         DeckDistrict deck = new DeckDistrict();
-        List<DistrictsType> picked = robotSarsor.pickDistrictCard(listDrawn , deck) ;
+        List<DistrictsType> picked = robotAgressif.pickDistrictCard(listDrawn , deck) ;
         assertTrue(picked.contains(DistrictsType.TOUR_DE_GUET) )  ;
 
     }
     @Test
     void chooseVictimForCondottiere() {
 
-            RobotSarsor robotSarsor = new RobotSarsor("TestRobot");
+            RobotAgressif robotAgressif = new RobotAgressif("TestRobot");
             Robot robot1 = mock(Robot.class);
             when(robot1.getNumberOfDistrictInCity()).thenReturn(3);
             Robot robot2 = mock(Robot.class);
@@ -58,7 +57,7 @@ class RobotSarsorTest {
             Robot robot3 = mock(Robot.class);
             when(robot3.getNumberOfDistrictInCity()).thenReturn(4);
             List<Robot> robots = Arrays.asList(robot1, robot2, robot3);
-            Robot victim = robotSarsor.chooseVictimForCondottiere(robots);
+            Robot victim = robotAgressif.chooseVictimForCondottiere(robots);
             assertEquals(robot2, victim);
         }
 
@@ -66,7 +65,7 @@ class RobotSarsorTest {
 
     @Test
     void generateChoice() {
-        RobotSarsor sarsor = new RobotSarsor("Sara") ;
+        RobotAgressif sarsor = new RobotAgressif("Sara") ;
         sarsor.setGolds(4);
         int choice = sarsor.generateChoice();
         assertEquals(1 , choice);
@@ -96,7 +95,7 @@ class RobotSarsorTest {
         bots.add(bot3);
 
 
-        RobotSarsor sarsor = new RobotSarsor("Sara");
+        RobotAgressif sarsor = new RobotAgressif("Sara");
         Robot victim = sarsor.chooseVictimForAssassin(bots, CharactersType.ASSASSIN.getNumber());
 
 

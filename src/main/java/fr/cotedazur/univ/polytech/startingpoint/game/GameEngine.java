@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotAgressif;
 
 import fr.cotedazur.univ.polytech.startingpoint.robots.*;
 
@@ -66,7 +66,7 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        Robot sarsor = new RobotSarsor("Sara" ) ;
+        Robot sarsor = new RobotAgressif("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
         Robot richardo = new RobotRichardo("Richardo") ;

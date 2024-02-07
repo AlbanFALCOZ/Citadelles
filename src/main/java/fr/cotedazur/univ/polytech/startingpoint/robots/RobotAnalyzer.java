@@ -250,6 +250,41 @@ public class RobotAnalyzer extends Robot {
     }
 
 
+    public CharactersType predictOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        //count fréquence des choix de perso
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        // le perso le plus souvent choisi
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    public Integer countOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        //count fréquence des choix de perso
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        // le perso le plus souvent choisi
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
+    }
+
+
     /*public String predictOpponentNextBuilding(String botName) {
         List<DistrictsType> buildingHistory = this.getBuildingHistory().get(botName);
 

@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -40,6 +41,7 @@ public class RobotRushTest {
         robotRush.pickCharacter(copyAvailableCharacters, null);
         assertNotEquals(null, robotRush.getCharacter());
     }
+}
 
     /*@Test
 =======
@@ -86,14 +88,58 @@ public class RobotRushTest {
         assertFalse(pickedCards.isEmpty(), "The picked cards list should not be empty.");
 
         verify(actionMock).printDistrictChoice(anyList(), anyList());
-    }
-
-     */
+=======
 
     @Test
-    public void testGenerateChoice() {
-        int choice = robotRush.generateChoice();
-        assertTrue(choice == 0 || choice == 1);
+    public void testPickMarchandWhenLowOnGolds() {
+        RobotRush robotRush = new RobotRush("rush");
+        DeckCharacters deckCharacters = new DeckCharacters();
+        List<CharactersType> charactersList = deckCharacters.getCharactersInHand();
+        charactersList.remove(CharactersType.ARCHITECTE);
+        robotRush.pickCharacter(charactersList,new ArrayList<>());
+        assertEquals(robotRush.getCharacter(),CharactersType.MARCHAND);
+>>>>>>> 944120921849840888ce852b7d9d74488663b2eb
+    }
+
+    @Test
+    public void testPickKingWhen6District() {
+        RobotRush robotRush = new RobotRush("rush");
+        DeckCharacters deckCharacters = new DeckCharacters();
+        List<CharactersType> charactersList = deckCharacters.getCharactersInHand();
+        charactersList.remove(CharactersType.ARCHITECTE);
+        robotRush.setGolds(100);
+        robotRush.pickCharacter(charactersList,new ArrayList<>());
+        assertEquals(robotRush.getCharacter(),CharactersType.ROI);
+    }
+
+    @Test
+    public void testPickEvequeWhen6DistrictAndNoKing() {
+        RobotRush robotRush = new RobotRush("rush");
+        DeckCharacters deckCharacters = new DeckCharacters();
+        List<CharactersType> charactersList = deckCharacters.getCharactersInHand();
+        charactersList.remove(CharactersType.ARCHITECTE);
+        charactersList.remove(CharactersType.ROI);
+        robotRush.setGolds(100);
+        robotRush.pickCharacter(charactersList,new ArrayList<>());
+        assertEquals(robotRush.getCharacter(),CharactersType.EVEQUE);
+    }
+
+    @Test
+    public void testPickAssassinWhenNothing() {
+        RobotRush robotRush = new RobotRush("rush");
+        DeckCharacters deckCharacters = new DeckCharacters();
+        List<CharactersType> charactersList = deckCharacters.getCharactersInHand();
+        charactersList.remove(CharactersType.ARCHITECTE);
+        charactersList.remove(CharactersType.ROI);
+        charactersList.remove(CharactersType.EVEQUE);
+        robotRush.setGolds(100);
+        System.out.println(charactersList.get(0));
+        robotRush.pickCharacter(charactersList,new ArrayList<>());
+        //Le marchand a la priorité sur les autres personnages
+        assertEquals(robotRush.getCharacter(),CharactersType.MARCHAND);
     }
 
 }
+
+
+     */

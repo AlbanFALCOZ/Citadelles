@@ -1,15 +1,18 @@
 package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.*;
-import fr.cotedazur.univ.polytech.startingpoint.districts.*;
-import fr.cotedazur.univ.polytech.startingpoint.robots.*;
+import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
+import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotAgressif;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotChoiceOfCharacter;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,6 +56,7 @@ class RobotRichardoTest {
     }
 
     @Test
+
     void testRichardoWhenKingPickNobleCard() {
         richardo.setCharacter(CharactersType.ROI);
         StrategyBatisseur batisseur = new StrategyBatisseur();
@@ -67,6 +71,7 @@ class RobotRichardoTest {
 
     @Test
     public void testChooseVictimForCondottiere_ChoosesCorrectVictim() {
+
 
         List<CharactersType> availableCharacters = new ArrayList<>();
         availableCharacters.add(CharactersType.CONDOTTIERE);
@@ -96,7 +101,9 @@ class RobotRichardoTest {
         charactersToPickFrom.add(CharactersType.EVEQUE) ;
         charactersToPickFrom.add(CharactersType.CONDOTTIERE) ;
         charactersToPickFrom.add(CharactersType.ASSASSIN) ;
-        Robot sarsor = new RobotSarsor("Sara");
+
+        Robot sarsor = new RobotAgressif("Sara");
+
         Robot gentil = new RobotDiscrete("Stacy");
         Robot choice = new RobotChoiceOfCharacter("Alban");
         RobotRichardo richardo = new RobotRichardo("Richardo");
@@ -154,12 +161,3 @@ class RobotRichardoTest {
 
     }
 }
-
-
-
-
-
-
-
-
-

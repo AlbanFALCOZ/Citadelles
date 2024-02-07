@@ -128,7 +128,6 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + " stole golds from " + victim + ". Total golds now " + bot.getGolds());
     }
 
-
     public void printMagicianSwapWithDeck() {
         logger.info(bot.getName() + " choosed to swap with deck");
     }
@@ -156,10 +155,7 @@ public class ActionOfBotDuringARound {
 
 
 
-    public void printVictimAssassinedStrategy(Robot victim) {
-        logger.info(bot.getName() + " murdered " + victim.getCharacter().getRole() + "because he has" + victim.getGolds() + bot.getName() + "wants to slow the game");
 
-    }
 
     public void printPrioritizesRed(){
         logger.info(bot.getName() + " prioritizes War district") ;
@@ -240,13 +236,9 @@ public class ActionOfBotDuringARound {
         }
     }
 
-    public void printDistrictChoice(List<DistrictsType> listDistrictDrawn, List<DistrictsType> listDistrictPicked) {
-        List<DistrictsType> drawnDistricts = listDistrictDrawn; // districts tirés
+    public void printDistrictChoice(List<DistrictsType> listDistrictPicked) {
         List<DistrictsType> pickedDistricts = listDistrictPicked; // districts choisis
-
-       // logger.info(bot.getName() + " drew the following districts: " + getStringOfListOfDistrict(drawnDistricts));
         if (!pickedDistricts.isEmpty()) {
-            //logger.info(bot.getName() + " chose to pick the following district: " + getStringOfListOfDistrict(pickedDistricts));
             for (DistrictsType pickedDistrict : pickedDistricts) {
                 String reason = getReasonForPickingDistrict(pickedDistrict);
                 logger.info("Reason for choosing " + pickedDistrict.getName() + ": " + reason);
@@ -278,6 +270,26 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + "has picked the " + bot.getCharacter().getRole() + " otherwise someone can finish with the Architecte");
     }
 
+
+    public void printVictimCondottiere(Robot victim) {
+        logger.info(bot.getName() + " decided to attack" +   victim.getName() + " because they almost finished building their district" ) ;
+    }
+
+    public void printRichardPickCondottiere(Robot target) {
+        logger.info(bot.getName() + " decided to pick Condottiere because " + target.getName() + " because they are in lead and it's getting tense ") ;
+    }
+
+    public void printRichardoPickAssassin() {
+        logger.info(bot.getName() + " decided to pick Assassin because it smells like thief");
+    }
+
+    public void printRichardPickEveque(Robot robot) {
+        logger.info(bot.getName() + "decided to pick Eveque because he's now trying to stop ") ;
+    }
+
+    public void printVictimeForMagicien(Robot victim) {
+        logger.info(bot.getName() + " decide to pick Magicien because he has nothing in hand and " + victim.getName() + "has a lot of disctricts in hand");
+    }
     public void printPrioritizeTYpe(CharactersType chosenCharacter) {
         logger.info(bot.getName() + " prioritizes " + chosenCharacter);
     }

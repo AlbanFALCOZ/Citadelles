@@ -49,6 +49,7 @@ public class StrategyBatisseur {
             if (bot.getCharacter() == CharactersType.ROI) return;
         }
         if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
+
             bot.pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
             if (bot.getCharacter() == CharactersType.ARCHITECTE) return;
         }

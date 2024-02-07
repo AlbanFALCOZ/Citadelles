@@ -32,7 +32,6 @@ public class Main {
             ParseFullGameStats.parseFullStats();
         }
 
-        showGame();
     }
 
 
