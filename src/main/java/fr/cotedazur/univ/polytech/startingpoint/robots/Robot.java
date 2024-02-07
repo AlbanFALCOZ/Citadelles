@@ -24,6 +24,10 @@ public abstract class Robot{
 
     protected boolean hasCrown;
 
+    private Map<String, List<CharactersType>> characterHistory;
+    private Map<String, List<DistrictsType>> buildingHistory;
+    private Map<String, Integer> handSizeHistory;
+
     public Robot(String name) {
         this.name = name;
         score = 0;
@@ -33,6 +37,9 @@ public abstract class Robot{
         city = new ArrayList<>();
         hasCrown = false;
         IsAssassinated = false;
+        this.characterHistory = new HashMap<>();
+        this.buildingHistory = new HashMap<>();
+        this.handSizeHistory = new HashMap<>();
 
 
     }
@@ -337,6 +344,39 @@ public abstract class Robot{
 
     public int getNumberOfCharacterToKill(List<Robot> bots) {
         return (int) (Math.random() * (8-2) + 2);
+    }
+  
+    public Map<String, List<CharactersType>> getCharacterHistory() {
+        return characterHistory;
+    }
+
+    public Map<String, Integer> getHandSizeHistory() {
+        return handSizeHistory;
+    }
+
+    public Map<String, List<DistrictsType>> getBuildingHistory() {
+        return buildingHistory;
+    }
+
+    public void updateHistory(List<Robot> bots) {
+        for (Robot bot : bots) {
+            String botName = bot.getName();
+            CharactersType chosenCharacter = bot.getCharacter();
+
+            List<DistrictsType> builtDistricts = bot.getCity();
+            Integer handSize = bot.getDistrictInHand().size();
+
+            characterHistory.putIfAbsent(botName, new ArrayList<>());
+            characterHistory.get(botName).add(chosenCharacter);
+
+            for(DistrictsType district : builtDistricts){
+                buildingHistory.putIfAbsent(botName, new ArrayList<>());
+                if (!buildingHistory.get(botName).contains(district)) {
+                    buildingHistory.get(botName).add(district);
+                }
+            }
+            handSizeHistory.put(botName, handSize);
+        }
     }
 
 }

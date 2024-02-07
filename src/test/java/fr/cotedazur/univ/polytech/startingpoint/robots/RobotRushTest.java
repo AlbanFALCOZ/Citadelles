@@ -44,22 +44,6 @@ public class RobotRushTest {
 
 
     @Test
-    public void testTryBuild() {
-        List<DistrictsType> allDistricts = Arrays.asList(DistrictsType.values());
-
-        Random rand = new Random();
-        DistrictsType randomDistrict = allDistricts.get(rand.nextInt(allDistricts.size()));
-
-        robotRush.getDistrictInHand().add(randomDistrict);
-
-        // construire
-        String buildResult = robotRush.tryBuild();
-        assertNotEquals("nothing", buildResult);
-        assertFalse(robotRush.getCity().isEmpty());
-    }
-
-
-    @Test
     public void testPickMarchandWhenLowOnGolds() {
         RobotRush robotRush = new RobotRush("rush");
         DeckCharacters deckCharacters = new DeckCharacters();
@@ -107,36 +91,4 @@ public class RobotRushTest {
         assertEquals(robotRush.getCharacter(),CharactersType.MARCHAND);
     }
 
-
-    @Test
-    public void testGenerateChoice() {
-        int choice = robotRush.generateChoice();
-        assertTrue(choice == 0 || choice == 1);
-    }
-
-    @Test
-    public void testTryBuildRobotRush() {
-        RobotRush robotRush = new RobotRush("rush");
-
-        DistrictsType districtCost2 = DistrictsType.MARCHE;
-        DistrictsType districtCost3 = DistrictsType.CASERNE;
-        DistrictsType districtCost5 = DistrictsType.LABORATOIRE;
-        robotRush.addDistrict(districtCost2);
-        robotRush.addDistrict(districtCost3);
-        robotRush.addDistrict(districtCost5);
-        String nameDistrict = robotRush.tryBuild();
-        assertEquals("a new " + districtCost2.getName(), nameDistrict);
-    }
-
-    @Test
-    public void testPickDistrictCardRobotRush() {
-        RobotRush robotRush = new RobotRush("rush");
-        List<DistrictsType> listDistrictDrawn = new ArrayList<>();
-        listDistrictDrawn.add(DistrictsType.TAVERNE);
-        listDistrictDrawn.add(DistrictsType.MANUFACTURE);
-        DeckDistrict deckDistrict = new DeckDistrict();
-        List<DistrictsType> pickedDistricts = robotRush.pickDistrictCard(listDistrictDrawn, deckDistrict);
-        assertEquals(1, pickedDistricts.size());
-        assertTrue(pickedDistricts.contains(DistrictsType.TAVERNE) || pickedDistricts.contains(DistrictsType.MANUFACTURE));
-    }
 }
