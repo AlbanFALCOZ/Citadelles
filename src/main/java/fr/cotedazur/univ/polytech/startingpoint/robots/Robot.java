@@ -342,6 +342,7 @@ public abstract class Robot{
         return victim;
     }
 
+<<<<<<< HEAD
     public Robot chooseVictimForVoleur(List<Robot> bots){
         Collections.shuffle(bots);
         for (Robot bot : bots) {
@@ -422,5 +423,10 @@ public abstract class Robot{
 
 
 
+=======
+    public int getNumberOfCharacterToKill(List<Robot> bots) {
+        return (int) (Math.random() * (8-2) + 2);
+    }
+>>>>>>> 259ae67f794d991576596c32e1f13eb180c9c7f4
 
 }

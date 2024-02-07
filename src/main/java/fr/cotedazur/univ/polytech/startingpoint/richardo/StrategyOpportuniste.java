@@ -7,6 +7,9 @@ import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo.*;
 
@@ -61,6 +64,7 @@ public class StrategyOpportuniste {
                 chosenCharacter = character;
                 availableCharacters.remove(character);
                 System.out.println("the robot prioritizes " + chosenCharacter);
+
                 break;
             }
         }
@@ -76,6 +80,7 @@ public class StrategyOpportuniste {
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(0);
             System.out.println("default");
+
         }
 
         robot.setCharacter(chosenCharacter);

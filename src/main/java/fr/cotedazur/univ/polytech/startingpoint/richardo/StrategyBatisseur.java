@@ -33,6 +33,7 @@ public class StrategyBatisseur {
         if (bot.getGolds() < 4) {
 
             bot.setBatisseur(true);
+
         }
     }
 
