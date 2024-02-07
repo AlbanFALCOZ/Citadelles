@@ -1,9 +1,10 @@
-package fr.cotedazur.univ.polytech.startingpoint.robots;
+package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 
 import java.util.*;

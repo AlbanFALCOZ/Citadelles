@@ -1,8 +1,9 @@
-package fr.cotedazur.univ.polytech.startingpoint.robots;
+package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class StrategyBatisseur {
             if (bot.getCharacter().getType().equals(district.getType())) {
                 listDistrictToBuild.add(district);
             }
-            if (listDistrictToBuild.size() == bot.numberOfCardsChosen) return listDistrictToBuild;
+            if (listDistrictToBuild.size() == bot.getNumberOfCardsChosen()) return listDistrictToBuild;
         }
         if (listDistrictToBuild.isEmpty()) {
             bot.setBatisseur(false);
@@ -78,7 +79,7 @@ public class StrategyBatisseur {
             bot.setBatisseur(true);
             return listDistrictToBuild;
         }
-        while (listDistrictToBuild.size() < bot.numberOfCardsChosen) listDistrictToBuild.add(listDistrict.remove(0));
+        while (listDistrictToBuild.size() < bot.getNumberOfCardsChosen()) listDistrictToBuild.add(listDistrict.remove(0));
         for (DistrictsType districtNonChosen : listDistrict) {
             deck.addDistrictToDeck(districtNonChosen);
         }
