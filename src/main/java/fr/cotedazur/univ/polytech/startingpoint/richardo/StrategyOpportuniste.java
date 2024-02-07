@@ -1,13 +1,14 @@
-package fr.cotedazur.univ.polytech.startingpoint.robots;
+package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.*;
 
-import static fr.cotedazur.univ.polytech.startingpoint.robots.RobotRichardo.*;
+import static fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo.*;
 
 
 public class StrategyOpportuniste {
@@ -15,7 +16,7 @@ public class StrategyOpportuniste {
     public StrategyOpportuniste(){}
 
     public void isOpportuniste(RobotRichardo bot) {
-        if (bot.getNumberOfDistrictInCity() > 6 || bot.getGolds() ==0) {
+        if (bot.getNumberOfDistrictInCity() >= 6 || bot.getGolds() ==0) {
             bot.setOpportuniste(true);
         }
     }
