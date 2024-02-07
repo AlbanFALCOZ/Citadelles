@@ -45,19 +45,17 @@ public class StrategyBatisseur {
     
     public void isBatisseur(RobotRichardo bot) {
         if (bot.getGolds() < 4) {
-            bot.setMarch(bot.getMarch()+1);
+
             bot.setBatisseur(true);
-        } else if (bot.getGolds() >= 6 && bot.getNumberOfDistrictInHand() >= 3) {
-            bot.setArch(bot.getArch()+1);
         }
     }
 
     public void pickBatisseur(List<CharactersType> availableCharacters, RobotRichardo bot){
         isBatisseur(bot);
-        bot.pickCharacterCard(availableCharacters,CharactersType.ROI);
-        if (bot.getCharacter() == CharactersType.ROI) return;
         bot.pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
         if (bot.getCharacter() == CharactersType.MARCHAND) return;
+        bot.pickCharacterCard(availableCharacters,CharactersType.ROI);
+        if (bot.getCharacter() == CharactersType.ROI) return;
         bot.pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
         if (bot.getCharacter() == CharactersType.ARCHITECTE) return;
 
