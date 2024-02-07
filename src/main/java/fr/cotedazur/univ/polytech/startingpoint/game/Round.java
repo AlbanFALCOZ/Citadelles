@@ -5,8 +5,6 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

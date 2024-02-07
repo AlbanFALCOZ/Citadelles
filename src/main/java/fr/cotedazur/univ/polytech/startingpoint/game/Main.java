@@ -32,6 +32,7 @@ public class Main {
             testBots();
             ParseFullGameStats.parseFullStats();
         }
+
     }
 
 
@@ -46,7 +47,7 @@ public class Main {
     }
 
     public static void testBots() {
-        String[] listName = {"Stacy","Nora","Sara","Alban"};
+        String[] listName = {"Stacy","Richardo","Sara","Alban"};
         play1000Games(false,listName);
         String[] listNameDiscretBots = {"RobotDiscret1","RobotDiscret2","RobotDiscret3","RobotDiscret4"};
         play1000Games(true,listNameDiscretBots);
@@ -57,11 +58,8 @@ public class Main {
         int[] listWinnersTied = new int[4];
         int numberOfGames = 1000;
         int i;
-
-
         Map<String,Integer> mapScore = new HashMap<>();
         for (String name : listName) mapScore.put(name,0);
-
         for (i = 0; i < numberOfGames; i++) {
             GameEngine Game = new GameEngine(false,onlyDiscretBots);
             Game.gameTurns();

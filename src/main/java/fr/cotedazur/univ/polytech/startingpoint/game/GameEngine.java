@@ -5,7 +5,6 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
 
 import fr.cotedazur.univ.polytech.startingpoint.robots.*;
@@ -66,12 +65,12 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        Robot rush = new RobotRush("Nora");
         Robot sarsor = new RobotSarsor("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
+        Robot richardo = new RobotRichardo("Richardo") ;
 
-        addCardsToBot(rush, sarsor, gentil, choice);
+        addCardsToBot(richardo, sarsor, gentil, choice);
     }
 
     private void addCardsToBot(Robot robot1, Robot robot2, Robot robot3, Robot robot4) {
@@ -117,7 +116,6 @@ public class GameEngine {
 
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
-
                 List<Robot> listOfThreeBots = new ArrayList<>(bots);
                 listOfThreeBots.remove(bot);
                 bot.pickCharacter(listCharacters, listOfThreeBots);
