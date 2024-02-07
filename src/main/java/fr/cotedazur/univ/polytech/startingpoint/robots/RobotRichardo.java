@@ -160,15 +160,7 @@ public class RobotRichardo extends Robot {
     }
 
 
-    @Override
-    public Robot chooseVictimForMagicien(List<Robot> bots){
-        Robot victim = bots.get(0);
-        int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
-        for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
-        }
-        return victim;
-    }
+
 
 
     public int countDistrictsByType(String type) {
@@ -182,8 +174,6 @@ public class RobotRichardo extends Robot {
                 .filter(district -> district.getType().equals(type))
                 .count();
     }
-
-
 
 
 
@@ -224,6 +214,12 @@ public class RobotRichardo extends Robot {
     @Override
     public Robot chooseVictimForCondottiere(List<Robot> bots){
         Robot victim = this.strategyAgressif.chooseVictimForCondottiere(bots , this );
+        return victim ;
+    }
+
+    @Override
+    public Robot chooseVictimForMagicien(List<Robot> bots){
+        Robot victim = this.strategyAgressif.chooseVictimForMagicien(bots , this ) ;
         return victim ;
     }
 

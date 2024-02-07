@@ -94,11 +94,14 @@ public class StrategyAgressif {
         return true ;
     }
 
-
-
-
-
-
+    public Robot chooseVictimForMagicien(List<Robot> bots , RobotRichardo robot){
+        Robot victim = bots.get(0);
+        int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
+        for (Robot bot : bots) {
+            if (robot.getNumberOfDistrictInHand() <= 1 || bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
+        }
+        return victim;
+    }
 
     public boolean hasMaxGolds(List<Robot> bots , RobotRichardo robot){
         for (Robot bot : bots){
