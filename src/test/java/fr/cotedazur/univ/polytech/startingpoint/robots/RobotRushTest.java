@@ -42,6 +42,17 @@ public class RobotRushTest {
     }
 
     /*@Test
+=======
+/*
+    @Test
+<<<<<<< HEAD
+=======
+    /*@Test
+>>>>>>> bb08d7867440ed661ee741f86b2d6635b148d03f
+=======
+
+>>>>>>> 660808199f114b105a028e70ddb301e08f4dd133
+>>>>>>> 665558b2b60c193941029e7b02ff5e73b36275a2
     public void testTryBuild() {
         List<DistrictsType> allDistricts = Arrays.asList(DistrictsType.values());
 

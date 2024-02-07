@@ -284,7 +284,7 @@ public class RobotAnalyzer extends Robot {
         return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
     }
 
-    public String predictOpponentNextBuilding(String botName) {
+    /*public String predictOpponentNextBuilding(String botName) {
         List<DistrictsType> buildingHistory = this.getBuildingHistory().get(botName);
 
         if (buildingHistory == null || buildingHistory.isEmpty()) {
@@ -299,6 +299,6 @@ public class RobotAnalyzer extends Robot {
 
         // le bat le plus souvent construit
         return Collections.max(buildingFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
-    }
+    }*/
     
 }

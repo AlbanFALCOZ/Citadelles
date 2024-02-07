@@ -2,7 +2,6 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
-import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -171,7 +170,7 @@ public class RobotSarsor extends Robot{
 
     @Override
     public int generateChoice() {
-        if(this.getGolds()<3) {
+        if(this.getGolds()<5) {
             return 1 ;
         }
         else {
@@ -197,13 +196,11 @@ public class RobotSarsor extends Robot{
 
 
     private boolean isPreferredCharacter(CharactersType character) {
-        if (character.getType().equals(CharactersType.CONDOTTIERE.getType()) && getGolds() > 5) {
-            return true;
-        } else if (character.getType().equals(CharactersType.ASSASSIN.getType()) && getGolds() > 7) {
-            return true;
-        }
-        return character.getType().equals(CharactersType.VOLEUR.getType());
+        return (character.getType().equals(CharactersType.CONDOTTIERE.getType()) && getGolds() > 7) ||
+                (character.getType().equals(CharactersType.ASSASSIN.getType()) && getGolds() > 5 ) ||
+                (character.getType().equals(CharactersType.VOLEUR.getType()) ) ;
     }
+
 
 
 

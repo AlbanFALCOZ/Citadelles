@@ -1,7 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.characters;
 
-import java.awt.*;
-
 /**
  * Cet enum englobe toutes les cartes personnages dont on aura besoin
  * le long de la partie
@@ -15,10 +13,10 @@ public enum CharactersType {
     VOLEUR(2, "Voleur", Colors.GRAY, "voleur"),
     MAGICIEN(3, "Magicien", Colors.GRAY, "magicien"),
     ROI(4, "Roi", Colors.YELLOW, "noble"),
-    EVEQUE(5, "Évêque", Colors.BLUE, "religieux"),
+    EVEQUE(5, "Eveque", Colors.BLUE, "religieux"),
     MARCHAND(6, "Marchand", Colors.GREEN, "marchand"),
     ARCHITECTE(7, "Architecte", Colors.GRAY, "architecte"),
-    CONDOTTIERE(8, "Condottière", Colors.RED, "militaire");
+    CONDOTTIERE(8, "Condottiere", Colors.RED, "militaire");
 
 
 

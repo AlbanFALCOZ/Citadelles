@@ -5,10 +5,16 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 public class WriteStatsByLine {
+
     public static void writeDataLineByLine(String[][] data) {
-        File file = new File("stats/gamestats.csv");
+        Path relative = Paths.get("stats","gamestats.csv");
+        File file = new File(relative.toString());
+
 
         try {
             FileWriter outputfile = new FileWriter(file, true);

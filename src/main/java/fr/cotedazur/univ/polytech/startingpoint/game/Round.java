@@ -5,9 +5,11 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * cette classe permet de gérer les tours de jeu

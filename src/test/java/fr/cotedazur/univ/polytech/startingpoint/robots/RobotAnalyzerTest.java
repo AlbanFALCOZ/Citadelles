@@ -37,10 +37,11 @@ public class RobotAnalyzerTest {
         robotAnalyzer.setGolds(6);
         robotAnalyzer.setDistrictInHand(new ArrayList<>(Arrays.asList(DistrictsType.MANOIR, DistrictsType.CATHEDRALE, DistrictsType.BIBLIOTHEQUE)));
         String result = robotAnalyzer.tryBuild();
-        assertTrue(result.equals("a new Bibliothèque"), "Le robot devrait construire 'Bibliothèque' car c'est un district spécial qu'il peut se permettre.");
+        assertEquals("a new Bibliotheque", result, "Le robot devrait construire 'Bibliothèque' car c'est un district spécial qu'il peut se permettre.");
 
         //construction district pour bloquer adversaires
         robotAnalyzer.setGolds(3);
+        // Assurez-vous que le mock ou la logique de test simule correctement le contexte où 'Manoir' serait choisi pour bloquer les adversaires
         robotAnalyzer.setDistrictInHand(new ArrayList<>(Arrays.asList(DistrictsType.MANOIR, DistrictsType.TAVERNE)));
         result = robotAnalyzer.tryBuild();
         assertEquals("a new Manoir", result, "Le robot devrait construire 'Manoir', basé sur la quantité d'or disponible et la stratégie de blocage des adversaires.");
@@ -54,37 +55,7 @@ public class RobotAnalyzerTest {
 
 
 
-/*
-    @Test
-    public void testTryBuild() {
-        robotAnalyzer.setGolds(5);
-        robotAnalyzer.getDistrictInHand().add(DistrictsType.PALAIS);
-        robotAnalyzer.getCity().add(DistrictsType.EGLISE);
 
-        String result = robotAnalyzer.tryBuild();
-
-        assertEquals("a new Palais", result);
-    }*/
-
-
-
-
-/*
-    @Test
-    public void testPickDistrictCard() {
-        DeckDistrict deckDistrict = new DeckDistrict();
-        List<DistrictsType> listDistrict = Arrays.asList(DistrictsType.PALAIS, DistrictsType.EGLISE);
-        listDistrict.forEach(deckDistrict::addDistrictToDeck);
-
-        int initialDeckSize = deckDistrict.numberOfRemainingDistrictInDeck();
-
-        List<DistrictsType> chosenDistricts = robotAnalyzer.pickDistrictCard(listDistrict, deckDistrict);
-
-        assertTrue(chosenDistricts.contains(DistrictsType.PALAIS) || chosenDistricts.contains(DistrictsType.EGLISE));
-        int finalDeckSize = deckDistrict.numberOfRemainingDistrictInDeck();
-
-        assertEquals(initialDeckSize - chosenDistricts.size() + listDistrict.size(), finalDeckSize);
-    }*/
 
     @Test
     public void testPickDistrictCard() {
@@ -146,59 +117,4 @@ public class RobotAnalyzerTest {
         assertEquals(CharactersType.ASSASSIN, chosenCharacter, "Le personnage choisi devrait être l'Assassin pour contrer le Roi prédit pour plusieurs adversaires");
     }
 
-    /*@Test
-    public void testUpdateHistory(){
-        Robot robot1 = new RobotAnalyzer("robot1");
-        Robot robot2 = new RobotRandom("robot2");
-        Robot robot3 = new RobotRandom("robot3");
-        Robot robot4 = new RobotRandom("robot4");
-
-        robot1.setCharacter(CharactersType.ROI);
-        robot2.setCharacter(CharactersType.EVEQUE);
-        robot3.setCharacter(CharactersType.MARCHAND);
-        robot4.setCharacter(CharactersType.MAGICIEN);
-
-
-        List<Robot> bots = new ArrayList<>();
-        bots.add(robot1);
-        bots.add(robot2);
-        bots.add(robot3);
-        bots.add(robot4);
-
-        robot1.getCity().add(DistrictsType.PALAIS);
-        robot2.getCity().add(DistrictsType.EGLISE);
-        robot3.getCity().add(DistrictsType.ECHOPPE);
-        robot4.getCity().add(DistrictsType.FORTRESSE);
-
-
-
-        Round round = new Round(bots, true, mockDeckDistrict);
-        round.playTurns();
-
-        robot1.getDistrictInHand().add(DistrictsType.DONJON);
-        robot2.getDistrictInHand().add(DistrictsType.ECOLE_DE_MAGIE);
-        robot3.getDistrictInHand().add(DistrictsType.LABORATOIRE);
-        robot4.getDistrictInHand().add(DistrictsType.TAVERNE);
-
-        robot1.getDistrictInHand().add(DistrictsType.TEMPLE);
-        robot2.getDistrictInHand().add(DistrictsType.TOUR_DE_GUET);
-        robot3.getDistrictInHand().add(DistrictsType.DRACOPORT);
-        robot4.getDistrictInHand().add(DistrictsType.MONASTERE);
-
-        robot1.setGolds(22);
-        robot2.setGolds(22);
-        robot3.setGolds(22);
-        robot4.setGolds(22);
-
-        round.playTurns();
-        round.playTurns();
-
-        for (Robot bot : bots){
-            System.out.println(bot.getHandSizeHistory());
-            System.out.println(bot.getBuildingHistory());
-            System.out.println(bot.getCharacterHistory());
-        }
-
-
-    }*/
 }

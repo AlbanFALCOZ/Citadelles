@@ -17,7 +17,7 @@ class DistrictsTypeTest {
     @Test
     void getName() {
         assertEquals("Manoir", DistrictsType.MANOIR.getName());
-        assertEquals("Château", DistrictsType.CHATEAU.getName());
+        assertEquals("Chateau", DistrictsType.CHATEAU.getName());
 
     }
 
@@ -47,7 +47,7 @@ class DistrictsTypeTest {
     @Test
     void toStringTest() {
         assertEquals("(Manoir, 3)", DistrictsType.MANOIR.toString());
-        assertEquals("(Château, 4)", DistrictsType.CHATEAU.toString());
+        assertEquals("(Chateau, 4)", DistrictsType.CHATEAU.toString());
 
     }
 

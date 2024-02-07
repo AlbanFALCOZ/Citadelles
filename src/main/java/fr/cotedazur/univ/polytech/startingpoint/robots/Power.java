@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class Power {
     public static final String MILITATE = "militaire";
@@ -18,7 +17,6 @@ public class Power {
     private ActionOfBotDuringARound action;
     private Robot bot;
 
-    private static final Logger logger = Logger.getLogger(Power.class.getName());
 
     public Power(Robot bot, ActionOfBotDuringARound action) {
         this.bot = bot;

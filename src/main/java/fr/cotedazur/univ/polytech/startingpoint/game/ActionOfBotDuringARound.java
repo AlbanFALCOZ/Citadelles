@@ -8,9 +8,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static fr.cotedazur.univ.polytech.startingpoint.game.Main.logger;
-
-
 public class ActionOfBotDuringARound {
 
 
@@ -140,7 +137,7 @@ public class ActionOfBotDuringARound {
     }
 
     public String getNameOfCharacterFromNumber(int number) {
-        String[] listName = {"Assassin", "Voleur", "Magicien", "Roi", "Évêque", "Marchand", "Architecte", "Condottière"};
+        String[] listName = {"Assassin", "Voleur", "Magicien", "Roi", "Eveque", "Marchand", "Architecte", "Condottiere"};
         return listName[number - 1];
     }
 
@@ -149,7 +146,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printDistrictRecovered(Robot victim, DistrictsType district) {
-        logger.info(victim.getName() + " got district " + district.getName() + " back into his hand by paying 1 gold thanks to district Cimetière.");
+        logger.info(victim.getName() + " got district " + district.getName() + " back into his hand by paying 1 gold thanks to district Cimetiere.");
     }
 
     public void printLaboratoryAction(List<DistrictsType> listOfDistrictRemoved) {
@@ -168,7 +165,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printPrioritizesRed(){
-        logger.info(bot.getName() + " prioritizes RED district") ;
+        logger.info(bot.getName() + " prioritizes War district") ;
     }
 
     public void printBotBonus(){
