@@ -111,16 +111,7 @@ public class Round {
 
                 break;
             case VOLEUR:
-
-                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
-                if (numberOfCharacterToStealFrom == 0) {
-                    numberOfCharacterToStealFrom = (int) (Math.random() * 6 + 3);
-
-                    this.voleur = bot;
-                    actionOfBotDuringARound.printChoiceOfThief(voleur, numberOfCharacterToStealFrom);
-                } else {
-                    powerOfBot.voleur(victimOfVoleur);
-                }
+                powerOfBot.voleur(bot.chooseVictimForVoleur(bots));
 
                 break;
             case MAGICIEN:

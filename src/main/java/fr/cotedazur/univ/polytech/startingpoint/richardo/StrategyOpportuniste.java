@@ -56,23 +56,26 @@ public class StrategyOpportuniste {
         CharactersType chosenCharacter = null;
         List<CharactersType> availableCharacters = robot.getAvailableCharacters();
 
-        if (robot.getGolds() == 0 && availableCharacters.contains(CharactersType.VOLEUR)) {
-            chosenCharacter = CharactersType.VOLEUR;
-            availableCharacters.remove(CharactersType.VOLEUR);
-        }
-
-
         for (CharactersType character : priorityOrder) {
             if (availableCharacters.contains(character)) {
                 chosenCharacter = character;
                 availableCharacters.remove(character);
+                System.out.println("the robot prioritizes " + chosenCharacter);
                 break;
             }
         }
 
+        if (availableCharacters.contains(CharactersType.VOLEUR)) {
+            chosenCharacter = CharactersType.VOLEUR;
+            availableCharacters.remove(CharactersType.VOLEUR);
+            System.out.println("the robot prioritizes " + chosenCharacter);
+        }
+
+
         if (chosenCharacter == null && !availableCharacters.isEmpty()) {
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(0);
+            System.out.println("default");
         }
 
         robot.setCharacter(chosenCharacter);
@@ -166,13 +169,20 @@ public class StrategyOpportuniste {
         return indice;
     }
 
-    public Robot chooseVictimForVoleur(List<Robot> bots, RobotRichardo robot){
-        Robot victim = null;
+    public CharactersType chooseVictimForVoleur(List<Robot> bots, RobotRichardo robot){
+        CharactersType victim;
+        Map<Integer, CharactersType> characterFrequency = new HashMap<>();
+
         for (Robot bot : bots) {
-            if (robot.getCharacter() == CharactersType.VOLEUR && bot.getCharacter() == CharactersType.MARCHAND) {
-                victim = bot;
+            if (!bot.getName().equals(robot.getName())){
+                characterFrequency.put(robot.countOpponentNextCharacter(bot.getName()), robot.predictOpponentNextCharacter(bot.getName()));
             }
         }
+
+        CharactersType maxCharacterFrequency = Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByKey()).getValue();
+        System.out.println("The character to kill is " + maxCharacterFrequency);
+
+        victim = maxCharacterFrequency;
         return victim;
     }
 

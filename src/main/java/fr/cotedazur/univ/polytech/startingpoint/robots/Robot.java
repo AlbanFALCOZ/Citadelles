@@ -342,6 +342,14 @@ public abstract class Robot{
         return victim;
     }
 
+    public Robot chooseVictimForVoleur(List<Robot> bots){
+        Collections.shuffle(bots);
+        for (Robot bot : bots) {
+            if (bot.getCharacter() != CharactersType.VOLEUR) return bot;
+        }
+        return null;
+    }
+
     public Map<String, List<CharactersType>> getCharacterHistory() {
         return characterHistory;
     }
@@ -374,6 +382,41 @@ public abstract class Robot{
             handSizeHistory.put(botName, handSize);
         }
     }
+
+    public CharactersType predictOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        //count fréquence des choix de perso
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        // le perso le plus souvent choisi
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    public Integer countOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        //count fréquence des choix de perso
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        // le perso le plus souvent choisi
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
+    }
+
 
 
 

@@ -1,12 +1,8 @@
-package fr.cotedazur.univ.polytech.startingpoint.robots;
+package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
-import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
-import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
-import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.game.GameEngine;
-import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
-import fr.cotedazur.univ.polytech.startingpoint.richardo.StrategyBatisseur;
+import fr.cotedazur.univ.polytech.startingpoint.characters.*;
+import fr.cotedazur.univ.polytech.startingpoint.districts.*;
+import fr.cotedazur.univ.polytech.startingpoint.robots.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -40,20 +36,20 @@ class RobotRichardoTest {
         StrategyBatisseur batisseur = new StrategyBatisseur();
 
         batisseur.pickBatisseur(listCharacters, richardo);
-        assertEquals(richardo.character,CharactersType.MARCHAND);
+        assertEquals(richardo.getCharacter(),CharactersType.MARCHAND);
         assertEquals(listCharacters.size(),7);
 
-        richardo.character = null;
+        richardo.setCharacter(null);
         batisseur.pickBatisseur(listCharacters, richardo);
-        assertEquals(richardo.character,CharactersType.ROI);
+        assertEquals(richardo.getCharacter(),CharactersType.ROI);
 
-        richardo.character = null;
+        richardo.setCharacter(null);
         richardo.setGolds(6);
         richardo.addDistrict(deckDistrict.getDistrictsInDeck());
         richardo.addDistrict(deckDistrict.getDistrictsInDeck());
         richardo.addDistrict(deckDistrict.getDistrictsInDeck());
         batisseur.pickBatisseur(listCharacters, richardo);
-        assertEquals(richardo.character,CharactersType.ARCHITECTE);
+        assertEquals(richardo.getCharacter(),CharactersType.ARCHITECTE);
     }
 
 
@@ -171,7 +167,7 @@ class RobotRichardoTest {
         richardo.setHasCrown(true);
         richardo.pickCharacter(charactersToPickFrom , bots);
 
-        assertEquals(CharactersType.ROI , richardo.getCharacter());
+        assertEquals(CharactersType.ASSASSIN , richardo.getCharacter());
 
     }
 

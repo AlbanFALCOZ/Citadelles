@@ -240,6 +240,20 @@ public class RobotRichardo extends Robot {
         return victim ;
     }
 
+    @Override
+    public Robot chooseVictimForVoleur(List<Robot> bots){
+        Robot victim = null;
+        for (Robot bot : bots) {
+            if (bot.getCharacter() != CharactersType.VOLEUR && (bot.getCharacter() == strategyOpportuniste.chooseVictimForVoleur(bots, this))) {
+                victim = bot;
+                System.out.println("Le voleur a choisi sa victime" + victim);
+                return victim;
+
+            }
+        }
+        return victim;
+    }
+
 
 
 
