@@ -8,8 +8,6 @@ import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 
-
-
 import java.util.*;
 
 public class RobotRichardo extends Robot {
@@ -63,6 +61,7 @@ public class RobotRichardo extends Robot {
     public boolean getAgressive(){
         return agressif ;
     }
+
 
 
     public boolean isBatisseur() {
@@ -125,9 +124,6 @@ public class RobotRichardo extends Robot {
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
 
-
-
-
         this.strategyBatisseur.isBatisseur(this);
         if(!this.batisseur)
 
@@ -165,6 +161,7 @@ public class RobotRichardo extends Robot {
                 setBatisseur(false);
                 setOpportuniste(false);
             }
+
         }
 
         if (batisseur) {
@@ -300,8 +297,6 @@ public class RobotRichardo extends Robot {
         }
         return false;
     }
-
-
 
     public boolean scenarioEndGame(List<Robot> bots ){
         for (Robot bot : bots){

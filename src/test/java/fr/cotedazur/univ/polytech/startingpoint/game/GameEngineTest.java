@@ -144,6 +144,7 @@ class GameEngineTest {
     @Test
     void testOnlyOneCharacterLeftAfterCharactersPicked() {
 
+
         GameEngine gameEngine = new GameEngine();
         List<CharactersType> listCharacters = gameEngine.getDeckCharacters().getCharactersInHand();
         gameEngine.destroyCharacters(listCharacters);
@@ -165,6 +166,7 @@ class GameEngineTest {
             }
         }
         assertEquals(1,listCharacters.size());
+
 
 
         gameEngine = new GameEngine(true,true);

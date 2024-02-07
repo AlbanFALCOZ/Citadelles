@@ -55,15 +55,15 @@ public class StrategyBatisseur {
     public void pickBatisseur(List<CharactersType> availableCharacters, RobotRichardo bot){
         isBatisseur(bot);
 
-        if(availableCharacters.contains(CharactersType.MARCHAND)) {
+        if (availableCharacters.contains(CharactersType.MARCHAND)) {
             bot.pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
             if (bot.getCharacter() == CharactersType.MARCHAND) return;
         }
-        if(availableCharacters.contains(CharactersType.ROI)) {
+        if (availableCharacters.contains(CharactersType.ROI)) {
             bot.pickCharacterCard(availableCharacters, CharactersType.ROI);
             if (bot.getCharacter() == CharactersType.ROI) return;
         }
-        if(availableCharacters.contains(CharactersType.ARCHITECTE)) {
+        if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
 
             bot.pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
             if (bot.getCharacter() == CharactersType.ARCHITECTE) return;

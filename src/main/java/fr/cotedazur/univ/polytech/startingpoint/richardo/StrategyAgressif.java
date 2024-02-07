@@ -1,7 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
+
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
+
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.List;
@@ -9,18 +11,19 @@ import java.util.List;
 public class StrategyAgressif {
 
 
-    public StrategyAgressif() {
-    }
+    public StrategyAgressif(){}
 
     public void isAgressif(List<Robot> bots, RobotRichardo robot) {
         for (Robot bot : bots) {
             if ((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 2) && (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()))) {
                 robot.setAgressif(true);
+
                 break;
             } else if (robot.getNumberOfDistrictInCity() > 4) {
                 robot.setAgressif(true);
 
             } else if (bot.getNumberOfDistrictInHand() <= 1) {
+
                 robot.setAgressif(true);
             }
         }
@@ -28,8 +31,10 @@ public class StrategyAgressif {
     }
 
 
+
     public Robot chooseVictimForCondottiere(List<Robot> bots, RobotRichardo robot) {
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
+
         Robot victim = bots.get(0);
         if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters())) {
             int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
@@ -39,13 +44,16 @@ public class StrategyAgressif {
                     numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
                 }
             }
+
             action.printVictimCondottiere(victim);
         }
+
 
         return victim;
 
 
     }
+
 
 
     public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots, RobotRichardo richardo) {
@@ -113,6 +121,7 @@ public class StrategyAgressif {
 
     public boolean hasMaxDistricts(List<Robot> bots, RobotRichardo robot) {
 
+
         for (Robot bot : bots) {
             if (bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity()) {
                 return false;
@@ -145,4 +154,16 @@ public class StrategyAgressif {
         return true;
     }
 
+
+
+
+
+
+
+
+
+
+
+
 }
+

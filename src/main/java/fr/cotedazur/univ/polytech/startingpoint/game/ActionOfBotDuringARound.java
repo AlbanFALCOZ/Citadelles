@@ -240,13 +240,9 @@ public class ActionOfBotDuringARound {
         }
     }
 
-    public void printDistrictChoice(List<DistrictsType> listDistrictDrawn, List<DistrictsType> listDistrictPicked) {
-        List<DistrictsType> drawnDistricts = listDistrictDrawn; // districts tirés
+    public void printDistrictChoice(List<DistrictsType> listDistrictPicked) {
         List<DistrictsType> pickedDistricts = listDistrictPicked; // districts choisis
-
-       // logger.info(bot.getName() + " drew the following districts: " + getStringOfListOfDistrict(drawnDistricts));
         if (!pickedDistricts.isEmpty()) {
-            //logger.info(bot.getName() + " chose to pick the following district: " + getStringOfListOfDistrict(pickedDistricts));
             for (DistrictsType pickedDistrict : pickedDistricts) {
                 String reason = getReasonForPickingDistrict(pickedDistrict);
                 logger.info("Reason for choosing " + pickedDistrict.getName() + ": " + reason);
@@ -278,6 +274,7 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + "has picked the " + bot.getCharacter().getRole() + " otherwise someone can finish with the Architecte");
     }
 
+
     public void printVictimCondottiere(Robot victim) {
         logger.info(bot.getName() + " decided to attack" +   victim.getName() + " because they almost finished building their district" ) ;
     }
@@ -297,4 +294,5 @@ public class ActionOfBotDuringARound {
     public void printVictimeForMagicien(Robot victim) {
         logger.info(bot.getName() + " decide to pick Magicien because he has nothing in hand and " + victim.getName() +  "has a lot of disctricts in hand") ;
     }
+
 }

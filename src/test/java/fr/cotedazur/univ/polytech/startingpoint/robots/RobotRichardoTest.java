@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,7 +56,6 @@ class RobotRichardoTest {
 
     @Test
 
-
     void testRichardoWhenKingPickNobleCard() {
 
         richardo.setCharacter(CharactersType.ROI);
@@ -94,6 +94,7 @@ class RobotRichardoTest {
 
 
 
+
     @Test
     void testPickCharacterWithoutVoleurAndNoNeedForCondottiere() {
         List<Robot> bots = new ArrayList<>();
@@ -102,7 +103,9 @@ class RobotRichardoTest {
         charactersToPickFrom.add(CharactersType.EVEQUE) ;
         charactersToPickFrom.add(CharactersType.CONDOTTIERE) ;
         charactersToPickFrom.add(CharactersType.ASSASSIN) ;
+
         Robot sarsor = new RobotAgressif("Sara");
+
         Robot gentil = new RobotDiscrete("Stacy");
         Robot choice = new RobotChoiceOfCharacter("Alban");
         RobotRichardo richardo = new RobotRichardo("Richardo");
@@ -120,9 +123,6 @@ class RobotRichardoTest {
     }
 
 
-
-
-
     @Test
     void testScenarioArchitecte() {
         RobotRichardo botNearFinishing = new RobotRichardo("richardo1");
@@ -137,6 +137,7 @@ class RobotRichardoTest {
         listBots.add(richardo2);
         listBots.add(richardo3);
         listBots.add(richardo4);
+
         botNearFinishing.setGolds(1000);
         while (botNearFinishing.getNumberOfDistrictInCity() < 5 || botNearFinishing.getNumberOfDistrictInHand() < 1) {
             botNearFinishing.addDistrict(deckDistrict.getDistrictsInDeck());
@@ -162,10 +163,5 @@ class RobotRichardoTest {
 
     }
 }
-
-
-
-
-
 
 
