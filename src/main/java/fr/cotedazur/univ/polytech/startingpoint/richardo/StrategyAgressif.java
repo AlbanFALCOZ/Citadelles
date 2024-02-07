@@ -58,6 +58,10 @@ public class StrategyAgressif {
                 if(richardo.getCharacter() == CharactersType.ASSASSIN) return ;
 
             }
+            else if ((availableCharacters.contains(CharactersType.EVEQUE))){
+                richardo.pickCharacterCard(availableCharacters , CharactersType.EVEQUE);
+                if(richardo.getCharacter() == CharactersType.EVEQUE) return ;
+            }
         }
         richardo.setCharacter(availableCharacters.get(0)) ;
         availableCharacters.remove(availableCharacters.get(0)) ;

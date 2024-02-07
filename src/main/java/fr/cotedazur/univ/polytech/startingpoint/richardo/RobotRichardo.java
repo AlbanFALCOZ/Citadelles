@@ -124,6 +124,13 @@ public class RobotRichardo extends Robot {
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
 
+
+        this.strategyBatisseur.isBatisseur(this);
+        if(!this.batisseur){
+            this.strategyAgressif.isAgressif(bots , this);
+
+        }
+
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
         this.availableCharacters = new ArrayList<>(availableCharacters) ;
         if (scenarioArchitecte(bots) && availableCharacters.size() == 5) {
@@ -142,28 +149,19 @@ public class RobotRichardo extends Robot {
        else if(scenarioRoi(bots)){
             if (availableCharacters.contains(CharactersType.ROI) ) {
                 pickCharacterCard(availableCharacters, CharactersType.ROI);
-                System.out.println("Scenario king , fucking pick assassin next game");
             }
-
-
+            else {
+                setAgressif(true);
+                setBatisseur(false);
+                setOpportuniste(false);
+            }
         }
-
-
-        this.strategyBatisseur.isBatisseur(this);
-        if(!this.batisseur){
-          this.strategyAgressif.isAgressif(bots , this);
-
-        }
-
         if (batisseur) {
             strategyBatisseur.pickBatisseur(availableCharacters, this);
             batisseur = false ;
-
-
             /*
         } else if (opportuniste) {
             strategyOpportuniste.pickOpportuniste(this);
-
              */
         } else if (agressif) {
             strategyAgressif.pickAgressif(availableCharacters, bots, this);
@@ -241,7 +239,7 @@ public class RobotRichardo extends Robot {
     @Override
     public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
 
-        Robot victim = null;
+        Robot victim ;
         if (scenarioArchitecte(bots)) victim = this.strategyAgressif.chooseVictimForAssassin(bots,7,this);
         else victim = this.strategyAgressif.chooseVictimForAssassin(bots , numberOfTheCharacterToKill , this) ;
         return victim ;
