@@ -29,7 +29,8 @@ public class StrategyAgressif {
     }
 
 
-    public Robot chooseVictimForCondottiere(List<Robot> bots, RobotRichardo robot) {
+    public Robot chooseVictimForCondottiere(List<Robot> bots , RobotRichardo robot) {
+
         Robot victim = bots.get(0);
         if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters())) {
             int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
@@ -49,11 +50,11 @@ public class StrategyAgressif {
 
     public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots , RobotRichardo richardo) {
         for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) {
+            if ((bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) && availableCharacters.contains(CharactersType.CONDOTTIERE)) {
                 richardo.pickCharacterCard(availableCharacters, CharactersType.CONDOTTIERE);
                 if(richardo.getCharacter() == CharactersType.CONDOTTIERE) return ;
             }
-            else if (richardo.thereIsA(CharactersType.VOLEUR, availableCharacters) || (bot.getNumberOfDistrictInHand() <= 1 )){
+            else if ((richardo.thereIsA(CharactersType.VOLEUR, availableCharacters) || (bot.getNumberOfDistrictInHand() <= 1 )) && availableCharacters.contains(CharactersType.ASSASSIN)){
                 richardo.pickCharacterCard(availableCharacters , CharactersType.ASSASSIN);
                 if(richardo.getCharacter() == CharactersType.ASSASSIN) return ;
 
@@ -65,6 +66,7 @@ public class StrategyAgressif {
 
 
     public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill , RobotRichardo robot  ) {
+
         Robot victim = bots.get(0);
         for (Robot bot : bots){
         if (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters())) {
@@ -84,6 +86,7 @@ public class StrategyAgressif {
                 victim = bot;
                 break;
             }
+
         }
         return victim ;
 
@@ -96,9 +99,9 @@ public class StrategyAgressif {
                 return false;
             }
         }
-        return true;
-    }
 
+        return true ;
+    }
 
     public Robot chooseVictimForMagicien(List<Robot> bots , RobotRichardo robot){
         Robot victim = bots.get(0);
@@ -118,6 +121,15 @@ public class StrategyAgressif {
 
             }
         }
-        return true;
+        return true ;
     }
+
+
+
+
+
+
+
+
 }
+

@@ -49,8 +49,6 @@ public class StrategyBatisseur {
 
             bot.setBatisseur(true);
 
-        } else if (bot.getGolds() >= 6 && bot.getNumberOfDistrictInHand() >= 3) {
-
 
         }
     }

@@ -276,4 +276,8 @@ public class ActionOfBotDuringARound {
             logger.info(bot.getName() + " chose to take resources as building a district was not possible.");
         }
     }
+
+    public void printScenarioArchitecte() {
+        logger.info(bot.getName() + "has picked the " + bot.getCharacter().getRole() + " otherwise someone can finish with the Architecte");
+    }
 }
