@@ -116,9 +116,9 @@ public class RobotRichardo extends Robot {
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         this.availableCharacters = new ArrayList<>(availableCharacters) ;
-        this.strategyBatisseur.isBatisseur(this);
+       this.strategyBatisseur.isBatisseur(this);
         if(!this.batisseur){
-            this.strategyAgressif.isAgressif(bots , this);
+          this.strategyAgressif.isAgressif(bots , this);
 
         }
 

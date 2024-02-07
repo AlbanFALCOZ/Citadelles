@@ -46,7 +46,6 @@ public class StrategyAgressif {
         for (Robot bot : bots) {
             if (bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) {
                 richardo.pickCharacterCard(availableCharacters, CharactersType.CONDOTTIERE);
-
                 if(richardo.getCharacter() == CharactersType.CONDOTTIERE) return ;
             }
             else if (richardo.thereIsA(CharactersType.VOLEUR, availableCharacters) || (bot.getNumberOfDistrictInHand() <= 1 )){
@@ -54,8 +53,6 @@ public class StrategyAgressif {
                 if(richardo.getCharacter() == CharactersType.ASSASSIN) return ;
 
             }
-
-
         }
 
         richardo.setCharacter(availableCharacters.get(0)) ;
@@ -65,26 +62,29 @@ public class StrategyAgressif {
 
     public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill , RobotRichardo robot  ) {
         Robot victim = bots.get(0);
+        for (Robot bot : bots){
         if (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters())) {
             numberOfTheCharacterToKill = 2;
-        } else if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters()) || hasMaxDistricts(bots , robot)) {
+
+        } else if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters()) || hasMaxDistricts(bots, robot)) {
             numberOfTheCharacterToKill = 8;
-        }
-        for (Robot bot : bots) {
-            if(bot.getNumberOfDistrictInHand() <= 1  ){
-                victim = bot ;
-                break ;
+
+        } else {
+            {
+                if (bot.getNumberOfDistrictInHand() <= 1) {
+                    numberOfTheCharacterToKill = 3;
+                }
             }
-            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) {
+        }
+        if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) {
                 victim = bot;
                 break;
             }
         }
-        return victim;
+        return victim ;
+
+
     }
-
-
-
     public boolean hasMaxDistricts(List<Robot> bots , RobotRichardo robot) {
         for (Robot bot : bots) {
             if (bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity()) {
