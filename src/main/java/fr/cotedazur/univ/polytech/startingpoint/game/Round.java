@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Power;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,6 +22,7 @@ public class Round {
     private int numberOfCharacterToStealFrom = 0;
     private Robot voleur;
     private Robot victimOfVoleur;
+
 
     /**
      * @param bots la liste des robots
@@ -83,7 +85,9 @@ public class Round {
         return sortedBots;
     }
 
-
+    /**
+     * cette méthode permet d'appeler le pouvoir du personne du robot
+     */
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(bots);
 
@@ -108,7 +112,8 @@ public class Round {
                 powerOfBot.condottiere(bot.chooseVictimForCondottiere(bots));
 
                 break;
-            case VOLEUR:
+            case VOLEUR: //La première fois que l'on rentre dans ce cas, on choisit un personnage à voler grâce au numberOfCharacterToStealFrom
+                //Puis lors du tour du personnage que l'on doit voler, on rentre dans le pouvoir voleur du bot pour voler les golds
 
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
                 if (numberOfCharacterToStealFrom == 0) {
@@ -189,8 +194,10 @@ public class Round {
         }
         for (Robot bot : bots) {
             bot.setIsAssassinated(false);
+            bot.updateHistory(bots);
         }
         assignCrownForKing();
 
     }
+
 }

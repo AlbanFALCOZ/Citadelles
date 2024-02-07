@@ -4,6 +4,8 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
+import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -15,7 +17,7 @@ import java.util.*;
 public class RobotRichardo extends Robot {
     public static final String NOBLE = "noble";
     public static final String RELIGIOUS = "religieux";
-    public  static final String MILITARY = "militaire";
+    public static final String MILITARY = "militaire";
     public static final String COMMERCIAL = "marchand";
     private StrategyBatisseur strategyBatisseur;
 
@@ -30,11 +32,8 @@ public class RobotRichardo extends Robot {
     private boolean opportuniste = false;
 
 
-
     private boolean agressif = false;
     private boolean batisseur = false;
-
-
 
 
     public void setAgressif(boolean agressif) {
@@ -61,12 +60,9 @@ public class RobotRichardo extends Robot {
         this.availableCharacters = availableCharacters;
     }
 
-    public boolean getAgressive(){
-        return agressif ;
+    public boolean getAgressive() {
+        return agressif;
     }
-
-
-
 
 
     public boolean isBatisseur() {
@@ -90,7 +86,7 @@ public class RobotRichardo extends Robot {
     }
 
 
-    private List<CharactersType> listCharacters = new ArrayList<>(Arrays.asList(CharactersType.values())) ;
+    private List<CharactersType> listCharacters = new ArrayList<>(Arrays.asList(CharactersType.values()));
 
     private DeckCharacters listOfCharacters = new DeckCharacters();
     private List<CharactersType> availableCharacters;
@@ -99,7 +95,7 @@ public class RobotRichardo extends Robot {
         super(name);
         strategyBatisseur = new StrategyBatisseur();
         strategyAgressif = new StrategyAgressif();
-        strategyOpportuniste= new StrategyOpportuniste();
+        strategyOpportuniste = new StrategyOpportuniste();
 
     }
 
@@ -112,11 +108,10 @@ public class RobotRichardo extends Robot {
 
     @Override
     public int generateChoice() {
-        if(this.getGolds()<6) {
-            return 1 ;
-        }
-        else {
-            return 0 ;
+        if (this.getGolds() < 6) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -125,26 +120,34 @@ public class RobotRichardo extends Robot {
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
 
 
+
         this.strategyBatisseur.isBatisseur(this);
-        if(!this.batisseur){
-            this.strategyAgressif.isAgressif(bots , this);
+        if(!this.batisseur)
 
-        }
+    {
+        this.strategyAgressif.isAgressif(bots, this);
 
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
-        this.availableCharacters = new ArrayList<>(availableCharacters) ;
-        if (scenarioArchitecte(bots) && availableCharacters.size() == 5) {
-            if (availableCharacters.contains(CharactersType.ARCHITECTE) && availableCharacters.contains(CharactersType.ASSASSIN)) {
-                pickCharacterCard(availableCharacters,CharactersType.ASSASSIN);
-                action.printScenarioArchitecte();
-                return;
-            }
-            if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
-                pickCharacterCard(availableCharacters,CharactersType.ARCHITECTE);
-                action.printScenarioArchitecte();
-                return;
-            }
+    }
+
+    ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
+        this.availableCharacters =new ArrayList<>(availableCharacters);
+        if(
+
+    scenarioArchitecte(bots) &&availableCharacters.size()==5)
+
+    {
+        if (availableCharacters.contains(CharactersType.ARCHITECTE) && availableCharacters.contains(CharactersType.ASSASSIN)) {
+            pickCharacterCard(availableCharacters, CharactersType.ASSASSIN);
+            action.printScenarioArchitecte();
+            return;
         }
+        if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
+            pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
+            action.printScenarioArchitecte();
+            return;
+        }
+    }
+
 
        else if(scenarioRoi(bots)){
             if (availableCharacters.contains(CharactersType.ROI) ) {
@@ -239,10 +242,9 @@ public class RobotRichardo extends Robot {
     @Override
     public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
 
-        Robot victim ;
-        if (scenarioArchitecte(bots)) victim = this.strategyAgressif.chooseVictimForAssassin(bots,7,this);
-        else victim = this.strategyAgressif.chooseVictimForAssassin(bots , numberOfTheCharacterToKill , this) ;
-        return victim ;
+        if (scenarioArchitecte(bots)) return this.strategyAgressif.chooseVictimForAssassin(bots,7,this);
+        else return this.strategyAgressif.chooseVictimForAssassin(bots , numberOfTheCharacterToKill , this) ;
+
     }
 
     @Override
@@ -281,13 +283,13 @@ public class RobotRichardo extends Robot {
     }
 
 
-
     public boolean scenarioArchitecte(List<Robot> bots) {
         for (Robot bot: bots) {
             if (bot.getNumberOfDistrictInHand() >= 1 && bot.getGolds() >= 4 && bot.getNumberOfDistrictInCity() >=5 && !bot.equals(this)) return true;
         }
         return false;
     }
+
 
     public boolean scenarioEndGame(List<Robot> bots ){
         for (Robot bot : bots){

@@ -25,7 +25,6 @@ public class StrategyAgressif {
             }
         }
 
-
     }
 
 
@@ -46,7 +45,6 @@ public class StrategyAgressif {
     }
 
 
-
     public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots , RobotRichardo richardo) {
         for (Robot bot : bots) {
             if ((bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) && availableCharacters.contains(CharactersType.CONDOTTIERE)) {
@@ -58,10 +56,12 @@ public class StrategyAgressif {
                 if(richardo.getCharacter() == CharactersType.ASSASSIN) return ;
 
             }
+
             else if ((availableCharacters.contains(CharactersType.EVEQUE))){
                 richardo.pickCharacterCard(availableCharacters , CharactersType.EVEQUE);
                 if(richardo.getCharacter() == CharactersType.EVEQUE) return ;
             }
+
         }
         richardo.setCharacter(availableCharacters.get(0)) ;
         availableCharacters.remove(availableCharacters.get(0)) ;
@@ -69,6 +69,7 @@ public class StrategyAgressif {
 
 
     public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill , RobotRichardo robot  ) {
+
 
         Robot victim = bots.get(0);
         for (Robot bot : bots){
@@ -89,6 +90,7 @@ public class StrategyAgressif {
                 victim = bot;
                 break;
             }
+
 
         }
         return victim ;
@@ -115,7 +117,6 @@ public class StrategyAgressif {
         }
         return victim;
     }
-
 
     public boolean hasMaxGolds(List<Robot> bots , RobotRichardo robot){
         for (Robot bot : bots){

@@ -57,7 +57,11 @@ class RobotRichardoTest {
     }
 
     @Test
+<<<<<<< HEAD
     void testRaichardoWhenKingPickNobleCard() {
+=======
+    void testRichardoWhenKingPickNobleCard() {
+>>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
         richardo.setCharacter(CharactersType.ROI);
         StrategyBatisseur batisseur = new StrategyBatisseur();
         batisseur.isBatisseur(richardo);
@@ -71,6 +75,7 @@ class RobotRichardoTest {
 
     @Test
     public void testChooseVictimForCondottiere_ChoosesCorrectVictim() {
+<<<<<<< HEAD
 
         List<CharactersType> availableCharacters = new ArrayList<>();
         availableCharacters.add(CharactersType.CONDOTTIERE);
@@ -92,6 +97,27 @@ class RobotRichardoTest {
     }
 
 
+=======
+
+        List<CharactersType> availableCharacters = new ArrayList<>();
+        availableCharacters.add(CharactersType.CONDOTTIERE);
+
+        List<Robot> bots = new ArrayList<>();
+        Robot bot1 = Mockito.mock(Robot.class);
+        when(bot1.getNumberOfDistrictInCity()).thenReturn(4);
+        when(bot1.getCharacter()).thenReturn(CharactersType.ROI);
+        bots.add(bot1);
+        Robot bot2 = Mockito.mock(Robot.class);
+        when(bot2.getNumberOfDistrictInCity()).thenReturn(5);
+        when(bot2.getCharacter()).thenReturn(CharactersType.ASSASSIN);
+        bots.add(bot2);
+        RobotRichardo richardo = new RobotRichardo("Richard");
+        richardo.setAvailableCharacters(availableCharacters);
+        richardo.pickCharacter(availableCharacters , bots);
+        Robot chosenVictim = richardo.chooseVictimForCondottiere(bots);
+        assertEquals(bot1, chosenVictim);
+    }
+>>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
 
 
     @Test
@@ -120,6 +146,7 @@ class RobotRichardoTest {
     }
 
 
+<<<<<<< HEAD
 
 
 
@@ -134,6 +161,50 @@ class RobotRichardoTest {
 
 
     }
+=======
+    @Test
+    void testScenarioArchitecte() {
+        RobotRichardo botNearFinishing = new RobotRichardo("richardo1");
+        RobotRichardo richardo2 = new RobotRichardo("richardo2");
+        RobotRichardo richardo3 = new RobotRichardo("richardo3");
+        RobotRichardo richardo4 = new RobotRichardo("richardo4");
+
+        List<CharactersType> listCharacter = deckCharacters.getCharactersInHand();
+
+        List<Robot> listBots = new ArrayList<>();
+        listBots.add(botNearFinishing);
+        listBots.add(richardo2);
+        listBots.add(richardo3);
+        listBots.add(richardo4);
+
+        botNearFinishing.setGolds(1000);
+        while (botNearFinishing.getNumberOfDistrictInCity() < 5 || botNearFinishing.getNumberOfDistrictInHand() < 1) {
+            botNearFinishing.addDistrict(deckDistrict.getDistrictsInDeck());
+            botNearFinishing.tryBuild();
+        }
+
+        assertTrue(richardo2.scenarioArchitecte(listBots));
+
+
+        botNearFinishing.setCharacter(CharactersType.CONDOTTIERE);
+        richardo2.setCharacter(CharactersType.EVEQUE);
+
+        listCharacter.remove(CharactersType.EVEQUE);
+        listCharacter.remove(CharactersType.CONDOTTIERE);
+        listCharacter.remove(CharactersType.ROI);
+
+        richardo2.pickCharacter(listCharacter,listBots);
+        assertEquals(richardo2.getCharacter(),CharactersType.ASSASSIN);
+
+        listCharacter.add(CharactersType.ROI);
+        richardo2.pickCharacter(listCharacter,listBots);
+        assertEquals(richardo2.getCharacter(),CharactersType.ARCHITECTE);
+
+    }
+}
+
+
+>>>>>>> fe79896e5ea55d59d13c0875b9ed22b4663a9cf5
 
 
 
