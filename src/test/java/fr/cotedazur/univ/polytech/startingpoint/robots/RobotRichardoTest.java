@@ -54,8 +54,9 @@ class RobotRichardoTest {
     }
 
     @Test
-    void testRichardoWhenKingPickNobleCard() {
 
+
+    void testRichardoWhenKingPickNobleCard() {
 
         richardo.setCharacter(CharactersType.ROI);
         StrategyBatisseur batisseur = new StrategyBatisseur();
@@ -120,6 +121,8 @@ class RobotRichardoTest {
 
 
 
+
+
     @Test
     void testScenarioArchitecte() {
         RobotRichardo botNearFinishing = new RobotRichardo("richardo1");
@@ -159,7 +162,6 @@ class RobotRichardoTest {
 
     }
 }
-
 
 
 

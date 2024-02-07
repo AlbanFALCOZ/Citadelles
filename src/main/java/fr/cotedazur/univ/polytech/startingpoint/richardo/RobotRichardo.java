@@ -9,6 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 
 
+
 import java.util.*;
 
 public class RobotRichardo extends Robot {
@@ -172,6 +173,7 @@ public class RobotRichardo extends Robot {
 
         } else if (opportuniste) {
             strategyOpportuniste.pickOpportuniste(this);
+
 
         } else if (agressif) {
             strategyAgressif.pickAgressif(availableCharacters, bots, this);
