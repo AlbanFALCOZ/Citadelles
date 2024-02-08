@@ -425,12 +425,13 @@ class RobotRandomTest {
 
     @Test
     void testLaboratoire(){
-        int goldsBeforeCallOfLaboratoire = RobotNora.getGolds();
         RobotNora.addDistrict(DistrictsType.LABORATOIRE);
-        RobotNora.addGold(5);
+        RobotNora.setGolds(5);
         RobotNora.tryBuild();
+        int goldsBeforeCallOfLaboratoire = RobotNora.getGolds();
         RobotNora.addDistrict(DistrictsType.TAVERNE);
         assertEquals(1,RobotNora.getNumberOfDistrictInHand());
+        RobotNora.setGolds(0);
         RobotNora.laboratoire(new DeckDistrict());
         assertEquals(0,RobotNora.getNumberOfDistrictInHand());
         assertEquals(RobotNora.getGolds(),goldsBeforeCallOfLaboratoire+1);
