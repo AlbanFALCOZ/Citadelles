@@ -69,9 +69,12 @@ public class GameEngine {
         Robot sarsor = new RobotAgressif("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
-        Robot richardo = new RobotRichardo("Richardo") ;
+        //Robot richardo = new RobotRichardo("Richardo") ;
+        Robot analyze = new RobotAnalyzer("Richardo", bots ) ;
 
-        addCardsToBot(richardo, sarsor, gentil, choice);
+
+        //addCardsToBot(richardo, sarsor, gentil, choice);
+        addCardsToBot(analyze, sarsor, gentil, choice);
     }
 
     /**
