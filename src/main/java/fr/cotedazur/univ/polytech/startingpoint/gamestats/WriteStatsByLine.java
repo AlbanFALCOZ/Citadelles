@@ -5,8 +5,11 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static java.nio.file.Files.createFile;
 
 
 public class WriteStatsByLine {
@@ -15,8 +18,12 @@ public class WriteStatsByLine {
         Path relative = Paths.get("stats","gamestats.csv");
         File file = new File(relative.toString());
 
-
         try {
+            if (!file.exists()) {
+                Files.createDirectories(relative.getParent());
+                Files.createFile(relative);
+            }
+
             FileWriter outputfile = new FileWriter(file, true);
             CSVWriter writer = new CSVWriter(outputfile);
 
@@ -31,4 +38,7 @@ public class WriteStatsByLine {
             e.printStackTrace();
         }
     }
+
+
+
 }

@@ -78,25 +78,6 @@ public class RobotAnalyzer extends Robot {
     }
 
 
-    private Map<String, Integer> predictMostBuiltDistrictTypeByOpponents() {
-        Map<String, Integer> typeFrequency = new HashMap<>();
-
-        for (Robot player : allPlayers) {
-            if (!player.equals(this)) {
-                for (DistrictsType district : player.getCity()) {
-                    String districtType = district.getType();
-                    typeFrequency.merge(districtType, 1, Integer::sum); //incrémenter compteur pour ce type
-                }
-            }
-        }
-
-        return typeFrequency;
-        /*return typeFrequency.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);*/
-    }
-
     private void buildDistrict(DistrictsType district) {
         getCity().add(district);
         setGolds(getGolds() - district.getCost());
@@ -148,7 +129,7 @@ public class RobotAnalyzer extends Robot {
             }
         }
         listDistrict.stream().filter(district -> !chosenDistricts.contains(district)).forEach(deck::addDistrictToDeck);
-        action.printDistrictChoice(listDistrict, chosenDistricts);
+        action.printDistrictChoice(chosenDistricts);
         return chosenDistricts;
     }
 
@@ -233,40 +214,5 @@ public class RobotAnalyzer extends Robot {
 
         }
         return chosenCharacter;
-    }
-
-
-    public CharactersType predictOpponentNextCharacter(String botName) {
-        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
-
-        if (characterHistory == null || characterHistory.isEmpty()) {
-            return null;
-        }
-
-        //count fréquence des choix de perso
-        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
-        for (CharactersType character : characterHistory) {
-            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
-        }
-
-        // le perso le plus souvent choisi
-        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
-    }
-
-    public Integer countOpponentNextCharacter(String botName) {
-        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
-
-        if (characterHistory == null || characterHistory.isEmpty()) {
-            return null;
-        }
-
-        //count fréquence des choix de perso
-        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
-        for (CharactersType character : characterHistory) {
-            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
-        }
-
-        // le perso le plus souvent choisi
-        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
     }
 }

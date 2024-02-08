@@ -3,9 +3,10 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotSarsor;
+import fr.cotedazur.univ.polytech.startingpoint.robots.RobotAgressif;
 
 import fr.cotedazur.univ.polytech.startingpoint.robots.*;
 
@@ -65,7 +66,7 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        Robot sarsor = new RobotSarsor("Sara" ) ;
+        Robot sarsor = new RobotAgressif("Sara" ) ;
         Robot gentil = new RobotDiscrete("Stacy") ;
         Robot choice = new RobotChoiceOfCharacter("Alban") ;
         //Robot richardo = new RobotRichardo("Richardo") ;
@@ -76,6 +77,11 @@ public class GameEngine {
         addCardsToBot(analyze, sarsor, gentil, choice);
     }
 
+    /**
+     * cette méthode permet d'ajouter
+     * au début du jeu
+     * les 4 cartes dans la main de chaque robot
+     */
     private void addCardsToBot(Robot robot1, Robot robot2, Robot robot3, Robot robot4) {
         bots.add(robot1);
         bots.add(robot2);
@@ -103,6 +109,10 @@ public class GameEngine {
      */
     public List<Robot> getBots() {
         return bots;
+    }
+
+    public DeckCharacters getDeckCharacters() {
+        return deckCharacters;
     }
 
     /**
@@ -135,8 +145,10 @@ public class GameEngine {
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
             }
         }
-
-        logger.info("Destroyed character: " + listCharacters.get(0).getColor().getColorDisplay() + listCharacters.get(0).getRole() + bots.get(0).getRESET());
+        if (listCharacters.size() != 1) {
+            System.out.println(listCharacters);
+            throw new RuntimeException();
+        }
     }
 
 
@@ -242,7 +254,7 @@ public class GameEngine {
     public void destroyCharacters(List<CharactersType> charactersInHand) {
         charactersInHand.remove(CharactersType.ROI);
         Collections.shuffle(charactersInHand, new Random());
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
 

@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class RobotSarsor extends Robot{
+public class RobotAgressif extends Robot{
 
     ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
 
 
-    public RobotSarsor(String name){
+    public RobotAgressif(String name){
         super(name);
         super.setTypeOfRobot("RobotSarsor");
     }
@@ -159,13 +159,11 @@ public class RobotSarsor extends Robot{
             }
         }
         return victim;
+
+
+
+
     }
-
-
-
-
-
-
 
 
     @Override
