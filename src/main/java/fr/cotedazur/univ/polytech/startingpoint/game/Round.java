@@ -116,7 +116,7 @@ public class Round {
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
                 
                 if (numberOfCharacterToStealFrom == 0) {
-                    numberOfCharacterToStealFrom = bot.getNumberOfCharacterToKill(bots);
+                    numberOfCharacterToStealFrom = bot.chooseVictimForVoleur(bots).getNumber();
                     this.voleur = bot;
                     actionOfBotDuringARound.printChoiceOfThief(voleur, numberOfCharacterToStealFrom);
                 } else {

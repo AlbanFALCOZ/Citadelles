@@ -178,6 +178,8 @@ public class StrategyOpportuniste {
 
     public CharactersType chooseVictimForVoleur(List<Robot> bots, RobotRichardo robot){
         List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
+        characters.remove(CharactersType.ASSASSIN);
+        characters.remove(CharactersType.VOLEUR);
         Collections.shuffle(characters);
         CharactersType victim;
         Map<Integer, CharactersType> characterFrequency = new HashMap<>();
@@ -188,24 +190,8 @@ public class StrategyOpportuniste {
             }
         }
 
-        CharactersType voleurValue = CharactersType.VOLEUR;
-        Integer voleurKey = null;
-
-        for (Map.Entry<Integer, CharactersType> entry : characterFrequency.entrySet()) {
-            if (Objects.equals(voleurValue, entry.getValue())) {
-                voleurKey = entry.getKey();
-                break;
-            }
-        }
-
-        if (voleurKey != null) {
-            characterFrequency.remove(voleurKey);
-        }
-        if (characterFrequency.isEmpty()) {
-            return characters.get(3);
-        }
         victim = Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByKey()).getValue();
-        if (victim != null) {
+        if (!victim.equals(CharactersType.ASSASSIN) && !victim.equals(CharactersType.VOLEUR)) {
             return victim;
         }
         victim = characters.get(0);

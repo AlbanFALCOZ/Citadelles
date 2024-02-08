@@ -416,7 +416,7 @@ public abstract class Robot {
 
     public int getNumberOfCharacterToKill(List<Robot> bots) {
 
-        return (int) (Math.random() * (8 - 2) + 2);
+        return (int) (Math.random() * (8 - 2) + 3);
 
     }
 

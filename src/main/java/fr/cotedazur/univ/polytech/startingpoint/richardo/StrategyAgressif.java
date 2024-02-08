@@ -103,7 +103,6 @@ public class StrategyAgressif {
         for (Robot bot : bots) {
             if (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()) && robot.getGolds() > 4) {
                 numberOfTheCharacterToKill = 2;
-                action.printBotBonus();
 
             } else if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters()) || hasMaxDistricts(bots, robot)) {
                 numberOfTheCharacterToKill = 8;

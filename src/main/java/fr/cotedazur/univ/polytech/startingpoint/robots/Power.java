@@ -158,7 +158,7 @@ public class Power {
         if (!victim.getIsAssassinated()) {
             int stolenGold = victim.getGolds();
             bot.addGold(stolenGold);
-            action.printThiefStill(victim.getCharacter());
+            action.printThiefStill(victim);
             victim.setGolds(0);
         }
         else action.printCantAffectVictim(victim);
