@@ -166,12 +166,6 @@ public class RobotAgressif extends Robot{
     }
 
 
-
-
-
-
-
-
     @Override
     public int generateChoice() {
         if(this.getGolds()<5) {
