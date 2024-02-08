@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class RobotAnalyzer extends Robot {
     private ActionOfBotDuringARound action;
-    private Map<String, List<CharactersType>> characterHistory;
     private Map<String, List<DistrictsType>> buildingHistory;
     private List<Robot> allPlayers;
 
@@ -28,6 +27,9 @@ public class RobotAnalyzer extends Robot {
     public String tryBuild() {
         List<DistrictsType> districtsInHand = new ArrayList<>(getDistrictInHand());
         Set<String> uniqueDistrictTypesInCity = getCity().stream().map(DistrictsType::getType).collect(Collectors.toSet());
+        String mostBuiltTypeByOpponents = predictMostBuiltDistrictTypeByOpponents();
+        action.printPredictedMostBuiltDistrictType(mostBuiltTypeByOpponents);
+
         String builtDistrictName = "nothing";
 
         //districts spéciaux
@@ -36,16 +38,17 @@ public class RobotAnalyzer extends Robot {
                 .collect(Collectors.toList());
         if (!specialDistricts.isEmpty()) {
             builtDistrictName = buildFirstAvailableDistrict(specialDistricts, uniqueDistrictTypesInCity);
+            action.printSpecialDistrictsConsideration(); // Affiche la considération des districts spéciaux
         }
 
         //bloquer adversaire
         if ("nothing".equals(builtDistrictName)) {
-            String mostBuiltTypeByOpponents = predictMostBuiltDistrictTypeByOpponents();
             List<DistrictsType> blockingDistricts = districtsInHand.stream()
                     .filter(d -> d.getType().equals(mostBuiltTypeByOpponents) && d.getCost() <= getGolds())
                     .collect(Collectors.toList());
             if (!blockingDistricts.isEmpty()) {
                 builtDistrictName = buildFirstAvailableDistrict(blockingDistricts, uniqueDistrictTypesInCity);
+                action.printBlockOpponentStrategy(builtDistrictName);
             }
         }
 
@@ -55,6 +58,7 @@ public class RobotAnalyzer extends Robot {
                 if (district.getCost() <= getGolds() && !uniqueDistrictTypesInCity.contains(district.getType())) {
                     buildDistrict(district);
                     builtDistrictName = district.getName();
+                    action.printEfficiencyBasedBuilding(builtDistrictName); // Affiche la construction basée sur l'efficacité
                     break;
                 }
             }
@@ -110,7 +114,6 @@ public class RobotAnalyzer extends Robot {
         Set<String> uniqueDistrictTypesInCity = getCity().stream().map(DistrictsType::getType).collect(Collectors.toSet());
         Map<String, Integer> districtTypeFrequencyInCity = getCity().stream().collect(Collectors.groupingBy(DistrictsType::getType, Collectors.summingInt(e -> 1)));
 
-        //trier les districts par score coût et fréquence dans la ville pour diversité
         listDistrict.sort(Comparator.comparingInt((DistrictsType d) -> districtTypeFrequencyInCity.getOrDefault(d.getType(), 0))
                 .thenComparingInt(DistrictsType::getScore).reversed()
                 .thenComparingInt(DistrictsType::getCost));
@@ -118,7 +121,7 @@ public class RobotAnalyzer extends Robot {
         List<DistrictsType> chosenDistricts = new ArrayList<>();
         int totalCost = 0;
 
-        //strat de choix de carte basée sur le coût, la diversité et perturbation des adversaires
+        //strat de choix de carte basée sur le coût, la diversité et pour perturber les adversaires
         for (DistrictsType district : listDistrict) {
             if (totalCost + district.getCost() <= getGolds() && chosenDistricts.size() < getNumberOfCardsChosen()) {
                 if (!uniqueDistrictTypesInCity.contains(district.getType()) || shouldPickBasedOnAdversaries(district)) {
@@ -139,21 +142,18 @@ public class RobotAnalyzer extends Robot {
             }
         }
 
-        //ajouter les districts non choisis au deck
         listDistrict.stream().filter(district -> !chosenDistricts.contains(district)).forEach(deck::addDistrictToDeck);
-
+        action.printDistrictChoice(listDistrict, chosenDistricts);
         return chosenDistricts;
     }
 
 
     private boolean shouldPickBasedOnAdversaries(DistrictsType district) {
-        //obtenir seulement les adversaires
         List<Robot> opponents = allPlayers.stream()
                 .filter(player -> !player.equals(this))
                 .collect(Collectors.toList());
 
         for (Robot opponent : opponents) {
-            //chaque Robot a une méthode getCity() qui retourne les districts construits
             long count = opponent.getCity().stream()
                     .filter(d -> d.getType().equals(district.getType()))
                     .count();
@@ -205,6 +205,7 @@ public class RobotAnalyzer extends Robot {
         }
 
         CharactersType maxCharacterFrequency = Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByKey()).getValue();
+        action.printCharacterPrediction(maxCharacterFrequency);
 
 
         if (maxCharacterFrequency != null) {
@@ -276,6 +277,7 @@ public class RobotAnalyzer extends Robot {
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(0);
         }
+        action.printCharacterPredictionAndChoice(maxCharacterFrequency, chosenCharacter);
         setCharacter(chosenCharacter);
     }
 
@@ -315,23 +317,4 @@ public class RobotAnalyzer extends Robot {
         // le perso le plus souvent choisi
         return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
     }
-
-    /*public String predictOpponentNextBuilding(String botName) {
-        List<DistrictsType> buildingHistory = this.getBuildingHistory().get(botName);
-
-        if (buildingHistory == null || buildingHistory.isEmpty()) {
-            return null;
-        }
-
-        // count fréquence de constructions
-        Map<String, Integer> buildingFrequency = new HashMap<>();
-        for (DistrictsType building : buildingHistory) {
-            buildingFrequency.put(building.getType(), buildingFrequency.getOrDefault(building.getType(), 0) + 1);
-        }
-
-        // le bat le plus souvent construit
-        return Collections.max(buildingFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
-    }*/
-
-
 }
