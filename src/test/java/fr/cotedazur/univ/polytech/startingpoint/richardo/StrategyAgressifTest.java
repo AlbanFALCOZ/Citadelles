@@ -102,7 +102,11 @@ class StrategyAgressifTest {
         for (int i = 0 ;  i < 4 ; i ++){
             listOfDistrcits.add(DistrictsType.MARCHE) ;
         }
-        List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
+        List<CharactersType> characters = new ArrayList<>();
+        characters.add(CharactersType.VOLEUR) ;
+        characters.add(CharactersType.CONDOTTIERE) ;
+        characters.add(CharactersType.ARCHITECTE) ;
+        characters.add(CharactersType.ASSASSIN) ;
         RobotRichardo richardo = new RobotRichardo("richardo") ;
         RobotRandom bot1 = new RobotRandom("Satcy") ;
         RobotRandom bot2 = new RobotRandom("bot2") ;
@@ -115,6 +119,8 @@ class StrategyAgressifTest {
         richardo.setGolds(45);
         //OH OH Y'a Un voleur dans le jeu.
         bot2.setCharacter(CharactersType.VOLEUR);
+        bot1.setCharacter(CharactersType.MARCHAND);
+        bot3.setCharacter(CharactersType.EVEQUE);
         //Le robot 2 n'est pas tant en vance que ça
         bot1.setCity(listOfDistrcits);
         //Je donne la couronne comme ça il pourra appliquer sa super methode qui lui permet de deduire si y'a un voleur dans le jeu
@@ -133,9 +139,9 @@ class StrategyAgressifTest {
         Robot victim = richardo.chooseVictimForAssassin(bots , 0 ) ;
         assertEquals(bot2 , victim);
 
-
-
     }
+
+
 
 
 
