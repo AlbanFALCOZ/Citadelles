@@ -96,32 +96,13 @@ public class StrategyAgressif {
 
 
     public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill, RobotRichardo robot) {
-
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
-
-        Robot victim = bots.get(0);
+        Robot victim = null;
         for (Robot bot : bots) {
-            if (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()) && robot.getGolds() > 4) {
-                numberOfTheCharacterToKill = 2;
-
-            } else if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters()) || hasMaxDistricts(bots, robot)) {
-                numberOfTheCharacterToKill = 8;
-
-            } else {
-                {
-                    if (bot.getNumberOfDistrictInHand() <= 1 || robot.getNumberOfDistrictInHand() == 3) {
-                        numberOfTheCharacterToKill = 3;
-                    }
-                }
-            }
-
             if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) {
                 victim = bot;
-                break;
             }
-
         }
-        action.printVictimAssassined(victim.getCharacter());
 
         return victim;
 
