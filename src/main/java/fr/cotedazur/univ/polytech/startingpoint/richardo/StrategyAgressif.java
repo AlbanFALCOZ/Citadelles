@@ -99,7 +99,7 @@ public class StrategyAgressif {
 
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
 
-        Robot victim = bots.get(0);
+        Robot victim = null;
         for (Robot bot : bots) {
             if (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()) && robot.getGolds() > 4) {
                 numberOfTheCharacterToKill = 2;
@@ -111,6 +111,7 @@ public class StrategyAgressif {
                 {
                     if (bot.getNumberOfDistrictInHand() <= 1 || robot.getNumberOfDistrictInHand() == 3) {
                         numberOfTheCharacterToKill = 3;
+                        System.out.println("J'ai tué le magicien avec la méthode");
                     }
                 }
             }
@@ -121,7 +122,7 @@ public class StrategyAgressif {
             }
 
         }
-        action.printVictimAssassined(victim.getCharacter());
+        if (victim != null) action.printVictimAssassined(victim.getCharacter());
 
         return victim;
 
