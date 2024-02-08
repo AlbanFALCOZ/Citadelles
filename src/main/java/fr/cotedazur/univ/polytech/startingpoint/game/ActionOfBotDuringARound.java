@@ -124,6 +124,7 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + " swapped cards with " + victim.getName());
     }
 
+
     public void printThiefStill(Robot victim) {
         logger.info(bot.getName() + " stole golds from " + victim.getName() + ". " + bot.getName() + " has now " + bot.getGolds() + " and " + victim.getName() + " has 0 gold");
     }

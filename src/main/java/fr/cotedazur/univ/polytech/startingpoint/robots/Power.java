@@ -154,6 +154,7 @@ public class Power {
         }
     }
 
+
     public void voleur(Robot victim) {
         if (!victim.getIsAssassinated()) {
             int stolenGold = victim.getGolds();
@@ -163,7 +164,6 @@ public class Power {
         }
         else action.printCantAffectVictim(victim);
     }
-
 
 
     public boolean canSteal(Robot robot, CharactersType victimCharacter) {

@@ -181,7 +181,6 @@ public class StrategyOpportuniste {
         characters.remove(CharactersType.ASSASSIN);
         characters.remove(CharactersType.VOLEUR);
         Collections.shuffle(characters);
-        CharactersType victim;
         Map<Integer, CharactersType> characterFrequency = new HashMap<>();
 
         for (Robot bot : bots) {
@@ -190,12 +189,18 @@ public class StrategyOpportuniste {
             }
         }
 
-        victim = Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByKey()).getValue();
-        if (!victim.equals(CharactersType.ASSASSIN) && !victim.equals(CharactersType.VOLEUR)) {
-            return victim;
+        List<Map.Entry<Integer, CharactersType>> sortedEntries = new ArrayList<>(characterFrequency.entrySet());
+        sortedEntries.sort(Map.Entry.<Integer, CharactersType>comparingByKey().reversed());
+
+        for (Map.Entry<Integer, CharactersType> entry : sortedEntries) {
+            CharactersType character = entry.getValue();
+            if (!character.equals(CharactersType.ASSASSIN) && !character.equals(CharactersType.VOLEUR)) {
+                return character;
+            }
         }
-        victim = characters.get(0);
-        return victim;
+
+        return characters.get(0);
+
 
     }
 
