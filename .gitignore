@@ -33,4 +33,8 @@ hs_err_pid*
 **/.project
 **/.settings
 
+<<<<<<< HEAD
+**/stats
+=======
+>>>>>>> edeff879525abe15682eb125c71cd4fc42b5d8e9
 /stats/

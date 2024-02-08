@@ -11,16 +11,15 @@ import java.util.logging.Logger;
 public class ActionOfBotDuringARound {
 
 
+    private static final Logger logger = Logger.getLogger(ActionOfBotDuringARound.class.getName());
     private Robot bot;
     private List<DistrictsType> listDistrictDrawn;
     private List<DistrictsType> listDistrictPicked;
 
-    private static final Logger logger = Logger.getLogger(ActionOfBotDuringARound.class.getName());
-
 
     public ActionOfBotDuringARound(Robot bot, boolean systemPrint) {
         this.bot = bot;
-        System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
+        System.setProperty("java.util.logging.SimpleFormatter.format", "\u001B[37m %5$s%6$s%n \u001B[0m");
         if (!systemPrint) logger.setLevel(Level.OFF);
     }
 
@@ -33,7 +32,9 @@ public class ActionOfBotDuringARound {
         logger.info(bot.statusOfPlayer());
     }
 
-    public void showStatusOfBot(Robot bot) { logger.info(bot.statusOfPlayer()); }
+    public void showStatusOfBot(Robot bot) {
+        logger.info(bot.statusOfPlayer());
+    }
 
     public void showCityOfBot(Robot bot) {
         logger.info("City of " + bot.getName() + " : " + getStringOfListOfDistrict(bot.getCity()));
@@ -76,7 +77,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfBotWhoGainedGold(int goldGained) {
-        logger.info(bot.getName() + " earned \u001B[33m"  + goldGained + " golds \u001B[37m. Total golds now: " + bot.getGolds());
+        logger.info(bot.getName() + " earned \u001B[33m" + goldGained + " golds \u001B[37m. Total golds now: " + bot.getGolds());
     }
 
     public void printActionOfSellerBotWhoGainedGold() {
@@ -155,17 +156,17 @@ public class ActionOfBotDuringARound {
     }
 
 
-
-
-
-    public void printPrioritizesRed(){
-        logger.info(bot.getName() + " prioritizes War district") ;
+    public void printVictimAssassinedStrategy(Robot victim) {
+        logger.info(bot.getName() + " murdered " + victim.getCharacter().getRole() + "because he has" + victim.getGolds() + bot.getName() + "wants to slow the game");
     }
 
-    public void printBotBonus(){
-        logger.info(bot.getName() + " is aiming for 5 colors bonus ") ;
+    public void printPrioritizesRed() {
+        logger.info(bot.getName() + " prioritizes War district");
     }
 
+    public void printBotBonus() {
+        logger.info(bot.getName() + " is aiming for 5 colors bonus ");
+    }
 
 
     public void printPickAnyDistrict(DistrictsType currentDistrict) {
@@ -226,11 +227,11 @@ public class ActionOfBotDuringARound {
 
     public void printCharacterChoice() {
         CharactersType character = bot.getCharacter();
-        if(character == CharactersType.ARCHITECTE) {
+        if (character == CharactersType.ARCHITECTE) {
             logger.info(bot.getName() + " has picked the Architect to build more buildings quickly.");
-        } else if(character == CharactersType.ROI || character == CharactersType.EVEQUE) {
+        } else if (character == CharactersType.ROI || character == CharactersType.EVEQUE) {
             logger.info(bot.getName() + " is close to having 8 districts and picked " + character.getRole() + " for protection.");
-        } else if(character == CharactersType.MARCHAND) {
+        } else if (character == CharactersType.MARCHAND) {
             logger.info(bot.getName() + " picked the Merchant to increase gold.");
         } else {
             logger.info(bot.getName() + " picked " + character.getRole() + " based on the highest priority available.");
@@ -239,6 +240,7 @@ public class ActionOfBotDuringARound {
 
     public void printDistrictChoice(List<DistrictsType> listDistrictPicked) {
         List<DistrictsType> pickedDistricts = listDistrictPicked; // districts choisis
+        // logger.info(bot.getName() + " drew the following districts: " + getStringOfListOfDistrict(drawnDistricts));
         if (!pickedDistricts.isEmpty()) {
             for (DistrictsType pickedDistrict : pickedDistricts) {
                 String reason = getReasonForPickingDistrict(pickedDistrict);
@@ -264,6 +266,33 @@ public class ActionOfBotDuringARound {
             logger.info(bot.getName() + " chose to try to build a district.");
         } else if (choice == 1) {
             logger.info(bot.getName() + " chose to take resources as building a district was not possible.");
+        }
+    }
+
+
+    public void printSpecialDistrictsConsideration() {
+        logger.info(bot.getName() + " is considering building special districts if it's advantageous");
+    }
+
+    public void printBlockOpponentStrategy(String districtName) {
+        if (!"nothing".equals(districtName)) {
+            logger.info(bot.getName() + " built " + districtName + " to block opponents from gaining an advantage");
+        }
+    }
+
+    public void printEfficiencyBasedBuilding(String districtName) {
+        if (!"nothing".equals(districtName)) {
+            logger.info(bot.getName() + " built " + districtName + " based on cost-efficiency and scoring potential");
+        }
+    }
+
+
+    public void printCharacterPredictionAndChoice(CharactersType predictedCharacter, CharactersType chosenCharacter) {
+        if (predictedCharacter != null) {
+            logger.info(bot.getName() + " predicts opponents might choose " + predictedCharacter.getRole() + " next");
+        }
+        if (chosenCharacter != null) {
+            logger.info(bot.getName() + " chose " + chosenCharacter.getRole() + " based on strategic considerations and predictions");
         }
     }
 
