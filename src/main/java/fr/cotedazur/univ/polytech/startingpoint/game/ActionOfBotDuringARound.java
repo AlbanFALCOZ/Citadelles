@@ -125,7 +125,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printThiefStill(CharactersType victim) {
-        logger.info(bot.getName() + " stole golds from " + victim + ". Total golds now " + bot.getGolds());
+        logger.info(bot.getName() + " stole your golds . Total golds now " + bot.getGolds());
     }
 
     public void printMagicianSwapWithDeck() {

@@ -13,7 +13,7 @@ public class RobotDiscrete extends Robot {
     private static final String NOBLE = "noble";
     private static final String RELIGIOUS = "religieux";
     private static final String MILITARY = "militaire";
-    private static final String COMMERCIAL = "marchand";
+    private static final String MERCHANT = "marchand";
 
     public RobotDiscrete(String name) {
         super(name);
@@ -103,7 +103,7 @@ public class RobotDiscrete extends Robot {
         characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));
         characterCounts.put(CharactersType.EVEQUE, countDistrictsByType(RELIGIOUS) + countDistrictsInHandByType(RELIGIOUS));
         characterCounts.put(CharactersType.CONDOTTIERE, countDistrictsByType(MILITARY) + countDistrictsInHandByType(MILITARY));
-        characterCounts.put(CharactersType.MARCHAND, countDistrictsByType(COMMERCIAL) + countDistrictsInHandByType(COMMERCIAL));
+        characterCounts.put(CharactersType.MARCHAND, countDistrictsByType(MERCHANT) + countDistrictsInHandByType(MERCHANT));
 
         List<CharactersType> priorityOrder = characterCounts.entrySet().stream()
                 .sorted(Map.Entry.<CharactersType, Integer>comparingByValue().reversed())
@@ -211,7 +211,7 @@ public class RobotDiscrete extends Robot {
     }
 
     private boolean isSpecialDistrictType(String type) {
-        return type.equals(NOBLE) || type.equals(RELIGIOUS) || type.equals(COMMERCIAL) || type.equals(MILITARY);
+        return type.equals(NOBLE) || type.equals(RELIGIOUS) || type.equals(MERCHANT) || type.equals(MILITARY);
     }
 
     private int chooseDistrict(DistrictsType currentDistrict, List<DistrictsType> listDistrictToBuild, int indice) {

@@ -154,7 +154,7 @@ public class Power {
         }
     }
 
-   public void voleur(List<Robot> bots, CharactersType victimCharacter) {
+  /* public void voleur(List<Robot> bots, CharactersType victimCharacter) {
         for (Robot robot : bots) {
             if (canSteal(robot, victimCharacter) && (!robot.equals(bot))) {
                 if (!robot.getIsAssassinated()) {
@@ -169,8 +169,20 @@ public class Power {
         }
         action.printVictimForVoleurNotExist();
 
-    }
+    }*/
 
+    public void voleur(Robot robot) {
+        if (!robot.getIsAssassinated()) {
+            int stolenGold = robot.getGolds();
+            bot.addGold(stolenGold);
+            action.printThiefStill(robot.getCharacter());
+            robot.setGolds(0);
+        }
+        action.printCantAffectVictim(bot);
+
+
+
+    }
 
     public boolean canSteal(Robot robot, CharactersType victimCharacter) {
         return robot.getCharacter().equals(victimCharacter);

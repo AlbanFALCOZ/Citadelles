@@ -180,8 +180,9 @@ public class StrategyOpportuniste {
 
     public CharactersType chooseVictimForVoleur(List<Robot> bots, RobotRichardo robot){
         List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
+        characters.remove(CharactersType.ASSASSIN);
+        characters.remove(CharactersType.VOLEUR);
         Collections.shuffle(characters);
-        CharactersType victim;
         Map<Integer, CharactersType> characterFrequency = new HashMap<>();
 
         for (Robot bot : bots) {
@@ -190,26 +191,17 @@ public class StrategyOpportuniste {
             }
         }
 
-        CharactersType voleurValue = CharactersType.VOLEUR;
-        Integer voleurKey = null;
+        List<Map.Entry<Integer, CharactersType>> sortedEntries = new ArrayList<>(characterFrequency.entrySet());
+        sortedEntries.sort(Map.Entry.<Integer, CharactersType>comparingByKey().reversed());
 
-        for (Map.Entry<Integer, CharactersType> entry : characterFrequency.entrySet()) {
-            if (Objects.equals(voleurValue, entry.getValue())) {
-                voleurKey = entry.getKey();
-                break;
+        for (Map.Entry<Integer, CharactersType> entry : sortedEntries) {
+            CharactersType character = entry.getValue();
+            if (!character.equals(CharactersType.ASSASSIN) && !character.equals(CharactersType.VOLEUR)) {
+                return character;
             }
         }
 
-        if (voleurKey != null) {
-            characterFrequency.remove(voleurKey);
-        }
-
-        victim = Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByKey()).getValue();
-        if (victim != null) {
-            return victim;
-        }
-        victim = characters.get(0);
-        return victim;
+        return characters.get(0);
 
     }
 

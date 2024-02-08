@@ -114,7 +114,14 @@ public class Round {
             case VOLEUR: //La première fois que l'on rentre dans ce cas, on choisit un personnage à voler grâce au numberOfCharacterToStealFrom
                 //Puis lors du tour du personnage que l'on doit voler, on rentre dans le pouvoir voleur du bot pour voler les golds
 
-                powerOfBot.voleur(bots, bot.chooseVictimForVoleur(bots));
+                if (numberOfCharacterToStealFrom == 0) {
+                    numberOfCharacterToStealFrom = bot.chooseVictimForVoleur(bots).getNumber();
+                    voleur = bot;
+                    victimOfVoleur = bots.get(numberOfCharacterToStealFrom);
+                    powerOfBot.voleur(victimOfVoleur);
+                }
+                victimOfVoleur = bots.get(numberOfCharacterToStealFrom);
+                powerOfBot.voleur(victimOfVoleur);
 
                 break;
             case MAGICIEN:
@@ -150,6 +157,9 @@ public class Round {
             if (!bot.getIsAssassinated()) {
                 ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
                 actionOfBotDuringARound.startTurnOfBot();
+                if (bot == victimOfVoleur) {
+                    choosePowerOfBot(bot);
+                }
                 bot.setChoice(bot.generateChoice());
                 choosePowerOfBot(bot);
                 switch (bot.getChoice()) {
