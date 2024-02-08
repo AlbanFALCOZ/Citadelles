@@ -421,6 +421,11 @@ public abstract class Robot {
     }
 
 
+    public void setCity(ArrayList<DistrictsType> listOfdistricts){
+        this.city = listOfdistricts ;
+    }
+
+
 
 
 

@@ -276,7 +276,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printRichardPickCondottiere(Robot target) {
-        logger.info(bot.getName() + " decided to pick Condottiere because " + target.getName() + " because they are in lead and it's getting tense ") ;
+        logger.info(bot.getName() + " decided to pick Condottiere because " + target.getName() + "  is in lead and it's getting tense ") ;
     }
 
     public void printRichardoPickAssassin() {
