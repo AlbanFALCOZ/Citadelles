@@ -41,54 +41,7 @@ public class RobotRushTest {
         robotRush.pickCharacter(copyAvailableCharacters, null);
         assertNotEquals(null, robotRush.getCharacter());
     }
-}
 
-    /*@Test
-=======
-/*
-    @Test
-<<<<<<< HEAD
-=======
-    /*@Test
->>>>>>> bb08d7867440ed661ee741f86b2d6635b148d03f
-=======
-
->>>>>>> 660808199f114b105a028e70ddb301e08f4dd133
->>>>>>> 665558b2b60c193941029e7b02ff5e73b36275a2
-    public void testTryBuild() {
-        List<DistrictsType> allDistricts = Arrays.asList(DistrictsType.values());
-
-        Random rand = new Random();
-        DistrictsType randomDistrict = allDistricts.get(rand.nextInt(allDistricts.size()));
-
-        robotRush.getDistrictInHand().add(randomDistrict);
-
-        // construire
-        String buildResult = robotRush.tryBuild();
-        assertNotEquals("nothing", buildResult);
-        assertTrue(robotRush.getCity().size() > 0);
-    }*/
-
-    /*
-    @Test
-    public void testPickDistrictCard() {
-        List<DistrictsType> allDistricts = Arrays.asList(DistrictsType.values());
-        Random rand = new Random();
-        List<DistrictsType> mockDistrictList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            mockDistrictList.add(allDistricts.get(rand.nextInt(allDistricts.size())));
-        }
-        when(mockDeckDistrict.getDistrictsInDeck()).thenReturn(
-                mockDistrictList.get(0),
-                mockDistrictList.subList(1, mockDistrictList.size()).toArray(new DistrictsType[0])
-        );
-
-        List<DistrictsType> pickedCards = robotRush.pickDistrictCard(mockDistrictList, mockDeckDistrict);
-
-        assertFalse(pickedCards.isEmpty(), "The picked cards list should not be empty.");
-
-        verify(actionMock).printDistrictChoice(anyList(), anyList());
-=======
 
     @Test
     public void testPickMarchandWhenLowOnGolds() {
@@ -98,7 +51,6 @@ public class RobotRushTest {
         charactersList.remove(CharactersType.ARCHITECTE);
         robotRush.pickCharacter(charactersList,new ArrayList<>());
         assertEquals(robotRush.getCharacter(),CharactersType.MARCHAND);
->>>>>>> 944120921849840888ce852b7d9d74488663b2eb
     }
 
     @Test
@@ -140,6 +92,3 @@ public class RobotRushTest {
     }
 
 }
-
-
-     */
