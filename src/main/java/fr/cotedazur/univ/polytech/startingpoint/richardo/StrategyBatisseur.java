@@ -37,26 +37,28 @@ public class StrategyBatisseur {
         }
     }
 
-    public void pickBatisseur(List<CharactersType> availableCharacters, RobotRichardo bot){
+    public boolean pickBatisseur(List<CharactersType> availableCharacters, RobotRichardo bot){
         isBatisseur(bot);
 
         if (availableCharacters.contains(CharactersType.MARCHAND)) {
             bot.pickCharacterCard(availableCharacters, CharactersType.MARCHAND);
-            if (bot.getCharacter() == CharactersType.MARCHAND) return;
+            if (bot.getCharacter() == CharactersType.MARCHAND) return true;
         }
         if (availableCharacters.contains(CharactersType.ROI)) {
             bot.pickCharacterCard(availableCharacters, CharactersType.ROI);
-            if (bot.getCharacter() == CharactersType.ROI) return;
+            if (bot.getCharacter() == CharactersType.ROI) return true;
         }
         if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
 
             bot.pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
-            if (bot.getCharacter() == CharactersType.ARCHITECTE) return;
+            if (bot.getCharacter() == CharactersType.ARCHITECTE) return true;
         }
-
+        /*
         bot.setCharacter(availableCharacters.get(0));
         availableCharacters.remove(0);
 
+         */
+        return false;
     }
 
     public List<DistrictsType> pickDistrictCardBatisseur(List<DistrictsType> listDistrict, DeckDistrict deck, RobotRichardo bot) {

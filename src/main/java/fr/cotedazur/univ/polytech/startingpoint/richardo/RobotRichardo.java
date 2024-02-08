@@ -142,17 +142,31 @@ public class RobotRichardo extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
+        this.availableCharacters =new ArrayList<>(availableCharacters);
 
-        this.strategyBatisseur.isBatisseur(this);
-        if(!this.batisseur)
 
-    {
-        this.strategyAgressif.isAgressif(bots, this);
+        this.strategyAgressif.isAgressif(bots,this);
+        if(!this.agressif){
+            this.strategyBatisseur.isBatisseur(this);
+        }
+        if (!this.batisseur) {
+            strategyOpportuniste.isOpportuniste(this);
 
-    }
+        }
+        if (agressif) {
+            if (strategyAgressif.pickAgressif(availableCharacters, bots, this)) return;
+
+        }else if (opportuniste) {
+            if (strategyOpportuniste.pickOpportuniste(availableCharacters,this)) return;
+
+        } else if (batisseur) {
+            if (strategyBatisseur.pickBatisseur(availableCharacters, this)) return;
+            //batisseur = false ;
+        }
+
 
     ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
-        this.availableCharacters =new ArrayList<>(availableCharacters);
+
         if(
 
     scenarioArchitecte(bots) &&availableCharacters.size()==5)
@@ -174,6 +188,7 @@ public class RobotRichardo extends Robot {
        else if(scenarioRoi(bots)){
             if (availableCharacters.contains(CharactersType.ROI) ) {
                 pickCharacterCard(availableCharacters, CharactersType.ROI);
+                return;
             }
             else {
                 setAgressif(true);
@@ -185,29 +200,12 @@ public class RobotRichardo extends Robot {
 
 
 
-        this.strategyBatisseur.isBatisseur(this);
-            if(!this.agressif){
-                this.strategyBatisseur.isBatisseur(this);
-            }
-            if (!this.batisseur) {
-                strategyOpportuniste.isOpportuniste(this);
-
-            }
-            if (agressif) {
-                strategyAgressif.pickAgressif(availableCharacters, bots, this);
-
-            }else if (opportuniste) {
-                strategyOpportuniste.pickOpportuniste(availableCharacters,this);
-
-            } else if (batisseur) {
-                strategyBatisseur.pickBatisseur(availableCharacters, this);
-                batisseur = false ;
 
 
-        } else {
-            setCharacter(availableCharacters.get(0));
-            availableCharacters.remove(0);
-        }
+
+        setCharacter(availableCharacters.get(0));
+        availableCharacters.remove(0);
+
 
     }
 

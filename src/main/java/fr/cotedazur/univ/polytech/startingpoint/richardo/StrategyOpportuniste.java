@@ -45,7 +45,7 @@ public class StrategyOpportuniste {
     }
 
 
-    public void pickOpportuniste(List<CharactersType> availableCharacters,RobotRichardo robot) {
+    public boolean pickOpportuniste(List<CharactersType> availableCharacters,RobotRichardo robot) {
         isOpportuniste(robot);
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot,true);
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
@@ -64,25 +64,30 @@ public class StrategyOpportuniste {
                 chosenCharacter = character;
                 availableCharacters.remove(character);
                 action.printPrioritizeTYpe(chosenCharacter);
-                break;
+                robot.setCharacter(chosenCharacter);
+                return true;
             }
         }
 
-        if (chosenCharacter == null && availableCharacters.contains(CharactersType.VOLEUR)) {
+        if (availableCharacters.contains(CharactersType.VOLEUR)) {
             chosenCharacter = CharactersType.VOLEUR;
             availableCharacters.remove(CharactersType.VOLEUR);
+            robot.setCharacter(chosenCharacter);
             robot.setAvailableCharacters(availableCharacters);
             action.printPrioritizeTYpe(chosenCharacter);
+            return true;
         }
 
-
+        /*
         if (chosenCharacter == null && !availableCharacters.isEmpty()) {
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(0);
             robot.setAvailableCharacters(availableCharacters);
 
         }
-        robot.setCharacter(chosenCharacter);
+
+         */
+        return false;
     }
 
     public List<DistrictsType> pickDistrictCardOpportuniste(List<DistrictsType> listDistrict, DeckDistrict deck, RobotRichardo robot) {

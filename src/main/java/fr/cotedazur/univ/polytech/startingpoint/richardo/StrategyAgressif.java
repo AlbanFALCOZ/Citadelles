@@ -58,20 +58,20 @@ public class StrategyAgressif {
 
 
 
-    public void pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots, RobotRichardo richardo) {
+    public boolean pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots, RobotRichardo richardo) {
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(richardo, true);
         for (Robot bot : bots) {
             if ((bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) && availableCharacters.contains(CharactersType.CONDOTTIERE)) {
                 richardo.pickCharacterCard(availableCharacters, CharactersType.CONDOTTIERE);
                 if (richardo.getCharacter() == CharactersType.CONDOTTIERE) {
                     action.printRichardPickCondottiere(bot);
-                    return;
+                    return true;
                 }
             } else if ((richardo.thereIsA(CharactersType.VOLEUR, availableCharacters) || (bot.getNumberOfDistrictInHand() <= 1)) && availableCharacters.contains(CharactersType.ASSASSIN)) {
                 richardo.pickCharacterCard(availableCharacters, CharactersType.ASSASSIN);
                 if (richardo.getCharacter() == CharactersType.ASSASSIN) {
                     action.printRichardoPickAssassin();
-                    return;
+                    return true;
                 }
 
 
@@ -80,13 +80,17 @@ public class StrategyAgressif {
                 richardo.pickCharacterCard(availableCharacters, CharactersType.EVEQUE);
                 if (richardo.getCharacter() == CharactersType.EVEQUE) {
                     action.printRichardPickEveque(bot);
-                    return;
+                    return true;
                 }
             }
 
         }
+        /*
         richardo.setCharacter(availableCharacters.get(0));
         availableCharacters.remove(availableCharacters.get(0));
+
+         */
+        return false;
     }
 
 
