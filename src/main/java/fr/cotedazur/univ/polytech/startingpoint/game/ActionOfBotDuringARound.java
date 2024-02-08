@@ -301,13 +301,6 @@ public class ActionOfBotDuringARound {
         }
     }
 
-    public void printCharacterPrediction(CharactersType predictedCharacter) {
-        if (predictedCharacter != null) {
-            logger.info(bot.getName() + " predicts that opponents might choose " + predictedCharacter.getRole() + " next");
-        } else {
-            logger.info(bot.getName() + " has no specific prediction for opponents' next character choice");
-        }
-    }
 
     public void printCharacterPredictionAndChoice(CharactersType predictedCharacter, CharactersType chosenCharacter) {
         if (predictedCharacter != null) {
