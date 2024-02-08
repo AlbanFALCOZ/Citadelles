@@ -298,4 +298,8 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + " can't steal from anyone because there is no one to steal from");
     }
 
+    public void printChoiceOfThief(Robot bot, int numberOfCharacter) {
+        logger.info(bot.getName() + " chose to steal from " + getNameOfCharacterFromNumber(numberOfCharacter));
+    }
+
 }

@@ -18,16 +18,17 @@ public class StrategyAgressif {
         for (Robot bot : bots) {
             if ((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 2) && (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()))) {
                 robot.setAgressif(true);
-
-                break;
+                return;
             } else if (robot.getNumberOfDistrictInCity() > 4) {
                 robot.setAgressif(true);
-
+                return;
             } else if (bot.getNumberOfDistrictInHand() <= 1) {
-
                 robot.setAgressif(true);
+                return;
             }
         }
+        robot.setAgressif(false);
+
 
     }
 

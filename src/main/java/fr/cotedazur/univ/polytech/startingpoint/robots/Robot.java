@@ -342,9 +342,10 @@ public abstract class Robot {
 
     public CharactersType chooseVictimForVoleur(List<Robot> bots){
         List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
+        characters.remove(CharactersType.ASSASSIN);
+        characters.remove(CharactersType.VOLEUR);
         Collections.shuffle(characters);
-        CharactersType victim = characters.get(0);
-        return victim;
+        return characters.get(0);
 
     }
 

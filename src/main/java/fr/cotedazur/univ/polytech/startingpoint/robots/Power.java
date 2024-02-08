@@ -162,12 +162,15 @@ public class Power {
                     bot.addGold(stolenGold);
                     action.printThiefStill(victimCharacter);
                     robot.setGolds(0);
-                    break;
-                } else action.printCantAffectVictim(bot);
+                    return;
+                } else  {
+                    action.printCantAffectVictim(bot);
+                    return;
+                }
             }
 
         }
-        action.printVictimForVoleurNotExist();
+        //action.printVictimForVoleurNotExist();
 
     }
 

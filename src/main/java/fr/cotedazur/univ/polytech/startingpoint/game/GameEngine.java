@@ -142,6 +142,10 @@ public class GameEngine {
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
             }
         }
+        if (listCharacters.size() != 1) {
+            System.out.println(listCharacters);
+            throw new RuntimeException();
+        }
     }
 
 
