@@ -31,7 +31,7 @@ public class Main {
             testBots();
             ParseFullGameStats.parseFullStats();
         }
-        testBots();
+        showGame();
 
     }
 
@@ -67,7 +67,7 @@ public class Main {
         String[] listName = new String[4];
         int[] listWinners = new int[4];
         int[] listWinnersTied = new int[4];
-        int numberOfGames = 10000;
+        int numberOfGames = 1000;
         int i;
         int compt = 0;
 
