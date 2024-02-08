@@ -161,7 +161,7 @@ public class RobotRichardo extends Robot {
 
         } else if (batisseur) {
             if (strategyBatisseur.pickBatisseur(availableCharacters, this)) return;
-            //batisseur = false ;
+
         }
 
 

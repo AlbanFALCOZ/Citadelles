@@ -16,13 +16,8 @@ public class StrategyAgressif {
 
     public void isAgressif(List<Robot> bots, RobotRichardo robot) {
         for (Robot bot : bots) {
-            if ((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 2) && (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()))) {
-                robot.setAgressif(true);
-                return;
-            } else if (robot.getNumberOfDistrictInCity() > 4) {
-                robot.setAgressif(true);
-                return;
-            } else if (bot.getNumberOfDistrictInHand() <= 1) {
+            if (( ((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2 ) && ( bot.getNumberOfDistrictInCity() > 2)  ) || (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()) && robot.getGolds() > 4))
+            || (robot.getNumberOfDistrictInCity() > 4 || bot.getNumberOfDistrictInHand() <= 1)) {
                 robot.setAgressif(true);
                 return;
             }
@@ -33,11 +28,8 @@ public class StrategyAgressif {
     }
 
 
-
     public Robot chooseVictimForCondottiere(List<Robot> bots, RobotRichardo robot) {
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
-
-
         Robot victim = bots.get(0);
         if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters())) {
             int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
@@ -50,19 +42,15 @@ public class StrategyAgressif {
 
             action.printVictimCondottiere(victim);
         }
-
-
         return victim;
 
 
     }
 
-
-
     public boolean pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots, RobotRichardo richardo) {
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(richardo, true);
         for (Robot bot : bots) {
-            if ((bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 5) && availableCharacters.contains(CharactersType.CONDOTTIERE)) {
+            if ((bot.getNumberOfDistrictInCity() > richardo.getNumberOfDistrictInCity() + 2 && bot.getNumberOfDistrictInCity() > 5) && availableCharacters.contains(CharactersType.CONDOTTIERE)) {
                 richardo.pickCharacterCard(availableCharacters, CharactersType.CONDOTTIERE);
                 if (richardo.getCharacter() == CharactersType.CONDOTTIERE) {
                     action.printRichardPickCondottiere(bot);
@@ -77,7 +65,6 @@ public class StrategyAgressif {
 
 
             } else if ((availableCharacters.contains(CharactersType.EVEQUE)) && bot.getNumberOfDistrictInCity() > 5) {
-
                 richardo.pickCharacterCard(availableCharacters, CharactersType.EVEQUE);
                 if (richardo.getCharacter() == CharactersType.EVEQUE) {
                     action.printRichardPickEveque(bot);
@@ -86,19 +73,18 @@ public class StrategyAgressif {
             }
 
         }
-        /*
-        richardo.setCharacter(availableCharacters.get(0));
-        availableCharacters.remove(availableCharacters.get(0));
-
-         */
         return false;
     }
 
 
     public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill, RobotRichardo robot) {
+
+        numberOfTheCharacterToKill = robot.getNumberOfCharacterToKill(bots ) ;
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
         Robot victim = null;
         for (Robot bot : bots) {
+
+
             if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) {
                 victim = bot;
             }
@@ -116,7 +102,6 @@ public class StrategyAgressif {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -134,17 +119,6 @@ public class StrategyAgressif {
         action.printVictimeForMagicien(victim);
         return victim;
     }
-
-    public boolean hasMaxGolds(List<Robot> bots, RobotRichardo robot) {
-        for (Robot bot : bots) {
-            if (bot.getGolds() > robot.getGolds()) {
-                return false;
-
-            }
-        }
-        return true;
-    }
-
 
 }
 
