@@ -89,7 +89,7 @@ public class Round {
      * cette méthode permet d'appeler le pouvoir du personne du robot
      */
     public void choosePowerOfBot(Robot bot) {
-
+        List<Robot> robots = new ArrayList<>(bots);
         ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
@@ -113,15 +113,16 @@ public class Round {
                 break;
             case VOLEUR: //La première fois que l'on rentre dans ce cas, on choisit un personnage à voler grâce au numberOfCharacterToStealFrom
                 //Puis lors du tour du personnage que l'on doit voler, on rentre dans le pouvoir voleur du bot pour voler les golds
-
+                robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
+                
                 if (numberOfCharacterToStealFrom == 0) {
                     numberOfCharacterToStealFrom = bot.chooseVictimForVoleur(bots).getNumber();
-                    voleur = bot;
-                    victimOfVoleur = bots.get(numberOfCharacterToStealFrom);
+                    this.voleur = bot;
+                    actionOfBotDuringARound.printChoiceOfThief(voleur, numberOfCharacterToStealFrom);
+                } else {
                     powerOfBot.voleur(victimOfVoleur);
                 }
-                victimOfVoleur = bots.get(numberOfCharacterToStealFrom);
-                powerOfBot.voleur(victimOfVoleur);
+
 
                 break;
             case MAGICIEN:
@@ -157,8 +158,9 @@ public class Round {
             if (!bot.getIsAssassinated()) {
                 ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
                 actionOfBotDuringARound.startTurnOfBot();
-                if (bot == victimOfVoleur) {
-                    choosePowerOfBot(bot);
+                if (bot.getCharacter().getNumber() == numberOfCharacterToStealFrom) {
+                    this.victimOfVoleur = bot;
+                    choosePowerOfBot(voleur);
                 }
                 bot.setChoice(bot.generateChoice());
                 choosePowerOfBot(bot);

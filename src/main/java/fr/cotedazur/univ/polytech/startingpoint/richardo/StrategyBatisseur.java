@@ -30,11 +30,7 @@ public class StrategyBatisseur {
     }
     
     public void isBatisseur(RobotRichardo bot) {
-        if (bot.getGolds() < 4) {
-
-            bot.setBatisseur(true);
-
-        }
+        bot.setBatisseur(bot.getGolds() < 4);
     }
 
     public boolean pickBatisseur(List<CharactersType> availableCharacters, RobotRichardo bot){

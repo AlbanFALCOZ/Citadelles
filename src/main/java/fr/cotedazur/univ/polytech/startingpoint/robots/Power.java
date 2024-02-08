@@ -154,35 +154,17 @@ public class Power {
         }
     }
 
-  /* public void voleur(List<Robot> bots, CharactersType victimCharacter) {
-        for (Robot robot : bots) {
-            if (canSteal(robot, victimCharacter) && (!robot.equals(bot))) {
-                if (!robot.getIsAssassinated()) {
-                    int stolenGold = robot.getGolds();
-                    bot.addGold(stolenGold);
-                    action.printThiefStill(victimCharacter);
-                    robot.setGolds(0);
-                    break;
-                } else action.printCantAffectVictim(bot);
-            }
 
-        }
-        action.printVictimForVoleurNotExist();
-
-    }*/
-
-    public void voleur(Robot robot) {
-        if (!robot.getIsAssassinated()) {
-            int stolenGold = robot.getGolds();
+    public void voleur(Robot victim) {
+        if (!victim.getIsAssassinated()) {
+            int stolenGold = victim.getGolds();
             bot.addGold(stolenGold);
-            action.printThiefStill(robot.getCharacter());
-            robot.setGolds(0);
+            action.printThiefStill(victim);
+            victim.setGolds(0);
         }
-        action.printCantAffectVictim(bot);
-
-
-
+        else action.printCantAffectVictim(victim);
     }
+
 
     public boolean canSteal(Robot robot, CharactersType victimCharacter) {
         return robot.getCharacter().equals(victimCharacter);

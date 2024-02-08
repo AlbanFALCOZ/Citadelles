@@ -18,16 +18,17 @@ public class StrategyAgressif {
         for (Robot bot : bots) {
             if ((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2 || bot.getNumberOfDistrictInCity() > 2) && (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()))) {
                 robot.setAgressif(true);
-
-                break;
+                return;
             } else if (robot.getNumberOfDistrictInCity() > 4) {
                 robot.setAgressif(true);
-
+                return;
             } else if (bot.getNumberOfDistrictInHand() <= 1) {
-
                 robot.setAgressif(true);
+                return;
             }
         }
+        robot.setAgressif(false);
+
 
     }
 
@@ -102,7 +103,6 @@ public class StrategyAgressif {
         for (Robot bot : bots) {
             if (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()) && robot.getGolds() > 4) {
                 numberOfTheCharacterToKill = 2;
-                action.printBotBonus();
 
             } else if (robot.thereIsA(CharactersType.CONDOTTIERE, robot.getAvailableCharacters()) || hasMaxDistricts(bots, robot)) {
                 numberOfTheCharacterToKill = 8;

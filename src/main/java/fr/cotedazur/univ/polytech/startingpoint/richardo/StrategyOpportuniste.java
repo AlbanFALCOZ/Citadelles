@@ -19,9 +19,7 @@ public class StrategyOpportuniste {
     public StrategyOpportuniste(){}
 
     public void isOpportuniste(RobotRichardo bot) {
-        if (bot.getNumberOfDistrictInCity() >= 6 || bot.getGolds() ==0) {
-            bot.setOpportuniste(true);
-        }
+        bot.setOpportuniste(bot.getNumberOfDistrictInCity() >= 6 || bot.getGolds() == 0);
     }
 
 
@@ -202,6 +200,7 @@ public class StrategyOpportuniste {
         }
 
         return characters.get(0);
+
 
     }
 
