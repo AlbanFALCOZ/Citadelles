@@ -296,7 +296,7 @@ public abstract class Robot {
     public List<DistrictsType> laboratoire(DeckDistrict deck) {
 
         List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
-        if (getNumberOfDistrictInHand() >= 1) {
+        if (getNumberOfDistrictInHand() >= 1 && getGolds() == 0){
             int indexOfDistrictInHandToRemove = (int) (Math.random() * getNumberOfDistrictInHand());
             DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
             listOfDistrictRemoved.add(card);
@@ -353,13 +353,6 @@ public abstract class Robot {
         return characterHistory;
     }
 
-    public Map<String, Integer> getHandSizeHistory() {
-        return handSizeHistory;
-    }
-
-    public Map<String, List<DistrictsType>> getBuildingHistory() {
-        return buildingHistory;
-    }
 
     public void updateHistory(List<Robot> bots) {
         for (Robot bot : bots) {
