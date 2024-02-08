@@ -95,10 +95,11 @@ class StrategyAgressifTest {
 
     @Test
     void testRichardoIsAgressifAndMakeThoughDecisions(){
+        //Initialisation d'un tour de jeu
         List<Robot>  bots = new ArrayList<>() ;
         ArrayList<DistrictsType> listOfDistrcits = new ArrayList<>() ;
         ArrayList<DistrictsType> listOfDistrcits2 = new ArrayList<>() ;
-        for (int i = 0 ;  i < 5 ; i ++){
+        for (int i = 0 ;  i < 4 ; i ++){
             listOfDistrcits.add(DistrictsType.MARCHE) ;
         }
         List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
@@ -110,7 +111,28 @@ class StrategyAgressifTest {
         bots.add(bot2) ;
         bots.add(bot3) ;
         bots.add(richardo) ;
-        bot1.getDistrictInHand().add(DistrictsType.MARCHE);
+        //Dis donc  , il est riche le richard , je voudrais bien tout le voler
+        richardo.setGolds(45);
+        //OH OH Y'a Un voleur dans le jeu.
+        bot2.setCharacter(CharactersType.VOLEUR);
+        //Le robot 2 n'est pas tant en vance que ça
+        bot1.setCity(listOfDistrcits);
+        //Je donne la couronne comme ça il pourra appliquer sa super methode qui lui permet de deduire si y'a un voleur dans le jeu
+        richardo.setHasCrown(true);
+        //Donc la Richardo check si y'a un voleur , la méthode à déja été testée , la c'est evident qu'il y'a un voleur
+        boolean result = richardo.thereIsA(CharactersType.VOLEUR , characters) ;
+        assertTrue(result);
+        //Normalement comme , il y'a un voleur et que richard n'a pas trop envie de se faire voler sa fortune; il piche Assassin
+        richardo.getStrategyAgressif().isAgressif(bots , richardo);
+        assertTrue(richardo.getAgressive());
+        //Apres qu'il soit agressif , Richardo doit choisir quel personnage pioher , dans ce il choit
+        //de prendre assassin
+        richardo.pickCharacter(characters , bots);
+        assertEquals(richardo.getCharacter() , CharactersType.ASSASSIN);
+        //Une fois assassin il tue le voleur.
+        Robot victim = richardo.chooseVictimForAssassin(bots , 0 ) ;
+        assertEquals(bot2 , victim);
+
 
 
     }

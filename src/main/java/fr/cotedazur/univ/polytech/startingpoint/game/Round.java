@@ -116,11 +116,11 @@ public class Round {
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
                 
                 if (numberOfCharacterToStealFrom == 0) {
-                    numberOfCharacterToStealFrom = (int) (Math.random() * 6 + 3);
+                    numberOfCharacterToStealFrom = bot.chooseVictimForVoleur(bots).getNumber();
                     this.voleur = bot;
                     actionOfBotDuringARound.printChoiceOfThief(voleur, numberOfCharacterToStealFrom);
                 } else {
-                    powerOfBot.voleur(bots, bot.chooseVictimForVoleur(bots));
+                    powerOfBot.voleur(victimOfVoleur);
                 }
 
 
