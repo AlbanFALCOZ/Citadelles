@@ -127,7 +127,7 @@ public class RobotChoiceOfCharacter extends Robot {
 
     public boolean tryToPick(CharactersType characterToPick, List<CharactersType> availableCharacters) {
         for (CharactersType charactersType : availableCharacters) {
-            if (charactersType.equals(characterToPick)) {
+            if (charactersType.equals(characterToPick) && availableCharacters.contains(charactersType)) {
                 setCharacter(charactersType);
                 availableCharacters.remove(charactersType);
                 return true;

@@ -7,7 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.*;
 
-public abstract class Robot{
+public abstract class Robot {
 
     public static final String RESET = "\u001B[37m";
     protected String name;
@@ -16,17 +16,17 @@ public abstract class Robot{
     protected int golds;
     protected int numberOfCardsDrawn = 2;
     protected int numberOfCardsChosen = 1;
-    private String typeOfRobot = "Robot";
     protected List<DistrictsType> districtInHand;
     protected CharactersType character;
-
     protected ArrayList<DistrictsType> city;
-
     protected boolean hasCrown;
-
+    protected boolean IsAssassinated;
+    private String typeOfRobot = "Robot";
     private Map<String, List<CharactersType>> characterHistory;
     private Map<String, List<DistrictsType>> buildingHistory;
     private Map<String, Integer> handSizeHistory;
+
+
 
     public Robot(String name) {
         this.name = name;
@@ -44,8 +44,6 @@ public abstract class Robot{
 
     }
 
-
-    protected boolean IsAssassinated;
     public List<DistrictsType> getDistrictInHand() {
         return districtInHand;
     }
@@ -147,7 +145,7 @@ public abstract class Robot{
 
     }
 
-    public int calculateScoreInHand(){
+    public int calculateScoreInHand() {
         int score = 0;
         for (DistrictsType district : districtInHand) {
             score += district.getScore();
@@ -164,7 +162,7 @@ public abstract class Robot{
     }
 
     public boolean hasEightDistrict() {
-        return (this.getNumberOfDistrictInCity()==8);
+        return (this.getNumberOfDistrictInCity() == 8);
     }
 
     public void addDistrict(DistrictsType district) {
@@ -295,16 +293,15 @@ public abstract class Robot{
     }
 
 
+    public List<DistrictsType> laboratoire(DeckDistrict deck) {
 
-
-    public List<DistrictsType> laboratoire(DeckDistrict deck){
         List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
         if (getNumberOfDistrictInHand() >= 1) {
-            int indexOfDistrictInHandToRemove = (int) (Math.random()*getNumberOfDistrictInHand());
+            int indexOfDistrictInHandToRemove = (int) (Math.random() * getNumberOfDistrictInHand());
             DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
             listOfDistrictRemoved.add(card);
             deck.addDistrictToDeck(card);
-            setGolds(getGolds()+1);
+            setGolds(getGolds() + 1);
         }
         return listOfDistrictRemoved;
     }
@@ -312,11 +309,11 @@ public abstract class Robot{
 
     public abstract void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots);
 
-    public Robot chooseVictimForCondottiere(List<Robot> bots){
+    public Robot chooseVictimForCondottiere(List<Robot> bots) {
         Robot victim = bots.get(0);
         int numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
         for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter()!= CharactersType.CONDOTTIERE && !victim.hasEightDistrict()) {
+            if (bot.getNumberOfDistrictInCity() >= numberOfDistrictsInCity && bot.getCharacter() != CharactersType.CONDOTTIERE && !victim.hasEightDistrict()) {
                 victim = bot;
                 numberOfDistrictsInCity = victim.getNumberOfDistrictInCity();
             }
@@ -325,7 +322,7 @@ public abstract class Robot{
 
     }
 
-    public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
+    public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill) {
         for (Robot bot : bots) {
             if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) return bot;
         }
@@ -333,19 +330,24 @@ public abstract class Robot{
 
     }
 
-    public Robot chooseVictimForMagicien(List<Robot> bots){
+    public Robot chooseVictimForMagicien(List<Robot> bots) {
         Robot victim = bots.get(0);
         int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
         for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter()!= CharactersType.MAGICIEN) victim = bot;
+            if (bot.getNumberOfDistrictInHand() >= numberOfDistrictsInHand && bot.getCharacter() != CharactersType.MAGICIEN)
+                victim = bot;
         }
         return victim;
     }
 
-    public int getNumberOfCharacterToKill(List<Robot> bots) {
-        return (int) (Math.random() * (8-2) + 2);
+    public CharactersType chooseVictimForVoleur(List<Robot> bots){
+        List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
+        Collections.shuffle(characters);
+        CharactersType victim = characters.get(0);
+        return victim;
+
     }
-  
+
     public Map<String, List<CharactersType>> getCharacterHistory() {
         return characterHistory;
     }
@@ -378,5 +380,47 @@ public abstract class Robot{
             handSizeHistory.put(botName, handSize);
         }
     }
+
+    public CharactersType predictOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
+    }
+
+    public Integer countOpponentNextCharacter(String botName) {
+        List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
+
+        if (characterHistory == null || characterHistory.isEmpty()) {
+            return null;
+        }
+
+        Map<CharactersType, Integer> characterFrequency = new HashMap<>();
+        for (CharactersType character : characterHistory) {
+            characterFrequency.put(character, characterFrequency.getOrDefault(character, 0) + 1);
+        }
+
+        return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
+    }
+
+
+
+    public int getNumberOfCharacterToKill(List<Robot> bots) {
+
+        return (int) (Math.random() * (8 - 2) + 2);
+
+    }
+
+
+
+
 
 }

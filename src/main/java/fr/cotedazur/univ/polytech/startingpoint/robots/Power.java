@@ -47,7 +47,7 @@ public class Power {
         if (i == 1) {
             bot.setChoice(0);
             bot.addGold(2);
-            action = new ActionOfBotDuringARound(bot,true);
+            action = new ActionOfBotDuringARound(bot, true);
             action.printActionOfBotWhoGainedGold(2);
 
         }
@@ -58,16 +58,11 @@ public class Power {
     }
 
 
-
-
-
-
     public boolean canDestroyDistrict(Robot victim, DistrictsType district) {
         int destructorGolds = bot.getGolds();
         boolean districtInCity = victim.getCity().contains(district);
-        return destructorGolds >= (district.getCost()-1) && districtInCity && !victim.hasEightDistrict();
+        return destructorGolds >= (district.getCost() - 1) && districtInCity && !victim.hasEightDistrict();
     }
-
 
 
     public void condottiere(Robot victim) {
@@ -81,7 +76,7 @@ public class Power {
             if (!district.getName().equals("Donjon") && (verify)) {
                 if (bot.getCharacter().getType().equals(MILITATE) &&
                         !victim.getCharacter().getType().equals(RELIGIOUS)) {
-                    district.powerOfDistrict(victim,-1);
+                    district.powerOfDistrict(victim, -1);
                     victim.getCity().remove(district);
                     int goldsAfterDestruction = destructorGolds - district.getCost();
                     bot.setGolds(goldsAfterDestruction + 1);
@@ -110,10 +105,10 @@ public class Power {
         victim.setDistrictInHand(botDistrictInHand);
     }
 
-    public boolean doublon(Robot victim){
-        for (DistrictsType district : bot.getCity()){
-            for (DistrictsType victimDistrict : victim.getDistrictInHand()){
-                if (district == victimDistrict){
+    public boolean doublon(Robot victim) {
+        for (DistrictsType district : bot.getCity()) {
+            for (DistrictsType victimDistrict : victim.getDistrictInHand()) {
+                if (district == victimDistrict) {
                     return true;
                 }
             }
@@ -121,13 +116,13 @@ public class Power {
         return false;
     }
 
-    public boolean doublonInHand(){
+    public boolean doublonInHand() {
         List<DistrictsType> hand = bot.getDistrictInHand();
         List<DistrictsType> handCopy = bot.getDistrictInHand();
         Collections.reverse(hand);
         for (int i = 0; i < hand.size(); i++) {
             for (int j = 0; j < handCopy.size(); j++) {
-                if (hand.get(i) == handCopy.get(j) && i!= j){
+                if (hand.get(i) == handCopy.get(j) && i != j) {
                     return true;
                 }
             }
@@ -144,15 +139,14 @@ public class Power {
             action.printMagicianSwap(victim);
             action.showStatusOfBot();
             action.showStatusOfBot(victim);
+        } else if (doublon(bot) || doublonInHand()) {
+            int numberOfDistrictInHand = bot.getNumberOfDistrictInHand();
+            List<DistrictsType> listDistrictHandMagician = new ArrayList<>(bot.getDistrictInHand());
+            bot.emptyListOfCardsInHand();
+            for (; numberOfDistrictInHand > 0; numberOfDistrictInHand--) bot.addDistrict(deck.getDistrictsInDeck());
+            while (!listDistrictHandMagician.isEmpty()) deck.addDistrictToDeck(listDistrictHandMagician.remove(0));
         }
-        else if(doublon(bot) || doublonInHand()){
-                int numberOfDistrictInHand = bot.getNumberOfDistrictInHand();
-                List<DistrictsType> listDistrictHandMagician = new ArrayList<>(bot.getDistrictInHand());
-                bot.emptyListOfCardsInHand();
-                for (; numberOfDistrictInHand > 0; numberOfDistrictInHand--) bot.addDistrict(deck.getDistrictsInDeck());
-                while (!listDistrictHandMagician.isEmpty()) deck.addDistrictToDeck(listDistrictHandMagician.remove(0));
-        }
-}
+    }
 
     public void assassin(Robot victim) {
         if (bot.getCharacter().getType().equals(ASSASSIN)) {
@@ -160,15 +154,26 @@ public class Power {
         }
     }
 
-    public void voleur(Robot victim) {
-        if (!victim.getIsAssassinated()) {
-            int stolenGold = victim.getGolds();
-            bot.addGold(stolenGold);
-            action.printThiefStill(victim);
-            victim.setGolds(0);
+   public void voleur(List<Robot> bots, CharactersType victimCharacter) {
+        for (Robot robot : bots) {
+            if (canSteal(robot, victimCharacter) && (!robot.equals(bot))) {
+                if (!robot.getIsAssassinated()) {
+                    int stolenGold = robot.getGolds();
+                    bot.addGold(stolenGold);
+                    action.printThiefStill(victimCharacter);
+                    robot.setGolds(0);
+                    break;
+                } else action.printCantAffectVictim(bot);
+            }
+
         }
-        else action.printCantAffectVictim(victim);
+        action.printVictimForVoleurNotExist();
+
     }
 
+
+    public boolean canSteal(Robot robot, CharactersType victimCharacter) {
+        return robot.getCharacter().equals(victimCharacter);
+    }
 }
 
