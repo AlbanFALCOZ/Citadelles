@@ -115,20 +115,20 @@ class StrategyAgressifTest {
         bots.add(bot2) ;
         bots.add(bot3) ;
         bots.add(richardo) ;
-        //Dis donc  , il est riche le richard , je voudrais bien tout le voler
+        //Dis donc  , il est riche le richard , je voudrais bien le voler
         richardo.setGolds(45);
         //OH OH Y'a Un voleur dans le jeu.
         bot2.setCharacter(CharactersType.VOLEUR);
         bot1.setCharacter(CharactersType.MARCHAND);
         bot3.setCharacter(CharactersType.EVEQUE);
-        //Le robot 2 n'est pas tant en vance que ça
+        //Le robot 2 n'est pas tant en avance que ça
         bot1.setCity(listOfDistrcits);
         //Je donne la couronne comme ça il pourra appliquer sa super methode qui lui permet de deduire si y'a un voleur dans le jeu
         richardo.setHasCrown(true);
         //Donc la Richardo check si y'a un voleur , la méthode à déja été testée , la c'est evident qu'il y'a un voleur
         boolean result = richardo.thereIsA(CharactersType.VOLEUR , characters) ;
         assertTrue(result);
-        //Normalement comme , il y'a un voleur et que richard n'a pas trop envie de se faire voler sa fortune; il piche Assassin
+        //Normalement comme , il y'a un voleur et que richard n'a pas trop envie de se faire voler sa fortune; il pioche Assassin
         richardo.getStrategyAgressif().isAgressif(bots , richardo);
         assertTrue(richardo.getAgressive());
         //Apres qu'il soit agressif , Richardo doit choisir quel personnage pioher , dans ce il choit
