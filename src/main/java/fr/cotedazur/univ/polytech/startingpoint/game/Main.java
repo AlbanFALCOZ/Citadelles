@@ -32,7 +32,6 @@ public class Main {
             ParseFullGameStats.parseFullStats();
         }
         showGame();
-
     }
 
 
@@ -64,9 +63,9 @@ public class Main {
      */
 
     public static void play1000Games(boolean onlyDiscretBots) {
-        String[] listName = new String[4];
-        int[] listWinners = new int[4];
-        int[] listWinnersTied = new int[4];
+        String[] listName = new String[5];
+        int[] listWinners = new int[5];
+        int[] listWinnersTied = new int[5];
         int numberOfGames = 1000;
         int i;
         int compt = 0;

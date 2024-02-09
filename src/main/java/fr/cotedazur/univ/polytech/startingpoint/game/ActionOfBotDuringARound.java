@@ -130,9 +130,6 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + " stole golds from " + victim.getName() + ". " + bot.getName() + " has now " + bot.getGolds() + " and " + victim.getName() + " has 0 gold");
     }
 
-    public void printMagicianSwapWithDeck() {
-        logger.info(bot.getName() + " choosed to swap with deck");
-    }
 
     public String getNameOfCharacterFromNumber(int number) {
         String[] listName = {"Assassin", "Voleur", "Magicien", "Roi", "Eveque", "Marchand", "Architecte", "Condottiere"};
@@ -155,10 +152,6 @@ public class ActionOfBotDuringARound {
         logger.info("Thanks to the manufacture, " + bot.getName() + " lost 3 golds but added {" + getStringOfListOfDistrict(listOfDistrictPicked) + "} to his hand");
     }
 
-
-    public void printVictimAssassinedStrategy(Robot victim) {
-        logger.info(bot.getName() + " murdered " + victim.getCharacter().getRole() + "because he has" + victim.getGolds() + bot.getName() + "wants to slow the game");
-    }
 
     public void printPrioritizesRed() {
         logger.info(bot.getName() + " prioritizes War district");
@@ -196,7 +189,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printPickCharacterWithPriority(CharactersType character) {
-        //logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
+       // logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
     }
 
     public void printPickdefaultCharacter() {
@@ -240,7 +233,6 @@ public class ActionOfBotDuringARound {
 
     public void printDistrictChoice(List<DistrictsType> listDistrictPicked) {
         List<DistrictsType> pickedDistricts = listDistrictPicked; // districts choisis
-        // logger.info(bot.getName() + " drew the following districts: " + getStringOfListOfDistrict(drawnDistricts));
         if (!pickedDistricts.isEmpty()) {
             for (DistrictsType pickedDistrict : pickedDistricts) {
                 String reason = getReasonForPickingDistrict(pickedDistrict);
@@ -252,7 +244,6 @@ public class ActionOfBotDuringARound {
     }
 
     private String getReasonForPickingDistrict(DistrictsType district) {
-        // Vous pouvez ajuster cette méthode pour refléter la logique de votre RobotRush
         if (district.getCost() <= bot.getGolds()) {
             return "It was affordable and fits the strategy to build quickly.";
         } else {
@@ -292,7 +283,7 @@ public class ActionOfBotDuringARound {
             logger.info(bot.getName() + " predicts opponents might choose " + predictedCharacter.getRole() + " next");
         }
         if (chosenCharacter != null) {
-            logger.info(bot.getName() + " chose " + chosenCharacter.getRole() + " based on strategic considerations and predictions");
+            //logger.info(bot.getName() + " chose " + chosenCharacter.getRole() + " based on strategic considerations and predictions");
         }
     }
 
@@ -314,7 +305,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printRichardPickEveque() {
-        logger.info(bot.getName() + "decided to pick Eveque because he's now trying to stop ");
+        logger.info(bot.getName() + " decided to pick Eveque because he's now trying to stop ");
     }
 
     public void printVictimeForMagicien(Robot victim) {

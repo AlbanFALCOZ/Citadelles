@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
+import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
 import fr.cotedazur.univ.polytech.startingpoint.robots.*;
 
 import java.util.*;
@@ -19,7 +20,7 @@ public class GameEngine {
     private final ArrayList<Robot> bots;
     private final DeckDistrict deckDistricts;
     private final DeckCharacters deckCharacters;
-    private final int[] list = {4, 2, 2, 2};
+    private final int[] list = {4, 2, 2, 2, 2};
     private Round round;
     private boolean systemPrint = false;
 
@@ -57,14 +58,12 @@ public class GameEngine {
      */
     public void initializeBots() {
         Robot sarsor = new RobotAgressif("Sara");
-        Robot gentil = new RobotDiscrete("Stacy");
+        Robot discrete = new RobotDiscrete("Stacy");
         Robot choice = new RobotChoiceOfCharacter("Alban");
-        //Robot richardo = new RobotRichardo("Richardo") ;
-        Robot analyze = new RobotAnalyzer("Richardo", bots);
+        Robot richardo = new RobotRichardo("Richardo");
+        Robot analyze = new RobotAnalyzer("Nora");
 
-
-        //addCardsToBot(richardo, sarsor, gentil, choice);
-        addCardsToBot(analyze, sarsor, gentil, choice);
+        addCardsToBot(sarsor, discrete, analyze, choice, richardo);
     }
 
     /**
@@ -72,11 +71,13 @@ public class GameEngine {
      * au début du jeu
      * les 4 cartes dans la main de chaque robot
      */
-    private void addCardsToBot(Robot robot1, Robot robot2, Robot robot3, Robot robot4) {
+    private void addCardsToBot(Robot robot1, Robot robot2, Robot robot3, Robot robot4, Robot robot5) {
         bots.add(robot1);
         bots.add(robot2);
         bots.add(robot3);
         bots.add(robot4);
+        bots.add(robot5);
+
 
         for (Robot bot : bots) {
             for (int k = 0; k < 4; k++) {
@@ -90,8 +91,9 @@ public class GameEngine {
         Robot RobotDiscret2 = new RobotDiscrete("RobotDiscret2");
         Robot RobotDiscret3 = new RobotDiscrete("RobotDiscret3");
         Robot RobotDiscret4 = new RobotDiscrete("RobotDiscret4");
+        Robot RobotDiscret5 = new RobotDiscrete("RobotDiscret5");
 
-        addCardsToBot(RobotDiscret1, RobotDiscret3, RobotDiscret4, RobotDiscret2);
+        addCardsToBot(RobotDiscret1, RobotDiscret2, RobotDiscret3, RobotDiscret4, RobotDiscret5);
     }
 
     /**
@@ -116,7 +118,6 @@ public class GameEngine {
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
         destroyCharacters(listCharacters);
         Collections.shuffle(listCharacters);
-
         for (Robot bot : bots) {
             if (bot.getHasCrown()) {
                 List<Robot> listOfThreeBots = new ArrayList<>(bots);
@@ -128,15 +129,11 @@ public class GameEngine {
         }
         for (Robot bot : bots) {
             if (!bot.getHasCrown()) {
-
                 List<Robot> listOfThreeBots = new ArrayList<>(bots);
                 listOfThreeBots.remove(bot);
                 bot.pickCharacter(listCharacters, listOfThreeBots);
                 logger.info(bot.getName() + " Picked " + bot.getCharacter().getColor().getColorDisplay() + bot.getCharacter().getRole() + bot.getRESET());
             }
-        }
-        if (listCharacters.size() != 1) {
-            throw new RuntimeException();
         }
     }
 
@@ -246,11 +243,11 @@ public class GameEngine {
         for (int i = 0; i < 3; i++) {
             if (!charactersInHand.isEmpty()) {
                 CharactersType destroyedCharacter = charactersInHand.remove(0);
-
                 logger.info("Destroyed character: " + destroyedCharacter.getColor().getColorDisplay() + destroyedCharacter.getRole() + bots.get(0).getRESET());
 
             }
         }
+
         charactersInHand.add(CharactersType.ROI);
     }
 
