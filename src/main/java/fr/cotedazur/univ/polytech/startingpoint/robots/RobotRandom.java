@@ -12,7 +12,6 @@ public class RobotRandom extends Robot {
 
     public RobotRandom(String name) {
         super(name);
-        super.setTypeOfRobot("RobotRandom");
     }
 
     @Override

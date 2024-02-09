@@ -24,7 +24,6 @@ public abstract class Robot {
     protected List<DistrictsType> city;
     protected boolean hasCrown;
     protected boolean IsAssassinated;
-    private String typeOfRobot = "Robot";
 
 
     public Robot(String name) {
@@ -39,8 +38,6 @@ public abstract class Robot {
         this.characterHistory = new HashMap<>();
         this.buildingHistory = new HashMap<>();
         this.handSizeHistory = new HashMap<>();
-
-
     }
 
     public List<DistrictsType> getDistrictInHand() {
@@ -130,10 +127,6 @@ public abstract class Robot {
         return city.size();
     }
 
-    public void setTypeOfRobot(String typeOfRobot) {
-        this.typeOfRobot = typeOfRobot;
-    }
-
     public boolean getHasCrown() {
         return hasCrown;
     }
@@ -164,6 +157,9 @@ public abstract class Robot {
         this.districtInHand.addAll(listDistrict);
     }
 
+    /**
+     * Cette méthode permet d'afficher le status du bot : son personnage, sa main, ses golds, sa cité
+     */
     public String statusOfPlayer(boolean showColor) {
         String colorCharacter = "";
         if (showColor) {
@@ -249,6 +245,9 @@ public abstract class Robot {
         return listDistrict;
     }
 
+    /**
+     * Si jamais le robot possède le laboratoire ou la manufacture dans sa cité, il appelle le pouvoir de ses cartes
+     */
     public void specialCards(DeckDistrict deck, ActionOfBotDuringARound action) {
         if (getCity().contains(DistrictsType.MANUFACTURE)) {
             List<DistrictsType> listOfDistrictPicked = manufacture(deck);
@@ -266,6 +265,9 @@ public abstract class Robot {
 
     public abstract int generateChoice();
 
+    /**
+     * Implémente le pouvoir du quartier manufacture
+     */
     public List<DistrictsType> manufacture(DeckDistrict deck) {
         List<DistrictsType> listOfDistrictPicked = new ArrayList<>();
         if (getGolds() >= 3) {
@@ -279,6 +281,9 @@ public abstract class Robot {
         return listOfDistrictPicked;
     }
 
+    /**
+     * Implémente le pouvoir du laboratoire
+     */
     public List<DistrictsType> laboratoire(DeckDistrict deck) {
 
         List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
@@ -293,6 +298,7 @@ public abstract class Robot {
     }
 
     public abstract void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots);
+
 
     public Robot chooseVictimForCondottiere(List<Robot> bots) {
         Robot victim = bots.get(0);
@@ -338,6 +344,9 @@ public abstract class Robot {
         return characterHistory;
     }
 
+    /**
+     * Cette méthode permet d'update l'historique des personnages de chaque robot, pour savoir quel est le personnage qu'il a pioché en priorité
+     */
     public void updateHistory(List<Robot> bots) {
         for (Robot bot : bots) {
             String botName = bot.getName();
@@ -359,6 +368,9 @@ public abstract class Robot {
         }
     }
 
+    /**
+     * Cette méthode prédit le personnage que va piocher le bot passé en paramètre via son nom
+     */
     public CharactersType predictOpponentNextCharacter(String botName) {
         List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
 
@@ -373,6 +385,7 @@ public abstract class Robot {
 
         return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
+
 
     public Integer countOpponentNextCharacter(String botName) {
         List<CharactersType> characterHistory = this.getCharacterHistory().get(botName);
@@ -389,6 +402,9 @@ public abstract class Robot {
         return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
     }
 
+    /**
+     * Cette méthode permet de choisir le numéro du personnage à tuer
+     */
     public int getNumberOfCharacterToKill(List<Robot> bots) {
 
         return (int) (Math.random() * (8 - 2) + 3);

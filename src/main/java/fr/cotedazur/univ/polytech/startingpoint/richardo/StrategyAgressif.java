@@ -12,7 +12,9 @@ public class StrategyAgressif {
     public StrategyAgressif() {
     }
 
-
+    /**
+     * Cette méthode permet de savoir si le bot doit devenir agressif ou pas
+     */
     public void isAgressif(List<Robot> bots, RobotRichardo robot) {
         for (Robot bot : bots) {
             if ((((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2) && (bot.getNumberOfDistrictInCity() > 2)) || (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()) && robot.getGolds() > 4))
@@ -26,7 +28,10 @@ public class StrategyAgressif {
 
     }
 
-
+    /**
+     * Cette méthode permet de choisir la victime du condottière
+     * Richard vise en priorité les joueurs qui ont plus de quartiers que lui dans sa cité
+     */
     public Robot chooseVictimForCondottiere(List<Robot> bots, RobotRichardo robot) {
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
         Robot victim = bots.get(0);
@@ -46,6 +51,11 @@ public class StrategyAgressif {
 
     }
 
+    /**
+     * Cette méthode permet à Richard de choisir un personnage agressif
+     * Richard essaie de piocher le condottière en priorité si un joueur est proche de finir et qu'il a au moins deux quartiers de plus que lui
+     * Ensuite, richard essaie de piocher l'assassin puis l'évêque
+     */
     public boolean pickAgressif(List<CharactersType> availableCharacters, List<Robot> bots, RobotRichardo richardo) {
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(richardo, true);
         for (Robot bot : bots) {
@@ -77,27 +87,23 @@ public class StrategyAgressif {
 
 
 
-
+    /**
+     * Cette méthode permet de renvoyer le robot à tuer si l'assassin à bien choisit
+     */
     public Robot chooseVictimForAssassin(List<Robot> bots, RobotRichardo robot) {
         int characterForAssassin = robot.getNumberOfCharacterToKill(bots ) ;
-
-
         Robot victim = null;
         for (Robot bot : bots) {
-
-
             if (bot.getCharacter().getNumber() == characterForAssassin) {
                 victim = bot;
             }
         }
-
         return victim;
 
 
     }
 
     public boolean hasMaxDistricts(List<Robot> bots, RobotRichardo robot) {
-
         for (Robot bot : bots) {
             if (bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity()) {
                 return false;
@@ -107,9 +113,7 @@ public class StrategyAgressif {
     }
 
     public Robot chooseVictimForMagicien(List<Robot> bots, RobotRichardo robot) {
-
         ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
-
         Robot victim = bots.get(0);
         int numberOfDistrictsInHand = victim.getNumberOfDistrictInHand();
 

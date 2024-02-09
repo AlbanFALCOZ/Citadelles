@@ -114,7 +114,6 @@ public class RobotDiscrete extends Robot {
 
         for (CharactersType character : priorityOrder) {
             if (availableCharacters.contains(character)) {
-                action.printPickCharacterWithPriority(character);
                 chosenCharacter = character;
                 availableCharacters.remove(character);
                 break;
@@ -122,7 +121,6 @@ public class RobotDiscrete extends Robot {
         }
 
         if (chosenCharacter == null && !availableCharacters.isEmpty()) {
-            action.printPickdefaultCharacter();
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(0);
         }

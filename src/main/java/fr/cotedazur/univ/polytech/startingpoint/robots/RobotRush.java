@@ -97,7 +97,6 @@ public class RobotRush extends Robot {
         int costOfDistrictToBeBuilt = 0;
         int i = 0;
 
-        List<DistrictsType> listDistrictDrawn = new ArrayList<>(listDistrict);
         List<DistrictsType> listDistrictPicked = new ArrayList<>();
 
         while (i < listDistrict.size() && listDistrictToBuild.size() < getNumberOfCardsChosen()) {

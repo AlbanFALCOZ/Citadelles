@@ -188,14 +188,6 @@ public class ActionOfBotDuringARound {
 
     }
 
-    public void printPickCharacterWithPriority(CharactersType character) {
-       // logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
-    }
-
-    public void printPickdefaultCharacter() {
-        logger.info(bot.getName() + " chose the first character in the list because he has no districts of any type.");
-    }
-
 
     public void printCanFinishThisTurn() {
         logger.info(bot.getName() + " can finish this turn so " + bot.getName() + " picked " + bot.getCharacter().getRole());

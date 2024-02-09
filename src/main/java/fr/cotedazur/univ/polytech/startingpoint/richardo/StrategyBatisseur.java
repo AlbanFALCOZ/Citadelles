@@ -13,8 +13,9 @@ public class StrategyBatisseur {
     public StrategyBatisseur() {
     }
 
-
-    //Dans le cas où Richardo est un batisseur, il essaie de construire les quartiers noble/marchands en priorité.
+    /**
+     * Dans le cas où Richardo est un batisseur, il essaie de construire les quartiers noble/marchands en priorité.
+     */
     public String tryBuildBatisseur(RobotRichardo bot) {
         for (int i = 0; i < bot.getDistrictInHand().size(); i++) {
             DistrictsType district = bot.getDistrictInHand().get(i);
@@ -29,10 +30,16 @@ public class StrategyBatisseur {
         return bot.buildDistrictAndRetrieveItsName();
     }
 
+    /**
+     * Richard devient un batisseur s'il a moins de 6 golds
+     */
     public void isBatisseur(RobotRichardo bot) {
         bot.setBatisseur(bot.getGolds() < 4);
     }
 
+    /**
+     * En tant que batisseur, Richard essaie de piocher en priorité les personnages marchand, roi puis architecte
+     */
     public boolean pickBatisseur(List<CharactersType> availableCharacters, RobotRichardo bot) {
         isBatisseur(bot);
 
@@ -49,14 +56,14 @@ public class StrategyBatisseur {
             bot.pickCharacterCard(availableCharacters, CharactersType.ARCHITECTE);
             return bot.getCharacter() == CharactersType.ARCHITECTE;
         }
-        /*
-        bot.setCharacter(availableCharacters.get(0));
-        availableCharacters.remove(0);
-
-         */
         return false;
     }
 
+    /**
+     * Dans le cas où Richard est le roi ou le marchand, après avoir pioché des cartes depuis la pioche, il choisit de mettre dans sa main en priorité les cartes marchands/nobles
+     * Si jamais il n'en trouve pas, il choisit d'appeler le pickDistrictCard sans être un batisseur
+     * Si jamais il en trouve une mais qu'il peut en prendre plus, il prend les premiers cartes qu'il a piochées
+     */
     public List<DistrictsType> pickDistrictCardBatisseur(List<DistrictsType> listDistrict, DeckDistrict deck, RobotRichardo bot) {
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         for (DistrictsType district : listDistrict) {

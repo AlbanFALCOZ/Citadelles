@@ -25,10 +25,10 @@ public class Main {
                 .addObject(citadelleArguments)
                 .build();
         commander.parse(args);
-        if (citadelleArguments._2ThousandsGame()) testBots();
+        if (citadelleArguments._2ThousandsGame()) testBots(false);
         if (citadelleArguments.isDemoMode()) showGame();
         if (citadelleArguments.getCsvFilePath()) {
-            testBots();
+            testBots(true);
             ParseFullGameStats.parseFullStats();
         }
 
@@ -52,9 +52,9 @@ public class Main {
      * cette méthode permet de jouer 1000 games avec nos 4 bots
      * puis de jouer 1000 games avec uniquement notre meilleur bot
      */
-    public static void testBots() {
-        play1000Games(false);
-        play1000Games(true);
+    public static void testBots(boolean updateCSV) {
+        play1000Games(false,updateCSV);
+        play1000Games(true,updateCSV);
     }
 
     /**
@@ -62,7 +62,7 @@ public class Main {
      * et d'afficher les statistiques des games
      */
 
-    public static void play1000Games(boolean onlyDiscretBots) {
+    public static void play1000Games(boolean onlyDiscretBots, boolean updateCSV) {
         String[] listName = new String[5];
         int[] listWinners = new int[5];
         int[] listWinnersTied = new int[5];
@@ -93,8 +93,11 @@ public class Main {
             logger.info("-Nombres d'egalitees        : " + numberOfGamesWonButTied + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesWonButTied, numberOfGames) + "%");
             logger.info("-Nombres de parties perdues : " + numberOfGamesLost + "/" + numberOfGames + " soit " + getRateFromNumberOfGames(numberOfGamesLost, numberOfGames) + "%");
 
-            String[][] data = {{listName[i], String.valueOf(numberOfGamesWon), String.valueOf(getRateFromNumberOfGames(numberOfGamesWon, numberOfGames)), String.valueOf(numberOfGamesWonButTied), String.valueOf(getRateFromNumberOfGames(numberOfGamesWonButTied, numberOfGames)), String.valueOf(numberOfGamesLost), String.valueOf(getRateFromNumberOfGames(numberOfGamesLost, numberOfGames)), String.valueOf((float) mapScore.get(listName[i]) / numberOfGames)}};
-            WriteStatsByLine.writeDataLineByLine(data);
+            if (updateCSV) {
+                String[][] data = {{listName[i], String.valueOf(numberOfGamesWon), String.valueOf(getRateFromNumberOfGames(numberOfGamesWon, numberOfGames)), String.valueOf(numberOfGamesWonButTied), String.valueOf(getRateFromNumberOfGames(numberOfGamesWonButTied, numberOfGames)), String.valueOf(numberOfGamesLost), String.valueOf(getRateFromNumberOfGames(numberOfGamesLost, numberOfGames)), String.valueOf((float) mapScore.get(listName[i]) / numberOfGames)}};
+                WriteStatsByLine.writeDataLineByLine(data);
+            }
+
 
         }
         logger.info("Fin des statistiques\n");

@@ -17,12 +17,10 @@ import static org.mockito.Mockito.when;
 public class RobotAnalyzerTest {
     private RobotAnalyzer robotAnalyzer;
     private DeckDistrict mockDeckDistrict;
-    private List<Robot> mockAllPlayers;
 
 
     @BeforeEach
     public void setUp() {
-        mockAllPlayers = new ArrayList<>();
         robotAnalyzer = new RobotAnalyzer("TestBot");
         mockDeckDistrict = mock(DeckDistrict.class);
         robotAnalyzer.getCity().clear();

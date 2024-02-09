@@ -19,7 +19,6 @@ public class Winner {
 
     public static final Logger logger = Logger.getLogger(Winner.class.getName());
     private final List<Robot> bots;
-    private List<Robot> winnerBots;
 
     /**
      * @param bots la liste des robots

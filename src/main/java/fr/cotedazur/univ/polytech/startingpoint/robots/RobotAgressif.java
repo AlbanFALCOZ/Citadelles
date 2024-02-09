@@ -18,7 +18,6 @@ public class RobotAgressif extends Robot {
 
     public RobotAgressif(String name) {
         super(name);
-        super.setTypeOfRobot("RobotSarsor");
     }
 
     @Override

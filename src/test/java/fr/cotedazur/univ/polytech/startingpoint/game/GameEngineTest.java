@@ -45,7 +45,6 @@ class GameEngineTest {
 
     @Test
     void testIsBuiltEigthDistrict_OneRobotHasEightDistricts() {
-        GameEngine game = new GameEngine();
         Robot bot = gameEngine.getBots().get(1);
 
         bot.setCharacter(CharactersType.MARCHAND);
