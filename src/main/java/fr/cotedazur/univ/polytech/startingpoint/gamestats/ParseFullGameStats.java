@@ -1,4 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.gamestats;
+
 import com.opencsv.CSVReader;
 
 import java.io.File;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ParseFullGameStats {
     public static void parseFullStats() throws Exception {
-        Path relative = Paths.get("stats","gamestats.csv");
+        Path relative = Paths.get("stats", "gamestats.csv");
         File file = new File(relative.toString());
 
         List<String[]> allRows;

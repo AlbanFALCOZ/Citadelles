@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class Round {
 
-    private List<Robot> bots;
-    private boolean systemPrint;
-    private DeckDistrict deck;
+    private final List<Robot> bots;
+    private final boolean systemPrint;
+    private final DeckDistrict deck;
     private int numberOfCharacterToStealFrom = 0;
     private Robot voleur;
     private Robot victimOfVoleur;
@@ -39,7 +39,7 @@ public class Round {
     }
 
 
-    public List<Robot> getBots(){
+    public List<Robot> getBots() {
         return bots;
     }
 
@@ -90,15 +90,16 @@ public class Round {
      */
     public void choosePowerOfBot(Robot bot) {
         List<Robot> robots = new ArrayList<>(bots);
-        ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
+        ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot, systemPrint);
         Power powerOfBot = new Power(bot, actionOfBotDuringARound);
         switch (bot.getCharacter()) {
             case ASSASSIN:
                 int numberOfTheCharacterToKill = bot.getNumberOfCharacterToKill(bots);
-                for (CharactersType character: CharactersType.values()) {
-                    if (character.getNumber() == numberOfTheCharacterToKill) actionOfBotDuringARound.printVictimAssassined(character);
+                for (CharactersType character : CharactersType.values()) {
+                    if (character.getNumber() == numberOfTheCharacterToKill)
+                        actionOfBotDuringARound.printVictimAssassined(character);
                 }
-                Robot victim = bot.chooseVictimForAssassin(bots,numberOfTheCharacterToKill);
+                Robot victim = bot.chooseVictimForAssassin(bots, numberOfTheCharacterToKill);
                 if (victim != null) powerOfBot.assassin(victim);
                 break;
             case MARCHAND:
@@ -114,7 +115,7 @@ public class Round {
             case VOLEUR: //La première fois que l'on rentre dans ce cas, on choisit un personnage à voler grâce au numberOfCharacterToStealFrom
                 //Puis lors du tour du personnage que l'on doit voler, on rentre dans le pouvoir voleur du bot pour voler les golds
                 robots.removeIf(robot -> robot.getCharacter().equals(CharactersType.VOLEUR));
-                
+
                 if (numberOfCharacterToStealFrom == 0) {
                     numberOfCharacterToStealFrom = bot.chooseVictimForVoleur(bots).getNumber();
                     this.voleur = bot;
@@ -156,7 +157,7 @@ public class Round {
         numberOfCharacterToStealFrom = 0;
         for (Robot bot : bots) {
             if (!bot.getIsAssassinated()) {
-                ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
+                ActionOfBotDuringARound actionOfBotDuringARound = new ActionOfBotDuringARound(bot, systemPrint);
                 actionOfBotDuringARound.startTurnOfBot();
                 if (bot.getCharacter().getNumber() == numberOfCharacterToStealFrom) {
                     this.victimOfVoleur = bot;
@@ -174,7 +175,7 @@ public class Round {
                         break;
                     case 1:
                         bot.addGold(2);
-                        actionOfBotDuringARound = new ActionOfBotDuringARound(bot,systemPrint);
+                        actionOfBotDuringARound = new ActionOfBotDuringARound(bot, systemPrint);
                         actionOfBotDuringARound.printActionOfBotWhoGainedGold(2);
                         break;
 
@@ -185,9 +186,8 @@ public class Round {
                 String hasBuilt = bot.tryBuild();
                 int goldsWon = bot.winGoldsByTypeOfBuildings();
                 actionOfBotDuringARound.printBuildingAndPowerOfBot(hasBuilt, goldsWon);
-            }
-            else {
-                ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot,systemPrint);
+            } else {
+                ActionOfBotDuringARound action = new ActionOfBotDuringARound(bot, systemPrint);
                 action.printTurnHasBeenSkipped();
             }
         }

@@ -7,16 +7,15 @@ import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import static fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo.*;
+import static fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo.MILITARY;
+import static fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo.RELIGIOUS;
 
 
 public class StrategyOpportuniste {
 
-    public StrategyOpportuniste(){}
+    public StrategyOpportuniste() {
+    }
 
     public void isOpportuniste(RobotRichardo bot) {
         bot.setOpportuniste(bot.getNumberOfDistrictInCity() >= 6 || bot.getGolds() == 0);
@@ -28,12 +27,12 @@ public class StrategyOpportuniste {
         List<DistrictsType> listDistrictInCity = bot.getCity();
         listDistrictInHand.sort(Comparator.comparingInt(DistrictsType::getCost).reversed());
         for (DistrictsType district : listDistrictInHand) {
-            if (!listDistrictInCity.contains(district) && ((district.getType().equals(RELIGIOUS) || district.getType().equals(MILITARY)) && district.getCost() <= bot.getGolds())){
-                    district.powerOfDistrict(bot,1);
-                    listDistrictInCity.add(district);
-                    bot.setGolds(bot.getGolds() - district.getCost());
-                    listDistrictInHand.remove(district);
-                    return "a new " + district.getName();
+            if (!listDistrictInCity.contains(district) && ((district.getType().equals(RELIGIOUS) || district.getType().equals(MILITARY)) && district.getCost() <= bot.getGolds())) {
+                district.powerOfDistrict(bot, 1);
+                listDistrictInCity.add(district);
+                bot.setGolds(bot.getGolds() - district.getCost());
+                listDistrictInHand.remove(district);
+                return "a new " + district.getName();
 
             }
 
@@ -43,9 +42,9 @@ public class StrategyOpportuniste {
     }
 
 
-    public boolean pickOpportuniste(List<CharactersType> availableCharacters,RobotRichardo robot) {
+    public boolean pickOpportuniste(List<CharactersType> availableCharacters, RobotRichardo robot) {
         isOpportuniste(robot);
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot,true);
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
         characterCounts.put(CharactersType.EVEQUE, robot.countDistrictsByType(RELIGIOUS) + robot.countDistrictsInHandByType(RELIGIOUS));
         characterCounts.put(CharactersType.CONDOTTIERE, robot.countDistrictsByType(MILITARY) + robot.countDistrictsInHandByType(MILITARY));
@@ -76,31 +75,22 @@ public class StrategyOpportuniste {
             return true;
         }
 
-        /*
-        if (chosenCharacter == null && !availableCharacters.isEmpty()) {
-            chosenCharacter = availableCharacters.get(0);
-            availableCharacters.remove(0);
-            robot.setAvailableCharacters(availableCharacters);
-
-        }
-
-         */
         return false;
     }
 
     public List<DistrictsType> pickDistrictCardOpportuniste(List<DistrictsType> listDistrict, DeckDistrict deck, RobotRichardo robot) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot,true);
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
         listDistrict.sort(Comparator.comparing(DistrictsType::getCost).reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int indice = 0;
 
-        indice = chooseSpecialDistrict(listDistrict, indice, listDistrictToBuild, robot);
-
         indice = chooseDistrictByType(listDistrict, indice, listDistrictToBuild, robot);
+
+        indice = chooseSpecialDistrict(listDistrict, indice, listDistrictToBuild, robot);
 
         indice = chooseAnyDistrict(listDistrict, indice, listDistrictToBuild, robot);
 
-        if (indice < robot.getNumberOfCardsChosen()){
+        if (indice < robot.getNumberOfCardsChosen()) {
             action.printCantPickDistrict();
 
         }
@@ -112,8 +102,8 @@ public class StrategyOpportuniste {
     }
 
     private int chooseAnyDistrict(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild, RobotRichardo robot) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot,true);
-        if (indice < robot.getNumberOfCardsChosen()){
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
+        if (indice < robot.getNumberOfCardsChosen()) {
             Iterator<DistrictsType> iterator = listDistrict.iterator();
             while (iterator.hasNext()) {
                 DistrictsType currentDistrict = iterator.next();
@@ -129,8 +119,9 @@ public class StrategyOpportuniste {
     }
 
     private int chooseSpecialDistrict(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild, RobotRichardo robot) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot,true);
-            Iterator<DistrictsType> iterator = listDistrict.iterator();
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
+        Iterator<DistrictsType> iterator = listDistrict.iterator();
+        if (indice < robot.getNumberOfCardsChosen()) {
             while (iterator.hasNext()) {
                 DistrictsType currentDistrict = iterator.next();
                 if (!isDistrictInCityOrHand(currentDistrict, robot) && isSpecialDistrictType(currentDistrict.getType())) {
@@ -140,24 +131,24 @@ public class StrategyOpportuniste {
                 }
                 if (indice == robot.getNumberOfCardsChosen()) break;
             }
+        }
 
         return indice;
     }
 
     private int chooseDistrictByType(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild, RobotRichardo robot) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot,true);
-        if (indice < robot.getNumberOfCardsChosen()) {
-            Iterator<DistrictsType> iterator = listDistrict.iterator();
-            while (iterator.hasNext()) {
-                DistrictsType currentDistrict = iterator.next();
-                if (!isDistrictInCityOrHand(currentDistrict, robot) && currentDistrict.getType().equals(robot.getCharacter().getType())) {
-                    indice = chooseDistrict(currentDistrict, listDistrictToBuild, indice);
-                    iterator.remove();
-                    action.printPickDistrictByType(currentDistrict);
-                }
-                if (indice == robot.getNumberOfCardsChosen()) break;
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
+        Iterator<DistrictsType> iterator = listDistrict.iterator();
+        while (iterator.hasNext()) {
+            DistrictsType currentDistrict = iterator.next();
+            if (!isDistrictInCityOrHand(currentDistrict, robot) && currentDistrict.getType().equals(robot.getCharacter().getType())) {
+                indice = chooseDistrict(currentDistrict, listDistrictToBuild, indice);
+                iterator.remove();
+                action.printPickDistrictByType(currentDistrict);
             }
+            if (indice == robot.getNumberOfCardsChosen()) break;
         }
+
         return indice;
     }
 
@@ -176,7 +167,7 @@ public class StrategyOpportuniste {
         return indice;
     }
 
-    public CharactersType chooseVictimForVoleur(List<Robot> bots, RobotRichardo robot){
+    public CharactersType chooseVictimForVoleur(List<Robot> bots, RobotRichardo robot) {
         List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
         characters.remove(CharactersType.ASSASSIN);
         characters.remove(CharactersType.VOLEUR);
@@ -184,7 +175,7 @@ public class StrategyOpportuniste {
         Map<Integer, CharactersType> characterFrequency = new HashMap<>();
 
         for (Robot bot : bots) {
-            if (!bot.getName().equals(robot.getName())){
+            if (!bot.getName().equals(robot.getName())) {
                 characterFrequency.put(robot.countOpponentNextCharacter(bot.getName()), robot.predictOpponentNextCharacter(bot.getName()));
             }
         }

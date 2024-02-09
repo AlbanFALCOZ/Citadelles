@@ -11,7 +11,6 @@ import java.util.List;
 public class RobotChoiceOfCharacter extends Robot {
 
 
-
     public RobotChoiceOfCharacter(String name) {
         super(name);
     }
@@ -21,7 +20,7 @@ public class RobotChoiceOfCharacter extends Robot {
         for (int i = 0; i < getDistrictInHand().size(); i++) {
             DistrictsType district = getDistrictInHand().get(i);
             if (district.getCost() <= getGolds() && !city.contains(district)) {
-                district.powerOfDistrict(this,1);
+                district.powerOfDistrict(this, 1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(i);
@@ -68,13 +67,13 @@ public class RobotChoiceOfCharacter extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-        boolean hasPickedMagician = tryToPick(CharactersType.MAGICIEN,availableCharacters);
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
+        boolean hasPickedMagician = tryToPick(CharactersType.MAGICIEN, availableCharacters);
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
         if (hasPickedMagician) {
             return;
         }
         if (canFinishThisTurn()) {
-            boolean hasPickedAssassin = tryToPick(CharactersType.ASSASSIN,availableCharacters);
+            boolean hasPickedAssassin = tryToPick(CharactersType.ASSASSIN, availableCharacters);
             if (hasPickedAssassin) {
                 action.printCanFinishThisTurn();
                 return;
@@ -82,7 +81,7 @@ public class RobotChoiceOfCharacter extends Robot {
         }
 
         if (canFinishNextTurn()) {
-            boolean hasPickedKing = tryToPick(CharactersType.ROI,availableCharacters);
+            boolean hasPickedKing = tryToPick(CharactersType.ROI, availableCharacters);
             if (hasPickedKing) {
                 action.printCanFinishNextTurn();
                 return;
@@ -97,7 +96,7 @@ public class RobotChoiceOfCharacter extends Robot {
 
         for (Robot bot : bots) {
             if (bot.city.size() == 6 && !bot.getName().equals(getName())) {
-                boolean hasPicked = tryToPick(CharactersType.CONDOTTIERE,availableCharacters);
+                boolean hasPicked = tryToPick(CharactersType.CONDOTTIERE, availableCharacters);
                 if (hasPicked) {
                     action.printPickCondottiere(bot);
                     return;
@@ -122,7 +121,7 @@ public class RobotChoiceOfCharacter extends Robot {
                 numberOfDistrictThatCanBeBuilt++;
             }
         }
-        return (numberOfDistrictThatCanBeBuilt >=2);
+        return (numberOfDistrictThatCanBeBuilt >= 2);
     }
 
     public boolean tryToPick(CharactersType characterToPick, List<CharactersType> availableCharacters) {
@@ -137,10 +136,10 @@ public class RobotChoiceOfCharacter extends Robot {
     }
 
     @Override
-    public Robot chooseVictimForCondottiere(List<Robot> bots){
+    public Robot chooseVictimForCondottiere(List<Robot> bots) {
         Robot victim = bots.get(0);
         for (Robot bot : bots) {
-            if (bot.getNumberOfDistrictInCity() == 6 && bot.getCharacter()!= CharactersType.CONDOTTIERE && !bot.hasEightDistrict()) {
+            if (bot.getNumberOfDistrictInCity() == 6 && bot.getCharacter() != CharactersType.CONDOTTIERE && !bot.hasEightDistrict()) {
                 return bot;
             }
         }

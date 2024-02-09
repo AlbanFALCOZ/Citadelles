@@ -12,7 +12,7 @@ public class ActionOfBotDuringARound {
 
 
     private static final Logger logger = Logger.getLogger(ActionOfBotDuringARound.class.getName());
-    private Robot bot;
+    private final Robot bot;
     private List<DistrictsType> listDistrictDrawn;
     private List<DistrictsType> listDistrictPicked;
 
@@ -302,31 +302,29 @@ public class ActionOfBotDuringARound {
 
 
     public void printVictimCondottiere(Robot victim) {
-        logger.info(bot.getName() + " decided to attack" +   victim.getName() + " because they almost finished building their district" ) ;
+        logger.info(bot.getName() + " decided to attack" + victim.getName() + " because they almost finished building their district");
     }
 
     public void printRichardPickCondottiere(Robot target) {
-        logger.info(bot.getName() + " decided to pick Condottiere because " + target.getName() + "  is in lead and it's getting tense ") ;
+        logger.info(bot.getName() + " decided to pick Condottiere because " + target.getName() + "  is in lead and it's getting tense ");
     }
 
     public void printRichardoPickAssassin() {
         logger.info(bot.getName() + " decided to pick Assassin because it smells like thief");
     }
 
-    public void printRichardPickEveque(Robot robot) {
-        logger.info(bot.getName() + "decided to pick Eveque because he's now trying to stop ") ;
+    public void printRichardPickEveque() {
+        logger.info(bot.getName() + "decided to pick Eveque because he's now trying to stop ");
     }
 
     public void printVictimeForMagicien(Robot victim) {
         logger.info(bot.getName() + " decide to pick Magicien because he has nothing in hand and " + victim.getName() + "has a lot of disctricts in hand");
     }
+
     public void printPrioritizeTYpe(CharactersType chosenCharacter) {
         logger.info(bot.getName() + " prioritizes " + chosenCharacter);
     }
 
-    public void printVictimForVoleurNotExist() {
-        logger.info(bot.getName() + " can't steal from anyone because there is no one to steal from");
-    }
 
     public void printChoiceOfThief(Robot bot, int numberOfCharacter) {
         logger.info(bot.getName() + " chose to steal from " + getNameOfCharacterFromNumber(numberOfCharacter));

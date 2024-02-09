@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
@@ -9,21 +8,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 class PowerTest {
+
+    @Mock
+    private Robot mockedBot;
+    @Mock
+    private ActionOfBotDuringARound mockedAction;
+    @InjectMocks
+    private Power power;
 
     @Test
     void canDestroyDistrict() {
         RobotRandom destructor = new RobotRandom("destructor");
         RobotRandom victim = new RobotRandom("victim");
-        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor,true));
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor, true));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MAGICIEN);
         victim.addDistrict(DistrictsType.TAVERNE);
@@ -43,14 +46,12 @@ class PowerTest {
 
     }
 
-
-
-//Sans mockito
+    //Sans mockito
     @Test
     void condottiere() {
         RobotRandom destructor = new RobotRandom("destructor");
         RobotRandom victim = new RobotRandom("victim");
-        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor,true));
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor, true));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MARCHAND);
         victim.setGolds(30);
@@ -78,13 +79,11 @@ class PowerTest {
         assertEquals(5, destructor.getGolds());
     }
 
-
-
     @Test
     public void tryDestroyDonjon() {
         RobotRandom destructor = new RobotRandom("destructor");
         RobotRandom victim = new RobotRandom("victim");
-        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor,true));
+        Power power = new Power(destructor, new ActionOfBotDuringARound(destructor, true));
         destructor.setCharacter(CharactersType.CONDOTTIERE);
         victim.setCharacter(CharactersType.MARCHAND);
         victim.setGolds(30);
@@ -107,13 +106,13 @@ class PowerTest {
     @Test
     public void marchand() {
         RobotRandom marchand = new RobotRandom("marchand");
-        Power power = new Power(marchand,new ActionOfBotDuringARound(marchand,true));
+        Power power = new Power(marchand, new ActionOfBotDuringARound(marchand, true));
         marchand.setCharacter(CharactersType.MARCHAND);
-        assertEquals(2,marchand.getGolds());
+        assertEquals(2, marchand.getGolds());
         power.marchand();
-        assertEquals(3,marchand.getGolds());
+        assertEquals(3, marchand.getGolds());
         marchand.winGoldsByTypeOfBuildings();
-        assertEquals(3,marchand.getGolds());
+        assertEquals(3, marchand.getGolds());
         marchand.addDistrict(DistrictsType.TAVERNE);
         marchand.addGold(1);
         marchand.addDistrict(DistrictsType.ECHOPPE);
@@ -121,14 +120,14 @@ class PowerTest {
         marchand.tryBuild();
         marchand.tryBuild();
         marchand.winGoldsByTypeOfBuildings();
-        assertEquals(5,marchand.getGolds());
+        assertEquals(5, marchand.getGolds());
     }
 
     @Test
     void testAssassin() {
         RobotRandom assassin = new RobotRandom("Assassin");
         RobotRandom victim = new RobotRandom("Victim");
-        Power power = new Power(assassin,new ActionOfBotDuringARound(assassin,true));
+        Power power = new Power(assassin, new ActionOfBotDuringARound(assassin, true));
         assassin.setCharacter(CharactersType.ASSASSIN);
         victim.setCharacter(CharactersType.MARCHAND);
         assertFalse(victim.getIsAssassinated());
@@ -136,12 +135,6 @@ class PowerTest {
         assertTrue(victim.getIsAssassinated());
     }
 
-    @Mock
-    private Robot mockedBot;
-    @Mock
-    private ActionOfBotDuringARound mockedAction;
-    @InjectMocks
-    private Power power;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -172,11 +165,11 @@ class PowerTest {
             robotVictim.addDistrict(deckDistrict.getDistrictsInDeck());
             robotVictim.tryBuild();
         }
-        assertEquals(7,robotVictim.getNumberOfDistrictInCity());
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robotDestructeur,true);
-        Power destruction = new Power(robotDestructeur,action);
+        assertEquals(7, robotVictim.getNumberOfDistrictInCity());
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robotDestructeur, true);
+        Power destruction = new Power(robotDestructeur, action);
         destruction.condottiere(robotVictim);
-        assertEquals(6,robotVictim.getNumberOfDistrictInCity());
+        assertEquals(6, robotVictim.getNumberOfDistrictInCity());
         //La victime a vu un de ses batiments se faire détruire
 
         while (robotVictim.getNumberOfDistrictInCity() < 8) {
@@ -184,9 +177,9 @@ class PowerTest {
             robotVictim.tryBuild();
         }
 
-        assertEquals(8,robotVictim.getNumberOfDistrictInCity());
+        assertEquals(8, robotVictim.getNumberOfDistrictInCity());
         destruction.condottiere(robotVictim);
-        assertEquals(8,robotVictim.getNumberOfDistrictInCity());
+        assertEquals(8, robotVictim.getNumberOfDistrictInCity());
         //Le condottière ne peut pas attaquer un joueur qui a déjà fini de construire ses 8 batiments
     }
 
@@ -199,13 +192,13 @@ class PowerTest {
         robotVictim.setGolds(100);
         robotDestructeur.setGolds(100);
         robotVictim.addDistrict(DistrictsType.OBSERVATOIRE);
-        assertEquals(2,robotVictim.numberOfCardsDrawn);
+        assertEquals(2, robotVictim.numberOfCardsDrawn);
         robotVictim.tryBuild();
-        assertEquals(3,robotVictim.numberOfCardsDrawn);
-        Power power = new Power(robotDestructeur,new ActionOfBotDuringARound(robotDestructeur,true));
+        assertEquals(3, robotVictim.numberOfCardsDrawn);
+        Power power = new Power(robotDestructeur, new ActionOfBotDuringARound(robotDestructeur, true));
         power.condottiere(robotVictim);
-        assertEquals(0,robotVictim.getNumberOfDistrictInCity());
-        assertEquals(2,robotVictim.numberOfCardsDrawn);
+        assertEquals(0, robotVictim.getNumberOfDistrictInCity());
+        assertEquals(2, robotVictim.numberOfCardsDrawn);
     }
 
     @Test
@@ -217,13 +210,13 @@ class PowerTest {
         robotVictim.setGolds(100);
         robotDestructeur.setGolds(100);
         robotVictim.addDistrict(DistrictsType.BIBLIOTHEQUE);
-        assertEquals(1,robotVictim.numberOfCardsChosen);
+        assertEquals(1, robotVictim.numberOfCardsChosen);
         robotVictim.tryBuild();
-        assertEquals(2,robotVictim.numberOfCardsChosen);
-        Power power = new Power(robotDestructeur,new ActionOfBotDuringARound(robotDestructeur,true));
+        assertEquals(2, robotVictim.numberOfCardsChosen);
+        Power power = new Power(robotDestructeur, new ActionOfBotDuringARound(robotDestructeur, true));
         power.condottiere(robotVictim);
-        assertEquals(0,robotVictim.getNumberOfDistrictInCity());
-        assertEquals(1,robotVictim.numberOfCardsChosen);
+        assertEquals(0, robotVictim.getNumberOfDistrictInCity());
+        assertEquals(1, robotVictim.numberOfCardsChosen);
     }
 
 }

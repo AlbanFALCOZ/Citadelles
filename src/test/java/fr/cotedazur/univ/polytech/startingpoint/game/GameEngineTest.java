@@ -164,9 +164,9 @@ class GameEngineTest {
                 bot.pickCharacter(listCharacters, listOfThreeBots);
             }
         }
-        assertEquals(1,listCharacters.size());
+        assertEquals(1, listCharacters.size());
 
-        gameEngine = new GameEngine(true,true);
+        gameEngine = new GameEngine(true, true);
         listCharacters = gameEngine.getDeckCharacters().getCharactersInHand();
         gameEngine.destroyCharacters(listCharacters);
         Collections.shuffle(listCharacters);
@@ -187,8 +187,6 @@ class GameEngineTest {
             }
         }
     }
-
-
 
 
 }

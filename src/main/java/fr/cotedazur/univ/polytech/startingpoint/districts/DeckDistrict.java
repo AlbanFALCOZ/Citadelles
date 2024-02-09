@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class DeckDistrict {
 
-    private List<DistrictsType> districtsInDeck;
+    private final List<DistrictsType> districtsInDeck;
 
     /**
      * Constructeur de la classe DeckDistrict

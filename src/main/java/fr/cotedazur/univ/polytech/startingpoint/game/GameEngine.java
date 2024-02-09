@@ -3,13 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
-import fr.cotedazur.univ.polytech.startingpoint.richardo.RobotRichardo;
-import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotAgressif;
-
 import fr.cotedazur.univ.polytech.startingpoint.robots.*;
-
 
 import java.util.*;
 import java.util.logging.Level;
@@ -21,17 +15,13 @@ import java.util.logging.Logger;
 public class GameEngine {
 
 
-
-    private ArrayList<Robot> bots;
-    private DeckDistrict deckDistricts;
-    private DeckCharacters deckCharacters;
-    private Round round;
-
-    private  int list[] = {4, 2, 2, 2};
-
-    private boolean systemPrint = false;
-
     private static final Logger logger = Logger.getLogger(GameEngine.class.getName());
+    private final ArrayList<Robot> bots;
+    private final DeckDistrict deckDistricts;
+    private final DeckCharacters deckCharacters;
+    private final int[] list = {4, 2, 2, 2};
+    private Round round;
+    private boolean systemPrint = false;
 
     /**
      * Constructeur de la classe GameEngine
@@ -43,7 +33,7 @@ public class GameEngine {
      */
     public GameEngine(boolean systemPrint, boolean onlyDiscretBot) {
         this.systemPrint = systemPrint;
-        System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
+        System.setProperty("java.util.logging.SimpleFormatter.format", "\u001B[37m %5$s%6$s%n \u001B[0m");
         if (!systemPrint) logger.setLevel(Level.OFF);
         deckDistricts = new DeckDistrict();
         deckCharacters = new DeckCharacters();
@@ -55,7 +45,7 @@ public class GameEngine {
     }
 
     public GameEngine() {
-        this(true,false);
+        this(true, false);
     }
 
 
@@ -66,11 +56,11 @@ public class GameEngine {
      * On mélange les districts
      */
     public void initializeBots() {
-        Robot sarsor = new RobotAgressif("Sara" ) ;
-        Robot gentil = new RobotDiscrete("Stacy") ;
-        Robot choice = new RobotChoiceOfCharacter("Alban") ;
+        Robot sarsor = new RobotAgressif("Sara");
+        Robot gentil = new RobotDiscrete("Stacy");
+        Robot choice = new RobotChoiceOfCharacter("Alban");
         //Robot richardo = new RobotRichardo("Richardo") ;
-        Robot analyze = new RobotAnalyzer("Richardo", bots ) ;
+        Robot analyze = new RobotAnalyzer("Richardo", bots);
 
 
         //addCardsToBot(richardo, sarsor, gentil, choice);
@@ -85,11 +75,11 @@ public class GameEngine {
     private void addCardsToBot(Robot robot1, Robot robot2, Robot robot3, Robot robot4) {
         bots.add(robot1);
         bots.add(robot2);
-        bots.add(robot3) ;
-        bots.add(robot4) ;
+        bots.add(robot3);
+        bots.add(robot4);
 
-        for (Robot bot: bots){
-            for(int k = 0 ; k < 4 ; k++){
+        for (Robot bot : bots) {
+            for (int k = 0; k < 4; k++) {
                 bot.addDistrict(deckDistricts.getDistrictsInDeck());
             }
         }
@@ -97,9 +87,9 @@ public class GameEngine {
 
     public void initialiazeBotsDiscrets() {
         Robot RobotDiscret1 = new RobotDiscrete("RobotDiscret1");
-        Robot RobotDiscret2 = new RobotDiscrete("RobotDiscret2" ) ;
-        Robot RobotDiscret3 = new RobotDiscrete("RobotDiscret3") ;
-        Robot RobotDiscret4 = new RobotDiscrete("RobotDiscret4") ;
+        Robot RobotDiscret2 = new RobotDiscrete("RobotDiscret2");
+        Robot RobotDiscret3 = new RobotDiscrete("RobotDiscret3");
+        Robot RobotDiscret4 = new RobotDiscrete("RobotDiscret4");
 
         addCardsToBot(RobotDiscret1, RobotDiscret3, RobotDiscret4, RobotDiscret2);
     }
@@ -146,7 +136,6 @@ public class GameEngine {
             }
         }
         if (listCharacters.size() != 1) {
-            System.out.println(listCharacters);
             throw new RuntimeException();
         }
     }
@@ -214,22 +203,22 @@ public class GameEngine {
 
         }
 
-        {
         int i = 0;
         for (Robot bot : bots) {
             if (bot.hasEightDistrict()) {
                 bot.setScore(bot.getScore() + list[i]);
-                if(i!=0){
+                if (i != 0) {
                     logger.info(bot.getName() + " gets 2 extra points for having 8 districts");
                 } else {
                     logger.info(bot.getName() + " ended the game and earns 4 extra points");
                 }
                 i++;
-                }
             }
         }
 
+
     }
+
     /**
      * cette méthode permet de vider la liste des robots
      */
@@ -264,9 +253,6 @@ public class GameEngine {
         }
         charactersInHand.add(CharactersType.ROI);
     }
-
-
-
 
 
 }
