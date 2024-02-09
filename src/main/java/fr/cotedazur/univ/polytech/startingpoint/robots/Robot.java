@@ -216,6 +216,7 @@ public abstract class Robot {
     }
 
     public int winGoldsByTypeOfBuildings() {
+        if (character.equals(CharactersType.ASSASSIN) || character.equals(CharactersType.ARCHITECTE) || character.equals(CharactersType.MAGICIEN) || character.equals(CharactersType.VOLEUR)) return 0;
         int oldGolds = this.getGolds();
         addGold(countBuildingsByType());
         return this.getGolds() - oldGolds;

@@ -117,7 +117,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printVictimAssassined(CharactersType character) {
-        logger.info(bot.getName() + " murdered " + character.getRole());
+        logger.info(bot.getName() + " chose to kill " + character.getRole());
 
     }
 
@@ -127,7 +127,7 @@ public class ActionOfBotDuringARound {
 
 
     public void printThiefStill(Robot victim) {
-        logger.info(bot.getName() + " stole golds from " + victim.getName() + ". " + bot.getName() + " has now " + bot.getGolds() + " and " + victim.getName() + " has 0 gold");
+        logger.info(bot.getName() + " stole golds from " + victim.getName() + ". " + bot.getName() + " has now " + bot.getGolds() + " golds and " + victim.getName() + " has 0 gold");
     }
 
 

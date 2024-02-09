@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 
 import com.beust.jcommander.JCommander;
 import fr.cotedazur.univ.polytech.startingpoint.arguments.CitadelleArguments;
-import fr.cotedazur.univ.polytech.startingpoint.gamestats.ParseFullGameStats;
+import fr.cotedazur.univ.polytech.startingpoint.gamestats.DisplayFullGameStats;
 import fr.cotedazur.univ.polytech.startingpoint.gamestats.WriteStatsByLine;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
@@ -29,7 +29,7 @@ public class Main {
         if (citadelleArguments.isDemoMode()) showGame();
         if (citadelleArguments.getCsvFilePath()) {
             testBots(true);
-            ParseFullGameStats.parseFullStats();
+            DisplayFullGameStats.parseFullStats();
         }
 
     }

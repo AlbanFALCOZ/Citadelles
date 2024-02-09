@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class ParseFullGameStats {
+public class DisplayFullGameStats {
     public static void parseFullStats() throws Exception {
         Path relative = Paths.get("stats", "gamestats.csv");
         File file = new File(relative.toString());
