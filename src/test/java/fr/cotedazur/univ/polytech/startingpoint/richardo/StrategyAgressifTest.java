@@ -115,6 +115,7 @@ class StrategyAgressifTest {
         bots.add(bot2) ;
         bots.add(bot3) ;
         bots.add(richardo) ;
+        richardo.setBatisseur(true);
         //Dis donc  , il est riche le richard , je voudrais bien le voler
         richardo.setGolds(45);
         //OH OH Y'a Un voleur dans le jeu.
