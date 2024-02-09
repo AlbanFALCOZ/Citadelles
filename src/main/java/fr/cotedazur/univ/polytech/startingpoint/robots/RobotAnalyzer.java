@@ -11,14 +11,10 @@ import java.util.stream.Collectors;
 
 public class RobotAnalyzer extends Robot {
     private final ActionOfBotDuringARound action;
-    private final Map<String, List<DistrictsType>> buildingHistory;
-    private final List<Robot> allPlayers;
 
-    public RobotAnalyzer(String name, List<Robot> allPlayers) {
+    public RobotAnalyzer(String name) {
         super(name);
         this.action = new ActionOfBotDuringARound(this, true);
-        this.buildingHistory = new HashMap<>();
-        this.allPlayers = allPlayers;
 
     }
 

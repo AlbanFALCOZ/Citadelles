@@ -23,7 +23,7 @@ public class RobotAnalyzerTest {
     @BeforeEach
     public void setUp() {
         mockAllPlayers = new ArrayList<>();
-        robotAnalyzer = new RobotAnalyzer("TestBot", mockAllPlayers);
+        robotAnalyzer = new RobotAnalyzer("TestBot");
         mockDeckDistrict = mock(DeckDistrict.class);
         robotAnalyzer.getCity().clear();
     }
