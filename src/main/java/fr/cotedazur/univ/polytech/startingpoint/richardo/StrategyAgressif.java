@@ -77,8 +77,10 @@ public class StrategyAgressif {
 
 
 
+
     public Robot chooseVictimForAssassin(List<Robot> bots, RobotRichardo robot) {
         int characterForAssassin = robot.getNumberOfCharacterToKill(bots ) ;
+
 
         Robot victim = null;
         for (Robot bot : bots) {

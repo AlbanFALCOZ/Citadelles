@@ -109,7 +109,7 @@ class StrategyAgressifTest {
         characters.add(CharactersType.ARCHITECTE) ;
         characters.add(CharactersType.ASSASSIN) ;
         RobotRichardo richardo = new RobotRichardo("richardo") ;
-        RobotRandom bot1 = new RobotRandom("Satcy") ;
+        RobotRandom bot1 = new RobotRandom("Stacy") ;
         RobotRandom bot2 = new RobotRandom("bot2") ;
         RobotRandom bot3 = new RobotRandom("bot3") ;
         bots.add(bot1) ;
@@ -117,6 +117,7 @@ class StrategyAgressifTest {
         bots.add(bot3) ;
         bots.add(richardo) ;
         richardo.setBatisseur(true);
+
 
         //Dis donc  , il est riche le richard , je voudrais bien le voler
         richardo.setGolds(45);

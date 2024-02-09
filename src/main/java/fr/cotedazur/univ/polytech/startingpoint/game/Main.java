@@ -80,6 +80,7 @@ public class Main {
 
         play(onlyDiscretBots, numberOfGames, mapScore, listName, listWinners, listWinnersTied);
 
+
         logger.info("Debut des statistiques");
         for (i = 0; i < listWinners.length; i++) {
             int numberOfGamesWon = listWinners[i];
@@ -98,6 +99,7 @@ public class Main {
         }
         logger.info("Fin des statistiques\n");
     }
+
 
     private static void play(boolean onlyDiscretBots, int numberOfGames, Map<String, Integer> mapScore, String[] listName, int[] listWinners, int[] listWinnersTied) {
         int i;
