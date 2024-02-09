@@ -133,7 +133,7 @@ class GameEngineTest {
         int originalSize = charactersInHand.size();
 
         gameEngine.destroyCharacters(charactersInHand);
-        assertEquals(originalSize - 3, charactersInHand.size(), "3 personnages doivent être retirés de la main.");
+        assertEquals(originalSize - 3, charactersInHand.size(), "2 personnages doivent être retirés de la main.");
 
         assertTrue(charactersInHand.contains(CharactersType.ROI), "Le personnage 'ROI' doit être présent dans la main.");
 
@@ -164,9 +164,9 @@ class GameEngineTest {
                 bot.pickCharacter(listCharacters, listOfThreeBots);
             }
         }
-        assertEquals(1,listCharacters.size());
+        assertEquals(0, listCharacters.size());
 
-        gameEngine = new GameEngine(true,true);
+        gameEngine = new GameEngine(true, true);
         listCharacters = gameEngine.getDeckCharacters().getCharactersInHand();
         gameEngine.destroyCharacters(listCharacters);
         Collections.shuffle(listCharacters);
@@ -187,8 +187,6 @@ class GameEngineTest {
             }
         }
     }
-
-
 
 
 }

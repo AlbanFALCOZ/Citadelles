@@ -9,13 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static java.nio.file.Files.createFile;
-
 
 public class WriteStatsByLine {
 
     public static void writeDataLineByLine(String[][] data) {
-        Path relative = Paths.get("stats","gamestats.csv");
+        Path relative = Paths.get("stats", "gamestats.csv");
         File file = new File(relative.toString());
 
         try {
@@ -38,7 +36,6 @@ public class WriteStatsByLine {
             e.printStackTrace();
         }
     }
-
 
 
 }

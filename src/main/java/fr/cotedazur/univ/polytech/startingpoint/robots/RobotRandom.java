@@ -3,11 +3,11 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import java.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class RobotRandom extends Robot {
-
 
 
     public RobotRandom(String name) {
@@ -22,7 +22,7 @@ public class RobotRandom extends Robot {
         for (int i = 0; i < getDistrictInHand().size(); i++) {
             DistrictsType district = getDistrictInHand().get(i);
             if (district.getCost() <= getGolds() && !listDistrictName.contains(district.getName())) {
-                district.powerOfDistrict(this,1);
+                district.powerOfDistrict(this, 1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(i);
@@ -55,7 +55,6 @@ public class RobotRandom extends Robot {
         }
 
 
-
         for (DistrictsType districtNonChosen : listDistrict) {
             deck.addDistrictToDeck(districtNonChosen);
         }
@@ -64,6 +63,8 @@ public class RobotRandom extends Robot {
 
     @Override
     public int generateChoice() {
+        if (getDistrictInHand().isEmpty()) return 0;
+        if (!canBuildADistrictInHand()) return 1;
         return (int) (Math.random() * 2);
     }
 
@@ -73,10 +74,7 @@ public class RobotRandom extends Robot {
         setCharacter(availableCharacters.get(0));
         availableCharacters.remove(availableCharacters.get(0));
 
-
     }
-
-
 
 
 }

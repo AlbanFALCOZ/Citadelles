@@ -11,23 +11,18 @@ public enum Colors {
     YELLOW("\u001B[33m"),
     PURPLE("\u001B[35m"),
     GRAY("\u001B[37;1m"),
-    WHITE( "\u001B[37m"),
+    WHITE("\u001B[37m"),
     RESET("\u001B[0m"),
 
 
     ;
 
-    public String getColorDisplay() {
-        return colorDisplay;
-    }
+    private static final Random random = new Random();
+    static List<Colors> listOfColors = new ArrayList<>();
+    String colorDisplay;
 
-    String colorDisplay ;
-
-    private static Random random = new Random();
-
-    static List<Colors> listOfColors = new ArrayList<>() ;
-    Colors(String colorDisplay){
-        this.colorDisplay = colorDisplay ;
+    Colors(String colorDisplay) {
+        this.colorDisplay = colorDisplay;
     }
 
     public static Colors getRandomColorCode() {
@@ -42,18 +37,19 @@ public enum Colors {
     }
 
     public static List<Colors> getListOfColors() {
-        listOfColors.add(Colors.GREEN) ;
-        listOfColors.add(Colors.RED) ;
-        listOfColors.add(Colors.BLUE) ;
+        listOfColors.add(Colors.GREEN);
+        listOfColors.add(Colors.RED);
+        listOfColors.add(Colors.BLUE);
         listOfColors.add(Colors.PURPLE);
-        listOfColors.add(Colors.YELLOW) ;
-        return listOfColors ;
+        listOfColors.add(Colors.YELLOW);
+        return listOfColors;
 
 
     }
 
-
-
+    public String getColorDisplay() {
+        return colorDisplay;
+    }
 
 
 }

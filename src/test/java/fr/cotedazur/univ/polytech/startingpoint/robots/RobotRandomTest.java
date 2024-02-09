@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -288,8 +289,6 @@ class RobotRandomTest {
         RobotNora.getCity().add(DistrictsType.CASERNE); // militaire
         RobotNora.getCity().add(DistrictsType.ECOLE_DE_MAGIE); // l'école de magie, qui sera comptée comme "noble" (pcq ROI)
 
-        ;
-
         // ordre des compteurs : noble, religieux, marchand, militaire, default
         assertEquals(2, RobotNora.countBuildingsByType());
     }
@@ -364,26 +363,25 @@ class RobotRandomTest {
     }
 
     @Test
-
     void pickThreeDistrictWithObservatoire() {
         RobotNora.addGold(1000);
         List<DistrictsType> listOfDistrictPicked = RobotNora.pickListOfDistrict(deck);
-        assertEquals(2,listOfDistrictPicked.size());
+        assertEquals(2, listOfDistrictPicked.size());
         RobotNora.addDistrict(DistrictsType.OBSERVATOIRE);
         RobotNora.tryBuild();
         listOfDistrictPicked = RobotNora.pickListOfDistrict(deck);
-        assertEquals(3,listOfDistrictPicked.size());
+        assertEquals(3, listOfDistrictPicked.size());
     }
 
     @Test
     void chooseTwoDistrictWithBibliothèque() {
         RobotNora.addGold(1000);
-        List<DistrictsType> listDistrictChosen = RobotNora.pickDistrictCard(RobotNora.pickListOfDistrict(deck),deck);
-        assertEquals(1,listDistrictChosen.size());
+        List<DistrictsType> listDistrictChosen = RobotNora.pickDistrictCard(RobotNora.pickListOfDistrict(deck), deck);
+        assertEquals(1, listDistrictChosen.size());
         RobotNora.addDistrict(DistrictsType.BIBLIOTHEQUE);
         RobotNora.tryBuild();
-        listDistrictChosen = RobotNora.pickDistrictCard(RobotNora.pickListOfDistrict(deck),deck);
-        assertEquals(2,listDistrictChosen.size());
+        listDistrictChosen = RobotNora.pickDistrictCard(RobotNora.pickListOfDistrict(deck), deck);
+        assertEquals(2, listDistrictChosen.size());
     }
 
     @Test
@@ -391,17 +389,17 @@ class RobotRandomTest {
         RobotNora.setGolds(1000);
         RobotNora.tryBuild();
         List<DistrictsType> listOfDistrictPicked = RobotNora.pickListOfDistrict(deck);
-        assertEquals(2,listOfDistrictPicked.size());
-        List<DistrictsType> listDistrictChosen = RobotNora.pickDistrictCard(listOfDistrictPicked,deck);
-        assertEquals(1,listDistrictChosen.size());
+        assertEquals(2, listOfDistrictPicked.size());
+        List<DistrictsType> listDistrictChosen = RobotNora.pickDistrictCard(listOfDistrictPicked, deck);
+        assertEquals(1, listDistrictChosen.size());
         RobotNora.addDistrict(DistrictsType.BIBLIOTHEQUE);
         RobotNora.addDistrict(DistrictsType.OBSERVATOIRE);
         RobotNora.tryBuild();
         RobotNora.tryBuild();
         listOfDistrictPicked = RobotNora.pickListOfDistrict(deck);
-        assertEquals(3,listOfDistrictPicked.size());
-        listDistrictChosen = RobotNora.pickDistrictCard(listOfDistrictPicked,deck);
-        assertEquals(2,listDistrictChosen.size());
+        assertEquals(3, listOfDistrictPicked.size());
+        listDistrictChosen = RobotNora.pickDistrictCard(listOfDistrictPicked, deck);
+        assertEquals(2, listDistrictChosen.size());
     }
 
     @Test
@@ -420,20 +418,42 @@ class RobotRandomTest {
     void testLaboratoireWithoutBuildingInHand() {
         int goldsBeforeCallOfLaboratoire = RobotNora.getGolds();
         RobotNora.laboratoire(new DeckDistrict());
-        assertEquals(goldsBeforeCallOfLaboratoire,RobotNora.getGolds());
+        assertEquals(goldsBeforeCallOfLaboratoire, RobotNora.getGolds());
     }
 
     @Test
-    void testLaboratoire(){
-        int goldsBeforeCallOfLaboratoire = RobotNora.getGolds();
+    void testLaboratoire() {
         RobotNora.addDistrict(DistrictsType.LABORATOIRE);
-        RobotNora.addGold(5);
+        RobotNora.setGolds(5);
         RobotNora.tryBuild();
+        int goldsBeforeCallOfLaboratoire = RobotNora.getGolds();
         RobotNora.addDistrict(DistrictsType.TAVERNE);
-        assertEquals(1,RobotNora.getNumberOfDistrictInHand());
+        assertEquals(1, RobotNora.getNumberOfDistrictInHand());
+        RobotNora.setGolds(0);
         RobotNora.laboratoire(new DeckDistrict());
-        assertEquals(0,RobotNora.getNumberOfDistrictInHand());
-        assertEquals(RobotNora.getGolds(),goldsBeforeCallOfLaboratoire+1);
+        assertEquals(0, RobotNora.getNumberOfDistrictInHand());
+        assertEquals(RobotNora.getGolds(), goldsBeforeCallOfLaboratoire + 1);
+    }
+
+    @Test
+    void testPickCharacter() {
+        List<CharactersType> availableCharacters = new ArrayList<>();
+        availableCharacters.add(CharactersType.ASSASSIN);
+        availableCharacters.add(CharactersType.VOLEUR);
+        availableCharacters.add(CharactersType.MAGICIEN);
+        availableCharacters.add(CharactersType.EVEQUE);
+        availableCharacters.add(CharactersType.MARCHAND);
+        RobotNora.pickCharacter(availableCharacters, new ArrayList<>());
+        assertEquals(CharactersType.ASSASSIN, RobotNora.getCharacter());
+    }
+
+    @Test
+    void testEmptyListOfCardsInHand() {
+        List<DistrictsType> listDistrictInHand = Arrays.asList(DistrictsType.BIBLIOTHEQUE, DistrictsType.CASERNE);
+        List<DistrictsType> listDistrictInHandCopy = new ArrayList<>(listDistrictInHand);
+        RobotNora.setDistrictInHand(listDistrictInHandCopy);
+        RobotNora.emptyListOfCardsInHand();
+        assertEquals(0, RobotNora.getNumberOfDistrictInHand());
     }
 
 }

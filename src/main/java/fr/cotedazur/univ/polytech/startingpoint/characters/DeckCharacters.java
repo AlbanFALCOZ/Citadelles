@@ -8,7 +8,7 @@ import java.util.List;
  * cette classe représente le deck de personnages
  */
 public class DeckCharacters {
-    private List<CharactersType> charactersInHand;
+    private final List<CharactersType> charactersInHand;
 
 
     /**

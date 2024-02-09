@@ -3,7 +3,11 @@ package fr.cotedazur.univ.polytech.startingpoint.game;
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,33 +17,23 @@ import java.util.logging.Logger;
  */
 public class Winner {
 
-    private List<Robot> bots;
-
-    private List<Robot> winnerBots ;
-
     public static final Logger logger = Logger.getLogger(Winner.class.getName());
+    private final List<Robot> bots;
+    private List<Robot> winnerBots;
 
     /**
      * @param bots la liste des robots
      *             Constructeur de la classe Winner
      */
-    public Winner(List<Robot> bots,boolean systemPrint) {
+    public Winner(List<Robot> bots, boolean systemPrint) {
         this.bots = new ArrayList<>(bots);
-        System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
+        System.setProperty("java.util.logging.SimpleFormatter.format", "\u001B[37m %5$s%6$s%n \u001B[0m");
         if (!systemPrint) logger.setLevel(Level.OFF);
     }
 
 
-
-
-    public List<Robot> getWinnerBots(){
-        return winnerBots;
-    }
-
-
-
-    public void setScores(){
-        for(Robot bot : bots) {
+    public void setScores() {
+        for (Robot bot : bots) {
             bot.setScore(bot.calculateScore());
         }
 
@@ -54,10 +48,10 @@ public class Winner {
      */
 
 
-    public String printScore(){
-        String scores = "" ;
+    public String printScore() {
+        String scores = "";
         setScores();
-        for (Robot bot : bots){
+        for (Robot bot : bots) {
             logger.info(bot.getName() + " has a score of " + bot.getScore());
         }
         return scores;
@@ -110,16 +104,15 @@ public class Winner {
     }
 
 
-
-    public void miracleDistrictEffect(){
-        for (Robot bot  : bots){
-            if(bot.getCity().contains(DistrictsType.COURT_DES_MIRACLES)){
+    public void miracleDistrictEffect() {
+        for (Robot bot : bots) {
+            if (bot.getCity().contains(DistrictsType.COURT_DES_MIRACLES)) {
                 int index = bot.getCity().indexOf(DistrictsType.COURT_DES_MIRACLES);
-               if( index != bot.getCity().size()-1 ) {
-                   Colors randomColor =Colors.getRandomColorCode() ;
-                   bot.getCity().get(index).setColor(randomColor);
-                   logger.info(bot.getName() + " choosed to change the color of their miracle card to " + randomColor);
-               }
+                if (index != bot.getCity().size() - 1) {
+                    Colors randomColor = Colors.getRandomColorCode();
+                    bot.getCity().get(index).setColor(randomColor);
+                    logger.info(bot.getName() + " choosed to change the color of their miracle card to " + randomColor);
+                }
             }
         }
     }
@@ -142,7 +135,6 @@ public class Winner {
             }
         }
     }
-
 
 
 }

@@ -1,9 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.richardo;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
-
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 
 import java.util.List;
@@ -11,13 +9,14 @@ import java.util.List;
 public class StrategyAgressif {
 
 
-    public StrategyAgressif(){}
+    public StrategyAgressif() {
+    }
 
 
     public void isAgressif(List<Robot> bots, RobotRichardo robot) {
         for (Robot bot : bots) {
-            if (( ((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2 ) && ( bot.getNumberOfDistrictInCity() > 2)  ) || (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()) && robot.getGolds() > 4))
-            || (robot.getNumberOfDistrictInCity() > 4 || bot.getNumberOfDistrictInHand() <= 1)) {
+            if ((((bot.getNumberOfDistrictInCity() > robot.getNumberOfDistrictInCity() + 2) && (bot.getNumberOfDistrictInCity() > 2)) || (robot.thereIsA(CharactersType.VOLEUR, robot.getAvailableCharacters()) && robot.getGolds() > 4))
+                    || (robot.getNumberOfDistrictInCity() > 4 || bot.getNumberOfDistrictInHand() <= 1)) {
                 robot.setAgressif(true);
                 return;
             }
@@ -67,7 +66,7 @@ public class StrategyAgressif {
             } else if ((availableCharacters.contains(CharactersType.EVEQUE)) && bot.getNumberOfDistrictInCity() > 5) {
                 richardo.pickCharacterCard(availableCharacters, CharactersType.EVEQUE);
                 if (richardo.getCharacter() == CharactersType.EVEQUE) {
-                    action.printRichardPickEveque(bot);
+                    action.printRichardPickEveque();
                     return true;
                 }
             }
@@ -77,8 +76,10 @@ public class StrategyAgressif {
     }
 
 
+
     public Robot chooseVictimForAssassin(List<Robot> bots, RobotRichardo robot) {
         int characterForAssassin = robot.getNumberOfCharacterToKill(bots ) ;
+
         Robot victim = null;
         for (Robot bot : bots) {
 

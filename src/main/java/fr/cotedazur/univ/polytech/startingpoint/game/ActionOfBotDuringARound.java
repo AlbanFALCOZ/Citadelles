@@ -11,16 +11,15 @@ import java.util.logging.Logger;
 public class ActionOfBotDuringARound {
 
 
-    private Robot bot;
+    private static final Logger logger = Logger.getLogger(ActionOfBotDuringARound.class.getName());
+    private final Robot bot;
     private List<DistrictsType> listDistrictDrawn;
     private List<DistrictsType> listDistrictPicked;
-
-    private static final Logger logger = Logger.getLogger(ActionOfBotDuringARound.class.getName());
 
 
     public ActionOfBotDuringARound(Robot bot, boolean systemPrint) {
         this.bot = bot;
-        System.setProperty("java.util.logging.SimpleFormatter.format","\u001B[37m %5$s%6$s%n \u001B[0m");
+        System.setProperty("java.util.logging.SimpleFormatter.format", "\u001B[37m %5$s%6$s%n \u001B[0m");
         if (!systemPrint) logger.setLevel(Level.OFF);
     }
 
@@ -33,7 +32,9 @@ public class ActionOfBotDuringARound {
         logger.info(bot.statusOfPlayer());
     }
 
-    public void showStatusOfBot(Robot bot) { logger.info(bot.statusOfPlayer()); }
+    public void showStatusOfBot(Robot bot) {
+        logger.info(bot.statusOfPlayer());
+    }
 
     public void showCityOfBot(Robot bot) {
         logger.info("City of " + bot.getName() + " : " + getStringOfListOfDistrict(bot.getCity()));
@@ -76,7 +77,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printActionOfBotWhoGainedGold(int goldGained) {
-        logger.info(bot.getName() + " earned \u001B[33m"  + goldGained + " golds \u001B[37m. Total golds now: " + bot.getGolds());
+        logger.info(bot.getName() + " earned \u001B[33m" + goldGained + " golds \u001B[37m. Total golds now: " + bot.getGolds());
     }
 
     public void printActionOfSellerBotWhoGainedGold() {
@@ -129,9 +130,6 @@ public class ActionOfBotDuringARound {
         logger.info(bot.getName() + " stole golds from " + victim.getName() + ". " + bot.getName() + " has now " + bot.getGolds() + " and " + victim.getName() + " has 0 gold");
     }
 
-    public void printMagicianSwapWithDeck() {
-        logger.info(bot.getName() + " choosed to swap with deck");
-    }
 
     public String getNameOfCharacterFromNumber(int number) {
         String[] listName = {"Assassin", "Voleur", "Magicien", "Roi", "Eveque", "Marchand", "Architecte", "Condottiere"};
@@ -155,17 +153,13 @@ public class ActionOfBotDuringARound {
     }
 
 
-
-
-
-    public void printPrioritizesRed(){
-        logger.info(bot.getName() + " prioritizes War district") ;
+    public void printPrioritizesRed() {
+        logger.info(bot.getName() + " prioritizes War district");
     }
 
-    public void printBotBonus(){
-        logger.info(bot.getName() + " is aiming for 5 colors bonus ") ;
+    public void printBotBonus() {
+        logger.info(bot.getName() + " is aiming for 5 colors bonus ");
     }
-
 
 
     public void printPickAnyDistrict(DistrictsType currentDistrict) {
@@ -195,7 +189,7 @@ public class ActionOfBotDuringARound {
     }
 
     public void printPickCharacterWithPriority(CharactersType character) {
-        //logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
+       // logger.info(bot.getName() + " chose " + character.getRole() + " because he has the most districts of this type and it is available.");
     }
 
     public void printPickdefaultCharacter() {
@@ -226,11 +220,11 @@ public class ActionOfBotDuringARound {
 
     public void printCharacterChoice() {
         CharactersType character = bot.getCharacter();
-        if(character == CharactersType.ARCHITECTE) {
+        if (character == CharactersType.ARCHITECTE) {
             logger.info(bot.getName() + " has picked the Architect to build more buildings quickly.");
-        } else if(character == CharactersType.ROI || character == CharactersType.EVEQUE) {
+        } else if (character == CharactersType.ROI || character == CharactersType.EVEQUE) {
             logger.info(bot.getName() + " is close to having 8 districts and picked " + character.getRole() + " for protection.");
-        } else if(character == CharactersType.MARCHAND) {
+        } else if (character == CharactersType.MARCHAND) {
             logger.info(bot.getName() + " picked the Merchant to increase gold.");
         } else {
             logger.info(bot.getName() + " picked " + character.getRole() + " based on the highest priority available.");
@@ -250,7 +244,6 @@ public class ActionOfBotDuringARound {
     }
 
     private String getReasonForPickingDistrict(DistrictsType district) {
-        // Vous pouvez ajuster cette méthode pour refléter la logique de votre RobotRush
         if (district.getCost() <= bot.getGolds()) {
             return "It was affordable and fits the strategy to build quickly.";
         } else {
@@ -267,37 +260,62 @@ public class ActionOfBotDuringARound {
         }
     }
 
+
+    public void printSpecialDistrictsConsideration() {
+        logger.info(bot.getName() + " is considering building special districts if it's advantageous");
+    }
+
+    public void printBlockOpponentStrategy(String districtName) {
+        if (!"nothing".equals(districtName)) {
+            logger.info(bot.getName() + " built " + districtName + " to block opponents from gaining an advantage");
+        }
+    }
+
+    public void printEfficiencyBasedBuilding(String districtName) {
+        if (!"nothing".equals(districtName)) {
+            logger.info(bot.getName() + " built " + districtName + " based on cost-efficiency and scoring potential");
+        }
+    }
+
+
+    public void printCharacterPredictionAndChoice(CharactersType predictedCharacter, CharactersType chosenCharacter) {
+        if (predictedCharacter != null) {
+            logger.info(bot.getName() + " predicts opponents might choose " + predictedCharacter.getRole() + " next");
+        }
+        if (chosenCharacter != null) {
+            //logger.info(bot.getName() + " chose " + chosenCharacter.getRole() + " based on strategic considerations and predictions");
+        }
+    }
+
     public void printScenarioArchitecte() {
         logger.info(bot.getName() + "has picked the " + bot.getCharacter().getRole() + " otherwise someone can finish with the Architecte");
     }
 
 
     public void printVictimCondottiere(Robot victim) {
-        logger.info(bot.getName() + " decided to attack" +   victim.getName() + " because they almost finished building their district" ) ;
+        logger.info(bot.getName() + " decided to attack" + victim.getName() + " because they almost finished building their district");
     }
 
     public void printRichardPickCondottiere(Robot target) {
-        logger.info(bot.getName() + " decided to pick Condottiere because " + target.getName() + "  is in lead and it's getting tense ") ;
+        logger.info(bot.getName() + " decided to pick Condottiere because " + target.getName() + "  is in lead and it's getting tense ");
     }
 
     public void printRichardoPickAssassin() {
         logger.info(bot.getName() + " decided to pick Assassin because it smells like thief");
     }
 
-    public void printRichardPickEveque(Robot robot) {
-        logger.info(bot.getName() + "decided to pick Eveque because he's now trying to stop ") ;
+    public void printRichardPickEveque() {
+        logger.info(bot.getName() + " decided to pick Eveque because he's now trying to stop ");
     }
 
     public void printVictimeForMagicien(Robot victim) {
         logger.info(bot.getName() + " decide to pick Magicien because he has nothing in hand and " + victim.getName() + "has a lot of disctricts in hand");
     }
+
     public void printPrioritizeTYpe(CharactersType chosenCharacter) {
         logger.info(bot.getName() + " prioritizes " + chosenCharacter);
     }
 
-    public void printVictimForVoleurNotExist() {
-        logger.info(bot.getName() + " can't steal from anyone because there is no one to steal from");
-    }
 
     public void printChoiceOfThief(Robot bot, int numberOfCharacter) {
         logger.info(bot.getName() + " chose to steal from " + getNameOfCharacterFromNumber(numberOfCharacter));

@@ -1,10 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.game;
 
 
-
 import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-
 import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
 import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRandom;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +22,7 @@ class WinnerTest {
     @BeforeEach
     void setUp() {
         gameEngine = new GameEngine();
-        winner = new Winner(gameEngine.getBots(),true);
+        winner = new Winner(gameEngine.getBots(), true);
     }
 
     @Test
@@ -73,14 +71,13 @@ class WinnerTest {
     }
 
 
-
     @Test
     void testShowWinners() {
         Robot robot1 = new RobotRandom("Robot1");
         Robot robot2 = new RobotRandom("Robot2");
         robot1.setScore(10);
         robot2.setScore(10);
-        Winner winner = new Winner(List.of(robot1, robot2),true);
+        Winner winner = new Winner(List.of(robot1, robot2), true);
         assertEquals("There is an equality o:! The winners are: Robot1, Robot2", winner.showWinners());
 
     }
@@ -96,7 +93,7 @@ class WinnerTest {
         robots.addAll(Arrays.asList(robot1, robot2, robot3));
 
 
-        Winner winner = new Winner(robots,true);
+        Winner winner = new Winner(robots, true);
 
 
         robot1.getCity().add(DistrictsType.MANOIR);
@@ -143,7 +140,7 @@ class WinnerTest {
         robot3.getCity().add(DistrictsType.TAVERNE);
 
 
-        Winner winner = new Winner(List.of(robot1, robot2, robot3),true);
+        Winner winner = new Winner(List.of(robot1, robot2, robot3), true);
 
 
         winner.miracleDistrictEffect();
@@ -173,8 +170,6 @@ class WinnerTest {
         }
         return false;
     }
-
-
 
 
 }

@@ -6,18 +6,17 @@ import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class RobotAgressif extends Robot{
+public class RobotAgressif extends Robot {
 
-    ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
+    ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
 
 
-    public RobotAgressif(String name){
+    public RobotAgressif(String name) {
         super(name);
         super.setTypeOfRobot("RobotSarsor");
     }
@@ -50,8 +49,6 @@ public class RobotAgressif extends Robot{
         }
 
 
-
-
         for (DistrictsType district : listToBuildFrom) {
             if (listOfColors.contains(district.getColor()) && district.getCost() <= this.getGolds()) {
                 district.powerOfDistrict(this, 1);
@@ -80,9 +77,6 @@ public class RobotAgressif extends Robot{
         return "nothing";
 
     }
-
-
-
 
 
     @Override
@@ -147,7 +141,6 @@ public class RobotAgressif extends Robot{
     }
 
 
-
     @Override
     public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill) {
         Robot victim = null;
@@ -161,18 +154,15 @@ public class RobotAgressif extends Robot{
         return victim;
 
 
-
-
     }
 
 
     @Override
     public int generateChoice() {
-        if(this.getGolds()<5) {
-            return 1 ;
-        }
-        else {
-            return 0 ;
+        if (this.getGolds() < 5) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 
@@ -195,12 +185,9 @@ public class RobotAgressif extends Robot{
 
     private boolean isPreferredCharacter(CharactersType character) {
         return (character.getType().equals(CharactersType.CONDOTTIERE.getType()) && getGolds() > 7) ||
-                (character.getType().equals(CharactersType.ASSASSIN.getType()) && getGolds() > 5 ) ||
-                (character.getType().equals(CharactersType.VOLEUR.getType()) ) ;
+                (character.getType().equals(CharactersType.ASSASSIN.getType()) && getGolds() > 5) ||
+                (character.getType().equals(CharactersType.VOLEUR.getType()));
     }
-
-
-
 
 
 }

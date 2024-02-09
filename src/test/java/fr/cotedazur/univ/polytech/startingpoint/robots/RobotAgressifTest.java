@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -17,17 +18,17 @@ class RobotAgressifTest {
 
     @Test
     void tryBuildForRedDistrcit() {
-            RobotAgressif robotAgressif = new RobotAgressif("TestRobot");
-            robotAgressif.setGolds(10); // Set initial golds
-            robotAgressif.getDistrictInHand().add(DistrictsType.CHATEAU);
-            robotAgressif.getDistrictInHand().add(DistrictsType.TEMPLE);
-            robotAgressif.getDistrictInHand().add(DistrictsType.ECHOPPE) ;
-            robotAgressif.getDistrictInHand().add(DistrictsType.TOUR_DE_GUET);
-            String warResult = robotAgressif.tryBuild();
-            assertEquals("a new Tour de guet", warResult);
-            assertTrue(robotAgressif.getCity().contains(DistrictsType.TOUR_DE_GUET));
-            assertEquals(9, robotAgressif.getGolds());
-        }
+        RobotAgressif robotAgressif = new RobotAgressif("TestRobot");
+        robotAgressif.setGolds(10); // Set initial golds
+        robotAgressif.getDistrictInHand().add(DistrictsType.CHATEAU);
+        robotAgressif.getDistrictInHand().add(DistrictsType.TEMPLE);
+        robotAgressif.getDistrictInHand().add(DistrictsType.ECHOPPE);
+        robotAgressif.getDistrictInHand().add(DistrictsType.TOUR_DE_GUET);
+        String warResult = robotAgressif.tryBuild();
+        assertEquals("a new Tour de guet", warResult);
+        assertTrue(robotAgressif.getCity().contains(DistrictsType.TOUR_DE_GUET));
+        assertEquals(9, robotAgressif.getGolds());
+    }
 
 
     @Test
@@ -38,40 +39,40 @@ class RobotAgressifTest {
 
         robotAgressif.setGolds(10);
         robotAgressif.setNumberOfCardsChosen(2); // Assuming the number of cards chosen is 2
-        List<DistrictsType> listDrawn = new ArrayList<>() ;
+        List<DistrictsType> listDrawn = new ArrayList<>();
         listDrawn.add(DistrictsType.COURT_DES_MIRACLES);
-        listDrawn.add(DistrictsType.TOUR_DE_GUET) ;
+        listDrawn.add(DistrictsType.TOUR_DE_GUET);
         DeckDistrict deck = new DeckDistrict();
-        List<DistrictsType> picked = robotAgressif.pickDistrictCard(listDrawn , deck) ;
-        assertTrue(picked.contains(DistrictsType.TOUR_DE_GUET) )  ;
+        List<DistrictsType> picked = robotAgressif.pickDistrictCard(listDrawn, deck);
+        assertTrue(picked.contains(DistrictsType.TOUR_DE_GUET));
 
     }
+
     @Test
     void chooseVictimForCondottiere() {
 
-            RobotAgressif robotAgressif = new RobotAgressif("TestRobot");
-            Robot robot1 = mock(Robot.class);
-            when(robot1.getNumberOfDistrictInCity()).thenReturn(3);
-            Robot robot2 = mock(Robot.class);
-            when(robot2.getNumberOfDistrictInCity()).thenReturn(5);
-            Robot robot3 = mock(Robot.class);
-            when(robot3.getNumberOfDistrictInCity()).thenReturn(4);
-            List<Robot> robots = Arrays.asList(robot1, robot2, robot3);
-            Robot victim = robotAgressif.chooseVictimForCondottiere(robots);
-            assertEquals(robot2, victim);
-        }
-
+        RobotAgressif robotAgressif = new RobotAgressif("TestRobot");
+        Robot robot1 = mock(Robot.class);
+        when(robot1.getNumberOfDistrictInCity()).thenReturn(3);
+        Robot robot2 = mock(Robot.class);
+        when(robot2.getNumberOfDistrictInCity()).thenReturn(5);
+        Robot robot3 = mock(Robot.class);
+        when(robot3.getNumberOfDistrictInCity()).thenReturn(4);
+        List<Robot> robots = Arrays.asList(robot1, robot2, robot3);
+        Robot victim = robotAgressif.chooseVictimForCondottiere(robots);
+        assertEquals(robot2, victim);
+    }
 
 
     @Test
     void generateChoice() {
-        RobotAgressif sarsor = new RobotAgressif("Sara") ;
+        RobotAgressif sarsor = new RobotAgressif("Sara");
         sarsor.setGolds(4);
         int choice = sarsor.generateChoice();
-        assertEquals(1 , choice);
+        assertEquals(1, choice);
         sarsor.setGolds(2);
         int choice2 = sarsor.generateChoice();
-        assertEquals(1  , choice2);
+        assertEquals(1, choice2);
     }
 
     @Test

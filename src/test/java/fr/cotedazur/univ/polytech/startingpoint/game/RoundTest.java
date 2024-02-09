@@ -29,7 +29,6 @@ class RoundTest {
     }
 
 
-
     @Test
     void testSortRobots() {
         // Arrange
@@ -53,7 +52,6 @@ class RoundTest {
         assertEquals(openRobot, round.getBots().get(2));
 
     }
-
 
 
     @Test
@@ -92,8 +90,6 @@ class RoundTest {
         round.assignCrownForKing();
         assertTrue(nobleRobot.getHasCrown());
     }
-
-
 
 
 }

@@ -10,6 +10,9 @@ import java.util.*;
 public abstract class Robot {
 
     public static final String RESET = "\u001B[37m";
+    private final Map<String, List<CharactersType>> characterHistory;
+    private final Map<String, List<DistrictsType>> buildingHistory;
+    private final Map<String, Integer> handSizeHistory;
     protected String name;
     protected int choice;
     protected int score;
@@ -18,14 +21,10 @@ public abstract class Robot {
     protected int numberOfCardsChosen = 1;
     protected List<DistrictsType> districtInHand;
     protected CharactersType character;
-    protected ArrayList<DistrictsType> city;
+    protected List<DistrictsType> city;
     protected boolean hasCrown;
     protected boolean IsAssassinated;
     private String typeOfRobot = "Robot";
-    private Map<String, List<CharactersType>> characterHistory;
-    private Map<String, List<DistrictsType>> buildingHistory;
-    private Map<String, Integer> handSizeHistory;
-
 
 
     public Robot(String name) {
@@ -119,6 +118,9 @@ public abstract class Robot {
         return city;
     }
 
+    public void setCity(List<DistrictsType> listOfdistricts) {
+        this.city = listOfdistricts;
+    }
 
     public int getNumberOfDistrictInHand() {
         return districtInHand.size();
@@ -126,10 +128,6 @@ public abstract class Robot {
 
     public int getNumberOfDistrictInCity() {
         return city.size();
-    }
-
-    public String getTypeOfRobot() {
-        return typeOfRobot;
     }
 
     public void setTypeOfRobot(String typeOfRobot) {
@@ -145,13 +143,6 @@ public abstract class Robot {
 
     }
 
-    public int calculateScoreInHand() {
-        int score = 0;
-        for (DistrictsType district : districtInHand) {
-            score += district.getScore();
-        }
-        return score;
-    }
 
     public int getChoice() {
         return choice;
@@ -207,7 +198,6 @@ public abstract class Robot {
         return Comparator.comparingInt(DistrictsType::getCost);
     }
 
-
     public int calculateScore() {
         int score = 0;
         for (DistrictsType district : city) {
@@ -259,7 +249,6 @@ public abstract class Robot {
         return listDistrict;
     }
 
-
     public void specialCards(DeckDistrict deck, ActionOfBotDuringARound action) {
         if (getCity().contains(DistrictsType.MANUFACTURE)) {
             List<DistrictsType> listOfDistrictPicked = manufacture(deck);
@@ -271,13 +260,11 @@ public abstract class Robot {
         }
     }
 
-
     public abstract String tryBuild();
 
     public abstract List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck);
 
     public abstract int generateChoice();
-
 
     public List<DistrictsType> manufacture(DeckDistrict deck) {
         List<DistrictsType> listOfDistrictPicked = new ArrayList<>();
@@ -292,11 +279,10 @@ public abstract class Robot {
         return listOfDistrictPicked;
     }
 
-
     public List<DistrictsType> laboratoire(DeckDistrict deck) {
 
         List<DistrictsType> listOfDistrictRemoved = new ArrayList<>();
-        if (getNumberOfDistrictInHand() >= 1) {
+        if (getNumberOfDistrictInHand() >= 1 && getGolds() == 0) {
             int indexOfDistrictInHandToRemove = (int) (Math.random() * getNumberOfDistrictInHand());
             DistrictsType card = districtInHand.remove(indexOfDistrictInHandToRemove);
             listOfDistrictRemoved.add(card);
@@ -305,7 +291,6 @@ public abstract class Robot {
         }
         return listOfDistrictRemoved;
     }
-
 
     public abstract void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots);
 
@@ -340,7 +325,7 @@ public abstract class Robot {
         return victim;
     }
 
-    public CharactersType chooseVictimForVoleur(List<Robot> bots){
+    public CharactersType chooseVictimForVoleur(List<Robot> bots) {
         List<CharactersType> characters = new ArrayList<>(Arrays.asList(CharactersType.values()));
         characters.remove(CharactersType.ASSASSIN);
         characters.remove(CharactersType.VOLEUR);
@@ -351,14 +336,6 @@ public abstract class Robot {
 
     public Map<String, List<CharactersType>> getCharacterHistory() {
         return characterHistory;
-    }
-
-    public Map<String, Integer> getHandSizeHistory() {
-        return handSizeHistory;
-    }
-
-    public Map<String, List<DistrictsType>> getBuildingHistory() {
-        return buildingHistory;
     }
 
     public void updateHistory(List<Robot> bots) {
@@ -372,7 +349,7 @@ public abstract class Robot {
             characterHistory.putIfAbsent(botName, new ArrayList<>());
             characterHistory.get(botName).add(chosenCharacter);
 
-            for(DistrictsType district : builtDistricts){
+            for (DistrictsType district : builtDistricts) {
                 buildingHistory.putIfAbsent(botName, new ArrayList<>());
                 if (!buildingHistory.get(botName).contains(district)) {
                     buildingHistory.get(botName).add(district);
@@ -412,21 +389,11 @@ public abstract class Robot {
         return Collections.max(characterFrequency.entrySet(), Map.Entry.comparingByValue()).getValue();
     }
 
-
-
     public int getNumberOfCharacterToKill(List<Robot> bots) {
 
         return (int) (Math.random() * (8 - 2) + 3);
 
     }
-
-
-    public void setCity(ArrayList<DistrictsType> listOfdistricts){
-        this.city = listOfdistricts ;
-    }
-
-
-
 
 
 }
