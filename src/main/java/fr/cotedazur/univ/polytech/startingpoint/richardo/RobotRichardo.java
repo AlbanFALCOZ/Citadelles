@@ -28,9 +28,8 @@ public class RobotRichardo extends Robot {
         strategyAgressif = new StrategyAgressif();
 
         strategyOpportuniste = new StrategyOpportuniste();
-
-
     }
+
 
     public StrategyAgressif getStrategyAgressif() {
         return strategyAgressif;
@@ -136,6 +135,7 @@ public class RobotRichardo extends Robot {
             if (availableCharacters.contains(CharactersType.ARCHITECTE) && availableCharacters.contains(CharactersType.ASSASSIN)) {
                 pickCharacterCard(availableCharacters, CharactersType.ASSASSIN);
                 action.printScenarioArchitecte();
+
                 return;
             }
             if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
@@ -143,6 +143,7 @@ public class RobotRichardo extends Robot {
                 action.printScenarioArchitecte();
                 return;
             }
+
         } else if (scenarioRoi(bots)) {
             if (availableCharacters.contains(CharactersType.ROI)) {
                 pickCharacterCard(availableCharacters, CharactersType.ROI);
@@ -221,9 +222,12 @@ public class RobotRichardo extends Robot {
     }
 
     @Override
-    public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill) {
-        if (scenarioArchitecte(bots)) return this.strategyAgressif.chooseVictimForAssassin(bots, 7, this);
-        else return this.strategyAgressif.chooseVictimForAssassin(bots, numberOfTheCharacterToKill, this);
+
+    public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
+        if (scenarioArchitecte(bots)) return this.strategyAgressif.chooseVictimForAssassin(bots,this);
+        else return this.strategyAgressif.chooseVictimForAssassin(bots , this) ;
+
+
     }
 
     @Override

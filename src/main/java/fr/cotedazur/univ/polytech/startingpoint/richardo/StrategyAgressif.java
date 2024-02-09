@@ -76,15 +76,17 @@ public class StrategyAgressif {
     }
 
 
-    public Robot chooseVictimForAssassin(List<Robot> bots, int numberOfTheCharacterToKill, RobotRichardo robot) {
 
-        numberOfTheCharacterToKill = robot.getNumberOfCharacterToKill(bots);
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(robot, true);
+
+    public Robot chooseVictimForAssassin(List<Robot> bots, RobotRichardo robot) {
+        int characterForAssassin = robot.getNumberOfCharacterToKill(bots ) ;
+
+
         Robot victim = null;
         for (Robot bot : bots) {
 
 
-            if (bot.getCharacter().getNumber() == numberOfTheCharacterToKill) {
+            if (bot.getCharacter().getNumber() == characterForAssassin) {
                 victim = bot;
             }
         }
