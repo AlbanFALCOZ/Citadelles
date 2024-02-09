@@ -10,9 +10,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class RobotAnalyzer extends Robot {
-    private ActionOfBotDuringARound action;
-    private Map<String, List<DistrictsType>> buildingHistory;
-    private List<Robot> allPlayers;
+    private final ActionOfBotDuringARound action;
+    private final Map<String, List<DistrictsType>> buildingHistory;
+    private final List<Robot> allPlayers;
 
     public RobotAnalyzer(String name, List<Robot> allPlayers) {
         super(name);
@@ -94,19 +94,19 @@ public class RobotAnalyzer extends Robot {
                 .thenComparingInt(DistrictsType::getScore).reversed());
 
         List<DistrictsType> chosenDistricts = new ArrayList<>();
-        int indice =0;
+        int indice = 0;
 
         //strat de choix de carte basée sur le coût, la diversité et pour perturber les adversaires
         for (DistrictsType district : listDistrict) {
             if (!uniqueDistrictTypesInCity.contains(district) && specialDistrict(district)) {
-                    chosenDistricts.add(district);
-                    listDistrict.remove(district);
-                    indice ++;
+                chosenDistricts.add(district);
+                listDistrict.remove(district);
+                indice++;
             }
             break;
 
         }
-        if(indice<getNumberOfCardsChosen()) {
+        if (indice < getNumberOfCardsChosen()) {
             for (DistrictsType district : listDistrict) {
                 if (district.getCost() <= getGolds() && (!uniqueDistrictTypesInCity.contains(district))) {
                     chosenDistricts.add(district);
@@ -117,7 +117,7 @@ public class RobotAnalyzer extends Robot {
 
             }
         }
-        if(indice<getNumberOfCardsChosen()){
+        if (indice < getNumberOfCardsChosen()) {
             for (DistrictsType district : listDistrict) {
                 if (!uniqueDistrictTypesInCity.contains(district)) {
                     chosenDistricts.add(district);
@@ -134,11 +134,9 @@ public class RobotAnalyzer extends Robot {
     }
 
 
-    public boolean specialDistrict (DistrictsType district){
+    public boolean specialDistrict(DistrictsType district) {
         return district.getType().equals("noble") || district.getType().equals("religieux") || district.getType().equals("marchand") || district.getType().equals("militaire");
     }
-
-
 
 
     @Override
@@ -191,15 +189,13 @@ public class RobotAnalyzer extends Robot {
 
     private CharactersType chooseCharacterDefault(List<CharactersType> availableCharacters, boolean needMoreGold, boolean needMoreCards, boolean opponentCloseToWinning) {
         CharactersType chosenCharacter = null;
-        if (needMoreGold && availableCharacters.contains(CharactersType.MARCHAND)){
+        if (needMoreGold && availableCharacters.contains(CharactersType.MARCHAND)) {
             chosenCharacter = CharactersType.MARCHAND;
             availableCharacters.remove(chosenCharacter);
-        }
-        else if (needMoreCards && availableCharacters.contains(CharactersType.ARCHITECTE)) {
+        } else if (needMoreCards && availableCharacters.contains(CharactersType.ARCHITECTE)) {
             chosenCharacter = CharactersType.ARCHITECTE;
             availableCharacters.remove(chosenCharacter);
-        }
-        else if (opponentCloseToWinning) {
+        } else if (opponentCloseToWinning) {
             if (availableCharacters.contains(CharactersType.ASSASSIN)) {
                 chosenCharacter = CharactersType.ASSASSIN;
                 availableCharacters.remove(chosenCharacter);
@@ -207,8 +203,7 @@ public class RobotAnalyzer extends Robot {
                 chosenCharacter = CharactersType.CONDOTTIERE;
                 availableCharacters.remove(chosenCharacter);
             }
-        }
-        else {
+        } else {
             chosenCharacter = availableCharacters.get(0);
             availableCharacters.remove(chosenCharacter);
 

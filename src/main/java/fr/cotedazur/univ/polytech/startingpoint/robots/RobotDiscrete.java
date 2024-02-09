@@ -21,7 +21,7 @@ public class RobotDiscrete extends Robot {
 
     @Override
     public String tryBuild() {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
         List<String> listDistrictName = new ArrayList<>();
         for (DistrictsType districtsType : getCity()) {
             listDistrictName.add(districtsType.getName());
@@ -59,7 +59,7 @@ public class RobotDiscrete extends Robot {
         List<DistrictsType> listDistrict = new ArrayList<>(allDistricts);
         listDistrict.sort(Comparator.comparingInt(DistrictsType::getCost).reversed());
         for (DistrictsType district : listDistrict) {
-            if (!listDistrictName.contains(district.getName()) && district.getCost() <= getGolds()){
+            if (!listDistrictName.contains(district.getName()) && district.getCost() <= getGolds()) {
                 district.powerOfDistrict(this, 1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
@@ -98,7 +98,7 @@ public class RobotDiscrete extends Robot {
 
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
         Map<CharactersType, Integer> characterCounts = new HashMap<>();
         characterCounts.put(CharactersType.ROI, countDistrictsByType(NOBLE) + countDistrictsInHandByType(NOBLE));
         characterCounts.put(CharactersType.EVEQUE, countDistrictsByType(RELIGIOUS) + countDistrictsInHandByType(RELIGIOUS));
@@ -131,10 +131,9 @@ public class RobotDiscrete extends Robot {
     }
 
 
-
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
         listDistrict.sort(compareByCost().reversed());
         List<DistrictsType> listDistrictToBuild = new ArrayList<>();
         int indice = 0;
@@ -145,7 +144,7 @@ public class RobotDiscrete extends Robot {
 
         indice = chooseAnyDistrict(listDistrict, indice, listDistrictToBuild);
 
-        if (indice < getNumberOfCardsChosen()){
+        if (indice < getNumberOfCardsChosen()) {
             action.printCantPickDistrict();
 
         }
@@ -157,8 +156,8 @@ public class RobotDiscrete extends Robot {
     }
 
     private int chooseAnyDistrict(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
-        if (indice < getNumberOfCardsChosen()){
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
+        if (indice < getNumberOfCardsChosen()) {
             Iterator<DistrictsType> iterator = listDistrict.iterator();
             while (iterator.hasNext()) {
                 DistrictsType currentDistrict = iterator.next();
@@ -174,8 +173,8 @@ public class RobotDiscrete extends Robot {
     }
 
     private int chooseSpecialDistrict(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
-        if (indice < getNumberOfCardsChosen()){
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
+        if (indice < getNumberOfCardsChosen()) {
             Iterator<DistrictsType> iterator = listDistrict.iterator();
             while (iterator.hasNext()) {
                 DistrictsType currentDistrict = iterator.next();
@@ -191,7 +190,7 @@ public class RobotDiscrete extends Robot {
     }
 
     private int chooseDistrictByType(List<DistrictsType> listDistrict, int indice, List<DistrictsType> listDistrictToBuild) {
-        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this,true);
+        ActionOfBotDuringARound action = new ActionOfBotDuringARound(this, true);
         Iterator<DistrictsType> iterator = listDistrict.iterator();
         while (iterator.hasNext()) {
             DistrictsType currentDistrict = iterator.next();

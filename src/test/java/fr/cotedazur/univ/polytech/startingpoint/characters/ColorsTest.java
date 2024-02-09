@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ColorsTest {
 
@@ -27,12 +28,12 @@ class ColorsTest {
     @Test
     void getColorDisplay() {
 
-            assertEquals("\u001B[32m", Colors.GREEN.getColorDisplay());
-            assertEquals("\u001B[31m", Colors.RED.getColorDisplay());
-            assertEquals("\u001B[34m", Colors.BLUE.getColorDisplay());
-            assertEquals("\u001B[33m", Colors.YELLOW.getColorDisplay());
-            assertEquals("\u001B[35m", Colors.PURPLE.getColorDisplay());
-            assertEquals("\u001B[37;1m", Colors.GRAY.getColorDisplay());
-            assertEquals("\u001B[0m", Colors.RESET.getColorDisplay());
-        }
+        assertEquals("\u001B[32m", Colors.GREEN.getColorDisplay());
+        assertEquals("\u001B[31m", Colors.RED.getColorDisplay());
+        assertEquals("\u001B[34m", Colors.BLUE.getColorDisplay());
+        assertEquals("\u001B[33m", Colors.YELLOW.getColorDisplay());
+        assertEquals("\u001B[35m", Colors.PURPLE.getColorDisplay());
+        assertEquals("\u001B[37;1m", Colors.GRAY.getColorDisplay());
+        assertEquals("\u001B[0m", Colors.RESET.getColorDisplay());
     }
+}

@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.districts;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DistrictsTypeTest {
 
@@ -41,7 +41,6 @@ class DistrictsTypeTest {
         assertEquals("\u001B[37m", DistrictsType.CHATEAU.getColorReset());
 
     }
-
 
 
     @Test

@@ -14,8 +14,8 @@ public class Power {
     public static final String MILITATE = "militaire";
     public static final String RELIGIOUS = "religieux";
     public static final String ASSASSIN = "assassin";
+    private final Robot bot;
     private ActionOfBotDuringARound action;
-    private Robot bot;
 
 
     public Power(Robot bot, ActionOfBotDuringARound action) {
@@ -161,13 +161,8 @@ public class Power {
             bot.addGold(stolenGold);
             action.printThiefStill(victim);
             victim.setGolds(0);
-        }
-        else action.printCantAffectVictim(victim);
+        } else action.printCantAffectVictim(victim);
     }
 
-
-    public boolean canSteal(Robot robot, CharactersType victimCharacter) {
-        return robot.getCharacter().equals(victimCharacter);
-    }
 }
 

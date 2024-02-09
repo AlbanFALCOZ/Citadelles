@@ -1,11 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
+
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class RobotRush extends Robot {
 
 
     @Override
-    public void pickCharacter (List<CharactersType> availableCharacters, List<Robot> bots) {
+    public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         //prioriser l'architecte pour construire rapidement
         if (availableCharacters.contains(CharactersType.ARCHITECTE)) {
             setCharacter(CharactersType.ARCHITECTE);
@@ -42,8 +42,7 @@ public class RobotRush extends Robot {
                 availableCharacters.remove(CharactersType.EVEQUE);
 
             }
-        }
-        else {
+        } else {
             CharactersType chosenCharacter = availableCharacters.get(0);
             for (CharactersType character : availableCharacters) {
                 if (getPriority(character) > getPriority(chosenCharacter)) {
@@ -53,17 +52,23 @@ public class RobotRush extends Robot {
             setCharacter(chosenCharacter);
             availableCharacters.remove(chosenCharacter);
         }
-        action.printCharacterChoice() ;
+        action.printCharacterChoice();
     }
 
     private int getPriority(CharactersType character) {
-        switch(character) {
-            case ARCHITECTE: return 5;
-            case ROI: return 4;
-            case EVEQUE: return 3;
-            case MARCHAND: return 2;
-            case MAGICIEN: return 1;
-            default: return 0;
+        switch (character) {
+            case ARCHITECTE:
+                return 5;
+            case ROI:
+                return 4;
+            case EVEQUE:
+                return 3;
+            case MARCHAND:
+                return 2;
+            case MAGICIEN:
+                return 1;
+            default:
+                return 0;
         }
     }
 
@@ -74,7 +79,7 @@ public class RobotRush extends Robot {
         String built = "nothing";
         for (DistrictsType district : getDistrictInHand()) {
             if (district.getCost() <= getGolds()) {
-                district.powerOfDistrict(this,1);
+                district.powerOfDistrict(this, 1);
                 getCity().add(district);
                 setGolds(getGolds() - district.getCost());
                 getDistrictInHand().remove(district);

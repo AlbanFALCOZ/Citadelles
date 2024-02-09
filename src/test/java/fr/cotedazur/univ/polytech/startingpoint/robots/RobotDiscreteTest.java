@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RobotDiscreteTest {
 
     private RobotDiscrete robot;
-    private List<Robot> bots = new ArrayList<>();
+    private final List<Robot> bots = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
@@ -44,6 +44,7 @@ class RobotDiscreteTest {
         robot.pickCharacter(availableCharactersCopy, bots);
         assertEquals(CharactersType.ROI, robot.getCharacter());
     }
+
     @Test
     void tryBuild_shouldBuildDistrictIfAffordableAndNotAlreadyBuilt() {
         RobotDiscrete robot = new RobotDiscrete("TestRobot");

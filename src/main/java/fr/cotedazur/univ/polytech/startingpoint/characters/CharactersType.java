@@ -19,9 +19,7 @@ public enum CharactersType {
     CONDOTTIERE(8, "Condottiere", Colors.RED, "militaire");
 
 
-
-
-    int number ;
+    int number;
 
     Colors color;
     String role;
@@ -36,8 +34,8 @@ public enum CharactersType {
      * @param type   type du personnage
      */
 
-    CharactersType(int number , String role, Colors color, String type){
-        this.number = number ;
+    CharactersType(int number, String role, Colors color, String type) {
+        this.number = number;
         this.role = role;
         this.color = color;
         this.type = type;

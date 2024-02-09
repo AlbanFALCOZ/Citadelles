@@ -3,19 +3,16 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.game.GameEngine;
-import fr.cotedazur.univ.polytech.startingpoint.game.Round;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class RobotAnalyzerTest {
     private RobotAnalyzer robotAnalyzer;
@@ -26,7 +23,7 @@ public class RobotAnalyzerTest {
     @BeforeEach
     public void setUp() {
         mockAllPlayers = new ArrayList<>();
-        robotAnalyzer = new RobotAnalyzer("TestBot",mockAllPlayers);
+        robotAnalyzer = new RobotAnalyzer("TestBot", mockAllPlayers);
         mockDeckDistrict = mock(DeckDistrict.class);
         robotAnalyzer.getCity().clear();
     }
@@ -56,18 +53,16 @@ public class RobotAnalyzerTest {
         robotAnalyzer.setGolds(0);
 
         // Test cas où le robot ne peut construire aucun district
-        robotAnalyzer.getDistrictInHand().addAll(Arrays.asList(DistrictsType.TAVERNE));
+        robotAnalyzer.getDistrictInHand().addAll(List.of(DistrictsType.TAVERNE));
         result = robotAnalyzer.tryBuild();
         assertEquals("nothing", result, "Le robot ne devrait construire aucun district car il n'a pas assez d'or.");
     }
 
 
-
-
     @Test
     public void testPickDistrictCard() {
         List<DistrictsType> availableDistricts = new ArrayList<>(Arrays.asList(DistrictsType.TAVERNE, DistrictsType.PALAIS, DistrictsType.MANOIR, DistrictsType.CATHEDRALE));
-        robotAnalyzer.getCity().addAll(Arrays.asList(DistrictsType.CHATEAU));
+        robotAnalyzer.getCity().addAll(List.of(DistrictsType.CHATEAU));
         robotAnalyzer.setGolds(8);
 
         List<DistrictsType> chosenDistricts = robotAnalyzer.pickDistrictCard(availableDistricts, mockDeckDistrict);
@@ -79,8 +74,6 @@ public class RobotAnalyzerTest {
         int totalCost = chosenDistricts.stream().mapToInt(DistrictsType::getCost).sum();
         assertTrue(totalCost <= robotAnalyzer.getGolds(), "Le coût total des districts choisis ne devrait pas dépasser l'or disponible du robot.");
     }
-
-
 
 
     @Test

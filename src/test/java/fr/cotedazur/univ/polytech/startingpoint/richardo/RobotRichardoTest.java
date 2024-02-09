@@ -4,19 +4,18 @@ import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
-import fr.cotedazur.univ.polytech.startingpoint.robots.Robot;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotAgressif;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotChoiceOfCharacter;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotDiscrete;
+import fr.cotedazur.univ.polytech.startingpoint.game.Round;
+import fr.cotedazur.univ.polytech.startingpoint.robots.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 class RobotRichardoTest {
 
@@ -33,18 +32,62 @@ class RobotRichardoTest {
     }
 
     @Test
+    public void testChooseVictimForMagicien() {
+        List<Robot> bots = new ArrayList<>();
+        Robot victim = new RobotRandom("Victim");
+        bots.add(victim);
+        richardo.setAgressif(true);
+
+        Robot result = richardo.chooseVictimForMagicien(bots);
+
+        assertEquals(victim, result);
+    }
+
+    @Test
+    public void testChooseVictimForVoleur_WhenOpportunisteIsTrue() {
+        richardo.setOpportuniste(true);
+        Robot bot1 = new RobotRandom("Bot1");
+        Robot bot2 = new RobotRandom("Bot2");
+        Robot bot3 = new RobotRandom("Bot3");
+        bot1.setCharacter(CharactersType.MAGICIEN);
+        bot2.setCharacter(CharactersType.MARCHAND);
+        bot3.setCharacter(CharactersType.EVEQUE);
+        richardo.setCharacter(CharactersType.ASSASSIN);
+        List<Robot> bots = new ArrayList<>();
+        bots.add(bot1);
+        bots.add(bot2);
+        bots.add(bot3);
+        bots.add(richardo);
+        Round round = new Round(bots);
+        round.playTurns();
+
+
+        CharactersType result = richardo.chooseVictimForVoleur(bots);
+
+        assertEquals(CharactersType.EVEQUE, result);
+    }
+
+    @Test
+    public void testChooseVictimForVoleur_WhenOpportunisteIsFalse() {
+        List<Robot> bots = new ArrayList<>();
+        CharactersType result = richardo.chooseVictimForVoleur(bots);
+
+        assertNotNull(result);
+    }
+
+    @Test
     void testRichardPickKing() {
         List<CharactersType> listCharacters = deckCharacters.getCharactersInHand();
 
         StrategyBatisseur batisseur = new StrategyBatisseur();
 
         batisseur.pickBatisseur(listCharacters, richardo);
-        assertEquals(richardo.getCharacter(),CharactersType.MARCHAND);
-        assertEquals(listCharacters.size(),7);
+        assertEquals(richardo.getCharacter(), CharactersType.MARCHAND);
+        assertEquals(listCharacters.size(), 7);
 
         richardo.setCharacter(null);
         batisseur.pickBatisseur(listCharacters, richardo);
-        assertEquals(richardo.getCharacter(),CharactersType.ROI);
+        assertEquals(richardo.getCharacter(), CharactersType.ROI);
 
         richardo.setCharacter(null);
         richardo.setGolds(6);
@@ -52,11 +95,10 @@ class RobotRichardoTest {
         richardo.addDistrict(deckDistrict.getDistrictsInDeck());
         richardo.addDistrict(deckDistrict.getDistrictsInDeck());
         batisseur.pickBatisseur(listCharacters, richardo);
-        assertEquals(richardo.getCharacter(),CharactersType.ARCHITECTE);
+        assertEquals(richardo.getCharacter(), CharactersType.ARCHITECTE);
     }
 
     @Test
-
     void testRichardoWhenKingPickNobleCard() {
         richardo.setCharacter(CharactersType.ROI);
         StrategyBatisseur batisseur = new StrategyBatisseur();
@@ -64,14 +106,13 @@ class RobotRichardoTest {
         List<DistrictsType> listOfNobleCards = new ArrayList<>();
         listOfNobleCards.add(DistrictsType.CHATEAU);
         listOfNobleCards.add(DistrictsType.TAVERNE);
-        richardo.addDistrict(richardo.pickDistrictCard(listOfNobleCards,deckDistrict));
+        richardo.addDistrict(richardo.pickDistrictCard(listOfNobleCards, deckDistrict));
         assertTrue(richardo.getDistrictInHand().contains(DistrictsType.CHATEAU));
     }
 
 
     @Test
     public void testChooseVictimForCondottiere_ChoosesCorrectVictim() {
-
 
         List<CharactersType> availableCharacters = new ArrayList<>();
         availableCharacters.add(CharactersType.CONDOTTIERE);
@@ -87,7 +128,7 @@ class RobotRichardoTest {
         bots.add(bot2);
         RobotRichardo richardo = new RobotRichardo("Richard");
         richardo.setAvailableCharacters(availableCharacters);
-        richardo.pickCharacter(availableCharacters , bots);
+        richardo.pickCharacter(availableCharacters, bots);
         Robot chosenVictim = richardo.chooseVictimForCondottiere(bots);
         assertEquals(bot1, chosenVictim);
     }
@@ -96,11 +137,11 @@ class RobotRichardoTest {
     @Test
     void testPickCharacterWithoutVoleurAndNoNeedForCondottiere() {
         List<Robot> bots = new ArrayList<>();
-        List<CharactersType> charactersToPickFrom = new ArrayList<>() ;
-        charactersToPickFrom.add(CharactersType.ROI) ;
-        charactersToPickFrom.add(CharactersType.EVEQUE) ;
-        charactersToPickFrom.add(CharactersType.CONDOTTIERE) ;
-        charactersToPickFrom.add(CharactersType.ASSASSIN) ;
+        List<CharactersType> charactersToPickFrom = new ArrayList<>();
+        charactersToPickFrom.add(CharactersType.ROI);
+        charactersToPickFrom.add(CharactersType.EVEQUE);
+        charactersToPickFrom.add(CharactersType.CONDOTTIERE);
+        charactersToPickFrom.add(CharactersType.ASSASSIN);
 
         Robot sarsor = new RobotAgressif("Sara");
 
@@ -112,11 +153,11 @@ class RobotRichardoTest {
         bots.add(choice);
         bots.add(richardo);
         richardo.setAgressif(true);
-        assertTrue( richardo.getAgressive());
+        assertTrue(richardo.getAgressive());
         richardo.setHasCrown(true);
-        richardo.pickCharacter(charactersToPickFrom , bots);
+        richardo.pickCharacter(charactersToPickFrom, bots);
 
-        assertEquals(CharactersType.ASSASSIN , richardo.getCharacter());
+        assertEquals(CharactersType.ASSASSIN, richardo.getCharacter());
 
     }
 
@@ -152,12 +193,89 @@ class RobotRichardoTest {
         listCharacter.remove(CharactersType.CONDOTTIERE);
         listCharacter.remove(CharactersType.ROI);
 
-        richardo2.pickCharacter(listCharacter,listBots);
-        assertEquals(richardo2.getCharacter(),CharactersType.ASSASSIN);
+        richardo2.pickCharacter(listCharacter, listBots);
+        assertEquals(richardo2.getCharacter(), CharactersType.ASSASSIN);
 
         listCharacter.add(CharactersType.ROI);
-        richardo2.pickCharacter(listCharacter,listBots);
-        assertEquals(richardo2.getCharacter(),CharactersType.ARCHITECTE);
+        richardo2.pickCharacter(listCharacter, listBots);
+        assertEquals(richardo2.getCharacter(), CharactersType.ARCHITECTE);
 
     }
+
+    @Test
+    public void testPickDistrictCard_WhenBatisseurAndCharacterIsRoi() {
+        richardo.setBatisseur(true);
+        richardo.setCharacter(CharactersType.ROI);
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        listDistrict.add(DistrictsType.CASERNE);
+        listDistrict.add(DistrictsType.CHATEAU);
+        listDistrict.add(DistrictsType.TAVERNE);
+        DeckDistrict deck = new DeckDistrict();
+
+        List<DistrictsType> result = richardo.pickDistrictCard(listDistrict, deck);
+
+        assertEquals(1, result.size());
+        assertEquals(DistrictsType.CHATEAU.getName(), result.get(0).getName());
+    }
+
+    @Test
+    public void testPickDistrictCard_WhenOpportuniste() {
+        richardo.setOpportuniste(true);
+        richardo.setCharacter(CharactersType.EVEQUE);
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        listDistrict.add(DistrictsType.CASERNE);
+        listDistrict.add(DistrictsType.CHATEAU);
+        listDistrict.add(DistrictsType.MONASTERE);
+        DeckDistrict deck = new DeckDistrict();
+
+        List<DistrictsType> result = richardo.pickDistrictCard(listDistrict, deck);
+
+        assertEquals(DistrictsType.MONASTERE, result.get(0));
+    }
+
+    @Test
+    public void testPickDistrictCard_WhenRegularScenario() {
+        richardo.setCharacter(CharactersType.MARCHAND);
+        richardo.setBatisseur(false);
+        richardo.setOpportuniste(false);
+        richardo.setGolds(8);
+        List<DistrictsType> listDistrict = new ArrayList<>();
+        listDistrict.add(DistrictsType.CASERNE);
+        listDistrict.add(DistrictsType.CHATEAU);
+        listDistrict.add(DistrictsType.TAVERNE);
+        DeckDistrict deck = new DeckDistrict();
+
+        List<DistrictsType> result = richardo.pickDistrictCard(listDistrict, deck);
+
+        assertEquals(1, result.size());
+        assertEquals(DistrictsType.CHATEAU, result.get(0));
+    }
+
+    @Test
+    public void testPickCharacter_WhenOpportunisteStrategyIsApplied() {
+        List<CharactersType> availableCharacters = Arrays.asList(CharactersType.MARCHAND, CharactersType.EVEQUE);
+        richardo.setOpportuniste(true);
+        List<CharactersType> availableCharactersCopy = new ArrayList<>(availableCharacters);
+        richardo.pickCharacter(availableCharactersCopy, new ArrayList<>());
+
+        assertEquals(CharactersType.EVEQUE, richardo.getCharacter());
+
+    }
+
+    @Test
+    public void testPickCharacter_WhenBatisseurStrategyIsApplied() {
+        List<CharactersType> availableCharacters = Arrays.asList(CharactersType.MARCHAND, CharactersType.ROI);
+        List<Robot> bots = new ArrayList<>();
+        List<CharactersType> availableCharactersCopy = new ArrayList<>(availableCharacters);
+        richardo.setBatisseur(true);
+
+        richardo.pickCharacter(availableCharactersCopy, bots);
+
+        assertEquals(CharactersType.MARCHAND, richardo.getCharacter());
+
+        assertFalse(richardo.getAgressive());
+        assertTrue(richardo.isBatisseur());
+        assertFalse(richardo.isOpportuniste());
+    }
+
 }

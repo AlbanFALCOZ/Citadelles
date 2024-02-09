@@ -1,21 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint.robots;
 
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
-import fr.cotedazur.univ.polytech.startingpoint.characters.Colors;
 import fr.cotedazur.univ.polytech.startingpoint.characters.DeckCharacters;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
-import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
 import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
-import fr.cotedazur.univ.polytech.startingpoint.robots.RobotRush;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.mock;
 
 public class RobotRushTest {
 
@@ -49,8 +47,8 @@ public class RobotRushTest {
         DeckCharacters deckCharacters = new DeckCharacters();
         List<CharactersType> charactersList = deckCharacters.getCharactersInHand();
         charactersList.remove(CharactersType.ARCHITECTE);
-        robotRush.pickCharacter(charactersList,new ArrayList<>());
-        assertEquals(robotRush.getCharacter(),CharactersType.MARCHAND);
+        robotRush.pickCharacter(charactersList, new ArrayList<>());
+        assertEquals(robotRush.getCharacter(), CharactersType.MARCHAND);
     }
 
     @Test
@@ -60,8 +58,8 @@ public class RobotRushTest {
         List<CharactersType> charactersList = deckCharacters.getCharactersInHand();
         charactersList.remove(CharactersType.ARCHITECTE);
         robotRush.setGolds(100);
-        robotRush.pickCharacter(charactersList,new ArrayList<>());
-        assertEquals(robotRush.getCharacter(),CharactersType.ROI);
+        robotRush.pickCharacter(charactersList, new ArrayList<>());
+        assertEquals(robotRush.getCharacter(), CharactersType.ROI);
     }
 
     @Test
@@ -72,8 +70,8 @@ public class RobotRushTest {
         charactersList.remove(CharactersType.ARCHITECTE);
         charactersList.remove(CharactersType.ROI);
         robotRush.setGolds(100);
-        robotRush.pickCharacter(charactersList,new ArrayList<>());
-        assertEquals(robotRush.getCharacter(),CharactersType.EVEQUE);
+        robotRush.pickCharacter(charactersList, new ArrayList<>());
+        assertEquals(robotRush.getCharacter(), CharactersType.EVEQUE);
     }
 
     @Test
@@ -86,9 +84,9 @@ public class RobotRushTest {
         charactersList.remove(CharactersType.EVEQUE);
         robotRush.setGolds(100);
         System.out.println(charactersList.get(0));
-        robotRush.pickCharacter(charactersList,new ArrayList<>());
+        robotRush.pickCharacter(charactersList, new ArrayList<>());
         //Le marchand a la priorité sur les autres personnages
-        assertEquals(robotRush.getCharacter(),CharactersType.MARCHAND);
+        assertEquals(robotRush.getCharacter(), CharactersType.MARCHAND);
     }
 
 }
