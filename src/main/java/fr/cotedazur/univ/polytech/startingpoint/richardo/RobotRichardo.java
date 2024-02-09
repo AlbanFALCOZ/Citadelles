@@ -68,7 +68,9 @@ public class RobotRichardo extends Robot {
         this.availableCharacters = availableCharacters;
     }
 
-    //On construit le premier district possible
+    /**
+     * cette méthode permet de construire le premier district possible
+     */
     public String buildDistrictAndRetrieveItsName() {
         for (int i = 0; i < this.getDistrictInHand().size(); i++) {
             DistrictsType district = this.getDistrictInHand().get(i);
@@ -83,7 +85,10 @@ public class RobotRichardo extends Robot {
         return "nothing";
     }
 
-
+    /**
+     * Si jamais Richard est en mode batisseur ou opportuniste, il faut qu'il construise selon sa stratégie actuelle
+     * S'il est en mode agressif, il construit le premier district disponible
+     */
     @Override
     public String tryBuild() {
         if (batisseur) return strategyBatisseur.tryBuildBatisseur(this);
@@ -91,7 +96,10 @@ public class RobotRichardo extends Robot {
         return buildDistrictAndRetrieveItsName();
     }
 
-
+    /**
+     * Si jamais Richard a moins de 6 golds, il choisit de prendre des golds
+     * Sinon, il choisit de piocher des quartiers
+     */
     @Override
     public int generateChoice() {
 
@@ -103,7 +111,14 @@ public class RobotRichardo extends Robot {
         }
     }
 
-
+    /**
+     * Cette méthode permet à Richard de choisir son personnage
+     * Selon s'il est agressif, batisseur ou opportuniste, il essaie de piocher le meilleur personnage selon sa stratégie
+     * Par exemple, s'il est batisseur, il essaie de piocher le marchand en priorité, puis le roi et enfin l'architecte
+     * Si jamais il n'arrive pas un piocher un de ses personnages, il essaie de piocher les personnages selon les différents scénarios
+     * Par exemple, s'il reconnait le scénario de l'architecte, il essaie de piocher l'assassin pour viser l'arhitecte par exemple
+     * Si jamais il ne pioche pas de personnage, il choisit le premier personnage disponible
+     */
     @Override
     public void pickCharacter(List<CharactersType> availableCharacters, List<Robot> bots) {
         this.availableCharacters = new ArrayList<>(availableCharacters);
@@ -163,12 +178,13 @@ public class RobotRichardo extends Robot {
 
     }
 
-
     public boolean thereIsA(CharactersType character, List<CharactersType> availableCharacters) {
         return (this.hasCrown && availableCharacters.contains(character));
     }
 
-
+    /**
+     * Si jamais le personnage peut être encore choisit, Richard choisit le personnage passé en paramètre
+     */
     public void pickCharacterCard(List<CharactersType> availableCharacters, CharactersType character) {
         if (availableCharacters.contains(character)) {
             this.setCharacter(character);
@@ -190,7 +206,10 @@ public class RobotRichardo extends Robot {
                 .count();
     }
 
-
+    /**
+     * Cette méthode permet, après avoir pioché 2 cartes ou plus depuis la pioche, de mettre dans sa main en priorité les cartes que le robot peut construire
+     * Dans le cas ou richard est un batisseur et qu'il a le roi ou le marchand, il essaie en priorité de choisir les quartiers nobles/marchands
+     */
     @Override
     public List<DistrictsType> pickDistrictCard(List<DistrictsType> listDistrict, DeckDistrict deck) {
         if (batisseur && (character == CharactersType.ROI || character == CharactersType.MARCHAND))
@@ -221,13 +240,21 @@ public class RobotRichardo extends Robot {
         return listDistrictToBuild;
     }
 
+    /**
+     * Cette méthode permet de renvoyer le bot qui doit être assassiné
+     * Si jamais l'assassin s'est trompé sur sa cible, on renvoit null
+     */
     @Override
-
     public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
         return this.strategyAgressif.chooseVictimForAssassin(bots,this);
 
     }
 
+    /**
+     * Cette méthode permet de choisir le numéro du personnage que Richard choisit de tuer
+     * Dans le cas du scénario de l'architecte, on choisit de tuer l'architecte
+     * Sinon, on choisit de tuer dans certains cas le voleur, le condottière ou le magicien si jamais Richard a beaucoup de cartes dans sa main
+     */
     @Override
     public int getNumberOfCharacterToKill(List<Robot> bots) {
         if (scenarioArchitecte(bots)) return 7;
@@ -251,15 +278,12 @@ public class RobotRichardo extends Robot {
 
     @Override
     public Robot chooseVictimForCondottiere(List<Robot> bots) {
-
-        Robot victim = this.strategyAgressif.chooseVictimForCondottiere(bots, this);
-        return victim;
+        return this.strategyAgressif.chooseVictimForCondottiere(bots, this);
     }
 
     @Override
     public Robot chooseVictimForMagicien(List<Robot> bots) {
-        Robot victim = this.strategyAgressif.chooseVictimForMagicien(bots, this);
-        return victim;
+        return this.strategyAgressif.chooseVictimForMagicien(bots, this);
     }
 
     @Override
@@ -271,7 +295,10 @@ public class RobotRichardo extends Robot {
         return super.chooseVictimForVoleur(bots);
     }
 
-
+    /**
+     * Cette méthode permet de savoir si le scénario de l'architecte apparait
+     * Le scénario de l'architecte apparait quand un bot a un quartier ou plus dans sa main, 4 golds ou plus et qu'il a déjà construit 5 quartiers ou plus
+     */
     public boolean scenarioArchitecte(List<Robot> bots) {
         for (Robot bot : bots) {
             if (bot.getNumberOfDistrictInHand() >= 1 && bot.getGolds() >= 4 && bot.getNumberOfDistrictInCity() >= 5 && !bot.equals(this))
@@ -281,6 +308,10 @@ public class RobotRichardo extends Robot {
     }
 
 
+    /**
+     * Cette méthode permet de savoir si le scénario du roi apparait
+     * Le scénario du roi apparait quand un bot a 6 quartiers dans sa cité
+     */
     public boolean scenarioRoi(List<Robot> bots) {
         for (Robot bot : bots) {
             if (bot.getNumberOfDistrictInCity() == 6) {

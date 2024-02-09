@@ -65,7 +65,6 @@ class StrategyAgressifTest {
         //Initialisation d'un tour de jeu
         List<Robot> bots = new ArrayList<>();
         ArrayList<DistrictsType> listOfDistrcits = new ArrayList<>();
-        ArrayList<DistrictsType> listOfDistrcits2 = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             listOfDistrcits.add(DistrictsType.MARCHE);
         }
@@ -98,7 +97,6 @@ class StrategyAgressifTest {
         //Initialisation d'un tour de jeu
         List<Robot> bots = new ArrayList<>();
         ArrayList<DistrictsType> listOfDistrcits = new ArrayList<>();
-        ArrayList<DistrictsType> listOfDistrcits2 = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             listOfDistrcits.add(DistrictsType.MARCHE);
         }

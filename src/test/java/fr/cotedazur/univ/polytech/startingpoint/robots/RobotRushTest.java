@@ -18,7 +18,6 @@ import static org.mockito.Mockito.mock;
 public class RobotRushTest {
 
     private RobotRush robotRush;
-    private DeckDistrict mockDeckDistrict;
     private ActionOfBotDuringARound actionMock;
 
 
@@ -27,7 +26,6 @@ public class RobotRushTest {
         robotRush = new RobotRush("TestBot");
         robotRush.setGolds(5);
 
-        mockDeckDistrict = mock(DeckDistrict.class);
         actionMock = mock(ActionOfBotDuringARound.class);
         robotRush.setAction(actionMock);
     }

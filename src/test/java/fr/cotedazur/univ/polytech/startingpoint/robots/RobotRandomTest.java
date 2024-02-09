@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.robots;
 import fr.cotedazur.univ.polytech.startingpoint.characters.CharactersType;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DeckDistrict;
 import fr.cotedazur.univ.polytech.startingpoint.districts.DistrictsType;
+import fr.cotedazur.univ.polytech.startingpoint.game.ActionOfBotDuringARound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -454,6 +455,28 @@ class RobotRandomTest {
         RobotNora.setDistrictInHand(listDistrictInHandCopy);
         RobotNora.emptyListOfCardsInHand();
         assertEquals(0, RobotNora.getNumberOfDistrictInHand());
+    }
+
+    @Test
+    void testSpecialCards() {
+        RobotRandom robotRandom = new RobotRandom("random");
+        robotRandom.addDistrict(DistrictsType.LABORATOIRE);
+        robotRandom.addGold(3);
+        robotRandom.tryBuild();
+        robotRandom.addDistrict(DistrictsType.PALAIS);
+        robotRandom.specialCards(new DeckDistrict(),new ActionOfBotDuringARound(robotRandom,true));
+        assertEquals(robotRandom.getGolds(),1);
+        assertEquals(robotRandom.getNumberOfDistrictInHand(),0);
+
+
+        robotRandom.setGolds(5);
+        robotRandom.addDistrict(DistrictsType.MANUFACTURE);
+        robotRandom.city.remove(DistrictsType.LABORATOIRE);
+        robotRandom.tryBuild();
+        robotRandom.addGold(3);
+        robotRandom.specialCards(new DeckDistrict(),new ActionOfBotDuringARound(robotRandom,true));
+        assertEquals(robotRandom.getGolds(),0);
+        assertEquals(robotRandom.getNumberOfDistrictInHand(),3);
     }
 
 }

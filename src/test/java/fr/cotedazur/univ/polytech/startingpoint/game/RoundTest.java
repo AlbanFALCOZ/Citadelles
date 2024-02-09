@@ -55,32 +55,6 @@ class RoundTest {
 
 
     @Test
-    public void testThiefStealsGold() {
-        GameEngine game = new GameEngine();
-        game.clearBots();
-
-        Robot thief = new RobotRandom("Thief");
-        Robot target = new RobotRandom("Target");
-
-        thief.setCharacter(CharactersType.VOLEUR);
-        target.setCharacter(CharactersType.ROI);
-        thief.setGolds(2);
-        target.setGolds(5);
-
-        game.addRobot(thief);
-        game.addRobot(target);
-
-        Round round = new Round(game.getBots());
-
-        List<Robot> otherBots = Collections.singletonList(target); //liste avec uniquement la cible
-        //thief.chooseTarget(otherBots);
-        //round.thiefAction(thief);
-
-        //assertEquals(7, thief.getGolds(), "Le voleur devrait avoir 7 pièces d'or après le vol");
-        //assertEquals(0, target.getGolds(), "La cible devrait avoir 0 pièce d'or après le vol");
-    }
-
-    @Test
     void testAssignCrownForKing_OneNobleCharacter() {
 
         Robot nobleRobot = new RobotRandom("Franz Kafka");
