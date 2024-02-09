@@ -224,9 +224,7 @@ public class RobotRichardo extends Robot {
     @Override
 
     public Robot chooseVictimForAssassin(List<Robot> bots,int numberOfTheCharacterToKill){
-        if (scenarioArchitecte(bots)) return this.strategyAgressif.chooseVictimForAssassin(bots,this);
-        else return this.strategyAgressif.chooseVictimForAssassin(bots , this) ;
-
+        return this.strategyAgressif.chooseVictimForAssassin(bots,this);
 
     }
 

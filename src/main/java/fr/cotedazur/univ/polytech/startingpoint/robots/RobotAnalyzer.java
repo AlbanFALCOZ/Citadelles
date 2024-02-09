@@ -98,8 +98,9 @@ public class RobotAnalyzer extends Robot {
                 chosenDistricts.add(district);
                 listDistrict.remove(district);
                 indice++;
+                break;
             }
-            break;
+
 
         }
         if (indice < getNumberOfCardsChosen()) {
